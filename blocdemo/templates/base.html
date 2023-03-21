@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+<div class="container-full-width">
+    <ul class="nav bg-dark fixed-top">
+        <li class="nav-item">
+            <a class="nav-link link-light" href="/blocdemo">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-light" href="analyze">Analyze</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-light" href="methodology">Methodology</a>
+        </li>
+    </ul>
+</div>
+
+<div class="container">
+{% block content %}
+{% endblock %}
+</div>
+
+</body>
+</html>

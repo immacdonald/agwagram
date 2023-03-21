@@ -1,0 +1,11 @@
+body {
+    padding-top: 70px;
+}
+
+.special-button {
+    min-height: 200px;
+    border-width: 4px;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 50px 0 25px 0px;
+}

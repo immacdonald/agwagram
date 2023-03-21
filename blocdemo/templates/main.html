@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | B3T
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-lg">
+    <h1>Home</h1>
+    <p> This is a test page in Django, we are loving this.</p>
+  </div>
+  <div class="col-lg">
+    <div class="row d-flex justify-content-center">
+      <button type="button" class="btn btn-outline-dark col-10 special-button" button onclick="location.href='{% url 'analyze' %}'" type="button">Analyze Account Behaviour</button>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <button type="button" class="btn btn-outline-dark disabled col-10 special-button">Track Account Behaviour Change</button>
+      </div>
+  </div>
+</div>
+{% endblock %}

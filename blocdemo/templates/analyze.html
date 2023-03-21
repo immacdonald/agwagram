@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+Analyze | B3T
+{% endblock %}
+
+
+{% block content %}
+<div class="row d-flex justify-content-center">
+  <div class="col-md-6 text-center">
+    <form name = "form" action = "{% url "results" %}" method = "POST" >
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</div>
+{% endblock %}
