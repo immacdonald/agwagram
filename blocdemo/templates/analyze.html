@@ -6,13 +6,14 @@ Analyze | B3T
 
 
 {% block content %}
-<div class="row d-flex justify-content-center">
-  <div class="col-md-6 text-center">
-    <form name = "form" action = "{% url "results" %}" method = "POST" >
-      {% csrf_token %}
-      {{ form }}
-      <input type="submit" value="Submit">
-    </form>
-  </div>
+<h1>Analyze</h1>
+<div class="search">
+  <form name = "form" action = "{% url "results" %}" method = "POST" >
+    {% csrf_token %}
+    {{form.as_p }}
+    <button type="submit">
+    <span class="icon material-symbols-outlined">search</span>
+    </button>
+  </form>
 </div>
 {% endblock %}
