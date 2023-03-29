@@ -7,7 +7,10 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% load compress %}
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'styles.scss' %}"     rel="stylesheet" media="screen">
+    {% endcompress %}
 </head>
 <body>
 

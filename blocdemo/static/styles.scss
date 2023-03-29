@@ -1,5 +1,13 @@
 body {
-    padding-top: 80px;
+	margin-top: 30px;
+	padding-top: 3vw;
+	padding-bottom: 3vw;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
 }
 
 .special-button {
