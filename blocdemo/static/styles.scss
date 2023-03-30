@@ -1,5 +1,9 @@
 // -------- Site Wide Styling --------
-$responsiveWidth: 800px;
+$smallResponsiveWidth: 800px;
+$mediumResponsiveWidth: 1200px;
+
+$headerHeight: 80px;
+$footerHeight: 40px;
 
 :root {
 	--c-text-primary: #333;
@@ -16,10 +20,19 @@ $responsiveWidth: 800px;
 
 body {
 	line-height: 1.5;
-	min-height: 100vh;
 	font-family: "Be Vietnam Pro", sans-serif;
 	background-color: var(--c-background-secondary);
 	color: var(--c-text-primary);
+}
+
+main {
+	// The SASS variable needs to be interpolated with #{} to be used in a CSS calculation
+	min-height: calc(98vh - #{$headerHeight} - #{$footerHeight} - 8px);
+}
+
+.main {
+	padding-top: 2rem;
+	padding-bottom: 8rem;
 }
 
 html {
@@ -50,7 +63,7 @@ html {
 .header {
 	display: flex;
 	align-items: center;
-	height: 80px;
+	height: $headerHeight;
 	border-bottom: 1px solid var(--c-border-primary);
 	background-color: var(--c-background-primary);
 }
@@ -89,7 +102,7 @@ html {
 	align-items: center;
 	justify-content: space-between;
 
-	@media (max-width: $responsiveWidth) {
+	@media (max-width: $smallResponsiveWidth) {
 		justify-content: flex-end;
 	}
 }
@@ -102,6 +115,7 @@ html {
 		text-decoration: none;
 		color: var(--c-text-action);
 		font-weight: 500;
+		padding: 8px;
 		transition: 0.15s ease;
 		& + * {
 			margin-left: 1.5rem;
@@ -114,13 +128,11 @@ html {
 		
 		&.active {
 			border-radius: 8px;
-			padding: 4px;
-			background-color: var(--c-border-primary);
-			//border: 2px solid var(--c-border-primary);
+			background-color: var(--c-background-tertiary);
 		}
 	}
 
-	@media (max-width: $responsiveWidth) {
+	@media (max-width: $smallResponsiveWidth) {
 		display: none;
 	}
 }
@@ -133,9 +145,69 @@ html {
 		margin: auto 0.5rem;
 	}
 
-	@media (max-width: $responsiveWidth) {
+	@media (max-width: $smallResponsiveWidth) {
 		display: none;
 	}
+}
+
+.icon-button {
+	font: inherit;
+	color: inherit;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	color: var(--c-text-action);
+	transition: 0.15s ease;
+
+	span {
+		font-size: 1.25em;
+	}
+
+	&:focus,
+	&:hover {
+		background-color: var(--c-background-tertiary);
+		color: var(--c-accent-primary);
+	}
+}
+
+#menu-toggle {
+	display: inherit;
+
+	@media (min-width: $smallResponsiveWidth) {
+		display: none;
+	}
+}
+
+// -------- Footer
+footer {
+	width: 100%;
+	height: $footerHeight;
+}
+
+.footer {
+	justify-content: center;
+	display: flex;
+
+	.footer-content {
+		color: var(--c-text-primary);
+		font-size: 12px;
+		border-top: 1px solid var(--c-border-primary);
+	}
+}
+
+// -------- Content Styling --------
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+:focus {
+	outline: 0;
 }
 
 button {
@@ -169,53 +241,6 @@ button {
 		border-color: var(--c-accent-primary);
 		color: var(--c-accent-primary);
 	}
-}
-
-.icon-button {
-	font: inherit;
-	color: inherit;
-	text-decoration: none;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	height: 40px;
-	border-radius: 8px;
-	color: var(--c-text-action);
-	transition: 0.15s ease;
-
-	span {
-		font-size: 1.25em;
-	}
-
-	&:focus,
-	&:hover {
-		background-color: var(--c-background-tertiary);
-		color: var(--c-accent-primary);
-	}
-}
-
-#menu-toggle {
-	display: inherit;
-
-	@media (min-width: $responsiveWidth) {
-		display: none;
-	}
-}
-
-// -------- Content Styling --------
-
-img {
-	display: block;
-	max-width: 100%;
-}
-
-:focus {
-	outline: 0;
-}
-
-.main {
-	padding-top: 2rem;
 }
 
 .search {
@@ -268,3 +293,155 @@ img {
 		height: 40px;
 	}
 }
+	
+.content {
+	border-top: 1px solid var(--c-border-primary);
+	margin-top: 2rem;
+	display: flex;
+	align-items: flex-start;
+}
+
+.content-main {
+	padding-top: 2rem;
+	padding-bottom: 6rem;
+	flex-grow: 1;
+}
+
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	column-gap: 1.5rem;
+	row-gap: 1.5rem;
+	grid-auto-flow: dense;
+
+	@media (min-width: 800px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (min-width: 1200px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.card {
+	background-color: var(--c-background-primary);
+	box-shadow: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
+	border-radius: 8px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	grid-column-end: span 1;
+	grid-row-end: span 1;
+
+	&.full-wide {
+		@media (min-width: $smallResponsiveWidth) {
+			grid-column-end: span 2; 
+		}
+	
+		@media (min-width: $mediumResponsiveWidth) {
+			grid-column-end: span 3; 
+		}
+	}
+
+	&.wide {
+		@media (min-width: $smallResponsiveWidth) {
+			grid-column-end: span 2; 
+		}
+	}
+}
+
+.card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0rem 1.25rem;
+	div {
+		display: flex;
+		align-items: center;
+
+		span {
+			width: 40px;
+			height: 40px;
+			border-radius: 8px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			img {
+				// max-width: 85%;
+				max-height: 100%;
+			}
+		}
+
+		h3 {
+			margin-left: 0.75rem;
+			font-weight: 500;
+		}
+	}
+}
+
+.toggle {
+	span {
+		display: block;
+		width: 40px;
+		height: 24px;
+		border-radius: 99em;
+		background-color: var(--c-background-quaternary);
+		box-shadow: inset 1px 1px 1px 0 rgba(#000, 0.05);
+		position: relative;
+		transition: 0.15s ease;
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			height: 18px;
+			width: 18px;
+			background-color: var(--c-background-primary);
+			border-radius: 50%;
+			box-shadow: 0 1px 3px 0 rgba(#000, 0.15);
+			transition: 0.15s ease;
+		}
+	}
+
+	input {
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+		&:checked + span {
+			background-color: var(--c-accent-primary);
+			&:before {
+				transform: translateX(calc(100% - 2px));
+			}
+		}
+
+		&:focus + span {
+			box-shadow: 0 0 0 4px var(--c-background-tertiary);
+		}
+	}
+}
+
+.card-body {
+	padding: 1rem 1.25rem;
+	font-size: 0.875rem;
+}
+
+.card-footer {
+	margin-top: auto;
+	padding: 0.5rem 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	border-top: 1px solid var(--c-border-primary);
+	a {
+		color: var(--c-text-action);
+		text-decoration: none;
+		font-weight: 500;
+		font-size: 0.875rem;
+	}
+}
+	

@@ -6,14 +6,172 @@ Results | B3T
 
 
 {% block content %}
-<div class="row d-flex justify-content-center">
-    <div class="col-md-6 text-center">
-        <h1>BLOC Analysis of @<strong>{{username}}</strong></h1>
+<!--<h1>BLOC Analysis of @<strong>{{username}}</strong></h1>
+<div class="content">
+    <p><b>Action:</b> {{bloc_action}}</p>
+    <p><b>Content Syntactic:</b> {{bloc_content_syntactic}}</p>
+    <p><b>Content Semantic:</b> {{bloc_content_semantic}}</p>
+</div>-->
+
+<div class="content-header">
+    <div class="content-header-intro">
+        <h2>Behaviour Analysis of @{{username}}</h2>
+        <p>Data from BLOC Analysis.</p>
+    </div>
+    <div class="content-header-actions">
+        <button>
+            <span class="icon material-symbols-outlined">bolt</span>
+            <span>Button 1</span>
+        </button>
+        <button>
+            <span class="icon material-symbols-outlined">settings</span>
+            <span>Button 2</span>
+        </button>
     </div>
 </div>
-<div class="row" style="margin-top: 25px">
-<p><b>Action:</b> {{bloc_action}}</p>
-<p><b>Content Syntactic:</b> {{bloc_content_syntactic}}</p>
-<p><b>Content Semantic:</b> {{bloc_content_semantic}}</p>
+<div class="content">
+    <div class="content-main">
+        <div class="card-grid">
+            <article class="card full-wide">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Long Card</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
+                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
+                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
+                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
+                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Footer Link</a>
+                </div>
+            </article>
+            <article class="card wide">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">settings</span>
+                        <h3>Medium Card</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
+                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
+                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
+                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
+                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Footer Link</a>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">settings</span>
+                        <h3>Normal Card</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
+                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
+                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
+                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
+                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Footer Link</a>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">settings</span>
+                        <h3>Normal Card</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
+                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
+                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
+                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
+                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Footer Link</a>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">settings</span>
+                        <h3>Normal Card</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
+                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
+                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
+                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
+                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Footer Link</a>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">settings</span>
+                        <h3>Normal Card</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
+                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
+                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
+                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
+                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#">Footer Link</a>
+                </div>
+            </article>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
