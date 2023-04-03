@@ -16,6 +16,9 @@ $footerHeight: 40px;
 	--c-background-secondary: #fdfcff;
 	--c-background-tertiary: #feedec;
 	--c-background-quaternary: #e9ecf4;
+
+	--c-disabled-color: #bbb;
+	--c-disabled-background: #eee;
 }
 
 body {
@@ -172,6 +175,13 @@ html {
 		background-color: var(--c-background-tertiary);
 		color: var(--c-accent-primary);
 	}
+
+	&.disabled {
+		background-color: var(--c-disabled-background);
+		color: var(--c-disabled-color);
+		border-color: var(--c-disabled-color);
+		pointer-events: none;
+	}
 }
 
 #menu-toggle {
@@ -240,6 +250,13 @@ button {
 	&:focus {
 		border-color: var(--c-accent-primary);
 		color: var(--c-accent-primary);
+	}
+
+	&.disabled {
+		background-color: var(--c-disabled-background);
+		color: var(--c-disabled-color);
+		border-color: var(--c-disabled-background);
+		pointer-events: none;
 	}
 }
 

@@ -9,7 +9,7 @@
     {% load static %}
     {% load compress %}
     {% compress css %}
-        <link type="text/x-scss" href="{% static 'styles.scss' %}"     rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'styles.scss' %}" rel="stylesheet" media="screen">
     {% endcompress %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
@@ -30,18 +30,17 @@
                 <a {% if request.resolver_match.url_name == 'methodology' %}class="active"{% endif %} href="methodology">Methodology</a>
             </nav>
             <div class="header-navigation-actions">
-                <a href="#" class="icon-button">
+                <a href="#" class="icon-button disabled">
                     <span class="icon material-symbols-outlined">settings</span>
                 </a>
-                <button >
+                <button class="disabled">
                     <span class="icon material-symbols-outlined">bolt</span>
                     <span>Log In</span>
                 </button>
             </div>
-            <button id="menu-toggle" >
-                <span class="icon material-symbols-outlined">menu</span>
-                <span>Menu</span>
-            </button>
+                <a href="#" id="menu-toggle" class="icon-button">
+                    <span class="icon material-symbols-outlined">menu</span>
+                </a>
         </div>
     </div>
 </header>
