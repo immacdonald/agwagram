@@ -4,14 +4,7 @@
 Results | B3T
 {% endblock %}
 
-
 {% block content %}
-<!--<h1>BLOC Analysis of @<strong>{{username}}</strong></h1>
-<div class="content">
-    <p><b>Action:</b> {{bloc_action}}</p>
-    <p><b>Content Syntactic:</b> {{bloc_content_syntactic}}</p>
-    <p><b>Content Semantic:</b> {{bloc_content_semantic}}</p>
-</div>-->
 
 <div class="content-header">
     <div class="content-header-intro">
@@ -19,159 +12,117 @@ Results | B3T
         <p>Data from BLOC Analysis.</p>
     </div>
     <div class="content-header-actions">
-        <button>
+        <!--<button>
             <span class="icon material-symbols-outlined">bolt</span>
             <span>Button 1</span>
         </button>
         <button>
             <span class="icon material-symbols-outlined">settings</span>
             <span>Button 2</span>
-        </button>
+        </button>-->
     </div>
 </div>
 <div class="content">
     <div class="content-main">
         <div class="card-grid">
-            <article class="card full-wide">
+            <article class="card">
                 <div class="card-header">
                     <div>
                         <span class="icon material-symbols-outlined">bolt</span>
-                        <h3>Long Card</h3>
+                        <h3>Action Analysis</h3>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" checked>
+                        <input type="checkbox" onChange="cardToggle(this)">
                         <span></span>
                     </label>
                 </div>
-                <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
-                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
-                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
-                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
-                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#">Footer Link</a>
-                </div>
-            </article>
-            <article class="card wide">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">settings</span>
-                        <h3>Medium Card</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" checked>
-                        <span></span>
-                    </label>
+                <div class="card-toggle-body">
+                    <p>This is more information about the action analysis.</p>
                 </div>
                 <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
-                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
-                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
-                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
-                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                    <p>{{bloc_action}}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#">Footer Link</a>
+                    <a href="methodology">More Details</a>
                 </div>
             </article>
             <article class="card">
                 <div class="card-header">
                     <div>
-                        <span class="icon material-symbols-outlined">settings</span>
-                        <h3>Normal Card</h3>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Content Syntactic</h3>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" checked>
+                        <input type="checkbox" onChange="cardToggle(this)">
                         <span></span>
                     </label>
                 </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the content syntactic analysis.</p>
+                </div>
                 <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
-                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
-                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
-                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
-                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                    <p>{{bloc_content_syntactic}}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#">Footer Link</a>
+                    <a href="methodology">More Details</a>
                 </div>
             </article>
             <article class="card">
                 <div class="card-header">
                     <div>
-                        <span class="icon material-symbols-outlined">settings</span>
-                        <h3>Normal Card</h3>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Content Semantic</h3>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" checked>
+                        <input type="checkbox" onChange="cardToggle(this)">
                         <span></span>
                     </label>
                 </div>
-                <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
-                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
-                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
-                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
-                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#">Footer Link</a>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">settings</span>
-                        <h3>Normal Card</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" checked>
-                        <span></span>
-                    </label>
+                <div class="card-toggle-body">
+                    <p>This is more information about the content semantic analysis.</p>
                 </div>
                 <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
-                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
-                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
-                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
-                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
+                    <p>{{bloc_content_semantic}}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#">Footer Link</a>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">settings</span>
-                        <h3>Normal Card</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" checked>
-                        <span></span>
-                    </label>
-                </div>
-                <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse velit nibh, ultrices sed diam in, hendrerit convallis odio. 
-                        Proin vehicula, urna nec ornare iaculis, ante enim vulputate nibh, ac suscipit sapien odio vitae erat. 
-                        Integer bibendum ligula vitae ligula dapibus, at mattis nulla varius. Nam finibus gravida condimentum. 
-                        Suspendisse tempus cursus enim, sed porta mi pretium vitae. Etiam pretium tincidunt egestas. 
-                        Praesent auctor dui leo, nec euismod ex scelerisque in.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#">Footer Link</a>
+                    <a href="methodology">More Details</a>
                 </div>
             </article>
         </div>
     </div>
 </div>
+
+<script>
+function cardToggle(item) {
+    console.log(item.checked);
+    var cardDropdown = item.parentElement.parentElement.nextElementSibling;
+    console.log(cardDropdown);
+    if(item.checked) {
+        cardDropdown.classList.add("active");
+    } else {
+        cardDropdown.classList.remove("active");
+    }
+}
+
+function calculateCardOffsetHeights() {
+    const cardToggleBodies = document.querySelectorAll('.card-toggle-body');
+    for (const cardToggleBody of cardToggleBodies) {
+        var extendedHeight = 24;
+        for (let i = 0; i < cardToggleBody.children.length; i++) {
+            extendedHeight += cardToggleBody.children[i].offsetHeight;
+        }
+    cardToggleBody.style.setProperty('--extended-height', extendedHeight.toString() + "px");
+    }
+}
+
+window.addEventListener('load', () => {
+    calculateCardOffsetHeights();
+});
+
+window.addEventListener('resize', function() {
+    calculateCardOffsetHeights();
+});
+
+</script>
 
 {% endblock %}
