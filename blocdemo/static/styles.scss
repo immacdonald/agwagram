@@ -257,7 +257,7 @@ button {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0 1em 0 44px;
+		padding: 0 10px 0 10px;
 		height: 40px;
 		border-radius: 8px;
 		border: 2px solid var(--c-border-primary);
@@ -284,13 +284,19 @@ button {
 		border: 0;
 		background-color: transparent;
 		position: absolute;
-		left: 12px;
+		right: -22px;
 		top: 50%;
 		transform: translateY(-20%);
 		font-size: 1.25em;
 		color: var(--c-text-action);
-		padding: 0;
 		height: 40px;
+		padding: 0 5px 0 10px;
+
+		&:focus,
+		&:hover {
+			color: var(--c-accent-primary);
+			background-color: var(--c-background-tertiary);
+		}
 	}
 }
 	
@@ -423,6 +429,23 @@ button {
 			box-shadow: 0 0 0 4px var(--c-background-tertiary);
 		}
 	}
+}
+
+.card-toggle-body {
+	padding: 0rem 1.25rem;
+	font-size: 0.875rem;
+	max-height: 0px;
+	overflow: hidden;
+	transition: max-height 0.5s ease-in-out;
+	background-color: var(--c-background-tertiary);
+	margin: 0px 20px;
+	border-radius: 8px;
+
+	&.active {
+		--extended-height: 0px;
+		max-height: var(--extended-height);
+	}
+
 }
 
 .card-body {
