@@ -8,6 +8,9 @@ from .code import bloc_handler
 
 from .forms import UsernameSearchForm
 
+import logging
+logger = logging.getLogger("mainLogger")
+
 def main(request):
     return render(request, 'main.html')
 
@@ -32,12 +35,13 @@ def analysis_results(request):
         usernameInputForm = UsernameSearchForm()
         return redirect('main')
 
-    #BLOC Result is a list containing dictionaries, the content evaluation is at index 0
-    bloc_result = bloc_handler.get_bloc(username)
+    results = bloc_handler.analyze_user(username)
+
     context = {
         "username" : username, 
-        "bloc_action": bloc_result[0]['bloc']['action'].replace(' ', '&nbsp;'),
-        "bloc_content_syntactic": bloc_result[0]['bloc']['content_syntactic'].replace(' ', '&nbsp;'),
-        "bloc_content_semantic": bloc_result[0]['bloc']['content_semantic_entity'].replace(' ', '&nbsp;')
+        "account_name": results['account_name'],
+        "bloc_action": results['bloc_action'].replace(' ', '&nbsp;'),
+        "bloc_content_syntactic": results['bloc_content_syntactic'].replace(' ', '&nbsp;'),
+        "bloc_content_semantic": results['bloc_content_semantic'].replace(' ', '&nbsp;')
     }
     return render(request, 'analysis_results.html', context)
