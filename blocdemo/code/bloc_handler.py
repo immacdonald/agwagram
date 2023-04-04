@@ -35,7 +35,14 @@ def analyze_user(screen_name):
         print('\t{:02d}. {:.3f} {}, {}'.format( i+1, u_pair['sim'], u_pair['user_pair'][0], u_pair['user_pair'][1]) )'''
     
     result = {
+        # User Data
         'account_name': user_data[0]['name'],
+        # BLOC Statistics
+        'tweet_count': all_bloc_output[0]['more_details']['total_tweets'],
+        'first_tweet_date': all_bloc_output[0]['more_details']['first_tweet_created_at_local_time'],
+        'last_tweet_date': all_bloc_output[0]['more_details']['last_tweet_created_at_local_time'],
+        'elapsed_time': all_bloc_output[0]['elapsed_time']['gen_tweets_total_seconds'] + all_bloc_output[0]['elapsed_time']['gen_bloc_total_seconds'],
+        # Analysis
         'bloc_action': all_bloc_output[0]['bloc']['action'],
         'bloc_content_syntactic': all_bloc_output[0]['bloc']['content_syntactic'],
         'bloc_content_semantic': all_bloc_output[0]['bloc']['content_semantic_entity'],

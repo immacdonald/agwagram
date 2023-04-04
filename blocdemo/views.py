@@ -38,8 +38,16 @@ def analysis_results(request):
     results = bloc_handler.analyze_user(username)
 
     context = {
+        # User Data
         "username" : username, 
         "account_name": results['account_name'],
+        # BLOC Statistics
+        'tweet_count': results['tweet_count'],
+        'first_tweet_date': results['first_tweet_date'],
+        'last_tweet_date': results['last_tweet_date'],
+        'elapsed_time': results['elapsed_time'],
+        # Analysis
+        # Analysis
         "bloc_action": results['bloc_action'].replace(' ', '&nbsp;'),
         "bloc_content_syntactic": results['bloc_content_syntactic'].replace(' ', '&nbsp;'),
         "bloc_content_semantic": results['bloc_content_semantic'].replace(' ', '&nbsp;')
