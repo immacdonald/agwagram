@@ -16,7 +16,6 @@ def analyze_user(screen_name):
     ot = osometweet.OsomeTweet(oauth2)
     # Returns dict list with 'id' 'name' and 'username' fields
     user_data = ot.user_lookup_usernames([screen_name])['data']
-    print(user_data[0])
     user_ids = [ user['id'] for user in user_data ]
 
     gen_bloc_params, gen_bloc_args = get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity'])
@@ -27,6 +26,8 @@ def analyze_user(screen_name):
 
     pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
     top_k_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
+
+    print('TOP BLOC WORDS', top_k_bloc_words)
 
     '''pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
     print('\nWrote pairwise_sim_report.json. Preview of first 10 most similar user pairs.')
@@ -46,6 +47,7 @@ def analyze_user(screen_name):
         'bloc_action': all_bloc_output[0]['bloc']['action'],
         'bloc_content_syntactic': all_bloc_output[0]['bloc']['content_syntactic'],
         'bloc_content_semantic': all_bloc_output[0]['bloc']['content_semantic_entity'],
+        'top_bloc_words': top_k_bloc_words['per_doc'][0]
     }
 
     return result

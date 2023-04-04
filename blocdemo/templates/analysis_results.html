@@ -9,7 +9,7 @@ Results | B3T
 <div class="content-header">
     <div class="content-header-intro">
         <h2>Analysis of {{account_name}} @{{username}}</h2>
-        <p>Results generated using {{tweet_count}} tweets from {{first_tweet_date}} - {{last_tweet_date}}. Generation process took {{elapsed_time}} seconds to complete.</p>
+        <p>Results generated using {{tweet_count}} tweets from {{first_tweet_date}} - {{last_tweet_date}}. BLOC process took {{elapsed_time}} seconds to complete.</p>
     </div>
     <div class="content-header-actions">
         <!--<button>
@@ -25,6 +25,29 @@ Results | B3T
 <div class="content">
     <div class="content-main">
         <div class="card-grid">
+            <article class="card wide">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Most Frequent BLOC Words</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" onChange="cardToggle(this)">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the BLOC word frequency analysis.</p>
+                </div>
+                <div class="card-body">
+                    {% for word in top_bloc_words %}
+                        <p>{{word}}</p>
+                    {% endfor %}
+                </div>
+                <div class="card-footer">
+                    <a href="methodology">More Details</a>
+                </div>
+            </article>
             <article class="card">
                 <div class="card-header">
                     <div>
