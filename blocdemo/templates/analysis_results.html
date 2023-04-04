@@ -8,7 +8,7 @@ Results | B3T
 
 <div class="content-header">
     <div class="content-header-intro">
-        <h2>Analysis of {{account_name}} @{{username}}</h2>
+        <h1>Analysis of @{{username}} (<i>{{account_name}}</i>)</h1>
         <p>Results generated using {{tweet_count}} tweets from {{first_tweet_date}} - {{last_tweet_date}}. BLOC process took {{elapsed_time}} seconds to complete.</p>
     </div>
     <div class="content-header-actions">
@@ -25,11 +25,11 @@ Results | B3T
 <div class="content">
     <div class="content-main">
         <div class="card-grid">
-            <article class="card wide">
+            <article class="card">
                 <div class="card-header">
                     <div>
                         <span class="icon material-symbols-outlined">bolt</span>
-                        <h3>Most Frequent BLOC Words</h3>
+                        <h3>Top BLOC Words</h3>
                     </div>
                     <label class="toggle">
                         <input type="checkbox" onChange="cardToggle(this)">
@@ -40,9 +40,20 @@ Results | B3T
                     <p>This is more information about the BLOC word frequency analysis.</p>
                 </div>
                 <div class="card-body">
-                    {% for word in top_bloc_words %}
-                        <p>{{word}}</p>
-                    {% endfor %}
+                    <table>
+                        <tr>
+                          <th>BLOC Word</th>
+                          <th>Frequency</th>
+                          <th>Rate</th>
+                        </tr>
+                        {% for word in top_bloc_words %}
+                        <tr>
+                          <td>{{word.term}}</td>
+                          <td>{{word.term_freq}}</td>
+                          <td>{{word.term_rate}}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
                 </div>
                 <div class="card-footer">
                     <a href="methodology">More Details</a>

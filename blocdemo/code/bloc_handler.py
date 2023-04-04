@@ -1,19 +1,16 @@
 from django.conf import settings
 
-import os
 import osometweet
 
 from argparse import Namespace
-
 from bloc.generator import gen_bloc_for_users
 from bloc.subcommands import run_subcommands
 
 
 def analyze_user(screen_name):
-    #users_bloc = gen_bloc_for_users([screen_name], settings.BEARER_TOKEN, '', '', '', '')
-    #return users_bloc
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
     ot = osometweet.OsomeTweet(oauth2)
+
     # Returns dict list with 'id' 'name' and 'username' fields
     user_data = ot.user_lookup_usernames([screen_name])['data']
     user_ids = [ user['id'] for user in user_data ]
@@ -24,16 +21,8 @@ def analyze_user(screen_name):
     all_bloc_output = bloc_payload.get('all_users_bloc', [])
     #total_tweets = sum([ user_bloc['more_details']['total_tweets'] for user_bloc in bloc_payload ])
 
-    pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
+    #pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
     top_k_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
-
-    print('TOP BLOC WORDS', top_k_bloc_words)
-
-    '''pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
-    print('\nWrote pairwise_sim_report.json. Preview of first 10 most similar user pairs.')
-    for i in range(len(pairwise_sim_report[:10])):
-        u_pair = pairwise_sim_report[i]
-        print('\t{:02d}. {:.3f} {}, {}'.format( i+1, u_pair['sim'], u_pair['user_pair'][0], u_pair['user_pair'][1]) )'''
     
     result = {
         # User Data

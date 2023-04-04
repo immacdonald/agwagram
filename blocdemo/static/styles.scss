@@ -519,3 +519,24 @@ button {
 		font-size: 0.875rem;
 	}
 }
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	line-height: normal;
+	text-align: center;
+  }
+  
+  th {
+	padding: 8px;
+	border-bottom: 1px solid var(--c-border-primary);
+  }
+
+  td {
+	padding: 4px 4px;
+  }
+  
+  tr:nth-child(odd):not(:first-child) {
+	background-color: var(--c-disabled-background);
+  }

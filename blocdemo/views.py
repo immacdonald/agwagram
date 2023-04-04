@@ -39,10 +39,9 @@ def analysis_results(request):
 
     results = bloc_handler.analyze_user(username)
 
-    top_bloc_words = []
+    # Output formatting
     for word in results['top_bloc_words']:
-        term_results = f'Term: {word["term"]}, Frequency: {word["term_freq"]}, Rate: {"{:.3f}".format(word["term_rate"], 3)}'
-        top_bloc_words.append(term_results)
+        word['term_rate'] = "{:.3f}".format(word["term_rate"], 3)
 
     initial_date_format = '%Y-%m-%d %H:%M:%S'
     output_date_format = '%m/%d/%Y'
@@ -60,6 +59,6 @@ def analysis_results(request):
         "bloc_action": results['bloc_action'].replace(' ', '&nbsp;'),
         "bloc_content_syntactic": results['bloc_content_syntactic'].replace(' ', '&nbsp;'),
         "bloc_content_semantic": results['bloc_content_semantic'].replace(' ', '&nbsp;'),
-        "top_bloc_words": top_bloc_words[:10]
+        "top_bloc_words": results['top_bloc_words'][:10]
     }
     return render(request, 'analysis_results.html', context)
