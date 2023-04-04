@@ -36,8 +36,8 @@ def analysis_results(request):
     bloc_result = bloc_handler.get_bloc(username)
     context = {
         "username" : username, 
-        "bloc_action": bloc_result[0]['bloc']['action'],
-        "bloc_content_syntactic": bloc_result[0]['bloc']['content_syntactic'],
-        "bloc_content_semantic": bloc_result[0]['bloc']['content_semantic_entity']
+        "bloc_action": bloc_result[0]['bloc']['action'].replace(' ', '&nbsp;'),
+        "bloc_content_syntactic": bloc_result[0]['bloc']['content_syntactic'].replace(' ', '&nbsp;'),
+        "bloc_content_semantic": bloc_result[0]['bloc']['content_semantic_entity'].replace(' ', '&nbsp;')
     }
     return render(request, 'analysis_results.html', context)

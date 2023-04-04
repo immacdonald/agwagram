@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "blocdemo",
-    "bootstrap5"
+    "bootstrap5",
+    "compressor"
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,11 @@ import dotenv
 
 dotenv.load_dotenv(dotenv.find_dotenv())
 BEARER_TOKEN = os.environ['BEARER_TOKEN'] 
+
+import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
+STATICFILES_FINDERS =( 'django.contrib.staticfiles.finders.FileSystemFinder',  'django.contrib.staticfiles.finders.AppDirectoriesFinder',    'compressor.finders.CompressorFinder',
+) 
+COMPRESS_PRECOMPILERS = (    
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
