@@ -1,6 +1,7 @@
 // -------- Site Wide Styling --------
 $smallResponsiveWidth: 800px;
 $mediumResponsiveWidth: 1200px;
+$headerMobileWidth: 672px;
 
 $headerHeight: 80px;
 $footerHeight: 40px;
@@ -105,7 +106,7 @@ html {
 	align-items: center;
 	justify-content: space-between;
 
-	@media (max-width: $smallResponsiveWidth) {
+	@media (max-width: $headerMobileWidth) {
 		justify-content: flex-end;
 	}
 }
@@ -135,7 +136,7 @@ html {
 		}
 	}
 
-	@media (max-width: $smallResponsiveWidth) {
+	@media (max-width: $headerMobileWidth) {
 		display: none;
 	}
 }
@@ -148,7 +149,7 @@ html {
 		margin: auto 0.5rem;
 	}
 
-	@media (max-width: $smallResponsiveWidth) {
+	@media (max-width: $headerMobileWidth) {
 		display: none;
 	}
 }
@@ -186,11 +187,44 @@ html {
 
 #menu-toggle {
 	display: inherit;
+	z-index: 100;
 
-	@media (min-width: $smallResponsiveWidth) {
+	@media (min-width: $headerMobileWidth) {
 		display: none;
 	}
 }
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: var(--c-background-secondary);
+	border-left: 1px solid var(--c-border-primary);
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+  
+  .overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .overlay a {
+    padding: 8px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+  }
 
 // -------- Footer
 footer {
@@ -468,7 +502,7 @@ button {
 .card-body {
 	padding: 1rem 1.25rem;
 	font-size: 0.875rem;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 }
 
 .card-footer {
@@ -485,4 +519,3 @@ button {
 		font-size: 0.875rem;
 	}
 }
-	

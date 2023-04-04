@@ -38,12 +38,23 @@
                     <span>Log In</span>
                 </button>
             </div>
-                <a href="#" id="menu-toggle" class="icon-button">
-                    <span class="icon material-symbols-outlined">menu</span>
-                </a>
+            <a href="#" id="menu-toggle" class="icon-button disabled" onclick="toggleNavOverlay()">
+                <span class="icon material-symbols-outlined">menu</span>
+            </a>
         </div>
     </div>
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'menu-styles.scss' %}" rel="stylesheet" media="screen">
+    {% endcompress %}
 </header>
+<!--<div id="myNav" class="overlay">
+    <div class="overlay-content">
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>-->
 <main>
     <div class="main responsive-wrapper">
         {% block content %}
@@ -61,4 +72,12 @@
 </footer>
 
 </body>
+<script>
+    var navToggled = false;
+    function toggleNavOverlay() {
+        navToggled = !navToggled;
+        document.getElementById("myNav").style.width = navToggled ? "50%" : "0%";
+    }
+
+</script>
 </html>
