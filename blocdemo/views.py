@@ -16,20 +16,21 @@ from datetime import datetime
 def main(request):
     return render(request, 'main.html')
 
-def analyze(request):
-    form = UsernameSearchForm()
+def analyze(request, form_data = None):
+    if request.method == "POST":
+        form = UsernameSearchForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            return analysis_results(request, username)
+    else:
+        form = UsernameSearchForm(form_data)
+
     return render(request, 'analyze.html', {'form': form})
 
 def methodology(request):
     return render(request, 'methodology.html')
 
-def analysis_results(request):
-    form = UsernameSearchForm(request.POST or None)
-    print('Valid form?', form.is_valid())
-    if not form.is_valid():
-        return render(request, 'analyze.html', {'form': form})
-
-    username = form.cleaned_data['username']
+def analysis_results(request, username):
     results = bloc_handler.analyze_user(username)
 
     if results['user_exists']:
