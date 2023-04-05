@@ -530,15 +530,21 @@ table {
 	text-align: center;
   }
   
-  th {
-	padding: 8px;
-	border-bottom: 1px solid var(--c-border-primary);
-  }
+th {
+padding: 8px;
+border-bottom: 1px solid var(--c-border-primary);
+}
 
-  td {
-	padding: 4px 4px;
-  }
+td {
+padding: 4px 4px;
+}
   
-  tr:nth-child(odd):not(:first-child) {
+tr:nth-child(odd):not(:first-child) {
 	background-color: var(--c-disabled-background);
-  }
+}
+
+.special-text {
+	padding: 0.25em;
+	background-color: var(--c-background-secondary);
+	border-radius: 8px;
+}
