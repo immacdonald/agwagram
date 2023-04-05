@@ -10,22 +10,24 @@ $footerHeight: 40px;
 	--c-text-primary: #333;
 	--c-text-secondary: #686b87;
 	--c-text-action: #333;
-	--c-accent-primary: #da1939;
-	--c-accent-secondary: #ff002b;
-	--c-border-primary: black;
-	--c-border-primary: #eff1f6;
-	--c-background-secondary: #fdfcff;
-	--c-background-tertiary: #feedec;
-	--c-background-quaternary: #e9ecf4;
 
-	--c-disabled-color: #bbb;
-	--c-disabled-background: #eee;
+	--c-accent-primary: #be233d;
+	--c-accent-secondary: #ff2e51;
+
+	--c-border-primary: #eff1f6;
+	
+	--c-background-primary: #fdfcff;
+	--c-background-secondary: #feedec;
+	--c-background-tertiary: #e9ecf4;
+
+	--c-disabled-background: var(--c-background-tertiary);
+	--c-disabled-color: #cfd1d6;
 }
 
 body {
 	line-height: 1.5;
 	font-family: "Be Vietnam Pro", sans-serif;
-	background-color: var(--c-background-secondary);
+	background-color: var(--c-background-primary);
 	color: var(--c-text-primary);
 }
 
@@ -132,7 +134,7 @@ html {
 		
 		&.active {
 			border-radius: 8px;
-			background-color: var(--c-background-tertiary);
+			background-color: var(--c-background-secondary);
 		}
 	}
 
@@ -173,7 +175,7 @@ html {
 
 	&:focus,
 	&:hover {
-		background-color: var(--c-background-tertiary);
+		background-color: var(--c-background-secondary);
 		color: var(--c-accent-primary);
 	}
 
@@ -201,7 +203,7 @@ html {
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: var(--c-background-secondary);
+    background-color: var(--c-background-primary);
 	border-left: 1px solid var(--c-border-primary);
     overflow-x: hidden;
     transition: 0.5s;
@@ -346,7 +348,7 @@ button {
 		&:focus,
 		&:hover {
 			color: var(--c-accent-primary);
-			background-color: var(--c-background-tertiary);
+			background-color: var(--c-background-secondary);
 		}
 	}
 }
@@ -442,7 +444,7 @@ button {
 		width: 40px;
 		height: 24px;
 		border-radius: 99em;
-		background-color: var(--c-background-quaternary);
+		background-color: var(--c-disabled-background);
 		box-shadow: inset 1px 1px 1px 0 rgba(#000, 0.05);
 		position: relative;
 		transition: 0.15s ease;
@@ -477,7 +479,7 @@ button {
 		}
 
 		&:focus + span {
-			box-shadow: 0 0 0 4px var(--c-background-tertiary);
+			box-shadow: 0 0 0 4px var(--c-background-secondary);
 		}
 	}
 }
@@ -488,7 +490,7 @@ button {
 	max-height: 0px;
 	overflow: hidden;
 	transition: max-height 0.5s ease-in-out;
-	background-color: var(--c-background-tertiary);
+	background-color: var(--c-background-secondary);
 	margin: 0px 20px;
 	border-radius: 8px;
 

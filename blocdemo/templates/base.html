@@ -9,7 +9,7 @@
     {% load static %}
     {% load compress %}
     {% compress css %}
-        <link type="text/x-scss" href="{% static 'styles.scss' %}" rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'scss/styles.scss' %}" rel="stylesheet" media="screen">
     {% endcompress %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
@@ -19,7 +19,7 @@
         <div class="header-logo">
             <a href="#">
                 <div>
-                    <img src="{% static 'disinfo-square.png' %}" />
+                    <img src="{% static 'images/disinfo-square.png' %}" />
                 </div>
             </a>
         </div>
@@ -43,9 +43,6 @@
             </a>
         </div>
     </div>
-    {% compress css %}
-        <link type="text/x-scss" href="{% static 'menu-styles.scss' %}" rel="stylesheet" media="screen">
-    {% endcompress %}
 </header>
 <!--<div id="myNav" class="overlay">
     <div class="overlay-content">
