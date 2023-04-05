@@ -124,6 +124,12 @@ html {
 	}
 }
 
+html[data-theme='dark'] {
+	.header-logo {
+		filter: invert(1);
+	}
+}
+
 .header-logo {
 	margin-right: 2.5rem;
 	a {
@@ -330,6 +336,20 @@ button {
 		border-color: var(--c-disabled-background);
 		pointer-events: none;
 	}
+}
+
+.wide-centered {
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+}
+
+.full-button {
+	width: 75%;
+	height: 80px;
+	font-weight: bold;
+	margin-top: 1em;
 }
 
 .search {
