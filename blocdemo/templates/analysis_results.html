@@ -8,8 +8,8 @@ Results | B3T
 
 <div class="content-header">
     <div class="content-header-intro">
-        <h2>Behaviour Analysis of @{{username}}</h2>
-        <p>Data from BLOC Analysis.</p>
+        <h1>BLOC Analysis of <span class="special-text">@{{username}}</span> (<i>{{account_name}}</i>)</h1>
+        <p>Results generated using {{tweet_count}} tweets from {{first_tweet_date}} - {{last_tweet_date}}. BLOC process took {{elapsed_time}} seconds to complete.</p>
     </div>
     <div class="content-header-actions">
         <!--<button>
@@ -25,6 +25,40 @@ Results | B3T
 <div class="content">
     <div class="content-main">
         <div class="card-grid">
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Top BLOC Words</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" onChange="cardToggle(this)">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the BLOC word frequency analysis.</p>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                          <th>BLOC Word</th>
+                          <th>Frequency</th>
+                          <th>Rate</th>
+                        </tr>
+                        {% for word in top_bloc_words %}
+                        <tr>
+                          <td>{{word.term}}</td>
+                          <td>{{word.term_freq}}</td>
+                          <td>{{word.term_rate}}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
+                </div>
+                <div class="card-footer">
+                    <a href="methodology">More Details</a>
+                </div>
+            </article>
             <article class="card">
                 <div class="card-header">
                     <div>

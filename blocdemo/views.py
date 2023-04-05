@@ -8,36 +8,61 @@ from .code import bloc_handler
 
 from .forms import UsernameSearchForm
 
+import logging
+logger = logging.getLogger("mainLogger")
+
+from datetime import datetime
+
 def main(request):
     return render(request, 'main.html')
 
-def analyze(request):
-    form = UsernameSearchForm()
+def analyze(request, form_data = None):
+    if request.method == "POST":
+        form = UsernameSearchForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            return analysis_results(request, username)
+    else:
+        form = UsernameSearchForm(form_data)
+
     return render(request, 'analyze.html', {'form': form})
 
 def methodology(request):
     return render(request, 'methodology.html')
 
-def analysis_results(request):
-    # Default search for OSoMe_IU
-    username = "Invalid Search"
-   
-    if request.method == "POST":
-        #Get the posted form
-        usernameInputForm = UsernameSearchForm(request.POST)
-      
-        if usernameInputForm.is_valid():
-            username = usernameInputForm.cleaned_data['username']
-    else:
-        usernameInputForm = UsernameSearchForm()
-        return redirect('main')
+def analysis_results(request, username):
+    results = bloc_handler.analyze_user(username)
 
-    #BLOC Result is a list containing dictionaries, the content evaluation is at index 0
-    bloc_result = bloc_handler.get_bloc(username)
-    context = {
-        "username" : username, 
-        "bloc_action": bloc_result[0]['bloc']['action'].replace(' ', '&nbsp;'),
-        "bloc_content_syntactic": bloc_result[0]['bloc']['content_syntactic'].replace(' ', '&nbsp;'),
-        "bloc_content_semantic": bloc_result[0]['bloc']['content_semantic_entity'].replace(' ', '&nbsp;')
-    }
-    return render(request, 'analysis_results.html', context)
+    if results['user_exists']:
+        # Output formatting
+        for word in results['top_bloc_words']:
+            word['term_rate'] = "{:.3f}".format(word["term_rate"], 3)
+
+        initial_date_format = '%Y-%m-%d %H:%M:%S'
+        output_date_format = '%m/%d/%Y'
+
+        context = {
+            # User Data
+            "username" : username, 
+            "account_name": results['account_name'],
+            # BLOC Statistics
+            'tweet_count': results['tweet_count'],
+            'first_tweet_date': datetime.strptime(results['first_tweet_date'], initial_date_format).strftime(output_date_format),
+            'last_tweet_date': datetime.strptime(results['last_tweet_date'], initial_date_format).strftime(output_date_format),
+            'elapsed_time': round(results['elapsed_time'], 3),
+            # Analysis
+            "bloc_action": results['bloc_action'].replace(' ', '&nbsp;'),
+            "bloc_content_syntactic": results['bloc_content_syntactic'].replace(' ', '&nbsp;'),
+            "bloc_content_semantic": results['bloc_content_semantic'].replace(' ', '&nbsp;'),
+            "top_bloc_words": results['top_bloc_words'][:10]
+        }
+        return render(request, 'analysis_results.html', context)
+    
+    else:
+        context = {
+            # User Data
+            "username" : username, 
+            'error_title': results['error_title'],
+            'error_detail': results['error_detail']
+        }
+        return render(request, 'analysis_failed.html', context)

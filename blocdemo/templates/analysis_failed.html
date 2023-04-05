@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+Results | B3T
+{% endblock %}
+
+{% block content %}
+
+<div class="content-header">
+    <div class="content-header-intro">
+        <h1>BLOC Analysis Failed for <span class="special-text">@{{username}}</span></h1>
+        <p>Unable to generate results due to <i>{{error_title}}</i>.</p>
+        <p>Details: <i>{{error_detail}}</i></p>
+    </div>
+    <div class="content-header-actions">
+        <!--<button>
+            <span class="icon material-symbols-outlined">bolt</span>
+            <span>Button 1</span>
+        </button>
+        <button>
+            <span class="icon material-symbols-outlined">settings</span>
+            <span>Button 2</span>
+        </button>-->
+    </div>
+</div>
+
+{% endblock %}
