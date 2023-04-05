@@ -30,6 +30,9 @@
                 <a {% if request.resolver_match.url_name == 'methodology' %}class="active"{% endif %} href="methodology">Methodology</a>
             </nav>
             <div class="header-navigation-actions">
+                <a href="#" id="theme-toggle" class="icon-button">
+                    <span class="icon material-symbols-outlined">bolt</span>
+                </a>
                 <a href="#" class="icon-button disabled">
                     <span class="icon material-symbols-outlined">settings</span>
                 </a>
@@ -44,6 +47,26 @@
         </div>
     </div>
 </header>
+<script>
+var toggle = document.getElementById("theme-toggle");
+
+var storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+if (storedTheme)
+    document.documentElement.setAttribute('data-theme', storedTheme)
+
+
+toggle.onclick = function() {
+    var currentTheme = document.documentElement.getAttribute("data-theme");
+    var targetTheme = "light";
+
+    if (currentTheme === "light") {
+        targetTheme = "dark";
+    }
+
+    document.documentElement.setAttribute('data-theme', targetTheme)
+    localStorage.setItem('theme', targetTheme);
+};
+</script>
 <!--<div id="myNav" class="overlay">
     <div class="overlay-content">
       <a href="#">About</a>
