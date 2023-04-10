@@ -17,9 +17,58 @@ Results | B3T
     </div>
     <div class="content-header-actions">
         <div class="tab-buttons">
+            <button class="tab-button" onclick="openTab(event, 'content-group')">Group Analysis</button>
+            {% for account in account_blocs %}
+                <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">@{{account.account_username}}</button>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="content" id="content-group">
+    <div class="content-subheader">
+        <h2>Group Analysis</h2>
+        <p>Aggregate behaviour of the following accounts:  
         {% for account in account_blocs %}
-            <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">{{account.account_username}}</button>
+            <span class="special-text">@{{account.account_username}}</span>{% if forloop.last %}.{% else %}, {% endif %}
         {% endfor %}
+        </p>
+    </div>
+    <div class="content-main">
+        <div class="card-grid">
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Top BLOC Words</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" onChange="cardToggle(this)">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the BLOC word frequency analysis.</p>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>BLOC Word</th>
+                            <th>Frequency</th>
+                            <th>Rate</th>
+                        </tr>
+                        {% for word in group_top_bloc_words %}
+                        <tr>
+                            <td>{{word.term}}</td>
+                            <td>{{word.term_freq}}</td>
+                            <td>{{word.term_rate}}</td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                </div>
+                <div class="card-footer">
+                    <a href="methodology">More Details</a>
+                </div>
+            </article>
         </div>
     </div>
 </div>
@@ -71,32 +120,30 @@ window.addEventListener('resize', function() {
 });
 </script>
 <script>
-function openTab(evt, tabName) {
+function openTab(event, tabName) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
     // Get all elements with class="content" and hide them
     tabcontent = document.getElementsByClassName("content");
     for (i = 0; i < tabcontent.length; i++) {
-        if(!tabcontent[i].classList.contains('inactive')) {
-            tabcontent[i].classList.add('inactive');
-        }
+        tabcontent[i].classList.add('inactive');
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tab-button");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        tablinks[i].classList.remove("active");
     }
 
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(tabName).classList.remove('inactive');
-    evt.currentTarget.className += " active";
+    document.getElementById(tabName).classList.remove("inactive");
+    event.currentTarget.classList.add("active");
     calculateCardOffsetHeights();
 }
 
 window.addEventListener('load', () => {
-    tablinks = document.getElementsByClassName("tab-buttons");
+    tablinks = document.getElementsByClassName("tab-button");
     tablinks[0].click();
 });
 </script>

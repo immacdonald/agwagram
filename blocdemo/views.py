@@ -36,8 +36,12 @@ def analysis_results(request, usernames):
 
     if results['successful_generation']:
         if(results['query_count'] > 1):
+            for word in results['group_top_bloc_words']:
+                word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
+
             context = {
-                'account_blocs': []
+                'account_blocs': [],
+                'group_top_bloc_words': results['group_top_bloc_words'][:10]
             }
 
             for account in results['account_blocs']:

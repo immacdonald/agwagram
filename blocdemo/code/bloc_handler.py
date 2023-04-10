@@ -60,20 +60,24 @@ def analyze_user(usernames):
 
         #pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
         top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
-        #print('TOP BLOC WORDS', top_k_bloc_words)
+        #print('TOP BLOC WORDS', top_bloc_words)
 
         user_bloc_words = {}
-
         for words, user in zip(top_bloc_words['per_doc'], top_bloc_words['users']):
             user_bloc_words[user] = words
 
         query_count = len(usernames)
-        
+
+        # Get the top bloc words for all acounts and sort by frequency
+        group_bloc_words = top_bloc_words.get('all_docs', [])
+        if group_bloc_words:
+            group_bloc_words = sorted(group_bloc_words, key=lambda x: x['term_freq'], reverse=True)
         
         result = {
             'successful_generation': True,
             'query_count': query_count,
-            'account_blocs': []
+            'account_blocs': [],
+            'group_top_bloc_words': group_bloc_words
         }
 
         for account_bloc, account_data in zip(all_bloc_output, user_data):
