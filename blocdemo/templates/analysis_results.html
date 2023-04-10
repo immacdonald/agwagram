@@ -16,6 +16,9 @@ Results | B3T
         </p>
     </div>
     <div class="content-header-actions">
+        {% for account in account_blocs %}
+            <button class="tablinks" onclick="openTab(event, 'content-{{ forloop.counter }}')">{{account.account_username}}</button>
+        {% endfor %}
         <!--<button>
             <span class="icon material-symbols-outlined">bolt</span>
             <span>Button 1</span>
@@ -26,8 +29,8 @@ Results | B3T
         </button>-->
     </div>
 </div>
-{% for account in  account_blocs %}
-<div class="content">
+{% for account in account_blocs %}
+<div class="content" id="content-{{ forloop.counter }}">
     <div class="content-subheader">
         <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h2>
         {% if account.tweet_count > 0 %}
@@ -174,7 +177,33 @@ window.addEventListener('load', () => {
 window.addEventListener('resize', function() {
     calculateCardOffsetHeights();
 });
+</script>
+<script>
+    function openTab(evt, tabName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
 
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+window.addEventListener('load', () => {
+    tablinks = document.getElementsByClassName("tablinks");
+    tablinks[0].click();
+});
 </script>
 
 {% endblock %}
