@@ -6,18 +6,14 @@ Results | B3T
 
 {% block content %}
 
-{% for account in  account_blocs %}
 <div class="content-header">
     <div class="content-header-intro">
-        <h1>BLOC Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h1>
-        {% if account.tweet_count > 0 %}
-        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
-            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
-        {% else %}
-        <p>No results generated due to finding 0 tweets. 
-            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
-        {% endif %}
-
+        <h1>BLOC Analysis</h1> 
+        <p>Successfully generated results for
+        {% for account in account_blocs %}
+            <b>@{{account.account_username}}</b>, 
+        {% endfor %}
+        </p>
     </div>
     <div class="content-header-actions">
         <!--<button>
@@ -30,7 +26,18 @@ Results | B3T
         </button>-->
     </div>
 </div>
+{% for account in  account_blocs %}
 <div class="content">
+    <div class="content-subheader">
+        <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h2>
+        {% if account.tweet_count > 0 %}
+        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
+            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% else %}
+        <p>No results generated due to finding 0 tweets. 
+            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% endif %}
+    </div>
     <div class="content-main">
         {% if account.tweet_count > 0 %}
         <div class="card-grid">

@@ -420,14 +420,19 @@ button {
 .content {
 	border-top: 1px solid var(--c-border-primary);
 	margin-top: 2rem;
-	display: flex;
-	align-items: flex-start;
+}
+
+.content-subheader {
+	padding-top: 2rem;
+	text-align: center;
 }
 
 .content-main {
 	padding-top: 2rem;
 	padding-bottom: 6rem;
 	flex-grow: 1;
+	display: flex;
+	align-items: flex-start;
 }
 
 .card-grid {
