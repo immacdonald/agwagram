@@ -11,7 +11,7 @@ Results | B3T
         <h1>BLOC Analysis</h1> 
         <p>Successfully generated results for
         {% for account in account_blocs %}
-            <b>@{{account.account_username}}</b>, 
+            <b>@{{account.account_username}}</b>{% if forloop.last %}.{% else %},{% endif %}
         {% endfor %}
         </p>
     </div>

@@ -11,7 +11,7 @@ Results | B3T
         <h1>BLOC Analysis Failed</h1>
         <p>Unable to generate results for the following accounts: 
             {% for username in query %}
-                <b>@{{username}}</b>, 
+                <b>@{{username}}</b>{% if forloop.last %}.{% else %},{% endif %}
             {% endfor %}
         </p>
         {% for error in errors %}
