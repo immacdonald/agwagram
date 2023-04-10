@@ -19,7 +19,7 @@ Results | B3T
     </div>
 </div>
 <div class="tab-buttons">
-    <button class="tab-button" onclick="openTab(event, 'content-group')">Group Analysis</button>
+    <button class="tab-button" onclick="openTab(event, 'content-group')">Group Analysis &nbsp;<span class="icon material-symbols-outlined">groups</span></button>
     {% for account in account_blocs %}
         <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">@{{account.account_username}}</button>
     {% endfor %}
@@ -40,7 +40,7 @@ Results | B3T
             <article class="card">
                 <div class="card-header">
                     <div>
-                        <span class="icon material-symbols-outlined">bolt</span>
+                        <span class="icon material-symbols-outlined">star_half</span>
                         <h3>Top BLOC Words</h3>
                     </div>
                     <label class="toggle">
@@ -74,7 +74,7 @@ Results | B3T
             <article class="card">
                 <div class="card-header">
                     <div>
-                        <span class="icon material-symbols-outlined">bolt</span>
+                        <span class="icon material-symbols-outlined">compare_arrows</span>
                         <h3>Pairwise Similarity</h3>
                     </div>
                     <label class="toggle">
