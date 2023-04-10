@@ -30,39 +30,47 @@ def analyze(request, form_data = None):
 def methodology(request):
     return render(request, 'methodology.html')
 
-def analysis_results(request, username):
-    results = bloc_handler.analyze_user(username)
+def analysis_results(request, usernames):
+    results = bloc_handler.analyze_user(usernames)
+    #print(results)
 
-    if results['user_exists']:
+    context = {
+        'account_blocs': []
+    }
+
+    for account in results['account_blocs']:
+    #if results['user_exists']:
         # Output formatting
-        for word in results['top_bloc_words']:
-            word['term_rate'] = "{:.3f}".format(word["term_rate"], 3)
+        for word in account['top_bloc_words']:
+            word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
 
         initial_date_format = '%Y-%m-%d %H:%M:%S'
         output_date_format = '%m/%d/%Y'
 
-        context = {
+        context['account_blocs'].append({
             # User Data
-            "username" : username, 
-            "account_name": results['account_name'],
+            "account_username" : account['account_username'], 
+            "account_name": account['account_name'],
             # BLOC Statistics
-            'tweet_count': results['tweet_count'],
-            'first_tweet_date': datetime.strptime(results['first_tweet_date'], initial_date_format).strftime(output_date_format),
-            'last_tweet_date': datetime.strptime(results['last_tweet_date'], initial_date_format).strftime(output_date_format),
-            'elapsed_time': round(results['elapsed_time'], 3),
+            'tweet_count': account['tweet_count'],
+            'first_tweet_date': datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format),
+            'last_tweet_date': datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format),
+            'elapsed_time': round(account['elapsed_time'], 3),
             # Analysis
-            "bloc_action": results['bloc_action'].replace(' ', '&nbsp;'),
-            "bloc_content_syntactic": results['bloc_content_syntactic'].replace(' ', '&nbsp;'),
-            "bloc_content_semantic": results['bloc_content_semantic'].replace(' ', '&nbsp;'),
-            "top_bloc_words": results['top_bloc_words'][:10]
-        }
-        return render(request, 'analysis_results.html', context)
+            "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
+            "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
+            "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
+            "top_bloc_words": account['top_bloc_words'][:10]
+        })
+        
+    print(context)
+    return render(request, 'analysis_results.html', context)
     
-    else:
+    '''else:
         context = {
             # User Data
             "username" : username, 
             'error_title': results['error_title'],
             'error_detail': results['error_detail']
         }
-        return render(request, 'analysis_failed.html', context)
+        return render(request, 'analysis_failed.html', context)'''

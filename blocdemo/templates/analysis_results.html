@@ -6,10 +6,11 @@ Results | B3T
 
 {% block content %}
 
+{% for account in  account_blocs %}
 <div class="content-header">
     <div class="content-header-intro">
-        <h1>BLOC Analysis of <span class="special-text">@{{username}}</span> (<i>{{account_name}}</i>)</h1>
-        <p>Results generated using {{tweet_count}} tweets from {{first_tweet_date}} - {{last_tweet_date}}. BLOC process took {{elapsed_time}} seconds to complete.</p>
+        <h1>BLOC Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h1>
+        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. BLOC process took {{account.elapsed_time}} seconds to complete.</p>
     </div>
     <div class="content-header-actions">
         <!--<button>
@@ -46,7 +47,7 @@ Results | B3T
                           <th>Frequency</th>
                           <th>Rate</th>
                         </tr>
-                        {% for word in top_bloc_words %}
+                        {% for word in account.top_bloc_words %}
                         <tr>
                           <td>{{word.term}}</td>
                           <td>{{word.term_freq}}</td>
@@ -74,7 +75,7 @@ Results | B3T
                     <p>This is more information about the action analysis.</p>
                 </div>
                 <div class="card-body">
-                    <p>{{bloc_action|safe}}</p>
+                    <p>{{account.bloc_action|safe}}</p>
                 </div>
                 <div class="card-footer">
                     <a href="methodology">More Details</a>
@@ -95,7 +96,7 @@ Results | B3T
                     <p>This is more information about the content syntactic analysis.</p>
                 </div>
                 <div class="card-body">
-                    <p>{{bloc_content_syntactic|safe}}</p>
+                    <p>{{account.bloc_content_syntactic|safe}}</p>
                 </div>
                 <div class="card-footer">
                     <a href="methodology">More Details</a>
@@ -116,7 +117,7 @@ Results | B3T
                     <p>This is more information about the content semantic analysis.</p>
                 </div>
                 <div class="card-body">
-                    <p>{{bloc_content_semantic|safe}}</p>
+                    <p>{{account.bloc_content_semantic|safe}}</p>
                 </div>
                 <div class="card-footer">
                     <a href="methodology">More Details</a>
@@ -125,6 +126,7 @@ Results | B3T
         </div>
     </div>
 </div>
+{% endfor %}
 
 <script>
 function cardToggle(item) {

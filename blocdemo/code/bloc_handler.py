@@ -6,12 +6,14 @@ from argparse import Namespace
 from bloc.generator import gen_bloc_for_users
 from bloc.subcommands import run_subcommands
 
-def verify_user_exists(screen_name):
+def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
     ot = osometweet.OsomeTweet(oauth2)
 
     # Returns dict list with 'id' 'name' and 'username' fields
-    user_data = ot.user_lookup_usernames([screen_name])
+    user_data = ot.user_lookup_usernames(user_list)
+
+    print('User data', user_data)
 
     if(user_data.get('errors')):
         error_details = {
@@ -20,15 +22,16 @@ def verify_user_exists(screen_name):
         }
         return False, error_details
 
-    print('User data', user_data)
-
-    return True, user_data['data']
+    return 0, user_data['data']
 
 
-def analyze_user(screen_name):
-    user_exists, user_data = verify_user_exists(screen_name)
+def analyze_user(usernames):
+    usernames = usernames.replace(',', ' ').split()
+    print(usernames)
 
-    if not user_exists:
+    error_count, user_data = verify_user_exists(usernames)
+
+    if error_count > 0:
         result = {
             'user_exists': False,
             'error_title': user_data['error_title'],
@@ -47,20 +50,26 @@ def analyze_user(screen_name):
         top_k_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
         
         result = {
-            'user_exists': True,
-            # User Data
-            'account_name': user_data[0]['name'],
-            # BLOC Statistics
-            'tweet_count': all_bloc_output[0]['more_details']['total_tweets'],
-            'first_tweet_date': all_bloc_output[0]['more_details']['first_tweet_created_at_local_time'],
-            'last_tweet_date': all_bloc_output[0]['more_details']['last_tweet_created_at_local_time'],
-            'elapsed_time': all_bloc_output[0]['elapsed_time']['gen_tweets_total_seconds'] + all_bloc_output[0]['elapsed_time']['gen_bloc_total_seconds'],
-            # Analysis
-            'bloc_action': all_bloc_output[0]['bloc']['action'],
-            'bloc_content_syntactic': all_bloc_output[0]['bloc']['content_syntactic'],
-            'bloc_content_semantic': all_bloc_output[0]['bloc']['content_semantic_entity'],
-            'top_bloc_words': top_k_bloc_words['per_doc'][0]
+            'account_blocs': []
         }
+
+        for account_bloc, account_data in zip(all_bloc_output, user_data):
+            result['account_blocs'].append({
+                'user_exists': True,
+                # User Data
+                'account_name': account_data['name'],
+                'account_username': account_data['username'],
+                # BLOC Statistics
+                'tweet_count': account_bloc['more_details']['total_tweets'],
+                'first_tweet_date': account_bloc['more_details']['first_tweet_created_at_local_time'],
+                'last_tweet_date': account_bloc['more_details']['last_tweet_created_at_local_time'],
+                'elapsed_time': account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds'],
+                # Analysis
+                'bloc_action': account_bloc['bloc']['action'],
+                'bloc_content_syntactic': account_bloc['bloc']['content_syntactic'],
+                'bloc_content_semantic': account_bloc['bloc']['content_semantic_entity'],
+                'top_bloc_words': top_k_bloc_words['per_doc'][0]
+            })
 
     return result
 
