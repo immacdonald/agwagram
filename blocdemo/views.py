@@ -34,43 +34,26 @@ def analysis_results(request, usernames):
     results = bloc_handler.analyze_user(usernames)
     #print(results)
 
-    context = {
-        'account_blocs': []
-    }
-
     if results['successful_generation']:
-        for account in results['account_blocs']:
-            # Output formatting
-            for word in account['top_bloc_words']:
-                word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
+        if(results['query_count'] > 1):
+            context = {
+                'account_blocs': []
+            }
 
-            initial_date_format = '%Y-%m-%d %H:%M:%S'
-            output_date_format = '%m/%d/%Y'
+            for account in results['account_blocs']:
+                account_data = format_account_data(account)
+                context['account_blocs'].append(account_data)
+            
+            #print(context)
+            return render(request, 'pages/analysis_results.html', context)
+        else:
+            context = {
+                'account': format_account_data(results['account_blocs'][0])
+            }
+            print('Context', context)
 
-            first_tweet_date = last_tweet_data = ''
-            if account['first_tweet_date'] != '':
-                first_tweet_date = datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format)
-            if account['last_tweet_date'] != '':    
-                last_tweet_data = datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format)
+            return render(request, 'pages/analysis_results_single.html', context) 
 
-            context['account_blocs'].append({
-                # User Data
-                "account_username" : account['account_username'], 
-                "account_name": account['account_name'],
-                # BLOC Statistics
-                'tweet_count': account['tweet_count'],
-                'first_tweet_date': first_tweet_date,
-                'last_tweet_date': last_tweet_data,
-                'elapsed_time': round(account['elapsed_time'], 3),
-                # Analysis
-                "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
-                "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
-                "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
-                "top_bloc_words": account['top_bloc_words'][:10]
-            })
-        
-        #print(context)
-        return render(request, 'pages/analysis_results.html', context)
     
     else:
         context = {
@@ -79,3 +62,36 @@ def analysis_results(request, usernames):
             "errors": results['errors']
         }
         return render(request, 'pages/analysis_failed.html', context)
+    
+
+def format_account_data(account):
+    # Output formatting
+    for word in account['top_bloc_words']:
+        word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
+
+    initial_date_format = '%Y-%m-%d %H:%M:%S'
+    output_date_format = '%m/%d/%Y'
+
+    first_tweet_date = last_tweet_data = ''
+    if account['first_tweet_date'] != '':
+        first_tweet_date = datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format)
+    if account['last_tweet_date'] != '':    
+        last_tweet_data = datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format)
+
+    output_data = {
+        # User Data
+        "account_username" : account['account_username'], 
+        "account_name": account['account_name'],
+        # BLOC Statistics
+        'tweet_count': account['tweet_count'],
+        'first_tweet_date': first_tweet_date,
+        'last_tweet_date': last_tweet_data,
+        'elapsed_time': round(account['elapsed_time'], 3),
+        # Analysis
+        "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
+        "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
+        "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
+        "top_bloc_words": account['top_bloc_words'][:10]
+    }
+
+    return output_data

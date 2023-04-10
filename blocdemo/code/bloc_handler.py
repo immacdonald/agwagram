@@ -66,10 +66,13 @@ def analyze_user(usernames):
 
         for words, user in zip(top_bloc_words['per_doc'], top_bloc_words['users']):
             user_bloc_words[user] = words
+
+        query_count = len(usernames)
         
         
         result = {
             'successful_generation': True,
+            'query_count': query_count,
             'account_blocs': []
         }
 

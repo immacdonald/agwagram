@@ -416,7 +416,11 @@ button {
 .content {
 	border-top: 1px solid var(--c-border-primary);
 	margin-top: 2rem;
-	display: none;
+	display: block;
+	
+	&.inactive {
+		display: none;
+	}
 }
 
 .content-subheader {

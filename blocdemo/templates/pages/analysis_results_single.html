@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+Results | B3T
+{% endblock %}
+
+{% block content %}
+
+<div class="content-header">
+    <div class="content-header-intro">
+        <h1>BLOC Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h1>
+        {% if account.tweet_count > 0 %}
+        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
+            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% else %}
+        <p>No results generated due to finding 0 tweets. 
+            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% endif %}
+    </div>
+</div>
+<div class="content" id="content-0">
+    {% include '../components/account_bloc.html' with account=account %}
+    <p>Test</p>
+</div>
+
+{% endblock %}
