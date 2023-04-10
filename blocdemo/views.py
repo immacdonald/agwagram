@@ -14,7 +14,7 @@ logger = logging.getLogger("mainLogger")
 from datetime import datetime
 
 def main(request):
-    return render(request, 'main.html')
+    return render(request, 'pages/main.html')
 
 def analyze(request, form_data = None):
     if request.method == "POST":
@@ -25,10 +25,10 @@ def analyze(request, form_data = None):
     else:
         form = UsernameSearchForm(form_data)
 
-    return render(request, 'analyze.html', {'form': form})
+    return render(request, 'pages/analyze.html', {'form': form})
 
 def methodology(request):
-    return render(request, 'methodology.html')
+    return render(request, 'pages/methodology.html')
 
 def analysis_results(request, usernames):
     results = bloc_handler.analyze_user(usernames)
@@ -70,7 +70,7 @@ def analysis_results(request, usernames):
             })
         
         #print(context)
-        return render(request, 'analysis_results.html', context)
+        return render(request, 'pages/analysis_results.html', context)
     
     else:
         context = {
@@ -78,4 +78,4 @@ def analysis_results(request, usernames):
             "query" : results['query'], 
             "errors": results['errors']
         }
-        return render(request, 'analysis_failed.html', context)
+        return render(request, 'pages/analysis_failed.html', context)

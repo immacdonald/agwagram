@@ -17,16 +17,8 @@ Results | B3T
     </div>
     <div class="content-header-actions">
         {% for account in account_blocs %}
-            <button class="tablinks" onclick="openTab(event, 'content-{{ forloop.counter }}')">{{account.account_username}}</button>
+            <button class="tab-buttons" onclick="openTab(event, 'content-{{ forloop.counter }}')">{{account.account_username}}</button>
         {% endfor %}
-        <!--<button>
-            <span class="icon material-symbols-outlined">bolt</span>
-            <span>Button 1</span>
-        </button>
-        <button>
-            <span class="icon material-symbols-outlined">settings</span>
-            <span>Button 2</span>
-        </button>-->
     </div>
 </div>
 {% for account in account_blocs %}
@@ -179,30 +171,30 @@ window.addEventListener('resize', function() {
 });
 </script>
 <script>
-    function openTab(evt, tabName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tab-buttons");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-  calculateCardOffsetHeights();
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+    calculateCardOffsetHeights();
 }
 
 window.addEventListener('load', () => {
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = document.getElementsByClassName("tab-buttons");
     tablinks[0].click();
 });
 </script>
