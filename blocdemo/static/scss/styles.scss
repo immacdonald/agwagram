@@ -415,7 +415,7 @@ button {
 	
 .content {
 	border-top: 1px solid var(--c-border-primary);
-	margin-top: 2rem;
+	//margin-top: 2rem;
 	display: block;
 	
 	&.inactive {
@@ -618,4 +618,17 @@ tr:nth-child(odd):not(:first-child) {
 	padding: 0.25em;
 	background-color: var(--c-background-secondary);
 	border-radius: 8px;
+}
+
+.tab-buttons {
+	display: flex;
+
+	button {
+		flex-grow: 1;
+		border-radius: 10px 10px 0 0;
+
+		&:not(:last-child) {
+			margin-right: 0.5rem;
+		}
+	}
 }

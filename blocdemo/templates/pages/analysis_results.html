@@ -16,9 +16,11 @@ Results | B3T
         </p>
     </div>
     <div class="content-header-actions">
+        <div class="tab-buttons">
         {% for account in account_blocs %}
-            <button class="tab-buttons" onclick="openTab(event, 'content-{{ forloop.counter }}')">{{account.account_username}}</button>
+            <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">{{account.account_username}}</button>
         {% endfor %}
+        </div>
     </div>
 </div>
 {% for account in account_blocs %}
@@ -82,7 +84,7 @@ function openTab(evt, tabName) {
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tab-buttons");
+    tablinks = document.getElementsByClassName("tab-button");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
