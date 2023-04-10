@@ -20,7 +20,7 @@ def verify_user_exists(user_list):
             'error_title': user_data['errors'][0]['title'],
             'error_detail': user_data['errors'][0]['detail']
         }
-        return False, error_details
+        return 1, error_details
 
     return 0, user_data['data']
 
@@ -30,10 +30,11 @@ def analyze_user(usernames):
     print(usernames)
 
     error_count, user_data = verify_user_exists(usernames)
+    print('User data is', user_data)
 
     if error_count > 0:
         result = {
-            'user_exists': False,
+            'successful_generation': False,
             'error_title': user_data['error_title'],
             'error_detail': user_data['error_detail']
         }
@@ -44,16 +45,23 @@ def analyze_user(usernames):
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
+        print(all_bloc_output)
         #total_tweets = sum([ user_bloc['more_details']['total_tweets'] for user_bloc in bloc_payload ])
 
         #pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
         top_k_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
+        print('TOP BLOC WORDS', top_k_bloc_words)
         
         result = {
+            'successful_generation': True,
             'account_blocs': []
         }
 
         for account_bloc, account_data in zip(all_bloc_output, user_data):
+            top_bloc_words = []
+            if account_bloc['more_details']['total_tweets'] > 0:
+                top_bloc_words = top_k_bloc_words['per_doc'][0]
+
             result['account_blocs'].append({
                 'user_exists': True,
                 # User Data
@@ -68,7 +76,7 @@ def analyze_user(usernames):
                 'bloc_action': account_bloc['bloc']['action'],
                 'bloc_content_syntactic': account_bloc['bloc']['content_syntactic'],
                 'bloc_content_semantic': account_bloc['bloc']['content_semantic_entity'],
-                'top_bloc_words': top_k_bloc_words['per_doc'][0]
+                'top_bloc_words': top_bloc_words
             })
 
     return result

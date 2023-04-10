@@ -38,39 +38,44 @@ def analysis_results(request, usernames):
         'account_blocs': []
     }
 
-    for account in results['account_blocs']:
-    #if results['user_exists']:
-        # Output formatting
-        for word in account['top_bloc_words']:
-            word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
+    if results['successful_generation']:
+        for account in results['account_blocs']:
+            # Output formatting
+            for word in account['top_bloc_words']:
+                word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
 
-        initial_date_format = '%Y-%m-%d %H:%M:%S'
-        output_date_format = '%m/%d/%Y'
+            initial_date_format = '%Y-%m-%d %H:%M:%S'
+            output_date_format = '%m/%d/%Y'
 
-        context['account_blocs'].append({
-            # User Data
-            "account_username" : account['account_username'], 
-            "account_name": account['account_name'],
-            # BLOC Statistics
-            'tweet_count': account['tweet_count'],
-            'first_tweet_date': datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format),
-            'last_tweet_date': datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format),
-            'elapsed_time': round(account['elapsed_time'], 3),
-            # Analysis
-            "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
-            "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
-            "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
-            "top_bloc_words": account['top_bloc_words'][:10]
-        })
+            first_tweet_date = last_tweet_data = ''
+            if account['tweet_count'] > 0:
+                first_tweet_date = datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format)
+                last_tweet_data = datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format)
+
+            context['account_blocs'].append({
+                # User Data
+                "account_username" : account['account_username'], 
+                "account_name": account['account_name'],
+                # BLOC Statistics
+                'tweet_count': account['tweet_count'],
+                'first_tweet_date': first_tweet_date,
+                'last_tweet_date': last_tweet_data,
+                'elapsed_time': round(account['elapsed_time'], 3),
+                # Analysis
+                "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
+                "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
+                "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
+                "top_bloc_words": account['top_bloc_words'][:10]
+            })
         
-    print(context)
-    return render(request, 'analysis_results.html', context)
+        print(context)
+        return render(request, 'analysis_results.html', context)
     
-    '''else:
+    else:
         context = {
             # User Data
-            "username" : username, 
+            "username" : usernames, 
             'error_title': results['error_title'],
             'error_detail': results['error_detail']
         }
-        return render(request, 'analysis_failed.html', context)'''
+        return render(request, 'analysis_failed.html', context)
