@@ -48,8 +48,9 @@ def analysis_results(request, usernames):
             output_date_format = '%m/%d/%Y'
 
             first_tweet_date = last_tweet_data = ''
-            if account['tweet_count'] > 0:
+            if account['first_tweet_date'] != '':
                 first_tweet_date = datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format)
+            if account['last_tweet_date'] != '':    
                 last_tweet_data = datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format)
 
             context['account_blocs'].append({
@@ -68,7 +69,7 @@ def analysis_results(request, usernames):
                 "top_bloc_words": account['top_bloc_words'][:10]
             })
         
-        print(context)
+        #print(context)
         return render(request, 'analysis_results.html', context)
     
     else:

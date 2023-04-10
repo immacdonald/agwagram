@@ -10,7 +10,14 @@ Results | B3T
 <div class="content-header">
     <div class="content-header-intro">
         <h1>BLOC Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h1>
-        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% if account.tweet_count > 0 %}
+        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
+            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% else %}
+        <p>No results generated due to finding 0 tweets. 
+            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+        {% endif %}
+
     </div>
     <div class="content-header-actions">
         <!--<button>
@@ -25,6 +32,7 @@ Results | B3T
 </div>
 <div class="content">
     <div class="content-main">
+        {% if account.tweet_count > 0 %}
         <div class="card-grid">
             <article class="card">
                 <div class="card-header">
@@ -124,6 +132,7 @@ Results | B3T
                 </div>
             </article>
         </div>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

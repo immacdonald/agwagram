@@ -13,7 +13,7 @@ def verify_user_exists(user_list):
     # Returns dict list with 'id' 'name' and 'username' fields
     user_data = ot.user_lookup_usernames(user_list)
 
-    print('User data', user_data)
+    #print('User data', user_data)
 
     if(user_data.get('errors')):
         error_details = {
@@ -35,8 +35,12 @@ def analyze_user(usernames):
     usernames = usernames.replace(',', ' ').split()
     print(usernames)
 
+    # Remove duplicate usernames while maintaining order
+    unique_usernames = set()
+    usernames = [u for u in usernames if not (u in unique_usernames or unique_usernames.add(u))]
+
     error_count, user_data = verify_user_exists(usernames)
-    print('User data is', user_data)
+    #print('User data is', user_data)
 
     if error_count > 0:
         result = {
@@ -51,12 +55,18 @@ def analyze_user(usernames):
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        print(all_bloc_output)
+        #print(all_bloc_output)
         #total_tweets = sum([ user_bloc['more_details']['total_tweets'] for user_bloc in bloc_payload ])
 
         #pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
-        top_k_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
-        print('TOP BLOC WORDS', top_k_bloc_words)
+        top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
+        #print('TOP BLOC WORDS', top_k_bloc_words)
+
+        user_bloc_words = {}
+
+        for words, user in zip(top_bloc_words['per_doc'], top_bloc_words['users']):
+            user_bloc_words[user] = words
+        
         
         result = {
             'successful_generation': True,
@@ -64,9 +74,7 @@ def analyze_user(usernames):
         }
 
         for account_bloc, account_data in zip(all_bloc_output, user_data):
-            top_bloc_words = []
-            if account_bloc['more_details']['total_tweets'] > 0:
-                top_bloc_words = top_k_bloc_words['per_doc'][0]
+            bloc_words = user_bloc_words.get(account_data['username'], [])
 
             result['account_blocs'].append({
                 'user_exists': True,
@@ -82,7 +90,7 @@ def analyze_user(usernames):
                 'bloc_action': account_bloc['bloc']['action'],
                 'bloc_content_syntactic': account_bloc['bloc']['content_syntactic'],
                 'bloc_content_semantic': account_bloc['bloc']['content_semantic_entity'],
-                'top_bloc_words': top_bloc_words
+                'top_bloc_words': bloc_words
             })
 
     return result
