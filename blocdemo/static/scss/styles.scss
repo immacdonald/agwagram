@@ -3,7 +3,7 @@ $smallResponsiveWidth: 800px;
 $mediumResponsiveWidth: 1200px;
 $headerMobileWidth: 672px;
 
-$headerHeight: 80px;
+$headerHeight: 60px;
 $footerHeight: 40px;
 
 :root {
@@ -40,6 +40,10 @@ html[data-theme='dark'] {
 
 	--c-disabled-background: var(--c-background-tertiary);
 	--c-disabled-color: #494848;
+
+	.header-logo {
+		filter: invert(1);
+	}
 }
 
 html[data-theme='light'] {
@@ -124,21 +128,17 @@ html {
 	}
 }
 
-html[data-theme='dark'] {
-	.header-logo {
-		filter: invert(1);
-	}
-}
-
 .header-logo {
 	margin-right: 2.5rem;
+
 	a {
 		display: flex;
 		align-items: center;
+
 		div {
 			flex-shrink: 0;
 			position: relative;
-			width: 80px;
+			width: $headerHeight;
 		}
 		
 	}
