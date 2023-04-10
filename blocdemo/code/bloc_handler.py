@@ -17,10 +17,16 @@ def verify_user_exists(user_list):
 
     if(user_data.get('errors')):
         error_details = {
-            'error_title': user_data['errors'][0]['title'],
-            'error_detail': user_data['errors'][0]['detail']
+            'errors': []
         }
-        return 1, error_details
+        for error in user_data['errors']:
+            error_details['errors'].append({
+                'account_username': error['value'],
+                'error_title': error['title'],
+                # Remove the brackets from the account error detail around the username
+                'error_detail': error['detail'].replace("[", "").replace("]", "")
+            })
+        return len(error_details['errors']), error_details
 
     return 0, user_data['data']
 
@@ -35,8 +41,8 @@ def analyze_user(usernames):
     if error_count > 0:
         result = {
             'successful_generation': False,
-            'error_title': user_data['error_title'],
-            'error_detail': user_data['error_detail']
+            'query': usernames,
+            'errors': user_data['errors']
         }
 
     else:

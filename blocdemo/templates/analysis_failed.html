@@ -8,9 +8,17 @@ Results | B3T
 
 <div class="content-header">
     <div class="content-header-intro">
-        <h1>BLOC Analysis Failed for <span class="special-text">@{{username}}</span></h1>
-        <p>Unable to generate results due to <i>{{error_title}}</i>.</p>
-        <p>Details: <i>{{error_detail}}</i></p>
+        <h1>BLOC Analysis Failed</h1>
+        <p>Unable to generate results for the following accounts: 
+            {% for username in query %}
+                <b>@{{username}}</b>, 
+            {% endfor %}
+        </p>
+        {% for error in errors %}
+            <h3>Error: <span class="special-text">@{{error.account_username}}</span></h3>
+            <p>Unable to analyze account due to <i>{{error.error_title}}</i>.</p>
+            <p>Details: <i>{{error.error_detail}}</i></p>
+        {% endfor %}
     </div>
     <div class="content-header-actions">
         <!--<button>

@@ -74,8 +74,7 @@ def analysis_results(request, usernames):
     else:
         context = {
             # User Data
-            "username" : usernames, 
-            'error_title': results['error_title'],
-            'error_detail': results['error_detail']
+            "query" : results['query'], 
+            "errors": results['errors']
         }
         return render(request, 'analysis_failed.html', context)
