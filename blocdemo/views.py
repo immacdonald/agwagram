@@ -39,9 +39,14 @@ def analysis_results(request, usernames):
             for word in results['group_top_bloc_words']:
                 word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
 
+            for u_pair in results['pairwise_sim']:
+                u_pair['sim'] = "{:.4f}".format(float(u_pair["sim"]), 4)
+
             context = {
+                'total_tweets': results['total_tweets'],
                 'account_blocs': [],
-                'group_top_bloc_words': results['group_top_bloc_words'][:10]
+                'group_top_bloc_words': results['group_top_bloc_words'][:10],
+                'pairwise_sim': results['pairwise_sim'][:10]
             }
 
             for account in results['account_blocs']:

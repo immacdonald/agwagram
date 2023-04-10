@@ -16,22 +16,24 @@ Results | B3T
         </p>
     </div>
     <div class="content-header-actions">
-        <div class="tab-buttons">
-            <button class="tab-button" onclick="openTab(event, 'content-group')">Group Analysis</button>
-            {% for account in account_blocs %}
-                <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">@{{account.account_username}}</button>
-            {% endfor %}
-        </div>
     </div>
+</div>
+<div class="tab-buttons">
+    <button class="tab-button" onclick="openTab(event, 'content-group')">Group Analysis</button>
+    {% for account in account_blocs %}
+        <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">@{{account.account_username}}</button>
+    {% endfor %}
 </div>
 <div class="content" id="content-group">
     <div class="content-subheader">
-        <h2>Group Analysis</h2>
-        <p>Aggregate behaviour of the following accounts:  
-        {% for account in account_blocs %}
-            <span class="special-text">@{{account.account_username}}</span>{% if forloop.last %}.{% else %}, {% endif %}
-        {% endfor %}
-        </p>
+        <div>
+            <h2>Group Analysis</h2>
+            <p>Aggregate behaviour based on a combined {{total_tweets}} tweets from the following accounts:  
+            {% for account in account_blocs %}
+                <span class="special-text">@{{account.account_username}}</span>{% if forloop.last %}.{% else %}, {% endif %}
+            {% endfor %}
+            </p>
+        </div>
     </div>
     <div class="content-main">
         <div class="card-grid">
@@ -69,20 +71,56 @@ Results | B3T
                     <a href="methodology">More Details</a>
                 </div>
             </article>
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">bolt</span>
+                        <h3>Pairwise Similarity</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" onChange="cardToggle(this)">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the pairwise similarity calculation.</p>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>Similarity</th>
+                            <th>Account 1</th>
+                            <th>Account 2</th>
+                        </tr>
+                        {% for u_pair in pairwise_sim %}
+                        <tr>
+                            <td>{{u_pair.sim}}</td>
+                            <td>{{u_pair.user_pair.0}}</td>
+                            <td>{{u_pair.user_pair.1}}</td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                </div>
+                <div class="card-footer">
+                    <a href="methodology">More Details</a>
+                </div>
+            </article>
         </div>
     </div>
 </div>
 {% for account in account_blocs %}
 <div class="content" id="content-{{ forloop.counter }}">
     <div class="content-subheader">
-        <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h2>
-        {% if account.tweet_count > 0 %}
-        <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
-            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
-        {% else %}
-        <p>No results generated due to finding 0 tweets. 
-            BLOC process took {{account.elapsed_time}} seconds to complete.</p>
-        {% endif %}
+        <div>
+            <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h2>
+            {% if account.tweet_count > 0 %}
+            <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
+                BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+            {% else %}
+            <p>No results generated due to finding 0 tweets. 
+                BLOC process took {{account.elapsed_time}} seconds to complete.</p>
+            {% endif %}
+        </div>
     </div>
     {% include '../components/account_bloc.html' with account=account %}
 </div>

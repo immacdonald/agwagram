@@ -8,20 +8,20 @@ $footerHeight: 40px;
 
 :root {
 	--s-white: #ffffff;
-	--s-lightgrey: #eff1f6;
+	--s-lightgrey: #f2f4f8;
 	--s-black: #333;
 }
 
 html[data-theme='dark'] {
 	--c-text-primary: var(--s-white);
-	--c-text-secondary: #eff1f6;
+	--c-text-secondary: var(--s-lightgrey);
 	--c-text-action: var(--s-white);
 	--c-text-accent: var(--s-white);
 
 	--c-accent-primary: #256ff0;
 	--c-accent-secondary: #a0c2f2;
 
-	--c-border-primary: var(--s-lightgrey);
+	--c-border-primary: #28293d;
 	
 	--c-background-primary: #1c1c28;
 	--c-background-secondary: #2159c0;
@@ -47,8 +47,8 @@ html[data-theme='light'] {
 	--c-border-primary: var(--s-lightgrey);
 	
 	--c-background-primary: #fdfcff;
-	--c-background-secondary: #feedec;
-	--c-background-tertiary: #e9ecf4;
+	--c-background-secondary: #fdbcb8;
+	--c-background-tertiary: var(--s-lightgrey);
 
 	--c-disabled-background: var(--c-background-tertiary);
 	--c-disabled-color: #cfd1d6;
@@ -415,22 +415,45 @@ button {
 	
 .content {
 	border-top: 1px solid var(--c-border-primary);
-	//margin-top: 2rem;
 	display: block;
+	background-color: var(--c-background-tertiary);
+	padding: 1rem;
+	border-radius: 0 0 1rem 1rem;
 	
 	&.inactive {
 		display: none;
 	}
+
+	&.solo {
+		border-radius: 1rem;
+	}
+}
+
+.content-header {
+	margin-bottom: 1rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid var(--c-border-primary);
 }
 
 .content-subheader {
-	padding-top: 2rem;
-	text-align: center;
+	margin-top: 2rem;
+	display: flex;
+	justify-content: center;
+
+	div {
+		background-color: var(--c-background-primary);
+		box-shadow: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
+		border: 1px solid var(--c-border-primary);
+		padding: 10px;
+		border-radius: 8px;
+		text-align: center;
+		width: fit-content;
+	}	
 }
 
 .content-main {
 	padding-top: 2rem;
-	padding-bottom: 6rem;
+	padding-bottom: 2rem;
 	flex-grow: 1;
 	display: flex;
 	align-items: flex-start;
@@ -442,6 +465,7 @@ button {
 	column-gap: 1.5rem;
 	row-gap: 1.5rem;
 	grid-auto-flow: dense;
+	width: 100%;
 
 	@media (min-width: 800px) {
 		grid-template-columns: repeat(2, 1fr);
@@ -625,10 +649,17 @@ tr:nth-child(odd):not(:first-child) {
 
 	button {
 		flex-grow: 1;
+		flex-basis: 0;
 		border-radius: 10px 10px 0 0;
 
 		&:not(:last-child) {
 			margin-right: 0.5rem;
+		}
+
+		&.active {
+			background-color: var(--c-background-tertiary);
+			color: var(--c-text-action);
+			font-weight: bold;
 		}
 	}
 }

@@ -55,29 +55,33 @@ def analyze_user(usernames):
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        #print(all_bloc_output)
-        #total_tweets = sum([ user_bloc['more_details']['total_tweets'] for user_bloc in bloc_payload ])
 
-        #pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
-        top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
-        #print('TOP BLOC WORDS', top_bloc_words)
-
-        user_bloc_words = {}
-        for words, user in zip(top_bloc_words['per_doc'], top_bloc_words['users']):
-            user_bloc_words[user] = words
-
+        # Useful statistics
         query_count = len(usernames)
+        total_tweets = sum([ user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output ])
 
-        # Get the top bloc words for all acounts and sort by frequency
+        # Get the top BLOC words per account
+        top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
+        user_bloc_words = {}
+        if total_tweets > 0:
+            for words, user in zip(top_bloc_words['per_doc'], top_bloc_words['users']):
+                user_bloc_words[user] = words
+        # Get the top BLOC words for all acounts and sort by frequency
         group_bloc_words = top_bloc_words.get('all_docs', [])
         if group_bloc_words:
             group_bloc_words = sorted(group_bloc_words, key=lambda x: x['term_freq'], reverse=True)
         
+        # Generate and sort the pairwise comparisons
+        pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
+        pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
+
         result = {
             'successful_generation': True,
             'query_count': query_count,
+            'total_tweets': total_tweets,
             'account_blocs': [],
-            'group_top_bloc_words': group_bloc_words
+            'group_top_bloc_words': group_bloc_words,
+            'pairwise_sim': pairwise_sim_report
         }
 
         for account_bloc, account_data in zip(all_bloc_output, user_data):
