@@ -5,6 +5,7 @@ from django.template import RequestContext, loader
 from django.views.decorators.csrf import csrf_protect
 
 from .code import bloc_handler
+from .code import bloc_symbols
 
 from .forms import UsernameSearchForm
 
@@ -46,7 +47,8 @@ def analysis_results(request, usernames):
                 'total_tweets': results['total_tweets'],
                 'account_blocs': [],
                 'group_top_bloc_words': results['group_top_bloc_words'][:10],
-                'pairwise_sim': results['pairwise_sim'][:10]
+                'pairwise_sim': results['pairwise_sim'][:10],
+                'bloc_symbols': bloc_symbols.get_all_symbols()
             }
 
             for account in results['account_blocs']:
@@ -97,9 +99,9 @@ def format_account_data(account):
         'last_tweet_date': last_tweet_data,
         'elapsed_time': round(account['elapsed_time'], 3),
         # Analysis
-        "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
-        "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
-        "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
+        "bloc_action": account['bloc_action'].replace(' ', ''), # &nbsp;
+        "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', ''),
+        "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', ''),
         "top_bloc_words": account['top_bloc_words'][:10]
     }
 

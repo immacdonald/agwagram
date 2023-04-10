@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <div class="content-main">
     {% if account.tweet_count > 0 %}
     <div class="card-grid">
@@ -50,7 +51,16 @@
                 <p>This is more information about the action analysis.</p>
             </div>
             <div class="card-body">
-                <p>{{account.bloc_action|safe}}</p>
+                <p>
+                    {% for char in account.bloc_action %}
+                        <div class="hoverable-text">{{ char }}
+                            {% if char|get_description != '' %}
+                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </p>
+                <!--<p>{{account.bloc_action|safe}}</p>-->
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
@@ -71,7 +81,16 @@
                 <p>This is more information about the content syntactic analysis.</p>
             </div>
             <div class="card-body">
-                <p>{{account.bloc_content_syntactic|safe}}</p>
+                <p>
+                    {% for char in account.bloc_content_syntactic %}
+                        <div class="hoverable-text">{{ char }}
+                            {% if char|get_description != '' %}
+                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </p>
+                <!--<p>{{account.bloc_content_syntactic|safe}}</p>-->
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
@@ -92,7 +111,16 @@
                 <p>This is more information about the content semantic analysis.</p>
             </div>
             <div class="card-body">
-                <p>{{account.bloc_content_semantic|safe}}</p>
+                <p>
+                    {% for char in account.bloc_content_semantic %}
+                        <div class="hoverable-text">{{ char }}
+                            {% if char|get_description != '' %}
+                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </p>
+                <!--<p>{{account.bloc_content_semantic|safe}}</p>-->
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
