@@ -14,7 +14,7 @@ logger = logging.getLogger("mainLogger")
 from datetime import datetime
 
 def main(request):
-    return render(request, 'main.html')
+    return render(request, 'pages/main.html')
 
 def analyze(request, form_data = None):
     if request.method == "POST":
@@ -25,44 +25,82 @@ def analyze(request, form_data = None):
     else:
         form = UsernameSearchForm(form_data)
 
-    return render(request, 'analyze.html', {'form': form})
+    return render(request, 'pages/analyze.html', {'form': form})
 
 def methodology(request):
-    return render(request, 'methodology.html')
+    return render(request, 'pages/methodology.html')
 
-def analysis_results(request, username):
-    results = bloc_handler.analyze_user(username)
+def analysis_results(request, usernames):
+    results = bloc_handler.analyze_user(usernames)
+    #print(results)
 
-    if results['user_exists']:
-        # Output formatting
-        for word in results['top_bloc_words']:
-            word['term_rate'] = "{:.3f}".format(word["term_rate"], 3)
+    if results['successful_generation']:
+        if(results['query_count'] > 1):
+            for word in results['group_top_bloc_words']:
+                word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
 
-        initial_date_format = '%Y-%m-%d %H:%M:%S'
-        output_date_format = '%m/%d/%Y'
+            for u_pair in results['pairwise_sim']:
+                u_pair['sim'] = "{:.4f}".format(float(u_pair["sim"]), 4)
 
-        context = {
-            # User Data
-            "username" : username, 
-            "account_name": results['account_name'],
-            # BLOC Statistics
-            'tweet_count': results['tweet_count'],
-            'first_tweet_date': datetime.strptime(results['first_tweet_date'], initial_date_format).strftime(output_date_format),
-            'last_tweet_date': datetime.strptime(results['last_tweet_date'], initial_date_format).strftime(output_date_format),
-            'elapsed_time': round(results['elapsed_time'], 3),
-            # Analysis
-            "bloc_action": results['bloc_action'].replace(' ', '&nbsp;'),
-            "bloc_content_syntactic": results['bloc_content_syntactic'].replace(' ', '&nbsp;'),
-            "bloc_content_semantic": results['bloc_content_semantic'].replace(' ', '&nbsp;'),
-            "top_bloc_words": results['top_bloc_words'][:10]
-        }
-        return render(request, 'analysis_results.html', context)
+            context = {
+                'total_tweets': results['total_tweets'],
+                'account_blocs': [],
+                'group_top_bloc_words': results['group_top_bloc_words'][:10],
+                'pairwise_sim': results['pairwise_sim'][:10]
+            }
+
+            for account in results['account_blocs']:
+                account_data = format_account_data(account)
+                context['account_blocs'].append(account_data)
+            
+            #print(context)
+            return render(request, 'pages/analysis_results.html', context)
+        else:
+            context = {
+                'account': format_account_data(results['account_blocs'][0])
+            }
+            print('Context', context)
+
+            return render(request, 'pages/analysis_results_single.html', context) 
+
     
     else:
         context = {
             # User Data
-            "username" : username, 
-            'error_title': results['error_title'],
-            'error_detail': results['error_detail']
+            "query" : results['query'], 
+            "errors": results['errors']
         }
-        return render(request, 'analysis_failed.html', context)
+        return render(request, 'pages/analysis_failed.html', context)
+    
+
+def format_account_data(account):
+    # Output formatting
+    for word in account['top_bloc_words']:
+        word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
+
+    initial_date_format = '%Y-%m-%d %H:%M:%S'
+    output_date_format = '%m/%d/%Y'
+
+    first_tweet_date = last_tweet_data = ''
+    if account['first_tweet_date'] != '':
+        first_tweet_date = datetime.strptime(account['first_tweet_date'], initial_date_format).strftime(output_date_format)
+    if account['last_tweet_date'] != '':    
+        last_tweet_data = datetime.strptime(account['last_tweet_date'], initial_date_format).strftime(output_date_format)
+
+    output_data = {
+        # User Data
+        "account_username" : account['account_username'], 
+        "account_name": account['account_name'],
+        # BLOC Statistics
+        'tweet_count': account['tweet_count'],
+        'first_tweet_date': first_tweet_date,
+        'last_tweet_date': last_tweet_data,
+        'elapsed_time': round(account['elapsed_time'], 3),
+        # Analysis
+        "bloc_action": account['bloc_action'].replace(' ', '&nbsp;'),
+        "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', '&nbsp;'),
+        "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', '&nbsp;'),
+        "top_bloc_words": account['top_bloc_words'][:10]
+    }
+
+    return output_data

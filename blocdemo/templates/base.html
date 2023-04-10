@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
-    {% load bootstrap5 %}
-    <!--{% bootstrap_css %}
+    <!--{% load bootstrap5 %}
+    {% bootstrap_css %}
     {% bootstrap_javascript %} -->
     {% load static %}
     {% load compress %}
@@ -14,90 +14,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 <body>
-<header class="header">
-    <div class="header-content responsive-wrapper">
-        <div class="header-logo">
-            <a href="#">
-                <div>
-                    <img src="{% static 'images/disinfo-square.png' %}" />
-                </div>
-            </a>
-        </div>
-        <div class="header-navigation">
-            <nav class="header-navigation-links">
-                <a {% if request.resolver_match.url_name == 'main' %}class="active"{% endif %}href="/blocdemo">Home</a>
-                <a {% if request.resolver_match.url_name == 'analyze' %}class="active"{% endif %} href="analyze">Analyze</a>
-                <a {% if request.resolver_match.url_name == 'methodology' %}class="active"{% endif %} href="methodology">Methodology</a>
-            </nav>
-            <div class="header-navigation-actions">
-                <a href="#" id="theme-toggle" class="icon-button">
-                    <span class="icon material-symbols-outlined">bolt</span>
-                </a>
-                <a href="#" class="icon-button disabled">
-                    <span class="icon material-symbols-outlined">settings</span>
-                </a>
-                <button class="disabled">
-                    <span class="icon material-symbols-outlined">bolt</span>
-                    <span>Log In</span>
-                </button>
-            </div>
-            <a href="#" id="menu-toggle" class="icon-button disabled" onclick="toggleNavOverlay()">
-                <span class="icon material-symbols-outlined">menu</span>
-            </a>
-        </div>
-    </div>
-</header>
-<script>
-var toggle = document.getElementById("theme-toggle");
 
-var storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-if (storedTheme)
-    document.documentElement.setAttribute('data-theme', storedTheme)
+{% include 'components/header.html' %}
 
-
-toggle.onclick = function() {
-    var currentTheme = document.documentElement.getAttribute("data-theme");
-    var targetTheme = "light";
-
-    if (currentTheme === "light") {
-        targetTheme = "dark";
-    }
-
-    document.documentElement.setAttribute('data-theme', targetTheme)
-    localStorage.setItem('theme', targetTheme);
-};
-</script>
-<!--<div id="myNav" class="overlay">
-    <div class="overlay-content">
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
-    </div>
-  </div>-->
 <main>
     <div class="main responsive-wrapper">
         {% block content %}
         {% endblock %}
     </div>
 </main>
-<footer>
-    <div class="responsive-wrapper">
-        <div class="footer">
-            <div class="footer-content">
-                <p>&copy; <i>Ian MacDonald</i> 2023 with <i>William & Mary Disinfo Lab</i></p>
-            </div>
-        </div>
-    </div>
-</footer>
+
+{% include 'components/footer.html' %}
 
 </body>
-<script>
-    var navToggled = false;
-    function toggleNavOverlay() {
-        navToggled = !navToggled;
-        document.getElementById("myNav").style.width = navToggled ? "50%" : "0%";
-    }
-
-</script>
 </html>

@@ -1,0 +1,134 @@
+<div class="content-main">
+    {% if account.tweet_count > 0 %}
+    <div class="card-grid">
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">star_half</span>
+                    <h3>Top BLOC Words</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the BLOC word frequency analysis.</p>
+            </div>
+            <div class="card-body">
+                <table>
+                    <tr>
+                        <th>BLOC Word</th>
+                        <th>Frequency</th>
+                        <th>Rate</th>
+                    </tr>
+                    {% for word in account.top_bloc_words %}
+                    <tr>
+                        <td>{{word.term}}</td>
+                        <td>{{word.term_freq}}</td>
+                        <td>{{word.term_rate}}</td>
+                    </tr>
+                    {% endfor %}
+                    </table>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">bar_chart</span>
+                    <h3>Action Analysis</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the action analysis.</p>
+            </div>
+            <div class="card-body">
+                <p>{{account.bloc_action|safe}}</p>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">code</span>
+                    <h3>Content Syntactic</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the content syntactic analysis.</p>
+            </div>
+            <div class="card-body">
+                <p>{{account.bloc_content_syntactic|safe}}</p>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">code</span>
+                    <h3>Content Semantic</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the content semantic analysis.</p>
+            </div>
+            <div class="card-body">
+                <p>{{account.bloc_content_semantic|safe}}</p>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+    </div>
+    {% endif %}
+</div>
+<script>
+    function cardToggle(item) {
+        console.log(item.checked);
+        var cardDropdown = item.parentElement.parentElement.nextElementSibling;
+        console.log(cardDropdown);
+        if(item.checked) {
+            cardDropdown.classList.add("active");
+        } else {
+            cardDropdown.classList.remove("active");
+        }
+    }
+    
+    function calculateCardOffsetHeights() {
+        const cardToggleBodies = document.querySelectorAll('.card-toggle-body');
+        for (const cardToggleBody of cardToggleBodies) {
+            var extendedHeight = 24;
+            for (let i = 0; i < cardToggleBody.children.length; i++) {
+                extendedHeight += cardToggleBody.children[i].offsetHeight;
+            }
+        cardToggleBody.style.setProperty('--extended-height', extendedHeight.toString() + "px");
+        }
+    }
+    
+    window.addEventListener('load', () => {
+        calculateCardOffsetHeights();
+    });
+    
+    window.addEventListener('resize', function() {
+        calculateCardOffsetHeights();
+    });
+</script>
