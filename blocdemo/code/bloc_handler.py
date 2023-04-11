@@ -51,10 +51,11 @@ def analyze_user(usernames):
 
     else:
         user_ids = [ user['id'] for user in user_data ]
-        gen_bloc_params, gen_bloc_args = get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity'])
+        gen_bloc_params, gen_bloc_args = get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
+        print(all_bloc_output)
 
         # Useful statistics
         query_count = len(usernames)
@@ -99,8 +100,10 @@ def analyze_user(usernames):
                 'elapsed_time': account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds'],
                 # Analysis
                 'bloc_action': account_bloc['bloc']['action'],
-                'bloc_content_syntactic': account_bloc['bloc']['content_syntactic'],
-                'bloc_content_semantic': account_bloc['bloc']['content_semantic_entity'],
+                'bloc_syntactic': account_bloc['bloc']['content_syntactic'],
+                'bloc_semantic_entity': account_bloc['bloc']['content_semantic_entity'],
+                'bloc_semantic_sentiment': account_bloc['bloc']['content_semantic_sentiment'],
+                'bloc_change': account_bloc['bloc']['change'],
                 'top_bloc_words': bloc_words
             })
 

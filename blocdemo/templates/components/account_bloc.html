@@ -82,7 +82,7 @@
             </div>
             <div class="card-body">
                 <p>
-                    {% for char in account.bloc_content_syntactic %}
+                    {% for char in account.bloc_syntactic %}
                         <div class="hoverable-text">{{ char }}
                             {% if char|get_description != '' %}
                                 <span class="hoverable-tooltip">{{ char|get_description }}</span>
@@ -90,7 +90,6 @@
                         </div>
                     {% endfor %}
                 </p>
-                <!--<p>{{account.bloc_content_syntactic|safe}}</p>-->
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
@@ -100,7 +99,65 @@
             <div class="card-header">
                 <div>
                     <span class="icon material-symbols-outlined">code</span>
-                    <h3>Content Semantic</h3>
+                    <h3>Content Semantic Entity</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the content semantic entity analysis.</p>
+            </div>
+            <div class="card-body">
+                <p>
+                    {% for char in account.bloc_semantic_entity %}
+                        <div class="hoverable-text">{{ char }}
+                            {% if char|get_description != '' %}
+                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">code</span>
+                    <h3>Content Semantic Sentiment</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the content semantic content analysis.</p>
+            </div>
+            <div class="card-body">
+                <p>
+                    {% for char in account.bloc_semantic_sentiment %}
+                        <div class="hoverable-text">{{ char }}
+                            {% if char|get_description != '' %}
+                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+        <!--<article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">code</span>
+                    <h3>Content Change</h3>
                 </div>
                 <label class="toggle">
                     <input type="checkbox" onChange="cardToggle(this)">
@@ -112,7 +169,7 @@
             </div>
             <div class="card-body">
                 <p>
-                    {% for char in account.bloc_content_semantic %}
+                    {% for char in account.bloc_change %}
                         <div class="hoverable-text">{{ char }}
                             {% if char|get_description != '' %}
                                 <span class="hoverable-tooltip">{{ char|get_description }}</span>
@@ -120,12 +177,11 @@
                         </div>
                     {% endfor %}
                 </p>
-                <!--<p>{{account.bloc_content_semantic|safe}}</p>-->
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
             </div>
-        </article>
+        </article>-->
     </div>
     {% endif %}
 </div>

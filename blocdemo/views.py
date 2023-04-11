@@ -61,7 +61,6 @@ def analysis_results(request, usernames):
             context = {
                 'account': format_account_data(results['account_blocs'][0])
             }
-            print('Context', context)
 
             return render(request, 'pages/analysis_results_single.html', context) 
 
@@ -99,10 +98,16 @@ def format_account_data(account):
         'last_tweet_date': last_tweet_data,
         'elapsed_time': round(account['elapsed_time'], 3),
         # Analysis
-        "bloc_action": account['bloc_action'].replace(' ', ''), # &nbsp;
-        "bloc_content_syntactic": account['bloc_content_syntactic'].replace(' ', ''),
-        "bloc_content_semantic": account['bloc_content_semantic'].replace(' ', ''),
+        "bloc_action": process_bloc_string(account['bloc_action']),
+        "bloc_syntactic": process_bloc_string(account['bloc_syntactic']),
+        "bloc_semantic_entity": process_bloc_string(account['bloc_semantic_entity']),
+        "bloc_semantic_sentiment": process_bloc_string(account['bloc_semantic_sentiment']),
+        "bloc_change": process_bloc_string(account['bloc_change']),
         "top_bloc_words": account['top_bloc_words'][:10]
     }
 
     return output_data
+
+def process_bloc_string(bloc):
+    #return bloc.replace(' ', '&nbsp;')
+    return bloc.replace(' ', '')
