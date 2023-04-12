@@ -25,7 +25,15 @@
                     </tr>
                     {% for word in account.top_bloc_words %}
                     <tr>
-                        <td>{{word.term}}</td>
+                        <td>
+                            {% for char in word.term %}
+                                <div class="hoverable-text">{{ char }}
+                                    {% if char|get_description != '' %}
+                                        <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </td>
                         <td>{{word.term_freq}}</td>
                         <td>{{word.term_rate}}</td>
                     </tr>

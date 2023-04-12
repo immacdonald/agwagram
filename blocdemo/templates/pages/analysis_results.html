@@ -5,6 +5,7 @@ Results | B3T
 {% endblock %}
 
 {% block content %}
+{% load custom_filters %}
 
 <div class="content-header">
     <div class="content-header-intro">
@@ -60,7 +61,15 @@ Results | B3T
                         </tr>
                         {% for word in group_top_bloc_words %}
                         <tr>
-                            <td>{{word.term}}</td>
+                            <td>
+                                {% for char in word.term %}
+                                    <div class="hoverable-text">{{ char }}
+                                        {% if char|get_description != '' %}
+                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </td>
                             <td>{{word.term_freq}}</td>
                             <td>{{word.term_rate}}</td>
                         </tr>
