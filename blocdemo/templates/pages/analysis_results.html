@@ -5,6 +5,7 @@ Results | B3T
 {% endblock %}
 
 {% block content %}
+{% load custom_filters %}
 
 <div class="content-header">
     <div class="content-header-intro">
@@ -19,7 +20,7 @@ Results | B3T
     </div>
 </div>
 <div class="tab-buttons">
-    <button class="tab-button" onclick="openTab(event, 'content-group')">Group Analysis &nbsp;<span class="icon material-symbols-outlined">groups</span></button>
+    <button class="tab-button active" onclick="openTab(event, 'content-group')">Group Analysis &nbsp;<span class="icon material-symbols-outlined">groups</span></button>
     {% for account in account_blocs %}
         <button class="tab-button" onclick="openTab(event, 'content-{{ forloop.counter }}')">@{{account.account_username}}</button>
     {% endfor %}
@@ -60,7 +61,15 @@ Results | B3T
                         </tr>
                         {% for word in group_top_bloc_words %}
                         <tr>
-                            <td>{{word.term}}</td>
+                            <td>
+                                {% for char in word.term %}
+                                    <div class="hoverable-text">{{ char }}
+                                        {% if char|get_description != '' %}
+                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </td>
                             <td>{{word.term_freq}}</td>
                             <td>{{word.term_rate}}</td>
                         </tr>
@@ -109,7 +118,7 @@ Results | B3T
     </div>
 </div>
 {% for account in account_blocs %}
-<div class="content" id="content-{{ forloop.counter }}">
+<div class="content inactive" id="content-{{ forloop.counter }}">
     <div class="content-subheader">
         <div>
             <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h2>
@@ -179,11 +188,6 @@ function openTab(event, tabName) {
     event.currentTarget.classList.add("active");
     calculateCardOffsetHeights();
 }
-
-window.addEventListener('load', () => {
-    tablinks = document.getElementsByClassName("tab-button");
-    tablinks[0].click();
-});
 </script>
 
 {% endblock %}

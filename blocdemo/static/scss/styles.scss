@@ -447,7 +447,7 @@ button {
 		padding: 10px;
 		border-radius: 8px;
 		text-align: center;
-		width: fit-content;
+		width: 90%;
 	}	
 }
 
@@ -481,7 +481,7 @@ button {
 	box-shadow: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
 	border: 1px solid var(--c-border-primary);
 	border-radius: 8px;
-	overflow: hidden;
+	//overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	grid-column-end: span 1;
@@ -508,7 +508,7 @@ button {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0rem 1.25rem;
+	padding: 0rem 0.5rem;
 	div {
 		display: flex;
 		align-items: center;
@@ -597,7 +597,7 @@ button {
 }
 
 .card-body {
-	padding: 1rem 1.25rem;
+	padding: 0.5rem 1.25rem;
 	font-size: 0.875rem;
 	overflow-wrap: anywhere;
 }
@@ -663,3 +663,45 @@ tr:nth-child(odd):not(:first-child) {
 		}
 	}
 }
+
+.hoverable-text {
+	position: relative;
+	display: inline-block;
+	margin-left: -3px;
+
+	.hoverable-tooltip {
+		visibility: hidden;
+		width: 120px;
+		bottom: 100%;
+		left: 50%;
+		margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+		background-color: var(--c-text-primary);
+		color: var(--c-background-primary);
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 0;
+	  
+		/* Position the tooltip */
+		position: absolute;
+		z-index: 999;
+
+		&::after {
+			content: " ";
+			position: absolute;
+			top: 100%; /* At the bottom of the tooltip */
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: var(--c-text-primary) transparent transparent transparent;
+		}
+	}
+
+	&:hover {
+		background-color: var(--c-background-secondary);
+
+		.hoverable-tooltip {
+			visibility: visible;
+		  }
+	}
+  }  
