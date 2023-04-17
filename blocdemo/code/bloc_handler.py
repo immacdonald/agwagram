@@ -6,6 +6,8 @@ from argparse import Namespace
 from bloc.generator import gen_bloc_for_users
 from bloc.subcommands import run_subcommands
 
+from . import bloc_symbols
+
 def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
     ot = osometweet.OsomeTweet(oauth2)
@@ -54,8 +56,10 @@ def analyze_user(usernames):
         gen_bloc_params, gen_bloc_args = get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
+        print(bloc_payload)
+
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        print(all_bloc_output)
+        #print(all_bloc_output)
 
         # Useful statistics
         query_count = len(usernames)
@@ -107,7 +111,58 @@ def analyze_user(usernames):
                 'top_bloc_words': bloc_words
             })
 
+            link_data(account_bloc['bloc']['action'], 
+                      account_bloc['bloc']['content_syntactic'], 
+                      account_bloc['bloc']['content_semantic_entity'])
+
     return result
+
+def link_data(action, syntactic, semantic):
+    ''' [
+        {
+            char
+            detail [
+                
+            ]
+        },
+    ] '''
+    
+    linked_data = []
+    syntactic_data = link_preprocess(syntactic)
+    semantic_data = link_preprocess(semantic)
+    
+    i = 0
+
+    for char in action:
+        if char in bloc_symbols.action_symbol_dict:
+            linked_data.append({
+                'char': bloc_symbols.get_symbol_meaning(char),
+                'content': {
+                    'syntactic:': bloc_symbols.get_multi_symbol_meanings(syntactic_data[i]),
+                    'semantic': bloc_symbols.get_multi_symbol_meanings(semantic_data[i % len(semantic_data)])
+                }
+            })
+            i+=1
+        else:
+            linked_data.append({
+                'char': bloc_symbols.get_symbol_meaning(char)
+            })
+    
+    #for data in linked_data:
+        #print(f'Data: {data}\n')
+
+
+def link_preprocess(data):
+    #print('Data:', data)
+    data = data.replace(' ', '').replace('|', '')
+    #print('Data:', data)
+    data = data.replace(')', '')
+    #print('Data:', data)
+    data = data.split('(')[1:]  # split the string by opening parenthesis and exclude the first empty string element
+    #print('Data:', data)
+    #print('Data length', len(data))
+    return data
+
 
 
 
