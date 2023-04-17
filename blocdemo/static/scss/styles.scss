@@ -667,7 +667,7 @@ tr:nth-child(odd):not(:first-child) {
 .hoverable-text {
 	position: relative;
 	display: inline-block;
-	margin-left: -3px;
+	margin-left: -0.25em;
 
 	.hoverable-tooltip {
 		visibility: hidden;

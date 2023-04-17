@@ -110,4 +110,5 @@ def format_account_data(account):
 
 def process_bloc_string(bloc):
     #return bloc.replace(' ', '&nbsp;')
-    return bloc.replace(' ', '')
+    #return bloc.replace(' ', '')
+    return bloc
