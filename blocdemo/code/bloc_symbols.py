@@ -81,5 +81,11 @@ master_symbol_dict = {
 def get_symbol_meaning(symbol):
     return master_symbol_dict.get(symbol, 'Error')
 
+def get_multi_symbol_meanings(symbols):
+    meaning = []
+    for char in symbols:
+        meaning.append(get_symbol_meaning(char))
+    return meaning
+
 def get_all_symbols():
     return master_symbol_dict
