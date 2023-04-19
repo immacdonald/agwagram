@@ -78,13 +78,28 @@ master_symbol_dict = {
     **time_symbol_dict
 }
 
-def get_symbol_meaning(symbol):
-    return master_symbol_dict.get(symbol, 'Error')
+def get_symbol_type(symbol):
+    if symbol in change_symbol_dict:
+        return 'Change'
+    if symbol in action_symbol_dict:
+        return 'Action'
+    if symbol in semantic_symbol_dict:
+        return 'Semantic'
+    if symbol in sentiment_symbol_dict:
+        return 'Sentiment'
+    if symbol in syntactic_symbol_dict:
+        return 'Syntactic'
+    if symbol in time_symbol_dict:
+        return 'Time'
+    return 'Error'
 
-def get_multi_symbol_meanings(symbols):
+def get_symbol_meaning(symbol, default='Error'):
+    return master_symbol_dict.get(symbol, default)
+
+def get_multi_symbol_meanings(symbols, default='Error'):
     meaning = []
     for char in symbols:
-        meaning.append(get_symbol_meaning(char))
+        meaning.append(get_symbol_meaning(char, default))
     return meaning
 
 def get_all_symbols():

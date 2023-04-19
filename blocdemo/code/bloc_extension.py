@@ -2,6 +2,8 @@ from argparse import Namespace
 
 from datetime import datetime
 
+from . import bloc_symbols
+
 def link_data(tweets):
     linked_data = []
     for tweet in tweets:
@@ -10,16 +12,24 @@ def link_data(tweets):
         # Format datetime object as desired
         formatted_date = date_obj.strftime('%B %d, %Y @ %I:%M%p').replace(' 0', ' ')
 
+        cleaned_action = tweet['bloc']['bloc_sequences_short']['action']
+        for char in bloc_symbols.time_symbol_dict:
+            cleaned_action = cleaned_action.replace(char, '')
+
+        cleaned_semantic_sentiment = tweet['bloc']['bloc_sequences_short']['content_semantic_sentiment']
+        for char in bloc_symbols.time_symbol_dict:
+            cleaned_semantic_sentiment = cleaned_semantic_sentiment.replace(char, '')
+
         data = {
             "created_at": formatted_date,
-            "action": tweet['bloc']['bloc_sequences_short']['action'],
+            "action": cleaned_action,
             "content_syntactic": tweet['bloc']['bloc_sequences_short']['content_syntactic'][1:-1],
             "content_semantic_entity": tweet['bloc']['bloc_sequences_short']['content_semantic_entity'][1:-1],
-            "content_semantic_sentiment": tweet['bloc']['bloc_sequences_short']['content_semantic_sentiment'],
+            "content_semantic_sentiment": cleaned_semantic_sentiment,
             "change": tweet['bloc']['bloc_sequences_short']['change']
         }
         linked_data.append(data)
-    print(linked_data)
+    #print(linked_data)
     
     return linked_data
 

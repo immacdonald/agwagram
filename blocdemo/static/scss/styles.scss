@@ -711,6 +711,12 @@ tr:nth-child(odd):not(:first-child) {
 		position: absolute;
 		z-index: 999;
 
+		&.large {
+			white-space: nowrap;
+			padding: 10px;
+			width: fit-content;
+		}
+
 		&::after {
 			content: " ";
 			position: absolute;

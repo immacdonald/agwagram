@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 
 from .code import bloc_handler
 from .code import bloc_symbols
+from .code.django_counter import DjangoCounter
 
 from .forms import UsernameSearchForm
 
@@ -105,12 +106,13 @@ def format_account_data(account):
         "bloc_change": process_bloc_string(account['bloc_change']),
         "top_bloc_words": account['top_bloc_words'],#[:10],
         # Linked Data
-        'linked_data': account['linked_data']
+        'linked_data': account['linked_data'],
+        'counter': DjangoCounter()
     }
 
     return output_data
 
 def process_bloc_string(bloc):
     #return bloc.replace(' ', '&nbsp;')
-    #return bloc.replace(' ', '')
-    return bloc
+    return bloc.replace(' ', '').replace('|', '')
+    #return bloc
