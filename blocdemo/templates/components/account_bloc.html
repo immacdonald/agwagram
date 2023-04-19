@@ -176,7 +176,26 @@
                 <p>This is more information about the action analysis.</p>
             </div>
             <div class="card-body">
-                <p>{{account.linked_data}}</p>
+                {% for char in account.bloc_action %}
+                    {% if char|get_type != 'Action' %}
+                        {{ char|get_description }}
+                    {% else %}
+                        {% with count=account.counter.count %}
+                        {% with data=account.linked_data|index:count %}
+                            {% if not forloop.first %}&nbsp;{% endif %}
+                            <div class="hoverable-text"><b>{{ char|get_description }}</b>
+                                <span class="hoverable-tooltip large">
+                                    Tweeted: {{ data.created_at }} <br>
+                                    Content: {{ data.content_syntactic|get_description }} <br>
+                                    Subject: {{ data.content_semantic_entity|get_description }} 
+                                </span>
+                            </div>
+                            {{ account.counter.increment }}
+                        {% endwith %}
+                        {% endwith %}
+                    {% endif %}
+                    {% if not forloop.last %},&nbsp;{% endif %}
+                {% endfor %}
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
