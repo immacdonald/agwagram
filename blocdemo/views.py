@@ -103,7 +103,7 @@ def format_account_data(account):
         "bloc_semantic_entity": process_bloc_string(account['bloc_semantic_entity']),
         "bloc_semantic_sentiment": process_bloc_string(account['bloc_semantic_sentiment']),
         "bloc_change": process_bloc_string(account['bloc_change']),
-        "top_bloc_words": account['top_bloc_words'][:10]
+        "top_bloc_words": account['top_bloc_words']#[:10]
     }
 
     return output_data
