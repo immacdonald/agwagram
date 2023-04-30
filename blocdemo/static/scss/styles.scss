@@ -475,8 +475,6 @@ button {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
-	grid-template-rows: repeat(2, 400px);
-
 }
 
 .card {
@@ -487,6 +485,10 @@ button {
 	//overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	/* Set the card to fill its container horizontally */
+	width: 100%;
+	/* Set the card body to grow to fill the available space */
+	flex-grow: 1;
 	grid-column-end: span 1;
 	grid-row-end: span 1;
 
@@ -605,27 +607,30 @@ button {
 	overflow-wrap: anywhere;
 }
 
-.scrollable-table{
-	padding: 0.5rem 1.25rem;
-	font-size: 0.875rem;
-	overflow-wrap: anywhere;
+.scrollable {
+	padding: 0.25rem 0.5rem;
+	max-height: 400px;
 	overflow-y: scroll;
 	overflow-x: hidden;
-}
 
-.scrollable-table::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
+	&::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
 
-.scrollable-table::-webkit-scrollbar-track {
-	background: var(--c-border-primary);
-}
-  
-.scrollable-table::-webkit-scrollbar-thumb {
-	background-color: lightgrey;
-	border-radius: 10px;
-	border: 3px solid var(--c-border-primary);
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: lightgrey;
+		border-radius: 10px;
+		border: 3px solid var(--c-border-primary);
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: transparent;
+	}
 }
   
 .card-footer {

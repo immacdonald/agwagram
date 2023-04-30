@@ -47,7 +47,7 @@ def analysis_results(request, usernames):
             context = {
                 'total_tweets': results['total_tweets'],
                 'account_blocs': [],
-                'group_top_bloc_words': results['group_top_bloc_words'][:10],
+                'group_top_bloc_words': results['group_top_bloc_words'],
                 'pairwise_sim': results['pairwise_sim'][:10],
                 'bloc_symbols': bloc_symbols.get_all_symbols()
             }
