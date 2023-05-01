@@ -1,0 +1,6 @@
+Django==4.1.7
+osometweet==0.4
+python-dotenv==1.0.0
+twitterbloc==1.2.0
+django-libsass==0.9
+twitterbloc @ git+https://github.com/anwala/bloc.git@cluster
