@@ -52,10 +52,11 @@ Results | B3T
                 <div class="card-toggle-body">
                     <p>This is more information about the BLOC word frequency analysis.</p>
                 </div>
-                <div class="scrollable-table">
+                <div class="card-body">
+                    <div class="scrollable">
                     <table>
                         <tr>
-                            <th>BLOC Word</th>
+                            <th class="table-main">BLOC Word</th>
                             <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
@@ -63,11 +64,11 @@ Results | B3T
                         <tr>
                             <td>
                                 {% for char in word.term %}
-                                    <div class="hoverable-text">{{ char }}
-                                        {% if char|get_description != '' %}
-                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
-                                        {% endif %}
+                                    <div class="hoverable-text">
+                                        {{ char|get_description }}
+                                        <span class="hoverable-tooltip">{{ char }}</span>
                                     </div>
+                                    {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
                             <td>{{word.term_freq}}</td>
@@ -75,6 +76,7 @@ Results | B3T
                         </tr>
                         {% endfor %}
                         </table>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <a href="methodology">More Details</a>

@@ -2,9 +2,10 @@ from django.conf import settings
 
 import osometweet
 
-from argparse import Namespace
 from bloc.generator import gen_bloc_for_users
 from bloc.subcommands import run_subcommands
+
+from . import bloc_extension
 
 def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
@@ -51,11 +52,14 @@ def analyze_user(usernames):
 
     else:
         user_ids = [ user['id'] for user in user_data ]
-        gen_bloc_params, gen_bloc_args = get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        gen_bloc_params, gen_bloc_args = bloc_extension.get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
+        #print(bloc_payload)
+
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        print(all_bloc_output)
+
+        #print(all_bloc_output)
 
         # Useful statistics
         query_count = len(usernames)
@@ -88,6 +92,10 @@ def analyze_user(usernames):
         for account_bloc, account_data in zip(all_bloc_output, user_data):
             bloc_words = user_bloc_words.get(account_data['username'], [])
 
+            all_tweets = account_bloc['tweets']
+
+            linked_data = bloc_extension.link_data(all_tweets)
+
             result['account_blocs'].append({
                 'user_exists': True,
                 # User Data
@@ -104,45 +112,9 @@ def analyze_user(usernames):
                 'bloc_semantic_entity': account_bloc['bloc']['content_semantic_entity'],
                 'bloc_semantic_sentiment': account_bloc['bloc']['content_semantic_sentiment'],
                 'bloc_change': account_bloc['bloc']['change'],
-                'top_bloc_words': bloc_words
+                'top_bloc_words': bloc_words,
+                # Linked Data
+                'linked_data': linked_data
             })
 
     return result
-
-
-
-def get_bloc_params(user_ids, bearer_token, token_pattern='word', no_screen_name=True, account_src='Twitter search', no_sleep=True, max_pages=1, max_results=100, bloc_alphabets = ['action', 'content_syntactic']):
-    #bloc_alphabets = ['action', 'change', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment']
-    params = {
-        'screen_names_or_ids': user_ids, 
-        'bearer_token': bearer_token, 
-        'account_src': account_src,
-        'account_class': '',
-        'access_token': '', 'access_token_secret': '', 'consumer_key': '', 'consumer_secret': '', 
-        'blank_mark': 60, 'minute_mark': 5, 'segmentation_type': 'week_number', 'days_segment_count': -1, 
-        'ansi_code': '91m', 
-        'bloc_alphabets': bloc_alphabets, 'bloc_symbols_file': None, 
-        'cache_path': '', 'cache_read': False, 'cache_write': False, 
-        'following_lookup': False, 
-        'keep_tweets': False, 
-        'keep_bloc_segments': False, 
-        'log_file': '', 'log_format': '', 'log_level': 'INFO', 'log_dets': {'level': 20},
-        'max_pages': max_pages, 'max_results': max_results, 
-        'no_screen_name': no_screen_name, 'no_sleep': no_sleep, 
-        'output': None, 
-        'timeline_startdate': '', 'timeline_scroll_by_hours': None, 'time_function': 'f2', 
-        'subcommand': '', 
-
-        'fold_start_count': 4,
-        'keep_tf_matrix': False,
-        'ngram': 1 if token_pattern == 'word' else 2,
-        'sort_action_words': False,#
-        'set_top_ngrams': False,
-        'tf_matrix_norm': '',
-        'token_pattern': token_pattern,
-        'top_ngrams_add_all_docs': False,
-        'sim_no_summary': True,
-        'tweet_order': 'reverse'
-    }
-
-    return params, Namespace(**params)
