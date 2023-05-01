@@ -654,19 +654,27 @@ table {
 	width: 100%;
 	line-height: normal;
 	text-align: center;
-  }
+
+}
   
 th {
-padding: 8px;
-border-bottom: 1px solid var(--c-border-primary);
+	padding: 8px;
+	border-bottom: 1px solid var(--c-border-primary);
 }
 
 td {
-padding: 4px 4px;
+	padding: 4px 4px;
+
 }
   
 tr:nth-child(odd):not(:first-child) {
 	background-color: var(--c-disabled-background);
+}
+
+.table-main {
+	// Requires a width before max-width applies
+	width: 100%;
+	max-width: 50%;
 }
 
 .special-text {

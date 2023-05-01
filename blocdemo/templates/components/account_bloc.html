@@ -20,7 +20,7 @@
                 <div class="scrollable">
                     <table>
                         <tr>
-                            <th>BLOC Word</th>
+                            <th class="table-main">BLOC Word</th>
                             <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
@@ -28,11 +28,11 @@
                         <tr>
                             <td>
                                 {% for char in word.term %}
-                                    <div class="hoverable-text">{{ char }}
-                                        {% if char|get_description != '' %}
-                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
-                                        {% endif %}
+                                    <div class="hoverable-text">
+                                        {{ char|get_description }}
+                                        <span class="hoverable-tooltip">{{ char }}</span>
                                     </div>
+                                    {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
                             <td>{{word.term_freq}}</td>
@@ -188,8 +188,11 @@
                             <div class="hoverable-text"><b>{{ char|get_description }}</b>
                                 <span class="hoverable-tooltip large">
                                     Tweeted: {{ data.created_at }} <br>
-                                    Content: {{ data.content_syntactic|get_description }} <br>
-                                    Subject: {{ data.content_semantic_entity|get_description }} 
+                                    Content: {{ data.content_syntactic|get_description }} 
+                                    {% if data.content_semantic_entity %}
+                                        <br>
+                                        Subject: {{ data.content_semantic_entity|get_description }} 
+                                    {% endif %}
                                 </span>
                             </div>
                             {{ account.counter.increment }}
