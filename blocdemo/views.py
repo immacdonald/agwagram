@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from .code import bloc_handler
 from .code import bloc_symbols
 from .code.django_counter import DjangoCounter
+from .code.django_counter import DjangoCounter
 
 from .forms import UsernameSearchForm
 
