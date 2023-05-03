@@ -79,6 +79,10 @@ master_symbol_dict = {
 }
 
 def get_symbol_type(symbol):
+    # For multi-symbol words only use the first
+    if len(symbol) > 1:
+        symbol = symbol[0]
+
     if symbol in change_symbol_dict:
         return 'Change'
     if symbol in action_symbol_dict:

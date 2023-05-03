@@ -6,6 +6,7 @@ from bloc.generator import gen_bloc_for_users
 from bloc.subcommands import run_subcommands
 
 from . import bloc_extension
+from . import bloc_symbols
 
 def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
@@ -76,6 +77,31 @@ def analyze_user(usernames):
         if group_bloc_words:
             group_bloc_words = sorted(group_bloc_words, key=lambda x: x['term_freq'], reverse=True)
         
+        group_top_actions = []
+        group_top_syntactic = []
+        group_top_semantic = []
+        group_top_sentiment = []
+        group_top_time = []
+
+        for word in group_bloc_words:
+            type = bloc_symbols.get_symbol_type(word['term'])
+            if type == 'Action':
+                group_top_actions.append(word)
+            elif type == 'Syntactic':
+                group_top_syntactic.append(word)
+            elif type == 'Semantic':
+                group_top_semantic.append(word)
+            elif type == 'Sentiment':
+                group_top_sentiment.append(word)
+            elif type == 'Time':
+                group_top_time.append(word)
+        
+        recalculate_bloc_word_rate(group_top_actions)
+        recalculate_bloc_word_rate(group_top_syntactic)
+        recalculate_bloc_word_rate(group_top_semantic)
+        recalculate_bloc_word_rate(group_top_sentiment)
+        recalculate_bloc_word_rate(group_top_time)
+
         # Generate and sort the pairwise comparisons
         pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
         pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
@@ -86,11 +112,43 @@ def analyze_user(usernames):
             'total_tweets': total_tweets,
             'account_blocs': [],
             'group_top_bloc_words': group_bloc_words,
+            'group_top_actions': group_top_actions,
+            'group_top_syntactic': group_top_syntactic,
+            'group_top_semantic': group_top_semantic,
+            'group_top_sentiment': group_top_sentiment,
+            'group_top_time': group_top_time,
             'pairwise_sim': pairwise_sim_report
         }
 
         for account_bloc, account_data in zip(all_bloc_output, user_data):
             bloc_words = user_bloc_words.get(account_data['username'], [])
+
+            top_actions = []
+            top_syntactic = []
+            top_semantic = []
+            top_sentiment = []
+            top_time = []
+
+            for word in bloc_words:
+                type = bloc_symbols.get_symbol_type(word['term'])
+                if type == 'Action':
+                    top_actions.append(word)
+                elif type == 'Syntactic':
+                    top_syntactic.append(word)
+                elif type == 'Semantic':
+                    top_semantic.append(word)
+                elif type == 'Sentiment':
+                    top_sentiment.append(word)
+                elif type == 'Time':
+                    top_time.append(word)
+
+
+            
+            recalculate_bloc_word_rate(top_actions)
+            recalculate_bloc_word_rate(top_syntactic)
+            recalculate_bloc_word_rate(top_semantic)
+            recalculate_bloc_word_rate(top_sentiment)
+            recalculate_bloc_word_rate(top_time)
 
             all_tweets = account_bloc['tweets']
 
@@ -112,9 +170,23 @@ def analyze_user(usernames):
                 'bloc_semantic_entity': account_bloc['bloc']['content_semantic_entity'],
                 'bloc_semantic_sentiment': account_bloc['bloc']['content_semantic_sentiment'],
                 'bloc_change': account_bloc['bloc']['change'],
+                # Top Words
                 'top_bloc_words': bloc_words,
+                'top_actions': top_actions,
+                'top_syntactic': top_syntactic,
+                'top_semantic': top_semantic,
+                'top_sentiment': top_sentiment,
+                'top_time': top_time,
                 # Linked Data
                 'linked_data': linked_data
             })
 
     return result
+
+def recalculate_bloc_word_rate(bloc_words):
+    total_freq = sum([x['term_freq'] for x in bloc_words])
+
+    for word in bloc_words:
+        term_freq = word['term_freq']
+        term_freq = term_freq / total_freq
+        word['term_rate'] = f"{term_freq:.1%}"
