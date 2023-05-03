@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "blocdemo",
-    "bootstrap5",
     "compressor"
 ]
 
