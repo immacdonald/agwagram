@@ -3,12 +3,12 @@ class DjangoCounter:
 
     def increment(self):
         self.count += 1
-        return ''
+        return ""
 
     def decrement(self):
         self.count -= 1
-        return ''
+        return ""
 
     def double(self):
         self.count *= 2
-        return ''
+        return ""
