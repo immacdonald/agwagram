@@ -57,7 +57,6 @@ Results | B3T
                         <table>
                             <tr>
                                 <th class="table-main">Action</th>
-                                <th>Frequency</th>
                                 <th>Rate</th>
                             </tr>
                             {% for word in group_top_actions %}
@@ -71,8 +70,7 @@ Results | B3T
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
+                                <td>{{word.term_rate}} ({{word.term_freq}})</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -101,7 +99,6 @@ Results | B3T
                         <table>
                             <tr>
                                 <th class="table-main">Action</th>
-                                <th>Frequency</th>
                                 <th>Rate</th>
                             </tr>
                             {% for word in group_top_syntactic %}
@@ -115,8 +112,7 @@ Results | B3T
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
+                                <td>{{word.term_rate}} ({{word.term_freq}})</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -145,7 +141,6 @@ Results | B3T
                         <table>
                             <tr>
                                 <th class="table-main">Action</th>
-                                <th>Frequency</th>
                                 <th>Rate</th>
                             </tr>
                             {% for word in group_top_semantic %}
@@ -159,8 +154,7 @@ Results | B3T
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
+                                <td>{{word.term_rate}} ({{word.term_freq}})</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -189,7 +183,6 @@ Results | B3T
                         <table>
                             <tr>
                                 <th class="table-main">Action</th>
-                                <th>Frequency</th>
                                 <th>Rate</th>
                             </tr>
                             {% for word in group_top_sentiment %}
@@ -203,8 +196,7 @@ Results | B3T
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
+                                <td>{{word.term_rate}} ({{word.term_freq}})</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -233,7 +225,6 @@ Results | B3T
                         <table>
                             <tr>
                                 <th class="table-main">Action</th>
-                                <th>Frequency</th>
                                 <th>Rate</th>
                             </tr>
                             {% for word in group_top_time %}
@@ -247,8 +238,7 @@ Results | B3T
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
+                                <td>{{word.term_rate}} ({{word.term_freq}})</td>
                             </tr>
                             {% endfor %}
                         </table>
