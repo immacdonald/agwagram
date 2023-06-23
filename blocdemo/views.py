@@ -39,16 +39,18 @@ def analysis_results(request, usernames):
 
     if results['successful_generation']:
         if(results['query_count'] > 1):
-            for word in results['group_top_bloc_words']:
-                word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
-
             for u_pair in results['pairwise_sim']:
-                u_pair['sim'] = "{:.4f}".format(float(u_pair["sim"]), 4)
+                u_pair['sim'] = f'{float(u_pair["sim"]):.1%}'
 
             context = {
                 'total_tweets': results['total_tweets'],
                 'account_blocs': [],
                 'group_top_bloc_words': results['group_top_bloc_words'],
+                "group_top_actions": results['group_top_actions'],
+                "group_top_syntactic": results['group_top_syntactic'],
+                "group_top_semantic": results['group_top_semantic'],
+                "group_top_sentiment": results['group_top_sentiment'],
+                "group_top_time": results['group_top_time'],
                 'pairwise_sim': results['pairwise_sim'][:10],
                 'bloc_symbols': bloc_symbols.get_all_symbols()
             }
@@ -78,9 +80,6 @@ def analysis_results(request, usernames):
 
 def format_account_data(account):
     # Output formatting
-    for word in account['top_bloc_words']:
-        word['term_rate'] = "{:.3f}".format(float(word["term_rate"]), 3)
-
     initial_date_format = '%Y-%m-%d %H:%M:%S'
     output_date_format = '%m/%d/%Y'
 
@@ -106,6 +105,11 @@ def format_account_data(account):
         "bloc_semantic_sentiment": process_bloc_string(account['bloc_semantic_sentiment']),
         "bloc_change": process_bloc_string(account['bloc_change']),
         "top_bloc_words": account['top_bloc_words'],#[:10],
+        "top_actions": account['top_actions'],
+        "top_syntactic": account['top_syntactic'],
+        "top_semantic": account['top_semantic'],
+        "top_sentiment": account['top_sentiment'],
+        "top_time": account['top_time'],
         # Linked Data
         'linked_data': account['linked_data'],
         'counter': DjangoCounter()
