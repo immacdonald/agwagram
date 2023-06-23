@@ -120,12 +120,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom Settings
 import os
-import dotenv
-
-dotenv.load_dotenv(dotenv.find_dotenv())
 BEARER_TOKEN = os.environ['BEARER_TOKEN'] 
 
-import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
 STATICFILES_FINDERS =( 'django.contrib.staticfiles.finders.FileSystemFinder',  'django.contrib.staticfiles.finders.AppDirectoriesFinder',    'compressor.finders.CompressorFinder',
 ) 
