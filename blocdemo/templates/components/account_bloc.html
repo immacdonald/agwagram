@@ -21,6 +21,7 @@
                     <table>
                         <tr>
                             <th class="table-main">Action</th>
+                            <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
                         {% for word in account.top_actions %}
@@ -34,7 +35,8 @@
                                     {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{word.term_rate}} ({{word.term_freq}})</td>
+                            <td>{{word.term_freq}}</td>
+                            <td>{{word.term_rate}}</td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -63,6 +65,7 @@
                     <table>
                         <tr>
                             <th class="table-main">Action</th>
+                            <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
                         {% for word in account.top_syntactic %}
@@ -76,7 +79,8 @@
                                     {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{word.term_rate}} ({{word.term_freq}})</td>
+                            <td>{{word.term_freq}}</td>
+                            <td>{{word.term_rate}}</td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -105,6 +109,7 @@
                     <table>
                         <tr>
                             <th class="table-main">Action</th>
+                            <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
                         {% for word in account.top_semantic %}
@@ -118,7 +123,8 @@
                                     {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{word.term_rate}} ({{word.term_freq}})</td>
+                            <td>{{word.term_freq}}</td>
+                            <td>{{word.term_rate}}</td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -147,6 +153,7 @@
                     <table>
                         <tr>
                             <th class="table-main">Action</th>
+                            <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
                         {% for word in account.top_sentiment %}
@@ -160,7 +167,8 @@
                                     {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{word.term_rate}} ({{word.term_freq}})</td>
+                            <td>{{word.term_freq}}</td>
+                            <td>{{word.term_rate}}</td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -189,6 +197,7 @@
                     <table>
                         <tr>
                             <th class="table-main">Action</th>
+                            <th>Frequency</th>
                             <th>Rate</th>
                         </tr>
                         {% for word in account.top_time %}
@@ -202,7 +211,8 @@
                                     {% if not forloop.last %},&nbsp;{% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{word.term_rate}} ({{word.term_freq}})</td>
+                            <td>{{word.term_freq}}</td>
+                            <td>{{word.term_rate}}</td>
                         </tr>
                         {% endfor %}
                     </table>

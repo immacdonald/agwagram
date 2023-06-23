@@ -664,10 +664,7 @@ th {
 
 td {
 	padding: 4px 4px;
-}
 
-tr {
-	text-align: left;
 }
   
 tr:nth-child(odd):not(:first-child) {
@@ -677,7 +674,7 @@ tr:nth-child(odd):not(:first-child) {
 .table-main {
 	// Requires a width before max-width applies
 	width: 100%;
-	max-width: 60%;
+	max-width: 50%;
 }
 
 .special-text {
@@ -728,8 +725,9 @@ tr:nth-child(odd):not(:first-child) {
 		z-index: 999;
 
 		&.large {
+			white-space: nowrap;
 			padding: 10px;
-			width: 360px;
+			width: fit-content;
 		}
 
 		&::after {

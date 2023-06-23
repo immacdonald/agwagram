@@ -42,10 +42,10 @@ def analysis_results(request, usernames):
     results = bloc_handler.analyze_user(usernames)
     # print(results)
 
-    if results["successful_generation"]:
-        if results["query_count"] > 1:
-            for u_pair in results["pairwise_sim"]:
-                u_pair["sim"] = f'{float(u_pair["sim"]):.1%}'
+    if results['successful_generation']:
+        if(results['query_count'] > 1):
+            for u_pair in results['pairwise_sim']:
+                u_pair['sim'] = "{:.4f}".format(float(u_pair["sim"]), 4)
 
             context = {
                 "total_tweets": results["total_tweets"],
