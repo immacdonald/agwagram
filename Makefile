@@ -7,7 +7,7 @@ define setup_env
 endef
 
 # Full rebuild and Docker
-clean:
+build:
 	echo 'Building BLOC website Docker image'
 	rm -rf venv
 	docker rm -f bloc_website
@@ -35,3 +35,7 @@ run_local:
 	python3 manage.py makemigrations
 	python3 manage.py migrate
 	python3 manage.py runserver 0.0.0.0:8000
+
+# flake8 linter
+flake8:
+	flake8
