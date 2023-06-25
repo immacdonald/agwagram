@@ -28,13 +28,20 @@ def verify_user_exists(user_list):
                 'error_detail': error['detail'].replace("[", "").replace("]", "")
             })
         return len(error_details['errors']), error_details
+    elif user_data.get('title') == 'Client Forbidden':
+        error_details = {
+            'errors': [{
+                'error_title': user_data['title'],
+                'error_detail': 'Unable to access the Twitter API due to recent changes by Twitter that are hostile towards developers.'
+            }]
+        }
+        return 1, error_details
 
     return 0, user_data['data']
 
 
 def analyze_user(usernames):
     usernames = usernames.replace(',', ' ').split()
-    print(usernames)
 
     # Remove duplicate usernames while maintaining order
     unique_usernames = set()
