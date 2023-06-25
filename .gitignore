@@ -104,6 +104,9 @@ celerybeat.pid
 # Environments
 secrets.env
 
+#Virtual Environments
+/venv/
+
 # Spyder project settings
 .spyderproject
 .spyproject

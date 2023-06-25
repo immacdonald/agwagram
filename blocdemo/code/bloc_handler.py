@@ -8,6 +8,7 @@ from bloc.subcommands import run_subcommands
 from . import bloc_extension
 from . import bloc_symbols
 
+
 def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
     ot = osometweet.OsomeTweet(oauth2)
@@ -15,9 +16,7 @@ def verify_user_exists(user_list):
     # Returns dict list with 'id' 'name' and 'username' fields
     user_data = ot.user_lookup_usernames(user_list)
 
-    #print('User data', user_data)
-
-    if(user_data.get('errors')):
+    if (user_data.get('errors')):
         error_details = {
             'errors': []
         }
@@ -42,7 +41,6 @@ def analyze_user(usernames):
     usernames = [u for u in usernames if not (u in unique_usernames or unique_usernames.add(u))]
 
     error_count, user_data = verify_user_exists(usernames)
-    #print('User data is', user_data)
 
     if error_count > 0:
         result = {
@@ -52,19 +50,16 @@ def analyze_user(usernames):
         }
 
     else:
-        user_ids = [ user['id'] for user in user_data ]
-        gen_bloc_params, gen_bloc_args = bloc_extension.get_bloc_params(user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        user_ids = [user['id'] for user in user_data]
+        gen_bloc_params, gen_bloc_args = bloc_extension.get_bloc_params(
+            user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
-
-        #print(bloc_payload)
 
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
 
-        #print(all_bloc_output)
-
         # Useful statistics
         query_count = len(usernames)
-        total_tweets = sum([ user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output ])
+        total_tweets = sum([user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output])
 
         # Get the top BLOC words per account
         top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
@@ -72,11 +67,12 @@ def analyze_user(usernames):
         if total_tweets > 0:
             for words, user in zip(top_bloc_words['per_doc'], top_bloc_words['users']):
                 user_bloc_words[user] = words
+
         # Get the top BLOC words for all acounts and sort by frequency
         group_bloc_words = top_bloc_words.get('all_docs', [])
         if group_bloc_words:
             group_bloc_words = sorted(group_bloc_words, key=lambda x: x['term_freq'], reverse=True)
-        
+
         group_top_actions = []
         group_top_syntactic = []
         group_top_semantic = []
@@ -95,7 +91,7 @@ def analyze_user(usernames):
                 group_top_sentiment.append(word)
             elif type == 'Time':
                 group_top_time.append(word)
-        
+
         recalculate_bloc_word_rate(group_top_actions)
         recalculate_bloc_word_rate(group_top_syntactic)
         recalculate_bloc_word_rate(group_top_semantic)
@@ -142,8 +138,6 @@ def analyze_user(usernames):
                 elif type == 'Time':
                     top_time.append(word)
 
-
-            
             recalculate_bloc_word_rate(top_actions)
             recalculate_bloc_word_rate(top_syntactic)
             recalculate_bloc_word_rate(top_semantic)
@@ -182,6 +176,7 @@ def analyze_user(usernames):
             })
 
     return result
+
 
 def recalculate_bloc_word_rate(bloc_words):
     total_freq = sum([x['term_freq'] for x in bloc_words])

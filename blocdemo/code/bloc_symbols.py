@@ -78,6 +78,7 @@ master_symbol_dict = {
     **time_symbol_dict
 }
 
+
 def get_symbol_type(symbol):
     # For multi-symbol words only use the first
     if len(symbol) > 1:
@@ -97,14 +98,17 @@ def get_symbol_type(symbol):
         return 'Time'
     return 'Error'
 
+
 def get_symbol_meaning(symbol, default='Error'):
     return master_symbol_dict.get(symbol, default)
+
 
 def get_multi_symbol_meanings(symbols, default='Error'):
     meaning = []
     for char in symbols:
         meaning.append(get_symbol_meaning(char, default))
     return meaning
+
 
 def get_all_symbols():
     return master_symbol_dict
