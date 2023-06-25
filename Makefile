@@ -17,7 +17,7 @@ build:
 
 # Creates a blank secrets.env file
 secret_file:
-	test -f secrets.env && echo 'Secret File Already Created' || echo "BEARER_TOKEN='Insert Twitter API bearer token here.'" > secrets.env
+	test -f secrets.env && echo 'Secret File Already Created' || echo "BEARER_TOKEN=Insert Twitter API bearer token here" > secrets.env
 
 # Makes the virtual environment for local execution
 virtualenv:
@@ -32,7 +32,7 @@ run_local:
 	test -d venv || $(MAKE) virtualenv
 	. ./venv/bin/activate
 	$(call setup_env, secrets)
-	$(call, setup_env, development)
+	$(call setup_env, development)
 	python3 manage.py makemigrations
 	python3 manage.py migrate
 	python3 manage.py runserver 0.0.0.0:8000
