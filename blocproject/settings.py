@@ -120,6 +120,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom Settings
+CURRENT_VERSION = os.environ['CURRENT_VERSION']
 BEARER_TOKEN = os.environ['BEARER_TOKEN']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')

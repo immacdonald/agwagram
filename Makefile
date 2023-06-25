@@ -32,6 +32,7 @@ run_local:
 	test -d venv || $(MAKE) virtualenv
 	. ./venv/bin/activate
 	$(call setup_env, secrets)
+	$(call, setup_env, development)
 	python3 manage.py makemigrations
 	python3 manage.py migrate
 	python3 manage.py runserver 0.0.0.0:8000
