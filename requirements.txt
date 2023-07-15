@@ -27,6 +27,6 @@ sqlparse==0.4.4
 textblob==0.17.1
 threadpoolctl==3.1.0
 tqdm==4.65.0
-twitterbloc @ git+https://github.com/anwala/bloc.git@66928042ea7d7053aa3cfd07a636e4eeeb476b6d
+twitterbloc @ git+https://github.com/anwala/bloc@cluster
 typing_extensions==4.6.3
 urllib3==1.26.6

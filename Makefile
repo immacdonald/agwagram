@@ -38,5 +38,5 @@ run_local:
 	python3 manage.py runserver 0.0.0.0:8000
 
 # flake8 linter
-flake8:
+run_flake8:
 	flake8
