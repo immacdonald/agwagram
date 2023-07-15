@@ -21,7 +21,8 @@ def analyze(request, form_data=None):
         form = UsernameSearchForm(request.POST or None)
         if form.is_valid():
             username = form.cleaned_data['username']
-            return analysis_results(request, username)
+            results = bloc_handler.analyze_user(username)
+            return analysis_results(request, results)
     else:
         form = UsernameSearchForm(form_data)
 
@@ -31,10 +32,12 @@ def analyze(request, form_data=None):
 def methodology(request):
     return render(request, 'pages/methodology.html')
 
+def analyze_file(request):
+    results = bloc_handler.analyze_tweet_file(None)
+    return analysis_results(request, results) 
 
-def analysis_results(request, usernames):
-    results = bloc_handler.analyze_user(usernames)
 
+def analysis_results(request, results):
     if results['successful_generation']:
         if (results['query_count'] > 1):
             for u_pair in results['pairwise_sim']:

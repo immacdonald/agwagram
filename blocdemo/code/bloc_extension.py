@@ -49,10 +49,12 @@ def get_bloc_params(user_ids, bearer_token, bloc_alphabets=['action', 'content_s
     return params, Namespace(**params)
 
 
-def get_tweet_bloc_params(bloc_alphabets=['action', 'content_syntactic']):
+def get_tweet_bloc_params(user_ids, bloc_alphabets=['action', 'content_syntactic']):
     defaultParams = get_default_bloc_params(bloc_alphabets=bloc_alphabets)
     
     params = {
+        'screen_names_or_ids': user_ids,
+        'account_src': 'Tweet File',
         'tweet_order': 'noop'
     }
 
