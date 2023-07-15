@@ -3,10 +3,15 @@ from django.conf import settings
 import osometweet
 
 from bloc.generator import gen_bloc_for_users
+from bloc.generator import add_bloc_sequences
 from bloc.subcommands import run_subcommands
 
 from . import bloc_extension
 from . import bloc_symbols
+
+import os
+from bloc.util import getDictFromJsonGZ
+from bloc.util import get_default_symbols
 
 
 def verify_user_exists(user_list):
@@ -40,6 +45,30 @@ def verify_user_exists(user_list):
     return 0, user_data['data']
 
 
+def analyze_tweet_file(file = None):
+    if not file:
+        path = os.path.dirname(os.path.abspath(__file__))
+        file = getDictFromJsonGZ(os.path.join(path, 'sample_raw_tweets_1.json.gz'))
+    
+    gen_bloc_params, gen_bloc_args = bloc_extension.get_tweet_bloc_params(
+            bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+    
+    all_bloc_symbols = get_default_symbols()
+    bloc_sequence = add_bloc_sequences(file, all_bloc_symbols=all_bloc_symbols, **gen_bloc_params)
+
+    all_bloc_output = [bloc_sequence]
+
+    user_data = [
+        {
+            'id': all_bloc_output[0]['tweets'][0]['user']['id'],
+            'username': all_bloc_output[0]['tweets'][0]['user']['screen_name'],
+            'name': all_bloc_output[0]['tweets'][0]['user']['name'],
+        }
+    ]
+
+    return all_bloc_output, user_data
+
+
 def analyze_user(usernames):
     usernames = usernames.replace(',', ' ').split()
 
@@ -47,7 +76,9 @@ def analyze_user(usernames):
     unique_usernames = set()
     usernames = [u for u in usernames if not (u in unique_usernames or unique_usernames.add(u))]
 
-    error_count, user_data = verify_user_exists(usernames)
+    #error_count, user_data = verify_user_exists(usernames)
+
+    error_count = 0
 
     if error_count > 0:
         result = {
@@ -57,12 +88,14 @@ def analyze_user(usernames):
         }
 
     else:
+        all_bloc_output, user_data = analyze_tweet_file()
         user_ids = [user['id'] for user in user_data]
+
         gen_bloc_params, gen_bloc_args = bloc_extension.get_bloc_params(
             user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
-        bloc_payload = gen_bloc_for_users(**gen_bloc_params)
+        #bloc_payload = gen_bloc_for_users(**gen_bloc_params)
 
-        all_bloc_output = bloc_payload.get('all_users_bloc', [])
+        #all_bloc_output = bloc_payload.get('all_users_bloc', [])
 
         # Useful statistics
         query_count = len(usernames)
@@ -164,7 +197,8 @@ def analyze_user(usernames):
                 'tweet_count': account_bloc['more_details']['total_tweets'],
                 'first_tweet_date': account_bloc['more_details']['first_tweet_created_at_local_time'],
                 'last_tweet_date': account_bloc['more_details']['last_tweet_created_at_local_time'],
-                'elapsed_time': account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds'],
+                #'elapsed_time': account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds'],
+                'elapsed_time': -1,
                 # Analysis
                 'bloc_action': account_bloc['bloc']['action'],
                 'bloc_syntactic': account_bloc['bloc']['content_syntactic'],
@@ -182,6 +216,7 @@ def analyze_user(usernames):
                 'linked_data': linked_data
             })
 
+    print(result)
     return result
 
 
