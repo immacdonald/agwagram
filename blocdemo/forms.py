@@ -1,6 +1,6 @@
 from django import forms
 from django.core import validators
-
+from django.core.validators import FileExtensionValidator
 
 class UsernameSearchForm(forms.Form):
     usernameValidator = validators.RegexValidator(
@@ -13,3 +13,6 @@ class UsernameSearchForm(forms.Form):
         required=True,
         widget=forms.TextInput(attrs={'placeholder': 'OSoMe_IU, POTUS'})
     )
+
+class UploadFileForm(forms.Form):
+    upload_file = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=["gz"])]);

@@ -10,7 +10,7 @@ Analyze | B3T
   <div class="column">
     <h1>Analyze</h1>
     <div class="search">
-      <form name = "form" action = "{% url "analyze" %}" method = "POST" >
+      <form name = "form" action = "{% url "analyze" %}" method = "POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
         <div class="form-group{% if field.errors %} has-error{% endif %}">

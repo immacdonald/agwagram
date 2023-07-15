@@ -47,8 +47,10 @@ def verify_user_exists(user_list):
 
 def analyze_tweet_file(file = None):
     if not file:
-        path = os.path.dirname(os.path.abspath(__file__))
-        file = getDictFromJsonGZ(os.path.join(path, 'sample_raw_tweets_1.json.gz'))
+        dir = os.path.dirname(os.path.abspath(__file__))
+        file = os.path.join(dir, 'sample_raw_tweets_1.json.gz')
+    
+    file = getDictFromJsonGZ(file)
     
     user_data = [
         {

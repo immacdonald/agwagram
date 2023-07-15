@@ -6,7 +6,7 @@ from .code.django_counter import DjangoCounter
 
 from datetime import datetime
 
-from .forms import UsernameSearchForm
+from .forms import UsernameSearchForm, UploadFileForm
 
 import logging
 logger = logging.getLogger("mainLogger")
@@ -21,8 +21,8 @@ def analyze(request, form_data=None):
         form = UsernameSearchForm(request.POST or None)
         if form.is_valid():
             username = form.cleaned_data['username']
-            results = bloc_handler.analyze_user(username)
-            return analysis_results(request, results)
+            request.session['results'] = bloc_handler.analyze_user(username)
+            return analysis_results(request)
     else:
         form = UsernameSearchForm(form_data)
 
@@ -37,7 +37,8 @@ def analyze_file(request):
     return analysis_results(request, results) 
 
 
-def analysis_results(request, results):
+def analysis_results(request):
+    results = request.session['results']
     if results['successful_generation']:
         if (results['query_count'] > 1):
             for u_pair in results['pairwise_sim']:
@@ -118,3 +119,34 @@ def format_account_data(account):
 
 def process_bloc_string(bloc):
     return bloc.replace(' ', '').replace('|', '')
+
+
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+import tempfile
+import os
+
+class UploadView(FormView):
+    form_class = UploadFileForm
+    template_name = 'upload.html'
+    enctype = 'multipart/form-data'
+    success_url = reverse_lazy('results')
+
+    def form_valid(self, form):
+        file = form.cleaned_data['upload_file']
+
+        # Use a tempfile to convert the uploaded file to one that can be accessed intuitively
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            for chunk in file.chunks():
+                temp_file.write(chunk)
+
+            # Obtain the file path of the temporary file
+            temp_file_path = temp_file.name
+
+        results = bloc_handler.analyze_tweet_file(temp_file_path)
+        os.remove(temp_file_path)
+
+        self.request.session['results'] = results
+
+        return redirect(self.get_success_url())
