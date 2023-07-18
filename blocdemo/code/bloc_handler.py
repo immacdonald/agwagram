@@ -1,17 +1,15 @@
 from django.conf import settings
 
 import osometweet
+import json
 
 from bloc.generator import gen_bloc_for_users
 from bloc.generator import add_bloc_sequences
+from bloc.util import get_default_symbols
 from bloc.subcommands import run_subcommands
 
 from . import bloc_extension
 from . import bloc_symbols
-
-import os
-from bloc.util import getDictFromJsonGZ
-from bloc.util import get_default_symbols
 
 
 def verify_user_exists(user_list):
@@ -45,29 +43,56 @@ def verify_user_exists(user_list):
     return 0, user_data['data']
 
 
+def getDictFromJsonl(file):
+    results = []
+
+    with open(file, 'r') as jsonl_file:
+        jsonl_list = list(jsonl_file)
+
+    for obj in jsonl_list:
+        result = json.loads(obj)
+        results.append(result)
+    return results
+    
+
+
 def analyze_tweet_file(file = None):
-    if not file:
-        dir = os.path.dirname(os.path.abspath(__file__))
-        file = os.path.join(dir, 'sample_raw_tweets_1.json.gz')
-    
-    file = getDictFromJsonGZ(file)
-    
-    user_data = [
-        {
-            'id': file[0]['user']['id'],
-            'username': file[0]['user']['screen_name'],
-            'name': file[0]['user']['name'],
-        }
-    ]
-    user_ids = [user['id'] for user in user_data]
+    if(file):
+        tweets = getDictFromJsonl(file)
 
-    bloc_params, bloc_args = bloc_extension.get_tweet_bloc_params(
-            user_ids, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        # Sort Tweets by user
+        users = {}
+        for tweet in tweets:
+            user_id = tweet['user']['id']
+            if user_id in users.keys():
+                users[user_id]['tweets'].append(tweet)
+            else:
+                users[user_id] = {
+                    'id': user_id,
+                    'username': tweet['user']['screen_name'],
+                    'name': tweet['user']['name'],
+                    'tweets': [tweet]
+                }
+        
+        user_data = []
+        for user in users.values():
+            user_data.append(
+                {
+                    'id': user['id'],
+                    'username': user['username'],
+                    'name': user['name']
+                }
+            )
     
-    all_bloc_symbols = get_default_symbols()
-    bloc_sequence = add_bloc_sequences(file, all_bloc_symbols=all_bloc_symbols, **bloc_params)
+        user_ids = [user['id'] for user in user_data]
 
-    all_bloc_output = [bloc_sequence]
+        bloc_params, bloc_args = bloc_extension.get_tweet_bloc_params(
+                user_ids, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        
+        all_bloc_symbols = get_default_symbols()
+        bloc_sequence = add_bloc_sequences(tweets, all_bloc_symbols=all_bloc_symbols, **bloc_params)
+
+        all_bloc_output = [bloc_sequence]
 
     return bloc_analysis(all_bloc_output, user_data, bloc_params, bloc_args)
 
@@ -80,7 +105,6 @@ def analyze_user(usernames):
     usernames = [u for u in usernames if not (u in unique_usernames or unique_usernames.add(u))]
 
     error_count, user_data = verify_user_exists(usernames)
-    print(user_data)
 
     if error_count > 0:
         result = {

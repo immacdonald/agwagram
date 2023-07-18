@@ -15,4 +15,4 @@ class UsernameSearchForm(forms.Form):
     )
 
 class UploadFileForm(forms.Form):
-    upload_file = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=["gz"])]);
+    upload_file = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=["jsonl"])]);
