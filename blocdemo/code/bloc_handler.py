@@ -43,7 +43,7 @@ def verify_user_exists(user_list):
     return 0, user_data['data']
 
 
-def getDictFromJsonl(file):
+def getDictArrayFromJsonl(file):
     results = []
 
     with open(file, 'r') as jsonl_file:
@@ -56,9 +56,11 @@ def getDictFromJsonl(file):
     
 
 
-def analyze_tweet_file(file = None):
-    if(file):
-        tweets = getDictFromJsonl(file)
+def analyze_tweet_file(files = None):
+    if(files):
+        tweets = []
+        for file in files:
+            tweets.extend(getDictArrayFromJsonl(file))
 
         # Sort Tweets by user
         users = {}
@@ -129,6 +131,8 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_params, gen_bloc_args):
     # Useful statistics
     query_count = len(user_data)
     total_tweets = sum([user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output])
+
+    print(user_data)
 
     # Get the top BLOC words per account
     top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)

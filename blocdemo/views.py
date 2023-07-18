@@ -134,18 +134,24 @@ class UploadView(FormView):
     success_url = reverse_lazy('results')
 
     def form_valid(self, form):
-        file = form.cleaned_data['upload_file']
+        uploaded_files = self.request.FILES.getlist('upload_files')
 
-        # Use a tempfile to convert the uploaded file to one that can be accessed intuitively
-        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-            for chunk in file.chunks():
-                temp_file.write(chunk)
+        # Use tempfiles to convert the uploaded files to ones that can be accessed intuitively
+        temp_files = []
+        for file in uploaded_files:
+            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                for chunk in file.chunks():
+                    temp_file.write(chunk)
 
-            # Obtain the file path of the temporary file
-            temp_file_path = temp_file.name
+                # Obtain the file path of the temporary file
+                temp_file_path = temp_file.name
 
-        results = bloc_handler.analyze_tweet_file(temp_file_path)
-        os.remove(temp_file_path)
+            temp_files.append(temp_file_path)
+
+        results = bloc_handler.analyze_tweet_file(temp_files)
+
+        for temp_file in temp_files:
+            os.remove(temp_file)
 
         self.request.session['results'] = results
 
