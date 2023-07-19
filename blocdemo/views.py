@@ -127,6 +127,15 @@ from django.shortcuts import redirect
 import tempfile
 import os
 
+def handle_uploaded_file(file):
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        for chunk in file.chunks():
+            temp_file.write(chunk)
+
+    
+    return temp_file
+
+
 class UploadView(FormView):
     form_class = UploadFileForm
     template_name = 'upload.html'
@@ -134,23 +143,17 @@ class UploadView(FormView):
     success_url = reverse_lazy('results')
 
     def form_valid(self, form):
-        uploaded_files = self.request.FILES.getlist('upload_files')
+        tweet_files = self.request.FILES.getlist('tweet_files')
 
-        # Use tempfiles to convert the uploaded files to ones that can be accessed intuitively
-        temp_files = []
-        for file in uploaded_files:
-            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-                for chunk in file.chunks():
-                    temp_file.write(chunk)
+        # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
+        converted_files = []
+        for file in tweet_files:
+            converted_file = handle_uploaded_file(file)
+            converted_files.append(converted_file.name)
 
-                # Obtain the file path of the temporary file
-                temp_file_path = temp_file.name
+        results = bloc_handler.analyze_tweet_file(converted_files)
 
-            temp_files.append(temp_file_path)
-
-        results = bloc_handler.analyze_tweet_file(temp_files)
-
-        for temp_file in temp_files:
+        for temp_file in converted_files:
             os.remove(temp_file)
 
         self.request.session['results'] = results

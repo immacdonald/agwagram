@@ -76,27 +76,31 @@ def analyze_tweet_file(files = None):
                     'tweets': [tweet]
                 }
         
+
         user_data = []
+        all_bloc_output = []
+        all_bloc_symbols = get_default_symbols()
+
         for user in users.values():
+            this_params, _ = bloc_extension.get_tweet_bloc_params(
+                user['id'], bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+
+            all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **this_params))
             user_data.append(
                 {
                     'id': user['id'],
                     'username': user['username'],
-                    'name': user['name']
+                    'name': user['name'],
+                    'length': len(user['tweets'])
                 }
             )
     
         user_ids = [user['id'] for user in user_data]
 
-        bloc_params, bloc_args = bloc_extension.get_tweet_bloc_params(
+        _, bloc_args = bloc_extension.get_tweet_bloc_params(
                 user_ids, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
-        
-        all_bloc_symbols = get_default_symbols()
-        bloc_sequence = add_bloc_sequences(tweets, all_bloc_symbols=all_bloc_symbols, **bloc_params)
 
-        all_bloc_output = [bloc_sequence]
-
-    return bloc_analysis(all_bloc_output, user_data, bloc_params, bloc_args)
+    return bloc_analysis(all_bloc_output, user_data, bloc_args, count_elapsed = False)
 
 
 def analyze_user(usernames):
@@ -122,17 +126,14 @@ def analyze_user(usernames):
         
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        result = bloc_analysis(all_bloc_output, user_data, gen_bloc_params, gen_bloc_args)
-        
+        result = bloc_analysis(all_bloc_output, user_data, gen_bloc_args)
 
     return result
 
-def bloc_analysis(all_bloc_output, user_data, gen_bloc_params, gen_bloc_args):
+def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = True):
     # Useful statistics
     query_count = len(user_data)
     total_tweets = sum([user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output])
-
-    print(user_data)
 
     # Get the top BLOC words per account
     top_bloc_words = run_subcommands(gen_bloc_args, 'top_ngrams', all_bloc_output)
@@ -219,6 +220,11 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_params, gen_bloc_args):
 
         all_tweets = account_bloc['tweets']
 
+        if count_elapsed:
+            elapsed_time = account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds']
+        else: 
+            elapsed_time = -1
+
         linked_data = bloc_extension.link_data(all_tweets)
 
         result['account_blocs'].append({
@@ -230,8 +236,7 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_params, gen_bloc_args):
             'tweet_count': account_bloc['more_details']['total_tweets'],
             'first_tweet_date': account_bloc['more_details']['first_tweet_created_at_local_time'],
             'last_tweet_date': account_bloc['more_details']['last_tweet_created_at_local_time'],
-            #'elapsed_time': account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds'],
-            'elapsed_time': -1,
+            'elapsed_time':  elapsed_time,
             # Analysis
             'bloc_action': account_bloc['bloc']['action'],
             'bloc_syntactic': account_bloc['bloc']['content_syntactic'],

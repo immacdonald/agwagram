@@ -1,6 +1,7 @@
 from django import forms
 from django.core import validators
-from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
+import os
 
 from multiupload.fields import MultiFileField
 
@@ -16,11 +17,19 @@ class UsernameSearchForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'OSoMe_IU, POTUS'})
     )
 
+ 
+def validate_jsonl_files(value):
+    for file in value:
+        print(os.path.splitext(file.name)[1])
+        if os.path.splitext(file.name)[1] != '.jsonl':
+            raise ValidationError("Not a valid JSONL file.")
+        
+
 class UploadFileForm(forms.Form):
-    upload_files = MultiFileField(
+    tweet_files = MultiFileField(
+        required=True,
         min_num=1,
         max_num=10,
-        max_file_size=1024*1024*5,  # 5 MB
+        max_file_size=1024*1024*10,
+        validators=[validate_jsonl_files]
     )
-
-    #        validators=[FileExtensionValidator(allowed_extensions=["jsonl"])]
