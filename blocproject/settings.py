@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "compressor"
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -120,8 +123,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom Settings
-CURRENT_VERSION = os.environ['CURRENT_VERSION']
-BEARER_TOKEN = os.environ['BEARER_TOKEN']
+CURRENT_VERSION = os.environ.get('CURRENT_VERSION', 'No Version Found')
+BEARER_TOKEN = os.environ.get('BEARER_TOKEN', '')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.FileSystemFinder', 'django.contrib.staticfiles.finders.AppDirectoriesFinder', 'compressor.finders.CompressorFinder')

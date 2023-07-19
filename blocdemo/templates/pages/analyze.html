@@ -8,24 +8,24 @@ Analyze | B3T
 {% block content %}
 <div class="wide-centered">
   <div class="column">
-  <h1>Analyze</h1>
-  <div class="search">
-    <form name = "form" action = "{% url "analyze" %}" method = "POST" >
-      {% csrf_token %}
-      {% for field in form %}
-      <div class="form-group{% if field.errors %} has-error{% endif %}">
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
-        {% for error in field.errors %}
-          <p class="form-error">{{ error }}</p>
+    <h1>Analyze</h1>
+    <div class="search">
+      <form name = "form" action = "{% url "analyze" %}" method = "POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}
+            <p class="form-error">{{ error }}</p>
+          {% endfor %}
+        </div>
         {% endfor %}
-      </div>
-      {% endfor %}
-      <button type="submit">
-      <span class="icon material-symbols-outlined">search</span>
-      </button>
-    </form>
+        <button type="submit">
+        <span class="icon material-symbols-outlined">search</span>
+        </button>
+      </form>
+    </div>
   </div>
-</div>
 </div>
 {% endblock %}

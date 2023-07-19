@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+Analyze | B3T
+{% endblock %}
+
+
+{% block content %}
+<div class="wide-centered">
+    <div style="padding:20px;margin:40px;border:1px solid #ccc">
+        <h1>Tweet File Upload</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -34,15 +34,44 @@ def link_data(tweets):
     return linked_data
 
 
-def get_bloc_params(user_ids, bearer_token, token_pattern='word',
-                    no_screen_name=True, account_src='Twitter search',
-                    no_sleep=True, max_pages=1, max_results=100,
-                    bloc_alphabets=['action', 'content_syntactic']):
-    # bloc_alphabets = ['action', 'change', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment']
+def get_bloc_params(user_ids, bearer_token, bloc_alphabets=['action', 'content_syntactic']):
+    defaultParams = get_default_bloc_params(bloc_alphabets=bloc_alphabets)
+    
     params = {
         'screen_names_or_ids': user_ids,
         'bearer_token': bearer_token,
-        'account_src': account_src,
+        'account_src': 'Twitter Search',
+        'tweet_order': 'reverse'
+    }
+
+    params = params | defaultParams
+
+    return params, Namespace(**params)
+
+
+def get_tweet_bloc_params(user_ids, bloc_alphabets=['action', 'content_syntactic']):
+    defaultParams = get_default_bloc_params(bloc_alphabets=bloc_alphabets)
+    
+    params = {
+        'screen_names_or_ids': user_ids,
+        'account_src': 'Tweet File',
+        'tweet_order': 'noop'
+    }
+
+    params = params | defaultParams
+
+    return params, Namespace(**params)
+
+
+def get_default_bloc_params(bloc_alphabets):
+    # Previously function arguments but rarely modifified
+    token_pattern = 'word'
+    max_pages = 1
+    max_results = 100
+    no_screen_name = True
+    no_sleep = True
+
+    params = {
         'account_class': '',
         'access_token': '', 'access_token_secret': '', 'consumer_key': '', 'consumer_secret': '',
         'blank_mark': 60, 'minute_mark': 5, 'segmentation_type': 'week_number', 'days_segment_count': -1,
@@ -68,7 +97,6 @@ def get_bloc_params(user_ids, bearer_token, token_pattern='word',
         'token_pattern': token_pattern,
         'top_ngrams_add_all_docs': False,
         'sim_no_summary': True,
-        'tweet_order': 'reverse'
     }
 
-    return params, Namespace(**params)
+    return params
