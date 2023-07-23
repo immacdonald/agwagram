@@ -27,7 +27,7 @@ To use the BLOC features, a valid set of [Twitter Developer (API V2)](https://de
 make build
 ```
 
-The website is then accessible at the URL `http://localhost:8000/blocdemo/`.  
+The website is then accessible at the URL `http://localhost:8000/`.  
 
 #### Without Docker
 Instead of running inside of a Docker container, the website can also be started directly. Follow the above steps to properly format your `secrets.env` file, but then the following two commands:

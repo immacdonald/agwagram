@@ -5,9 +5,10 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.main, name='main'),
+    path('', views.MainView.as_view(), name='main'),
     path('analyze-user', views.AnalyzeUser.as_view(), name='analyze-user'),
-    path('results', views.analysis_results, name='results'),
-    path('methodology', views.methodology, name='methodology'),
+    path('results', views.AnalysisResultsView.as_view(), name='results'),
+    path('methodology', views.MethodologyView.as_view(), name='methodology'),
     path('analyze-file', views.AnalyzeFile.as_view(), name='analyze-file'),
+    path('api/v1/analyze/user', views.Analyze.as_view(), name='api-analyze-user'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

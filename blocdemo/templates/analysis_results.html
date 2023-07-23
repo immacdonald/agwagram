@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "components/base.html" %}
 
 {% block title %}
 Results | B3T
@@ -309,7 +309,7 @@ Results | B3T
             {% endif %}
         </div>
     </div>
-    {% include '../components/account_bloc.html' with account=account %}
+    {% include 'components/account_bloc.html' with account=account %}
 </div>
 {% endfor %}
 

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "components/base.html" %}
 
 {% block title %}
 Analyze | B3T
@@ -7,13 +7,37 @@ Analyze | B3T
 
 {% block content %}
 <div class="wide-centered">
-    <div style="padding:20px;margin:40px;border:1px solid #ccc">
-        <h1>Tweet File Upload</h1>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit">Submit</button>
-        </form>
+    <div class="column half-width">
+        {% if previous_results %}
+            <button class="full-button" onclick="location.href='{% url 'results' %}'" type="button">View Previous Results</button>
+        {% endif %}
+        <h1>Analyze</h1>
+        <div class="form">
+            <div>Upload files containing Tweet data to be analyzed using the BLOC algorithm. 
+                Files can be in JSON or JSONL formats and can be uploaded unzipped or as Gzip files.
+                To upload multiple files at once please select them all in the file selection prompt 
+                using Ctrl+Click or Cmd+Click depending on your browser and operating system.
+            </div>
+            <br/>
+            <form name = "form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group{% if field.errors %} has-error{% endif %}">
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  <br/>
+                  {{ field }}
+                  {% for error in field.errors %}
+                    <p class="form-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+                {% endfor %}
+                <div class="wide-centered">
+                    <button type="submit" class="submit-button">
+                    <span>Submit</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

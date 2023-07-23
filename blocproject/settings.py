@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "blocdemo",
-    "compressor"
+    "compressor",
+    "rest_framework"
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
