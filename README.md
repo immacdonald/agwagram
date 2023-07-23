@@ -24,10 +24,17 @@ make secret_file
 To use the BLOC features, a valid set of [Twitter Developer (API V2)](https://developer.twitter.com/en/docs/twitter-api) credentials must be configured in the project. These are read in from the `secrets.env` file once supplied with a value for `BEARER_TOKEN`. Then,  to compose the Docker image and begin running the development server:
 
 ```bash
-make build
+make docker
 ```
 
-The website is then accessible at the URL `http://localhost:8000/`.  
+This command is a combination of `make build` and `make run`, which can also be ran individually when needed. The website is then accessible at the URL `http://localhost:8000/`.  
+
+##### Changing Port
+To run the Django server on a port besides the default of `8000`, change the value of `PORT` in the `development.env` file. To apply these changes to an existing Docker container, stop the container and start it again using:
+
+```bash
+make run
+```
 
 #### Without Docker
 Instead of running inside of a Docker container, the website can also be started directly. Follow the above steps to properly format your `secrets.env` file, but then the following two commands:
