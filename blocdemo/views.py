@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .code import bloc_handler
 from .code import symbols
 from .code.django_counter import DjangoCounter
+from .code.file_handling import handle_uploaded_file
 
 from datetime import datetime
 
@@ -11,7 +12,6 @@ from .forms import UsernameSearchForm, UploadFileForm
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-import tempfile
 import os
 
 import logging
@@ -119,15 +119,6 @@ def format_account_data(account):
 
 def process_bloc_string(bloc):
     return bloc.replace(' ', '').replace('|', '')
-
-
-def handle_uploaded_file(file):
-    with tempfile.NamedTemporaryFile(delete=False, suffix=file.name) as temp_file:
-        for chunk in file.chunks():
-            temp_file.write(chunk)
-
-    
-    return temp_file
 
 
 class AnalyzeFile(FormView):

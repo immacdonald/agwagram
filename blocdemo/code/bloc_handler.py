@@ -1,8 +1,6 @@
 from django.conf import settings
 
 import osometweet
-import json
-import gzip
 
 from bloc.generator import gen_bloc_for_users
 from bloc.generator import add_bloc_sequences
@@ -12,7 +10,7 @@ from bloc.subcommands import run_subcommands
 from . import bloc_extension
 from . import symbols
 
-import os
+from .file_handling import *
 
 
 def verify_user_exists(user_list):
@@ -44,43 +42,6 @@ def verify_user_exists(user_list):
         return 1, error_details
 
     return 0, user_data['data']
-
-
-def getDictArrayFromJsonl(file):
-    data = []
-
-    with open(file, 'r') as jsonl_file:
-        jsonl_list = list(jsonl_file)
-
-    for obj in jsonl_list:
-        result = json.loads(obj)
-        data.append(result)
-    return data
-
-def getDictArrayFromJson(file):
-    data = []
-    with open(file, 'r') as json_file:
-        data = json.load(json_file)
-    
-    return data
-
-def getDictArrayFromFile(file):
-    file_type = os.path.splitext(file)[1]
-
-    if file_type == '.gz':
-        uncompressed_file = os.path.splitext(file)[0]
-        with gzip.open(file, 'rb') as gz_file:
-            with open(uncompressed_file, 'wb') as write_file:
-                write_file.write(gz_file.read())
-
-        # Determine the file type of the uncompressed file
-        file_type = os.path.splitext(uncompressed_file)[1]
-        file=uncompressed_file
-    
-    if file_type == '.json':
-        return getDictArrayFromJson(file)
-    elif file_type == '.jsonl':
-        return getDictArrayFromJsonl(file)
 
 
 def analyze_tweet_file(files = None):
