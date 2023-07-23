@@ -10,7 +10,7 @@
         </div>
         <div class="header-navigation">
             <nav class="header-navigation-links">
-                <a {% if request.resolver_match.url_name == 'main' %}class="active"{% endif %}href="/blocdemo">Home</a>
+                <a {% if request.resolver_match.url_name == 'main' %}class="active"{% endif %}href="/">Home</a>
                 <a {% if request.resolver_match.url_name == 'analyze' %}class="active"{% endif %} href="analyze">Analyze</a>
                 <a {% if request.resolver_match.url_name == 'upload' %}class="active"{% endif %} href="upload">Upload Tweets</a>
                 <a {% if request.resolver_match.url_name == 'methodology' %}class="active"{% endif %} href="methodology">Methodology</a>
@@ -61,11 +61,3 @@ toggle.onclick = function() {
     }
 
 </script>
-<!--<div id="myNav" class="overlay">
-    <div class="overlay-content">
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
-    </div>
-  </div>-->

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from .code import bloc_handler
-from .code import bloc_symbols
+from .code import symbols
 from .code.django_counter import DjangoCounter
 
 from datetime import datetime
@@ -54,7 +54,7 @@ def analysis_results(request):
                 "group_top_sentiment": results['group_top_sentiment'],
                 "group_top_time": results['group_top_time'],
                 'pairwise_sim': results['pairwise_sim'][:10],
-                'bloc_symbols': bloc_symbols.get_all_symbols()
+                'bloc_symbols': symbols.get_all_symbols()
             }
 
             for account in results['account_blocs']:
@@ -128,7 +128,7 @@ import tempfile
 import os
 
 def handle_uploaded_file(file):
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=file.name) as temp_file:
         for chunk in file.chunks():
             temp_file.write(chunk)
 

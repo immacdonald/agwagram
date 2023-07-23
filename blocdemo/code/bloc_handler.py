@@ -2,6 +2,7 @@ from django.conf import settings
 
 import osometweet
 import json
+import gzip
 
 from bloc.generator import gen_bloc_for_users
 from bloc.generator import add_bloc_sequences
@@ -9,7 +10,9 @@ from bloc.util import get_default_symbols
 from bloc.subcommands import run_subcommands
 
 from . import bloc_extension
-from . import bloc_symbols
+from . import symbols
+
+import os
 
 
 def verify_user_exists(user_list):
@@ -44,23 +47,48 @@ def verify_user_exists(user_list):
 
 
 def getDictArrayFromJsonl(file):
-    results = []
+    data = []
 
     with open(file, 'r') as jsonl_file:
         jsonl_list = list(jsonl_file)
 
     for obj in jsonl_list:
         result = json.loads(obj)
-        results.append(result)
-    return results
+        data.append(result)
+    return data
+
+def getDictArrayFromJson(file):
+    data = []
+    with open(file, 'r') as json_file:
+        data = json.load(json_file)
     
+    return data
+
+def getDictArrayFromFile(file):
+    file_type = os.path.splitext(file)[1]
+
+    if file_type == '.gz':
+        uncompressed_file = os.path.splitext(file)[0]
+        with gzip.open(file, 'rb') as gz_file:
+            with open(uncompressed_file, 'wb') as write_file:
+                write_file.write(gz_file.read())
+
+        # Determine the file type of the uncompressed file
+        file_type = os.path.splitext(uncompressed_file)[1]
+        file=uncompressed_file
+    
+    if file_type == '.json':
+        return getDictArrayFromJson(file)
+    elif file_type == '.jsonl':
+        return getDictArrayFromJsonl(file)
 
 
 def analyze_tweet_file(files = None):
     if(files):
         tweets = []
         for file in files:
-            tweets.extend(getDictArrayFromJsonl(file))
+            file_contents = getDictArrayFromFile(file)
+            tweets.extend(file_contents)
 
         # Sort Tweets by user
         users = {}
@@ -100,7 +128,7 @@ def analyze_tweet_file(files = None):
         _, bloc_args = bloc_extension.get_tweet_bloc_params(
                 user_ids, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
 
-    return bloc_analysis(all_bloc_output, user_data, bloc_args, count_elapsed = False)
+        return bloc_analysis(all_bloc_output, user_data, bloc_args, count_elapsed = False)
 
 
 def analyze_user(usernames):
@@ -154,7 +182,7 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
     group_top_time = []
 
     for word in group_bloc_words:
-        type = bloc_symbols.get_symbol_type(word['term'])
+        type = symbols.get_symbol_type(word['term'])
         if type == 'Action':
             group_top_actions.append(word)
         elif type == 'Syntactic':
@@ -200,7 +228,7 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
         top_time = []
 
         for word in bloc_words:
-            type = bloc_symbols.get_symbol_type(word['term'])
+            type = symbols.get_symbol_type(word['term'])
             if type == 'Action':
                 top_actions.append(word)
             elif type == 'Syntactic':
