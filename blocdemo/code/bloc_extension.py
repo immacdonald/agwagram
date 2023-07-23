@@ -2,7 +2,7 @@ from argparse import Namespace
 
 from datetime import datetime
 
-from . import bloc_symbols
+from . import symbols
 
 
 def link_data(tweets):
@@ -14,11 +14,11 @@ def link_data(tweets):
         formatted_date = date_obj.strftime('%B %d, %Y @ %I:%M%p').replace(' 0', ' ')
 
         cleaned_action = tweet['bloc']['bloc_sequences_short']['action']
-        for char in bloc_symbols.time_symbol_dict:
+        for char in symbols.time_symbol_dict:
             cleaned_action = cleaned_action.replace(char, '')
 
         cleaned_semantic_sentiment = tweet['bloc']['bloc_sequences_short']['content_semantic_sentiment']
-        for char in bloc_symbols.time_symbol_dict:
+        for char in symbols.time_symbol_dict:
             cleaned_semantic_sentiment = cleaned_semantic_sentiment.replace(char, '')
 
         data = {

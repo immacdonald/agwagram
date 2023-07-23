@@ -18,11 +18,12 @@ class UsernameSearchForm(forms.Form):
     )
 
  
-def validate_jsonl_files(value):
+def validate_tweet_files(value):
     for file in value:
-        print(os.path.splitext(file.name)[1])
-        if os.path.splitext(file.name)[1] != '.jsonl':
-            raise ValidationError("Not a valid JSONL file.")
+        #print(os.path.splitext(file.name)[1])
+        if os.path.splitext(file.name)[1] == '.jsonl' or os.path.splitext(file.name)[1] == '.json' or os.path.splitext(file.name)[1] == '.gz':
+            return
+        raise ValidationError("Not a valid JSON, JSONL, or Gzip file.")
         
 
 class UploadFileForm(forms.Form):
@@ -31,5 +32,5 @@ class UploadFileForm(forms.Form):
         min_num=1,
         max_num=10,
         max_file_size=1024*1024*10,
-        validators=[validate_jsonl_files]
+        validators=[validate_tweet_files]
     )
