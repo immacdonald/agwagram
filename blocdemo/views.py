@@ -8,6 +8,12 @@ from datetime import datetime
 
 from .forms import UsernameSearchForm, UploadFileForm
 
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+import tempfile
+import os
+
 import logging
 logger = logging.getLogger("mainLogger")
 
@@ -16,25 +22,19 @@ def main(request):
     return render(request, 'pages/main.html')
 
 
-def analyze(request, form_data=None):
-    if request.method == "POST":
-        form = UsernameSearchForm(request.POST or None)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            request.session['results'] = bloc_handler.analyze_user(username)
-            return analysis_results(request)
-    else:
-        form = UsernameSearchForm(form_data)
+class AnalyzeUser(FormView):
+    form_class = UsernameSearchForm
+    template_name = 'analyze_user.html'
+    success_url = reverse_lazy('results')
 
-    return render(request, 'pages/analyze.html', {'form': form})
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        self.request.session['results'] = bloc_handler.analyze_user(username)
+        return redirect(self.get_success_url())
 
 
 def methodology(request):
     return render(request, 'pages/methodology.html')
-
-def analyze_file(request):
-    results = bloc_handler.analyze_tweet_file(None)
-    return analysis_results(request, results) 
 
 
 def analysis_results(request):
@@ -121,12 +121,6 @@ def process_bloc_string(bloc):
     return bloc.replace(' ', '').replace('|', '')
 
 
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
-from django.shortcuts import redirect
-import tempfile
-import os
-
 def handle_uploaded_file(file):
     with tempfile.NamedTemporaryFile(delete=False, suffix=file.name) as temp_file:
         for chunk in file.chunks():
@@ -136,9 +130,9 @@ def handle_uploaded_file(file):
     return temp_file
 
 
-class UploadView(FormView):
+class AnalyzeFile(FormView):
     form_class = UploadFileForm
-    template_name = 'upload.html'
+    template_name = 'analyze_file.html'
     enctype = 'multipart/form-data'
     success_url = reverse_lazy('results')
 

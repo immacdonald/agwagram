@@ -11,8 +11,8 @@
         <div class="header-navigation">
             <nav class="header-navigation-links">
                 <a {% if request.resolver_match.url_name == 'main' %}class="active"{% endif %}href="/">Home</a>
-                <a {% if request.resolver_match.url_name == 'analyze' %}class="active"{% endif %} href="analyze">Analyze</a>
-                <a {% if request.resolver_match.url_name == 'upload' %}class="active"{% endif %} href="upload">Upload Tweets</a>
+                <a {% if request.resolver_match.url_name == 'analyze-user' %}class="active"{% endif %} href="analyze-user">Analyze User</a>
+                <a {% if request.resolver_match.url_name == 'analyze-file' %}class="active"{% endif %} href="analyze-file">Analyze Tweet File</a>
                 <a {% if request.resolver_match.url_name == 'methodology' %}class="active"{% endif %} href="methodology">Methodology</a>
             </nav>
             <div class="header-navigation-actions">
@@ -27,7 +27,7 @@
                     <span>Log In</span>
                 </button>
             </div>
-            <a href="#" id="menu-toggle" class="icon-button disabled" onclick="toggleNavOverlay()">
+            <a href="#" id="menu-toggle" class="icon-button disabled">
                 <span class="icon material-symbols-outlined">menu</span>
             </a>
         </div>
@@ -52,12 +52,4 @@ toggle.onclick = function() {
     document.documentElement.setAttribute('data-theme', targetTheme)
     localStorage.setItem('theme', targetTheme);
 };
-</script>
-<script>
-    var navToggled = false;
-    function toggleNavOverlay() {
-        navToggled = !navToggled;
-        document.getElementById("myNav").style.width = navToggled ? "50%" : "0%";
-    }
-
 </script>
