@@ -33,5 +33,5 @@ class UploadFileForm(forms.Form):
         max_num=10,
         max_file_size=1024*1024*10,
         validators=[validate_tweet_files],
-        label='Upload file:'
+        label='Upload file(s): Drag & Drop'
     )

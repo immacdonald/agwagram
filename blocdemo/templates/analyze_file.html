@@ -15,16 +15,16 @@ Analyze | B3T
         <h1>Analyze</h1>
         <div class="form">
             <div>Upload files containing Tweet data to be analyzed using the BLOC algorithm.
-                Files can be in JSON or JSONL formats and can be uploaded unzipped or as Gzip files.
+                Files can be in <b>JSON</b> or <b>JSONL</b> formats and can be uploaded unzipped or as Gzip files.
                 To upload multiple files at once please select them all in the file selection prompt
-                using Ctrl+Click or Cmd+Click depending on your browser and operating system.
+                or drag-and-drop them each in.
             </div>
             <br />
             <form name="form" method="POST" enctype="multipart/form-data" class="dropzone">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="form-group{% if field.errors %} has-error{% endif %}">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <label for="{{ field.id_for_label }}"><i>{{ field.label }}</i></label>
                     <br />
                     {{ field }}
                     {% for error in field.errors %}
@@ -32,7 +32,7 @@ Analyze | B3T
                     {% endfor %}
                 </div>
                 {% endfor %}
-                <h3>Uploaded Files:</h3>
+                <h4>Uploaded Files:</h4>
                 <ul id="uploaded-files-list">
                 </ul>
                 <div class="wide-centered">
