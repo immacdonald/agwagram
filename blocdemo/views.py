@@ -69,6 +69,8 @@ class AnalyzeFile(FormView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        uploaded_files = self.request.session.get('uploaded_files', [])
+        print(uploaded_files)
         context['previous_results'] = 'results' in self.request.session
         return context
 

@@ -764,6 +764,31 @@ tr:nth-child(odd):not(:first-child) {
 	margin-top: 16px;
 }
 
-input[type="file"]::-webkit-file-upload-button{
-	@include button;
+input[type="file"] {
+	border: 1px solid var(--c-text-secondary);
+	width: 100%;
+	height: 96px;
+	border-radius: 8px;
+	margin-top: 8px;
+
+	&::before {
+		content: "";
+		-webkit-mask: url('../images/upload_file.svg') no-repeat 100% 100%;
+		mask: url('../images/upload_file.svg') no-repeat 100% 100%;
+		-webkit-mask-size: cover;
+		mask-size: cover;
+  		background-color: var(--c-text-primary);
+		width: 64px;
+		height: 64px;
+		margin: auto;
+		margin-top: 16px;
+		margin-bottom: 128px;
+	}
+
+	&::file-selector-button{
+		@include button;
+		background-color: green;
+	}
+
+	display: flex;
 }

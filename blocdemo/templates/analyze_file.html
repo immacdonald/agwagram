@@ -9,35 +9,70 @@ Analyze | B3T
 <div class="wide-centered">
     <div class="column half-width">
         {% if previous_results %}
-            <button class="full-button" onclick="location.href='{% url 'results' %}'" type="button">View Previous Results</button>
+        <button class="full-button" onclick="location.href='{% url 'results' %}'" type="button">View Previous
+            Results</button>
         {% endif %}
         <h1>Analyze</h1>
         <div class="form">
-            <div>Upload files containing Tweet data to be analyzed using the BLOC algorithm. 
+            <div>Upload files containing Tweet data to be analyzed using the BLOC algorithm.
                 Files can be in JSON or JSONL formats and can be uploaded unzipped or as Gzip files.
-                To upload multiple files at once please select them all in the file selection prompt 
+                To upload multiple files at once please select them all in the file selection prompt
                 using Ctrl+Click or Cmd+Click depending on your browser and operating system.
             </div>
-            <br/>
-            <form name = "form" method="POST" enctype="multipart/form-data">
+            <br />
+            <form name="form" method="POST" enctype="multipart/form-data" class="dropzone">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="form-group{% if field.errors %} has-error{% endif %}">
-                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                  <br/>
-                  {{ field }}
-                  {% for error in field.errors %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <br />
+                    {{ field }}
+                    {% for error in field.errors %}
                     <p class="form-error">{{ error }}</p>
-                  {% endfor %}
+                    {% endfor %}
                 </div>
                 {% endfor %}
+                <h3>Uploaded Files:</h3>
+                <ul id="uploaded-files-list">
+                </ul>
                 <div class="wide-centered">
                     <button type="submit" class="submit-button">
-                    <span>Submit</span>
+                        <span>Submit</span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    // JavaScript function to display the selected files before form submission
+    const dataTransfer = new DataTransfer();
+
+    function showUploadedFiles() {
+        const fileInput = document.querySelector('input[type="file"]');
+        const fileList = fileInput.files;
+        const uploadedFilesList = document.getElementById('uploaded-files-list');
+
+        for (let i = 0; i < fileList.length; i++) {
+            console.log(fileList[i])
+            if([...dataTransfer.files].some(e => e.name == fileList[i].name)) {
+                console.log('Name matches');
+                continue;
+            }
+            dataTransfer.items.add(fileList[i]);
+        }
+
+        uploadedFilesList.innerHTML = '';
+        for (let i = 0; i < dataTransfer.files.length; i++) {
+            const listItem = document.createElement('li');
+            listItem.textContent = dataTransfer.files[i].name;
+            uploadedFilesList.appendChild(listItem);
+        }
+        
+        fileInput.files = dataTransfer.files;
+    }
+
+    // Listen for file input change event and call the function
+    document.querySelector('input[type="file"]').addEventListener('change', showUploadedFiles);
+</script>
 {% endblock %}
