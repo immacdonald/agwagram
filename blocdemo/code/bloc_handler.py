@@ -165,6 +165,19 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
     pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
     pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
 
+    # Generate change reports
+    gen_bloc_args.keep_tweets = False
+    # Change currently should be run separately per alphabet since the change parameters (change_mean and change_stddev) are empirically derived per alphabet
+    gen_bloc_args.bloc_alphabets = ['action']
+    action_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
+
+
+    gen_bloc_args.change_mean = 0.45
+    gen_bloc_args.change_stddev = 0.38
+    gen_bloc_args.bloc_alphabets = ['content_syntactic']
+    content_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
+    change_report = {'action': action_change_report[0]['change_report'], 'content_syntactic': content_change_report[0]['change_report']}
+
     result = {
         'successful_generation': True,
         'query_count': query_count,
@@ -176,7 +189,8 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
         'group_top_semantic': group_top_semantic,
         'group_top_sentiment': group_top_sentiment,
         'group_top_time': group_top_time,
-        'pairwise_sim': pairwise_sim_report
+        'pairwise_sim': pairwise_sim_report,
+        'change_report': change_report,
     }
 
     for account_bloc, account_data in zip(all_bloc_output, user_data):

@@ -40,7 +40,7 @@ class AnalyzeUser(FormView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #context['previous_results'] = 'results' in self.request.session
+        context['previous_results'] = 'results' in self.request.session
         return context
     
 class AnalyzeFile(FormView):
@@ -69,7 +69,7 @@ class AnalyzeFile(FormView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #context['previous_results'] = 'results' in self.request.session
+        context['previous_results'] = 'results' in self.request.session
         return context
 
 
@@ -95,6 +95,7 @@ class AnalysisResultsView(View):
                     "group_top_sentiment": results['group_top_sentiment'],
                     "group_top_time": results['group_top_time'],
                     'pairwise_sim': results['pairwise_sim'][:10],
+                    'change_report': results['change_report'],
                     'bloc_symbols': symbols.get_all_symbols()
                 }
 

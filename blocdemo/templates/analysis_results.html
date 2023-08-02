@@ -292,6 +292,53 @@ Results | B3T
                     <a href="methodology">More Details</a>
                 </div>
             </article>
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">star_half</span>
+                        <h3>Change Analysis</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" onChange="cardToggle(this)">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the BLOC change analysis.</p>
+                </div>
+                <div class="card-body">
+                    <div class="scrollable">
+                        <div>
+                            {{change_report}}
+                        </div>
+                        <!--<table>
+                            <tr>
+                                <th class="table-main">Action</th>
+                                <th>Frequency</th>
+                                <th>Rate</th>
+                            </tr>
+                            {% for word in group_top_actions %}
+                            <tr>
+                                <td>
+                                    {% for char in word.term %}
+                                        <div class="hoverable-text">
+                                            {{ char|get_description }}
+                                            <span class="hoverable-tooltip">{{ char }}</span>
+                                        </div>
+                                        {% if not forloop.last %},&nbsp;{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{word.term_freq}}</td>
+                                <td>{{word.term_rate}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>-->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="methodology">More Details</a>
+                </div>
+            </article>
         </div>
     </div>
 </div>

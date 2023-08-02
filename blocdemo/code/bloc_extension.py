@@ -87,6 +87,9 @@ def get_default_bloc_params(bloc_alphabets):
         'output': None,
         'timeline_startdate': '', 'timeline_scroll_by_hours': None, 'time_function': 'f2',
         'subcommand': '',
+        'change_mean': 0.61, 
+        'change_stddev': 0.3, 
+        'change_zscore_threshold': 1.5,
 
         'fold_start_count': 4,
         'keep_tf_matrix': False,

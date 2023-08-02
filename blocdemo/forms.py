@@ -20,7 +20,6 @@ class UsernameSearchForm(forms.Form):
  
 def validate_tweet_files(value):
     for file in value:
-        #print(os.path.splitext(file.name)[1])
         if os.path.splitext(file.name)[1] == '.jsonl' or os.path.splitext(file.name)[1] == '.json' or os.path.splitext(file.name)[1] == '.gz':
             return
         raise ValidationError("Not a valid JSON, JSONL, or Gzip file.")

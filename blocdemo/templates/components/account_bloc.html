@@ -289,7 +289,6 @@
                         </div>
                     {% endfor %}
                 </p>
-                <!--<p>{{account.bloc_action|safe}}</p>-->
             </div>
             <div class="card-footer">
                 <a href="methodology">More Details</a>
@@ -370,6 +369,35 @@
             <div class="card-body">
                 <p>
                     {% for char in account.bloc_semantic_sentiment %}
+                        <div class="hoverable-text">{{ char }}
+                            {% if char|get_description != '' %}
+                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="methodology">More Details</a>
+            </div>
+        </article>
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <span class="icon material-symbols-outlined">code</span>
+                    <h3>Change</h3>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" onChange="cardToggle(this)">
+                    <span></span>
+                </label>
+            </div>
+            <div class="card-toggle-body">
+                <p>This is more information about the change analysis.</p>
+            </div>
+            <div class="card-body">
+                <p>
+                    {% for char in account.bloc_change %}
                         <div class="hoverable-text">{{ char }}
                             {% if char|get_description != '' %}
                                 <span class="hoverable-tooltip">{{ char|get_description }}</span>
