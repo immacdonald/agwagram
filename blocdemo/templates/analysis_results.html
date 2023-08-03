@@ -304,35 +304,24 @@ Results | B3T
                     </label>
                 </div>
                 <div class="card-toggle-body">
-                    <p>This is more information about the BLOC change analysis.</p>
+                    <p>This is more information about the BLOC change 2 analysis.</p>
                 </div>
                 <div class="card-body">
                     <div class="scrollable">
-                        <div>
-                            {{change_report}}
-                        </div>
-                        <!--<table>
+                        <table>
                             <tr>
-                                <th class="table-main">Action</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
+                                <th>Pause</th>
+                                <th>Word</th>
+                                <th>Activity</th>
                             </tr>
-                            {% for word in group_top_actions %}
+                            {% for report in change_report.action.self_sim.action %}
                             <tr>
-                                <td>
-                                    {% for char in word.term %}
-                                        <div class="hoverable-text">
-                                            {{ char|get_description }}
-                                            <span class="hoverable-tooltip">{{ char }}</span>
-                                        </div>
-                                        {% if not forloop.last %},&nbsp;{% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
+                                <td>{{report.change_profile.pause}}</td>
+                                <td>{{report.change_profile.word}}</td>
+                                <td>{{report.change_profile.activity}}</td>
                             </tr>
                             {% endfor %}
-                        </table>-->
+                        </table>
                     </div>
                 </div>
                 <div class="card-footer">

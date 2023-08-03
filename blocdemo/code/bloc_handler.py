@@ -5,7 +5,9 @@ import osometweet
 from bloc.generator import gen_bloc_for_users
 from bloc.generator import add_bloc_sequences
 from bloc.util import get_default_symbols
+from bloc.util import get_bloc_params
 from bloc.subcommands import run_subcommands
+from argparse import Namespace
 
 from . import bloc_extension
 from . import symbols
@@ -43,7 +45,6 @@ def verify_user_exists(user_list):
 
     return 0, user_data['data']
 
-from bloc.util import get_bloc_params
 
 def analyze_tweet_file(files = None):
     if(files):
@@ -71,13 +72,12 @@ def analyze_tweet_file(files = None):
         all_bloc_output = []
         all_bloc_symbols = get_default_symbols()
 
+        bloc_params = select_bloc_params(source='File')
+
         for user in users.values():
-            this_params, _ = bloc_extension.get_tweet_bloc_params(
-                user['id'], bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+            bloc_params['screen_names_or_ids'] = user['id']
 
-            this_params, this_args = get_bloc_params([], '', sort_action_words=True, keep_bloc_segments=True, tweet_order='noop', bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], keep_tweets=True)
-
-            all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **this_params))
+            all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **bloc_params))
             user_data.append(
                 {
                     'id': user['id'],
@@ -88,12 +88,9 @@ def analyze_tweet_file(files = None):
             )
     
         user_ids = [user['id'] for user in user_data]
+        bloc_params['screen_names_or_ids'] = user_ids
 
-        this_params, this_args = get_bloc_params(user_ids, '', sort_action_words=True, keep_bloc_segments=True, tweet_order='noop', bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], keep_tweets=True)
-        #_, bloc_args = bloc_extension.get_tweet_bloc_params(
-        #        user_ids, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
-
-        return bloc_analysis(all_bloc_output, user_data, this_args, count_elapsed = False)
+        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
 
 
 def analyze_user(usernames):
@@ -114,17 +111,17 @@ def analyze_user(usernames):
     else:
         user_ids = [user['id'] for user in user_data]
 
-        gen_bloc_params, gen_bloc_args = bloc_extension.get_bloc_params(
-            user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        gen_bloc_params = select_bloc_params(ids=user_ids, bearer_token=settings.BEARER_TOKEN, source='Account')
         
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        result = bloc_analysis(all_bloc_output, user_data, gen_bloc_args)
+        result = bloc_analysis(all_bloc_output, user_data, gen_bloc_params)
 
     return result
 
-def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = True):
+def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True):
     # Useful statistics
+    gen_bloc_args = Namespace(**bloc_params)
     query_count = len(user_data)
     total_tweets = sum([user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output])
 
@@ -174,8 +171,6 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
     # Change currently should be run separately per alphabet since the change parameters (change_mean and change_stddev) are empirically derived per alphabet
     gen_bloc_args.bloc_alphabets = ['action']
     action_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
-    print(action_change_report)
-
 
     gen_bloc_args.change_mean = 0.45
     gen_bloc_args.change_stddev = 0.38
@@ -273,3 +268,22 @@ def recalculate_bloc_word_rate(bloc_words):
         term_freq = word['term_freq']
         term_freq = term_freq / total_freq
         word['term_rate'] = f"{term_freq:.1%}"
+
+
+def select_bloc_params(ids=[], bearer_token='', source='Account'):
+    if source == 'Account':
+        account_src = 'Twitter Search'
+        tweet_order = 'reverse'
+    elif source == 'File':
+        account_src = 'Tweet File'
+        tweet_order = 'noop'
+
+    bloc_params, _ = get_bloc_params(ids, 
+                                     bearer_token, 
+                                     sort_action_words=True, 
+                                     keep_bloc_segments=True, 
+                                     tweet_order=tweet_order, 
+                                     account_src=account_src,
+                                     bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], 
+                                     keep_tweets=True)
+    return bloc_params
