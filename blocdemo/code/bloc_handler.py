@@ -168,15 +168,10 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
 
     # Generate change reports
     gen_bloc_args.keep_tweets = False
-    # Change currently should be run separately per alphabet since the change parameters (change_mean and change_stddev) are empirically derived per alphabet
     gen_bloc_args.bloc_alphabets = ['action']
     action_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
 
-    gen_bloc_args.change_mean = 0.45
-    gen_bloc_args.change_stddev = 0.38
-    gen_bloc_args.bloc_alphabets = ['content_syntactic']
-    content_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
-    change_report = {'action': action_change_report[0]['change_report'], 'content_syntactic': content_change_report[0]['change_report']}
+    change_report = link_change_report(action_change_report)
 
     result = {
         'successful_generation': True,
@@ -287,3 +282,33 @@ def select_bloc_params(ids=[], bearer_token='', source='Account'):
                                      bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], 
                                      keep_tweets=True)
     return bloc_params
+
+
+def link_change_report(raw_change_report):
+    bloc_segments = raw_change_report[0]['bloc_segments']
+    values = {}
+    # Combine details for segments (dates) and segment details (BLOC content)
+    for key in bloc_segments['segments'].keys():
+        values[str(key)] = bloc_segments['segments'][key] | bloc_segments['segments_details'][key]
+
+    reports = []
+    for report in raw_change_report[0]['change_report']['self_sim']['action']:
+        # Add start and end details to the report
+        report['first_segment'] = values[report['fst_doc_seg_id']]
+        report['second_segment'] = values[report['sec_doc_seg_id']]
+        # Change local_dates from a dictionary to an array
+        report['first_segment']['local_dates'] = list(report['first_segment']['local_dates'])
+        report['second_segment']['local_dates'] = list(report['second_segment']['local_dates'])
+        # Delete report segment ID keys
+        del(report['fst_doc_seg_id'])
+        del(report['sec_doc_seg_id'])
+        # Round change profile
+        report['change_profile']['pause'] = round_format(report["change_profile"]["pause"])
+        report['change_profile']['word'] = round_format(report["change_profile"]["word"])
+        report['change_profile']['activity'] = round_format(report["change_profile"]["activity"])
+        reports.append(report)
+
+    return reports
+
+def round_format(value):
+    return f'{float(value):.1%}'

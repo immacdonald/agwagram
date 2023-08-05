@@ -292,7 +292,7 @@ Results | B3T
                     <a href="methodology">More Details</a>
                 </div>
             </article>
-            <article class="card">
+            <article class="card full-wide">
                 <div class="card-header">
                     <div>
                         <span class="icon material-symbols-outlined">star_half</span>
@@ -310,15 +310,21 @@ Results | B3T
                     <div class="scrollable">
                         <table>
                             <tr>
-                                <th>Pause</th>
-                                <th>Word</th>
-                                <th>Activity</th>
+                                <th class="sixth">Action</th>
+                                <th class="sixth">Pause</th>
+                                <th class="sixth">Word</th>
+                                <th class="sixth">Activity</th>
+                                <th class="sixth">Start Date</th>
+                                <th class="sixth">End Date</th>
                             </tr>
-                            {% for report in change_report.action.self_sim.action %}
+                            {% for report in change_report %}
                             <tr>
+                                <td>{{report.first_segment.action}} to {{report.second_segment.action}}</td>
                                 <td>{{report.change_profile.pause}}</td>
                                 <td>{{report.change_profile.word}}</td>
                                 <td>{{report.change_profile.activity}}</td>
+                                <td>{{report.first_segment.local_dates.0}}</td>
+                                <td>{{report.second_segment.local_dates.0}}</td>
                             </tr>
                             {% endfor %}
                         </table>
