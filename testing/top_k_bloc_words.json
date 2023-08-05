@@ -1,0 +1,423 @@
+{
+    "per_doc": [
+        [
+            {
+                "term": "T",
+                "term_freq": 272,
+                "term_rate": 0.3119266055045872
+            },
+            {
+                "term": "t",
+                "term_freq": 265,
+                "term_rate": 0.3038990825688073
+            },
+            {
+                "term": "⚃",
+                "term_freq": 105,
+                "term_rate": 0.12041284403669725
+            },
+            {
+                "term": "⚂",
+                "term_freq": 84,
+                "term_rate": 0.0963302752293578
+            },
+            {
+                "term": "⚁",
+                "term_freq": 42,
+                "term_rate": 0.0481651376146789
+            },
+            {
+                "term": "⚄",
+                "term_freq": 41,
+                "term_rate": 0.047018348623853214
+            },
+            {
+                "term": "p",
+                "term_freq": 18,
+                "term_rate": 0.020642201834862386
+            },
+            {
+                "term": "⚀",
+                "term_freq": 11,
+                "term_rate": 0.01261467889908257
+            },
+            {
+                "term": "qt",
+                "term_freq": 10,
+                "term_rate": 0.011467889908256881
+            },
+            {
+                "term": "□",
+                "term_freq": 7,
+                "term_rate": 0.008027522935779817
+            },
+            {
+                "term": "mt",
+                "term_freq": 4,
+                "term_rate": 0.0045871559633027525
+            },
+            {
+                "term": "Et",
+                "term_freq": 2,
+                "term_rate": 0.0022935779816513763
+            },
+            {
+                "term": "H",
+                "term_freq": 2,
+                "term_rate": 0.0022935779816513763
+            },
+            {
+                "term": "Ht",
+                "term_freq": 2,
+                "term_rate": 0.0022935779816513763
+            },
+            {
+                "term": "EH",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            },
+            {
+                "term": "Eqt",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            },
+            {
+                "term": "HHH+t",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            },
+            {
+                "term": "HHt",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            },
+            {
+                "term": "mmm+t",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            },
+            {
+                "term": "mmt",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            },
+            {
+                "term": "π",
+                "term_freq": 1,
+                "term_rate": 0.0011467889908256881
+            }
+        ],
+        [
+            {
+                "term": "UUt",
+                "term_freq": 1083,
+                "term_rate": 0.3443561208267091
+            },
+            {
+                "term": "π",
+                "term_freq": 845,
+                "term_rate": 0.2686804451510334
+            },
+            {
+                "term": "⚁",
+                "term_freq": 738,
+                "term_rate": 0.23465818759936408
+            },
+            {
+                "term": "⚀",
+                "term_freq": 223,
+                "term_rate": 0.07090620031796502
+            },
+            {
+                "term": "HUUt",
+                "term_freq": 117,
+                "term_rate": 0.03720190779014308
+            },
+            {
+                "term": "T",
+                "term_freq": 39,
+                "term_rate": 0.012400635930047695
+            },
+            {
+                "term": "Tπ",
+                "term_freq": 35,
+                "term_rate": 0.011128775834658187
+            },
+            {
+                "term": "ππ",
+                "term_freq": 16,
+                "term_rate": 0.005087440381558029
+            },
+            {
+                "term": "Tπππ+",
+                "term_freq": 15,
+                "term_rate": 0.0047694753577106515
+            },
+            {
+                "term": "⚂",
+                "term_freq": 11,
+                "term_rate": 0.0034976152623211448
+            },
+            {
+                "term": "Tππ",
+                "term_freq": 10,
+                "term_rate": 0.003179650238473768
+            },
+            {
+                "term": "Tπππ",
+                "term_freq": 6,
+                "term_rate": 0.0019077901430842607
+            },
+            {
+                "term": "TT",
+                "term_freq": 4,
+                "term_rate": 0.0012718600953895071
+            },
+            {
+                "term": "TTπ",
+                "term_freq": 1,
+                "term_rate": 0.0003179650238473768
+            },
+            {
+                "term": "TTπππ+",
+                "term_freq": 1,
+                "term_rate": 0.0003179650238473768
+            },
+            {
+                "term": "πππ+",
+                "term_freq": 1,
+                "term_rate": 0.0003179650238473768
+            }
+        ]
+    ],
+    "all_docs": [
+        {
+            "term": "T",
+            "term_freq": 311,
+            "term_rate": 0.07742096091610655,
+            "doc_freq": 2,
+            "doc_rate": 1.0
+        },
+        {
+            "term": "⚂",
+            "term_freq": 95,
+            "term_rate": 0.023649489668907144,
+            "doc_freq": 2,
+            "doc_rate": 1.0
+        },
+        {
+            "term": "⚁",
+            "term_freq": 780,
+            "term_rate": 0.1941747572815534,
+            "doc_freq": 2,
+            "doc_rate": 1.0
+        },
+        {
+            "term": "⚀",
+            "term_freq": 234,
+            "term_rate": 0.05825242718446602,
+            "doc_freq": 2,
+            "doc_rate": 1.0
+        },
+        {
+            "term": "π",
+            "term_freq": 846,
+            "term_rate": 0.210604929051531,
+            "doc_freq": 2,
+            "doc_rate": 1.0
+        },
+        {
+            "term": "t",
+            "term_freq": 265,
+            "term_rate": 0.06596962907642519,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "⚃",
+            "term_freq": 105,
+            "term_rate": 0.026138909634055265,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "⚄",
+            "term_freq": 41,
+            "term_rate": 0.010206621857107294,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "p",
+            "term_freq": 18,
+            "term_rate": 0.004480955937266617,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "qt",
+            "term_freq": 10,
+            "term_rate": 0.0024894199651481204,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "□",
+            "term_freq": 7,
+            "term_rate": 0.0017425939756036844,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "mt",
+            "term_freq": 4,
+            "term_rate": 0.0009957679860592482,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Et",
+            "term_freq": 2,
+            "term_rate": 0.0004978839930296241,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "H",
+            "term_freq": 2,
+            "term_rate": 0.0004978839930296241,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Ht",
+            "term_freq": 2,
+            "term_rate": 0.0004978839930296241,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "EH",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Eqt",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "HHH+t",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "HHt",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "mmm+t",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "mmt",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "UUt",
+            "term_freq": 1083,
+            "term_rate": 0.26960418222554144,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "HUUt",
+            "term_freq": 117,
+            "term_rate": 0.02912621359223301,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Tπ",
+            "term_freq": 35,
+            "term_rate": 0.008712969878018421,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "ππ",
+            "term_freq": 16,
+            "term_rate": 0.003983071944236993,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Tπππ+",
+            "term_freq": 15,
+            "term_rate": 0.0037341299477221808,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Tππ",
+            "term_freq": 10,
+            "term_rate": 0.0024894199651481204,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "Tπππ",
+            "term_freq": 6,
+            "term_rate": 0.0014936519790888724,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "TT",
+            "term_freq": 4,
+            "term_rate": 0.0009957679860592482,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "TTπ",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "TTπππ+",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        },
+        {
+            "term": "πππ+",
+            "term_freq": 1,
+            "term_rate": 0.00024894199651481205,
+            "doc_freq": 1,
+            "doc_rate": 0.5
+        }
+    ],
+    "users": [
+        "jesus",
+        "storygraphbot"
+    ]
+}

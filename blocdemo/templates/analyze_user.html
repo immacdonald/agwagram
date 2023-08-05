@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "components/base.html" %}
 
 {% block title %}
 Analyze | B3T
@@ -7,7 +7,10 @@ Analyze | B3T
 
 {% block content %}
 <div class="wide-centered">
-  <div class="column">
+  <div class="column half-width">
+    {% if previous_results %}
+      <button class="full-button" onclick="location.href='{% url 'results' %}'" type="button">View Previous Results</button>
+    {% endif %}
     <h1>Analyze</h1>
     <div class="search">
       <form name = "form" method="POST" enctype="multipart/form-data">

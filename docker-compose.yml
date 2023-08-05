@@ -6,9 +6,9 @@ services:
       - ./secrets.env
       - ./development.env
     build: .
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    container_name: bloc_website
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT}"
+    container_name: bloc
     volumes:
-      - .:/bloc-website
+      - .:/bloc
     ports:
-      - "8000:8000"
+      - "${PORT}:${PORT}"

@@ -1,18 +1,18 @@
 from django.conf import settings
 
 import osometweet
-import json
-import gzip
 
 from bloc.generator import gen_bloc_for_users
 from bloc.generator import add_bloc_sequences
 from bloc.util import get_default_symbols
+from bloc.util import get_bloc_params
 from bloc.subcommands import run_subcommands
+from argparse import Namespace
 
 from . import bloc_extension
 from . import symbols
 
-import os
+from .file_handling import *
 
 
 def verify_user_exists(user_list):
@@ -46,43 +46,6 @@ def verify_user_exists(user_list):
     return 0, user_data['data']
 
 
-def getDictArrayFromJsonl(file):
-    data = []
-
-    with open(file, 'r') as jsonl_file:
-        jsonl_list = list(jsonl_file)
-
-    for obj in jsonl_list:
-        result = json.loads(obj)
-        data.append(result)
-    return data
-
-def getDictArrayFromJson(file):
-    data = []
-    with open(file, 'r') as json_file:
-        data = json.load(json_file)
-    
-    return data
-
-def getDictArrayFromFile(file):
-    file_type = os.path.splitext(file)[1]
-
-    if file_type == '.gz':
-        uncompressed_file = os.path.splitext(file)[0]
-        with gzip.open(file, 'rb') as gz_file:
-            with open(uncompressed_file, 'wb') as write_file:
-                write_file.write(gz_file.read())
-
-        # Determine the file type of the uncompressed file
-        file_type = os.path.splitext(uncompressed_file)[1]
-        file=uncompressed_file
-    
-    if file_type == '.json':
-        return getDictArrayFromJson(file)
-    elif file_type == '.jsonl':
-        return getDictArrayFromJsonl(file)
-
-
 def analyze_tweet_file(files = None):
     if(files):
         tweets = []
@@ -109,11 +72,12 @@ def analyze_tweet_file(files = None):
         all_bloc_output = []
         all_bloc_symbols = get_default_symbols()
 
-        for user in users.values():
-            this_params, _ = bloc_extension.get_tweet_bloc_params(
-                user['id'], bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        bloc_params = select_bloc_params(source='File')
 
-            all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **this_params))
+        for user in users.values():
+            bloc_params['screen_names_or_ids'] = user['id']
+
+            all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **bloc_params))
             user_data.append(
                 {
                     'id': user['id'],
@@ -124,11 +88,9 @@ def analyze_tweet_file(files = None):
             )
     
         user_ids = [user['id'] for user in user_data]
+        bloc_params['screen_names_or_ids'] = user_ids
 
-        _, bloc_args = bloc_extension.get_tweet_bloc_params(
-                user_ids, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
-
-        return bloc_analysis(all_bloc_output, user_data, bloc_args, count_elapsed = False)
+        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
 
 
 def analyze_user(usernames):
@@ -149,17 +111,17 @@ def analyze_user(usernames):
     else:
         user_ids = [user['id'] for user in user_data]
 
-        gen_bloc_params, gen_bloc_args = bloc_extension.get_bloc_params(
-            user_ids, settings.BEARER_TOKEN, bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'])
+        gen_bloc_params = select_bloc_params(ids=user_ids, bearer_token=settings.BEARER_TOKEN, source='Account')
         
         bloc_payload = gen_bloc_for_users(**gen_bloc_params)
         all_bloc_output = bloc_payload.get('all_users_bloc', [])
-        result = bloc_analysis(all_bloc_output, user_data, gen_bloc_args)
+        result = bloc_analysis(all_bloc_output, user_data, gen_bloc_params)
 
     return result
 
-def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = True):
+def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True):
     # Useful statistics
+    gen_bloc_args = Namespace(**bloc_params)
     query_count = len(user_data)
     total_tweets = sum([user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output])
 
@@ -204,6 +166,13 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
     pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
     pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
 
+    # Generate change reports
+    gen_bloc_args.keep_tweets = False
+    gen_bloc_args.bloc_alphabets = ['action']
+    action_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
+
+    change_report = link_change_report(action_change_report)
+
     result = {
         'successful_generation': True,
         'query_count': query_count,
@@ -215,7 +184,8 @@ def bloc_analysis(all_bloc_output, user_data, gen_bloc_args, count_elapsed = Tru
         'group_top_semantic': group_top_semantic,
         'group_top_sentiment': group_top_sentiment,
         'group_top_time': group_top_time,
-        'pairwise_sim': pairwise_sim_report
+        'pairwise_sim': pairwise_sim_report,
+        'change_report': change_report,
     }
 
     for account_bloc, account_data in zip(all_bloc_output, user_data):
@@ -293,3 +263,52 @@ def recalculate_bloc_word_rate(bloc_words):
         term_freq = word['term_freq']
         term_freq = term_freq / total_freq
         word['term_rate'] = f"{term_freq:.1%}"
+
+
+def select_bloc_params(ids=[], bearer_token='', source='Account'):
+    if source == 'Account':
+        account_src = 'Twitter Search'
+        tweet_order = 'reverse'
+    elif source == 'File':
+        account_src = 'Tweet File'
+        tweet_order = 'noop'
+
+    bloc_params, _ = get_bloc_params(ids, 
+                                     bearer_token, 
+                                     sort_action_words=True, 
+                                     keep_bloc_segments=True, 
+                                     tweet_order=tweet_order, 
+                                     account_src=account_src,
+                                     bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], 
+                                     keep_tweets=True)
+    return bloc_params
+
+
+def link_change_report(raw_change_report):
+    bloc_segments = raw_change_report[0]['bloc_segments']
+    values = {}
+    # Combine details for segments (dates) and segment details (BLOC content)
+    for key in bloc_segments['segments'].keys():
+        values[str(key)] = bloc_segments['segments'][key] | bloc_segments['segments_details'][key]
+
+    reports = []
+    for report in raw_change_report[0]['change_report']['self_sim']['action']:
+        # Add start and end details to the report
+        report['first_segment'] = values[report['fst_doc_seg_id']]
+        report['second_segment'] = values[report['sec_doc_seg_id']]
+        # Change local_dates from a dictionary to an array
+        report['first_segment']['local_dates'] = list(report['first_segment']['local_dates'])
+        report['second_segment']['local_dates'] = list(report['second_segment']['local_dates'])
+        # Delete report segment ID keys
+        del(report['fst_doc_seg_id'])
+        del(report['sec_doc_seg_id'])
+        # Round change profile
+        report['change_profile']['pause'] = round_format(report["change_profile"]["pause"])
+        report['change_profile']['word'] = round_format(report["change_profile"]["word"])
+        report['change_profile']['activity'] = round_format(report["change_profile"]["activity"])
+        reports.append(report)
+
+    return reports
+
+def round_format(value):
+    return f'{float(value):.1%}'

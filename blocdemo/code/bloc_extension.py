@@ -1,7 +1,4 @@
-from argparse import Namespace
-
 from datetime import datetime
-
 from . import symbols
 
 
@@ -32,71 +29,3 @@ def link_data(tweets):
         linked_data.append(data)
 
     return linked_data
-
-
-def get_bloc_params(user_ids, bearer_token, bloc_alphabets=['action', 'content_syntactic']):
-    defaultParams = get_default_bloc_params(bloc_alphabets=bloc_alphabets)
-    
-    params = {
-        'screen_names_or_ids': user_ids,
-        'bearer_token': bearer_token,
-        'account_src': 'Twitter Search',
-        'tweet_order': 'reverse'
-    }
-
-    params = params | defaultParams
-
-    return params, Namespace(**params)
-
-
-def get_tweet_bloc_params(user_ids, bloc_alphabets=['action', 'content_syntactic']):
-    defaultParams = get_default_bloc_params(bloc_alphabets=bloc_alphabets)
-    
-    params = {
-        'screen_names_or_ids': user_ids,
-        'account_src': 'Tweet File',
-        'tweet_order': 'noop'
-    }
-
-    params = params | defaultParams
-
-    return params, Namespace(**params)
-
-
-def get_default_bloc_params(bloc_alphabets):
-    # Previously function arguments but rarely modifified
-    token_pattern = 'word'
-    max_pages = 1
-    max_results = 100
-    no_screen_name = True
-    no_sleep = True
-
-    params = {
-        'account_class': '',
-        'access_token': '', 'access_token_secret': '', 'consumer_key': '', 'consumer_secret': '',
-        'blank_mark': 60, 'minute_mark': 5, 'segmentation_type': 'week_number', 'days_segment_count': -1,
-        'ansi_code': '91m',
-        'bloc_alphabets': bloc_alphabets, 'bloc_symbols_file': None,
-        'cache_path': '', 'cache_read': False, 'cache_write': False,
-        'following_lookup': False,
-        'keep_tweets': True,
-        'keep_bloc_segments': False,
-        'log_file': '', 'log_format': '', 'log_level': 'INFO', 'log_dets': {'level': 20},
-        'max_pages': max_pages, 'max_results': max_results,
-        'no_screen_name': no_screen_name, 'no_sleep': no_sleep,
-        'output': None,
-        'timeline_startdate': '', 'timeline_scroll_by_hours': None, 'time_function': 'f2',
-        'subcommand': '',
-
-        'fold_start_count': 4,
-        'keep_tf_matrix': False,
-        'ngram': 1 if token_pattern == 'word' else 2,
-        'sort_action_words': False,
-        'set_top_ngrams': False,
-        'tf_matrix_norm': '',
-        'token_pattern': token_pattern,
-        'top_ngrams_add_all_docs': False,
-        'sim_no_summary': True,
-    }
-
-    return params

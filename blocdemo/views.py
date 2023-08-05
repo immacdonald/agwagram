@@ -3,23 +3,29 @@ from django.shortcuts import render
 from .code import bloc_handler
 from .code import symbols
 from .code.django_counter import DjangoCounter
+from .code.file_handling import handle_uploaded_file
 
 from datetime import datetime
 
 from .forms import UsernameSearchForm, UploadFileForm
 
+from django.views import View
+from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-import tempfile
 import os
 
 import logging
 logger = logging.getLogger("mainLogger")
 
 
-def main(request):
-    return render(request, 'pages/main.html')
+class MainView(TemplateView):
+    template_name = 'main.html'
+
+
+class MethodologyView(TemplateView):
+    template_name = 'methodology.html'
 
 
 class AnalyzeUser(FormView):
@@ -31,50 +37,86 @@ class AnalyzeUser(FormView):
         username = form.cleaned_data['username']
         self.request.session['results'] = bloc_handler.analyze_user(username)
         return redirect(self.get_success_url())
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['previous_results'] = 'results' in self.request.session
+        return context
+    
+class AnalyzeFile(FormView):
+    form_class = UploadFileForm
+    template_name = 'analyze_file.html'
+    enctype = 'multipart/form-data'
+    success_url = reverse_lazy('results')
+
+    def form_valid(self, form):
+        tweet_files = self.request.FILES.getlist('tweet_files')
+
+        # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
+        converted_files = []
+        for file in tweet_files:
+            converted_file = handle_uploaded_file(file)
+            converted_files.append(converted_file.name)
+
+        results = bloc_handler.analyze_tweet_file(converted_files)
+
+        for temp_file in converted_files:
+            os.remove(temp_file)
+
+        self.request.session['results'] = results
+
+        return redirect(self.get_success_url())
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['previous_results'] = 'results' in self.request.session
+        return context
 
 
-def methodology(request):
-    return render(request, 'pages/methodology.html')
+class AnalysisResultsView(View):
+    def get(self, request):
+        results = request.session.get('results')
+        if results is None:
+            # Handle the case when 'results' is not available in the session
+            return render(request, 'analysis_failed.html', {"errors": "No results found."})
 
+        if results['successful_generation']:
+            if results['query_count'] > 1:
+                for u_pair in results['pairwise_sim']:
+                    u_pair['sim'] = f'{float(u_pair["sim"]):.1%}'
 
-def analysis_results(request):
-    results = request.session['results']
-    if results['successful_generation']:
-        if (results['query_count'] > 1):
-            for u_pair in results['pairwise_sim']:
-                u_pair['sim'] = f'{float(u_pair["sim"]):.1%}'
+                context = {
+                    'total_tweets': results['total_tweets'],
+                    'account_blocs': [],
+                    'group_top_bloc_words': results['group_top_bloc_words'],
+                    "group_top_actions": results['group_top_actions'],
+                    "group_top_syntactic": results['group_top_syntactic'],
+                    "group_top_semantic": results['group_top_semantic'],
+                    "group_top_sentiment": results['group_top_sentiment'],
+                    "group_top_time": results['group_top_time'],
+                    'pairwise_sim': results['pairwise_sim'][:10],
+                    'change_report': results['change_report'],
+                    'bloc_symbols': symbols.get_all_symbols()
+                }
 
-            context = {
-                'total_tweets': results['total_tweets'],
-                'account_blocs': [],
-                'group_top_bloc_words': results['group_top_bloc_words'],
-                "group_top_actions": results['group_top_actions'],
-                "group_top_syntactic": results['group_top_syntactic'],
-                "group_top_semantic": results['group_top_semantic'],
-                "group_top_sentiment": results['group_top_sentiment'],
-                "group_top_time": results['group_top_time'],
-                'pairwise_sim': results['pairwise_sim'][:10],
-                'bloc_symbols': symbols.get_all_symbols()
-            }
+                for account in results['account_blocs']:
+                    account_data = format_account_data(account)
+                    context['account_blocs'].append(account_data)
 
-            for account in results['account_blocs']:
-                account_data = format_account_data(account)
-                context['account_blocs'].append(account_data)
+                return render(request, 'analysis_results.html', context)
+            else:
+                context = {
+                    'account': format_account_data(results['account_blocs'][0])
+                }
 
-            return render(request, 'pages/analysis_results.html', context)
+                return render(request, 'analysis_results_single.html', context)
         else:
             context = {
-                'account': format_account_data(results['account_blocs'][0])
+                # User Data
+                "query": results['query'],
+                "errors": results['errors']
             }
-
-            return render(request, 'pages/analysis_results_single.html', context)
-    else:
-        context = {
-            # User Data
-            "query": results['query'],
-            "errors": results['errors']
-        }
-        return render(request, 'pages/analysis_failed.html', context)
+            return render(request, 'analysis_failed.html', context)
 
 
 def format_account_data(account):
@@ -119,37 +161,24 @@ def format_account_data(account):
 
 def process_bloc_string(bloc):
     return bloc.replace(' ', '').replace('|', '')
-
-
-def handle_uploaded_file(file):
-    with tempfile.NamedTemporaryFile(delete=False, suffix=file.name) as temp_file:
-        for chunk in file.chunks():
-            temp_file.write(chunk)
-
     
-    return temp_file
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-class AnalyzeFile(FormView):
-    form_class = UploadFileForm
-    template_name = 'analyze_file.html'
-    enctype = 'multipart/form-data'
-    success_url = reverse_lazy('results')
+class Analyze(APIView):
+    def post(self, request):
+        # Assuming the data is sent in JSON format
+        try:
+            # Get the value from the POST data
+            data = request.data.get('user')
+            
+            # Process the data and return the response
+            if data is not None:
+                result = "Received value: " + data
+                return Response({"result": result})
+            else:
+                return Response({"error": "Invalid data. 'value' parameter not found."}, status=400)
 
-    def form_valid(self, form):
-        tweet_files = self.request.FILES.getlist('tweet_files')
-
-        # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
-        converted_files = []
-        for file in tweet_files:
-            converted_file = handle_uploaded_file(file)
-            converted_files.append(converted_file.name)
-
-        results = bloc_handler.analyze_tweet_file(converted_files)
-
-        for temp_file in converted_files:
-            os.remove(temp_file)
-
-        self.request.session['results'] = results
-
-        return redirect(self.get_success_url())
+        except Exception as e:
+            return Response({"error": "An error occurred: " + str(e)}, status=500)

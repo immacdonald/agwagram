@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "components/base.html" %}
 
 {% block title %}
 Results | B3T
@@ -292,6 +292,48 @@ Results | B3T
                     <a href="methodology">More Details</a>
                 </div>
             </article>
+            <article class="card full-wide">
+                <div class="card-header">
+                    <div>
+                        <span class="icon material-symbols-outlined">star_half</span>
+                        <h3>Change Analysis</h3>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" onChange="cardToggle(this)">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="card-toggle-body">
+                    <p>This is more information about the BLOC change 2 analysis.</p>
+                </div>
+                <div class="card-body">
+                    <div class="scrollable">
+                        <table>
+                            <tr>
+                                <th class="sixth">Action</th>
+                                <th class="sixth">Pause</th>
+                                <th class="sixth">Word</th>
+                                <th class="sixth">Activity</th>
+                                <th class="sixth">Start Date</th>
+                                <th class="sixth">End Date</th>
+                            </tr>
+                            {% for report in change_report %}
+                            <tr>
+                                <td>{{report.first_segment.action}} to {{report.second_segment.action}}</td>
+                                <td>{{report.change_profile.pause}}</td>
+                                <td>{{report.change_profile.word}}</td>
+                                <td>{{report.change_profile.activity}}</td>
+                                <td>{{report.first_segment.local_dates.0}}</td>
+                                <td>{{report.second_segment.local_dates.0}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="methodology">More Details</a>
+                </div>
+            </article>
         </div>
     </div>
 </div>
@@ -309,7 +351,7 @@ Results | B3T
             {% endif %}
         </div>
     </div>
-    {% include '../components/account_bloc.html' with account=account %}
+    {% include 'components/account_bloc.html' with account=account %}
 </div>
 {% endfor %}
 

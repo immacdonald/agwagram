@@ -6,14 +6,20 @@ define setup_env
     $(eval export)
 endef
 
-# Full rebuild and Docker
+# Full rebuild of Docker
 build:
 	echo 'Building BLOC website Docker image'
-	rm -rf venv
-	docker rm -f bloc_website
-	docker-compose build
+	$(call setup_env, development)
+	docker-compose build --no-cache
+
+run:
 	echo 'Running BLOC website'
+	$(call setup_env, development)
 	docker-compose up
+
+docker:
+	$(MAKE) build
+	$(MAKE) run
 
 # Creates a blank secrets.env file
 secret_file:
@@ -21,11 +27,13 @@ secret_file:
 
 # Makes the virtual environment for local execution
 virtualenv:
-	rm -rf venv
 	python3 -m venv venv
 	. ./venv/bin/activate
 	pip3 install --upgrade pip
 	pip3 install -r requirements.txt
+
+remove_virtualenv:
+	rm -rf venv
 
 # Runs the Django server locally (no Docker)
 run_local:
@@ -35,7 +43,7 @@ run_local:
 	$(call setup_env, development)
 	python3 manage.py makemigrations
 	python3 manage.py migrate
-	python3 manage.py runserver 0.0.0.0:8000
+	python3 manage.py runserver 0.0.0.0:${PORT}
 
 # flake8 linter
 run_flake8:
