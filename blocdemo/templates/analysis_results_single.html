@@ -1,14 +1,14 @@
 {% extends "components/base.html" %}
 
 {% block title %}
-Results | B3T
+Results | BLOC
 {% endblock %}
 
 {% block content %}
 
 <div class="content-header">
     <div class="content-header-intro">
-        <h1>BLOC Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h1>
+        <h1>BLOC Analysis of <span class="special-text">@{{account.account_username}}</span> (<em>{{account.account_name}}</em>)</h1>
         {% if account.tweet_count > 0 %}
         <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
             BLOC process took {{account.elapsed_time}} seconds to complete.</p>
