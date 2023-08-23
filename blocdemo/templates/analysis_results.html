@@ -1,7 +1,7 @@
 {% extends "components/base.html" %}
 
 {% block title %}
-Results | B3T
+Results | BLOC
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@ Results | B3T
         <h1>BLOC Analysis</h1> 
         <p>Successfully generated results for
         {% for account in account_blocs %}
-            <b>@{{account.account_username}}</b>{% if forloop.last %}.{% else %},{% endif %}
+            <strong>@{{account.account_username}}</strong>{% if forloop.last %}.{% else %},{% endif %}
         {% endfor %}
         </p>
     </div>
@@ -341,7 +341,7 @@ Results | B3T
 <div class="content inactive" id="content-{{ forloop.counter }}">
     <div class="content-subheader">
         <div>
-            <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<i>{{account.account_name}}</i>)</h2>
+            <h2>Analysis of <span class="special-text">@{{account.account_username}}</span> (<em>{{account.account_name}}</em>)</h2>
             {% if account.tweet_count > 0 %}
             <p>Results generated using {{account.tweet_count}} tweets from {{account.first_tweet_date}} - {{account.last_tweet_date}}. 
                 BLOC process took {{account.elapsed_time}} seconds to complete.</p>

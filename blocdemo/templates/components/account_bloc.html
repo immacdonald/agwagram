@@ -244,7 +244,7 @@
                         {% with count=account.counter.count %}
                         {% with data=account.linked_data|index:count %}
                             {% if not forloop.first %}&nbsp;{% endif %}
-                            <div class="hoverable-text"><b>{{ char|get_description }}</b>
+                            <div class="hoverable-text"><strong>{{ char|get_description }}</strong>
                                 <span class="hoverable-tooltip large">
                                     Tweeted: {{ data.created_at }} <br>
                                     Content: {{ data.content_syntactic|get_description }} 

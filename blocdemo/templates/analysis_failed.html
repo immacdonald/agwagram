@@ -1,7 +1,7 @@
 {% extends "components/base.html" %}
 
 {% block title %}
-Results | B3T
+Results | BLOC
 {% endblock %}
 
 {% block content %}
@@ -11,13 +11,13 @@ Results | B3T
         <h1>BLOC Analysis Failed</h1>
         <p>Unable to generate results for the following accounts: 
             {% for username in query %}
-                <b>@{{username}}</b>{% if forloop.last %}.{% else %},{% endif %}
+                <strong>@{{username}}</strong>{% if forloop.last %}.{% else %},{% endif %}
             {% endfor %}
         </p>
         {% for error in errors %}
             <h3>Error: <span class="special-text">@{{error.account_username}}</span></h3>
-            <p>Unable to analyze account due to <i>{{error.error_title}}</i>.</p>
-            <p>Details: <i>{{error.error_detail}}</i></p>
+            <p>Unable to analyze account due to <em>{{error.error_title}}</em>.</p>
+            <p>Details: <em>{{error.error_detail}}</em></p>
         {% endfor %}
     </div>
 </div>
