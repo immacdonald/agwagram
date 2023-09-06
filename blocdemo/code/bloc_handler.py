@@ -142,6 +142,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
     group_top_semantic = []
     group_top_sentiment = []
     group_top_time = []
+    group_top_change = []
 
     for word in group_bloc_words:
         type = symbols.get_symbol_type(word['term'])
@@ -155,12 +156,15 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             group_top_sentiment.append(word)
         elif type == 'Time':
             group_top_time.append(word)
+        elif type == 'Change':
+            group_top_change.append(word)
 
     recalculate_bloc_word_rate(group_top_actions)
     recalculate_bloc_word_rate(group_top_syntactic)
     recalculate_bloc_word_rate(group_top_semantic)
     recalculate_bloc_word_rate(group_top_sentiment)
     recalculate_bloc_word_rate(group_top_time)
+    recalculate_bloc_word_rate(group_top_change)
 
     # Generate and sort the pairwise comparisons
     pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
@@ -170,8 +174,6 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
     gen_bloc_args.keep_tweets = False
     gen_bloc_args.bloc_alphabets = ['action']
     action_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
-
-    change_report = link_change_report(action_change_report)
 
     result = {
         'successful_generation': True,
@@ -185,7 +187,6 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
         'group_top_sentiment': group_top_sentiment,
         'group_top_time': group_top_time,
         'pairwise_sim': pairwise_sim_report,
-        'change_report': change_report,
     }
 
     for account_bloc, account_data in zip(all_bloc_output, user_data):
@@ -196,6 +197,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
         top_semantic = []
         top_sentiment = []
         top_time = []
+        top_change = []
 
         for word in bloc_words:
             type = symbols.get_symbol_type(word['term'])
@@ -209,12 +211,15 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
                 top_sentiment.append(word)
             elif type == 'Time':
                 top_time.append(word)
+            elif type == 'Change':
+                top_change.append(word)
 
         recalculate_bloc_word_rate(top_actions)
         recalculate_bloc_word_rate(top_syntactic)
         recalculate_bloc_word_rate(top_semantic)
         recalculate_bloc_word_rate(top_sentiment)
         recalculate_bloc_word_rate(top_time)
+        recalculate_bloc_word_rate(top_change)
 
         all_tweets = account_bloc['tweets']
 
@@ -222,6 +227,11 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             elapsed_time = account_bloc['elapsed_time']['gen_tweets_total_seconds'] + account_bloc['elapsed_time']['gen_bloc_total_seconds']
         else: 
             elapsed_time = -1
+
+        change_report = {}
+        for report in action_change_report:
+            if(report['screen_name'] == account_data['username']):
+                change_report = link_change_report(report)
 
         linked_data = bloc_extension.link_data(all_tweets)
 
@@ -241,6 +251,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             'bloc_semantic_entity': account_bloc['bloc']['content_semantic_entity'],
             'bloc_semantic_sentiment': account_bloc['bloc']['content_semantic_sentiment'],
             'bloc_change': account_bloc['bloc']['change'],
+            'change_report': change_report,
             # Top Words
             'top_bloc_words': bloc_words,
             'top_actions': top_actions,
@@ -248,6 +259,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             'top_semantic': top_semantic,
             'top_sentiment': top_sentiment,
             'top_time': top_time,
+            'top_change': top_change,
             # Linked Data
             'linked_data': linked_data
         })
@@ -284,31 +296,44 @@ def select_bloc_params(ids=[], bearer_token='', source='Account'):
     return bloc_params
 
 
-def link_change_report(raw_change_report):
-    bloc_segments = raw_change_report[0]['bloc_segments']
+def link_change_report(raw_report):
+    bloc_segments = raw_report['bloc_segments']
     values = {}
     # Combine details for segments (dates) and segment details (BLOC content)
     for key in bloc_segments['segments'].keys():
         values[str(key)] = bloc_segments['segments'][key] | bloc_segments['segments_details'][key]
 
-    reports = []
-    for report in raw_change_report[0]['change_report']['self_sim']['action']:
-        # Add start and end details to the report
-        report['first_segment'] = values[report['fst_doc_seg_id']]
-        report['second_segment'] = values[report['sec_doc_seg_id']]
-        # Change local_dates from a dictionary to an array
-        report['first_segment']['local_dates'] = list(report['first_segment']['local_dates'])
-        report['second_segment']['local_dates'] = list(report['second_segment']['local_dates'])
-        # Delete report segment ID keys
-        del(report['fst_doc_seg_id'])
-        del(report['sec_doc_seg_id'])
-        # Round change profile
-        report['change_profile']['pause'] = round_format(report["change_profile"]["pause"])
-        report['change_profile']['word'] = round_format(report["change_profile"]["word"])
-        report['change_profile']['activity'] = round_format(report["change_profile"]["activity"])
-        reports.append(report)
 
-    return reports
+    report = {}
+
+    reports = []
+    for change_event in raw_report['change_report']['self_sim']['action']:
+        # Add start and end details to the report
+        change_event['first_segment'] = values[change_event['fst_doc_seg_id']]
+        change_event['second_segment'] = values[change_event['sec_doc_seg_id']]
+        # Change local_dates from a dictionary to an array
+        change_event['first_segment']['local_dates'] = list(change_event['first_segment']['local_dates'])
+        change_event['second_segment']['local_dates'] = list(change_event['second_segment']['local_dates'])
+        # Delete report segment ID keys
+        del(change_event['fst_doc_seg_id'])
+        del(change_event['sec_doc_seg_id'])
+        # Round change profile
+        change_event['change_profile']['pause'] = round_format(change_event["change_profile"]["pause"])
+        change_event['change_profile']['word'] = round_format(change_event["change_profile"]["word"])
+        change_event['change_profile']['activity'] = round_format(change_event["change_profile"]["activity"])
+        reports.append(change_event)
+
+    report['change_events'] = reports
+    report['change_profile'] = {
+        'change_rate': round_format(raw_report['change_report']['change_rates']['action']),
+        'average_change': {
+            'word': round_format(raw_report['change_report']['avg_change_profile']['action']['word']),
+            'pause': round_format(raw_report['change_report']['avg_change_profile']['action']['pause']),
+            'activity': round_format(raw_report['change_report']['avg_change_profile']['action']['activity']),
+        }
+    }
+
+    return report
 
 def round_format(value):
     return f'{float(value):.1%}'
