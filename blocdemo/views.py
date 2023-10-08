@@ -95,7 +95,6 @@ class AnalysisResultsView(View):
                     "group_top_sentiment": results['group_top_sentiment'],
                     "group_top_time": results['group_top_time'],
                     'pairwise_sim': results['pairwise_sim'][:10],
-                    'change_report': results['change_report'],
                     'bloc_symbols': symbols.get_all_symbols()
                 }
 
@@ -151,6 +150,7 @@ def format_account_data(account):
         "top_semantic": account['top_semantic'],
         "top_sentiment": account['top_sentiment'],
         "top_time": account['top_time'],
+        'change_report': account['change_report'],
         # Linked Data
         'linked_data': account['linked_data'],
         'counter': DjangoCounter()

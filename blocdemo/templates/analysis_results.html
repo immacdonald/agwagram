@@ -38,11 +38,11 @@ Results | BLOC
     </div>
     <div class="content-main">
         <div class="card-grid">
-            <article class="card">
+            <article class="card wide">
                 <div class="card-header">
                     <div>
                         <span class="icon material-symbols-outlined">star_half</span>
-                        <h3>Top Actions</h3>
+                        <h3>Top BLOC Words</h3>
                     </div>
                     <label class="toggle">
                         <input type="checkbox" onChange="cardToggle(this)">
@@ -53,16 +53,30 @@ Results | BLOC
                     <p>This is more information about the BLOC word frequency analysis.</p>
                 </div>
                 <div class="card-body">
+                    <p>Displays the top 100 BLOC words between all the accounts analyzed.</p>
                     <div class="scrollable">
                         <table>
                             <tr>
-                                <th class="table-main">Action</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
+                                <th style="width: 40px">Rank</th>
+                                <th style="width: 100px">Word</th>
+                                <th style="width: 80px">Frequency</th>
+                                <th style="width: 60px">Rate (%)</th>
+                                <th>Description</th>
                             </tr>
-                            {% for word in group_top_actions %}
+                            {% for word in group_top_bloc_words %}
                             <tr>
+                                <td>{{word.rank}}.</td>
                                 <td>
+                                    {% for char in word.term %}
+                                        <div class="hoverable-text">
+                                            {{ char }}
+                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </td>
+                                <td>{{word.term_freq}}</td>
+                                <td>{{word.term_rate}}</td>
+                                <td style="text-align: left">
                                     {% for char in word.term %}
                                         <div class="hoverable-text">
                                             {{ char|get_description }}
@@ -71,8 +85,6 @@ Results | BLOC
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -86,7 +98,7 @@ Results | BLOC
                 <div class="card-header">
                     <div>
                         <span class="icon material-symbols-outlined">star_half</span>
-                        <h3>Top Syntactic Format</h3>
+                        <h3>Top Pauses</h3>
                     </div>
                     <label class="toggle">
                         <input type="checkbox" onChange="cardToggle(this)">
@@ -100,155 +112,32 @@ Results | BLOC
                     <div class="scrollable">
                         <table>
                             <tr>
-                                <th class="table-main">Action</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
-                            </tr>
-                            {% for word in group_top_syntactic %}
-                            <tr>
-                                <td>
-                                    {% for char in word.term %}
-                                        <div class="hoverable-text">
-                                            {{ char|get_description }}
-                                            <span class="hoverable-tooltip">{{ char }}</span>
-                                        </div>
-                                        {% if not forloop.last %},&nbsp;{% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="methodology">More Details</a>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">star_half</span>
-                        <h3>Top Semantic Entities</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" onChange="cardToggle(this)">
-                        <span></span>
-                    </label>
-                </div>
-                <div class="card-toggle-body">
-                    <p>This is more information about the BLOC word frequency analysis.</p>
-                </div>
-                <div class="card-body">
-                    <div class="scrollable">
-                        <table>
-                            <tr>
-                                <th class="table-main">Action</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
-                            </tr>
-                            {% for word in group_top_semantic %}
-                            <tr>
-                                <td>
-                                    {% for char in word.term %}
-                                        <div class="hoverable-text">
-                                            {{ char|get_description }}
-                                            <span class="hoverable-tooltip">{{ char }}</span>
-                                        </div>
-                                        {% if not forloop.last %},&nbsp;{% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="methodology">More Details</a>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">star_half</span>
-                        <h3>Top Sentiments</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" onChange="cardToggle(this)">
-                        <span></span>
-                    </label>
-                </div>
-                <div class="card-toggle-body">
-                    <p>This is more information about the BLOC word frequency analysis.</p>
-                </div>
-                <div class="card-body">
-                    <div class="scrollable">
-                        <table>
-                            <tr>
-                                <th class="table-main">Action</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
-                            </tr>
-                            {% for word in group_top_sentiment %}
-                            <tr>
-                                <td>
-                                    {% for char in word.term %}
-                                        <div class="hoverable-text">
-                                            {{ char|get_description }}
-                                            <span class="hoverable-tooltip">{{ char }}</span>
-                                        </div>
-                                        {% if not forloop.last %},&nbsp;{% endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="methodology">More Details</a>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">star_half</span>
-                        <h3>Top Time Delays Between Tweets</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" onChange="cardToggle(this)">
-                        <span></span>
-                    </label>
-                </div>
-                <div class="card-toggle-body">
-                    <p>This is more information about the BLOC word frequency analysis.</p>
-                </div>
-                <div class="card-body">
-                    <div class="scrollable">
-                        <table>
-                            <tr>
-                                <th class="table-main">Action</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
+                                <th style="width: 45px">Pause</th>
+                                <th style="width: 80px">Frequency</th>
+                                <th style="width: 60px">Rate (%)</th>
+                                <th>Description</th>
                             </tr>
                             {% for word in group_top_time %}
                             <tr>
                                 <td>
                                     {% for char in word.term %}
                                         <div class="hoverable-text">
+                                            {{ char }}
+                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </td>
+                                <td>{{word.term_freq}}</td>
+                                <td>{{word.term_rate}}</td>
+                                <td style="text-align: left">
+                                    {% for char in word.term %}
+                                        <div class="hoverable-text">
                                             {{ char|get_description }}
                                             <span class="hoverable-tooltip">{{ char }}</span>
                                         </div>
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -287,48 +176,6 @@ Results | BLOC
                         </tr>
                         {% endfor %}
                         </table>
-                </div>
-                <div class="card-footer">
-                    <a href="methodology">More Details</a>
-                </div>
-            </article>
-            <article class="card full-wide">
-                <div class="card-header">
-                    <div>
-                        <span class="icon material-symbols-outlined">star_half</span>
-                        <h3>Change Analysis</h3>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" onChange="cardToggle(this)">
-                        <span></span>
-                    </label>
-                </div>
-                <div class="card-toggle-body">
-                    <p>This is more information about the BLOC change 2 analysis.</p>
-                </div>
-                <div class="card-body">
-                    <div class="scrollable">
-                        <table>
-                            <tr>
-                                <th class="sixth">Action</th>
-                                <th class="sixth">Pause</th>
-                                <th class="sixth">Word</th>
-                                <th class="sixth">Activity</th>
-                                <th class="sixth">Start Date</th>
-                                <th class="sixth">End Date</th>
-                            </tr>
-                            {% for report in change_report %}
-                            <tr>
-                                <td>{{report.first_segment.action}} to {{report.second_segment.action}}</td>
-                                <td>{{report.change_profile.pause}}</td>
-                                <td>{{report.change_profile.word}}</td>
-                                <td>{{report.change_profile.activity}}</td>
-                                <td>{{report.first_segment.local_dates.0}}</td>
-                                <td>{{report.second_segment.local_dates.0}}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
                 </div>
                 <div class="card-footer">
                     <a href="methodology">More Details</a>
