@@ -14,6 +14,8 @@ from . import symbols
 
 from .file_handling import *
 
+TOP_WORD_LIMIT = 100
+
 
 def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
@@ -144,8 +146,11 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
     group_top_time = []
     group_top_change = []
 
+    n = 1
     for word in group_bloc_words:
         type = symbols.get_symbol_type(word['term'])
+        word['rank'] = n
+        n = n + 1
         if type == 'Action':
             group_top_actions.append(word)
         elif type == 'Syntactic':
@@ -172,15 +177,15 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
 
     # Generate change reports
     gen_bloc_args.keep_tweets = False
-    gen_bloc_args.bloc_alphabets = ['action']
-    action_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
+    gen_bloc_args.bloc_alphabets = ['action', 'content_syntactic']
+    raw_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
 
     result = {
         'successful_generation': True,
         'query_count': query_count,
         'total_tweets': total_tweets,
         'account_blocs': [],
-        'group_top_bloc_words': group_bloc_words,
+        'group_top_bloc_words': group_bloc_words[:TOP_WORD_LIMIT],
         'group_top_actions': group_top_actions,
         'group_top_syntactic': group_top_syntactic,
         'group_top_semantic': group_top_semantic,
@@ -199,8 +204,11 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
         top_time = []
         top_change = []
 
+        n = 1
         for word in bloc_words:
             type = symbols.get_symbol_type(word['term'])
+            word['rank'] = n
+            n = n + 1
             if type == 'Action':
                 top_actions.append(word)
             elif type == 'Syntactic':
@@ -229,7 +237,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             elapsed_time = -1
 
         change_report = {}
-        for report in action_change_report:
+        for report in raw_change_report:
             if(report['screen_name'] == account_data['username']):
                 change_report = link_change_report(report)
 
@@ -253,7 +261,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             'bloc_change': account_bloc['bloc']['change'],
             'change_report': change_report,
             # Top Words
-            'top_bloc_words': bloc_words,
+            'top_bloc_words': bloc_words[:TOP_WORD_LIMIT],
             'top_actions': top_actions,
             'top_syntactic': top_syntactic,
             'top_semantic': top_semantic,
@@ -273,8 +281,11 @@ def recalculate_bloc_word_rate(bloc_words):
 
     for word in bloc_words:
         term_freq = word['term_freq']
+        # Seperate thousands-place using comma operator
+        word['term_freq'] = f"{term_freq:,}"
         term_freq = term_freq / total_freq
-        word['term_rate'] = f"{term_freq:.1%}"
+        # Convert to percent but omit % symbol
+        word['term_rate'] = f"{term_freq:.1%}"[:-1]
 
 
 def select_bloc_params(ids=[], bearer_token='', source='Account'):
@@ -306,34 +317,37 @@ def link_change_report(raw_report):
 
     report = {}
 
-    reports = []
-    for change_event in raw_report['change_report']['self_sim']['action']:
-        # Add start and end details to the report
-        change_event['first_segment'] = values[change_event['fst_doc_seg_id']]
-        change_event['second_segment'] = values[change_event['sec_doc_seg_id']]
-        # Change local_dates from a dictionary to an array
-        change_event['first_segment']['local_dates'] = list(change_event['first_segment']['local_dates'])
-        change_event['second_segment']['local_dates'] = list(change_event['second_segment']['local_dates'])
-        # Delete report segment ID keys
-        del(change_event['fst_doc_seg_id'])
-        del(change_event['sec_doc_seg_id'])
-        # Round change profile
-        change_event['change_profile']['pause'] = round_format(change_event["change_profile"]["pause"])
-        change_event['change_profile']['word'] = round_format(change_event["change_profile"]["word"])
-        change_event['change_profile']['activity'] = round_format(change_event["change_profile"]["activity"])
-        reports.append(change_event)
+    for alphabet in ['action', 'content_syntactic']:
+        report[alphabet] = {}
+        reports = []
+        for change_event in raw_report['change_report']['self_sim'][alphabet]:
+            # Add start and end details to the report
+            change_event['first_segment'] = values[change_event['fst_doc_seg_id']]
+            change_event['second_segment'] = values[change_event['sec_doc_seg_id']]
+            # Change local_dates from a dictionary to an array
+            change_event['first_segment']['local_dates'] = list(change_event['first_segment']['local_dates'])
+            change_event['second_segment']['local_dates'] = list(change_event['second_segment']['local_dates'])
+            # Delete report segment ID keys
+            del(change_event['fst_doc_seg_id'])
+            del(change_event['sec_doc_seg_id'])
+            # Round change profile
+            change_event['change_profile']['pause'] = round_format(change_event["change_profile"]["pause"])
+            change_event['change_profile']['word'] = round_format(change_event["change_profile"]["word"])
+            change_event['change_profile']['activity'] = round_format(change_event["change_profile"]["activity"])
+            reports.append(change_event)
 
-    report['change_events'] = reports
-    report['change_profile'] = {
-        'change_rate': round_format(raw_report['change_report']['change_rates']['action']),
-        'average_change': {
-            'word': round_format(raw_report['change_report']['avg_change_profile']['action']['word']),
-            'pause': round_format(raw_report['change_report']['avg_change_profile']['action']['pause']),
-            'activity': round_format(raw_report['change_report']['avg_change_profile']['action']['activity']),
+        report[alphabet]['change_events'] = reports
+        report[alphabet]['change_profile'] = {
+            'change_rate': round_format(raw_report['change_report']['change_rates'][alphabet]),
+            'average_change': {
+                'word': round_format(raw_report['change_report']['avg_change_profile'][alphabet]['word']),
+                'pause': round_format(raw_report['change_report']['avg_change_profile'][alphabet]['pause']),
+                'activity': round_format(raw_report['change_report']['avg_change_profile'][alphabet]['activity']),
+            }
         }
-    }
 
+    print(report)
     return report
 
 def round_format(value):
-    return f'{float(value):.1%}'
+    return f'{float(value):.1%}'[:-1]

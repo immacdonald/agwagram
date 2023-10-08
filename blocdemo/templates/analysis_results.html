@@ -53,23 +53,25 @@ Results | BLOC
                     <p>This is more information about the BLOC word frequency analysis.</p>
                 </div>
                 <div class="card-body">
+                    <p>Displays the top 100 BLOC words between all the accounts analyzed.</p>
                     <div class="scrollable">
                         <table>
                             <tr>
+                                <th style="width: 40px">Rank</th>
                                 <th style="width: 100px">Word</th>
                                 <th style="width: 80px">Frequency</th>
-                                <th style="width: 60px">Rate</th>
+                                <th style="width: 60px">Rate (%)</th>
                                 <th>Description</th>
                             </tr>
                             {% for word in group_top_bloc_words %}
                             <tr>
+                                <td>{{word.rank}}.</td>
                                 <td>
                                     {% for char in word.term %}
                                         <div class="hoverable-text">
                                             {{ char }}
                                             <span class="hoverable-tooltip">{{ char|get_description }}</span>
                                         </div>
-                                        {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
                                 <td>{{word.term_freq}}</td>
@@ -110,13 +112,24 @@ Results | BLOC
                     <div class="scrollable">
                         <table>
                             <tr>
-                                <th class="table-main">Pause</th>
-                                <th>Frequency</th>
-                                <th>Rate</th>
+                                <th style="width: 45px">Pause</th>
+                                <th style="width: 80px">Frequency</th>
+                                <th style="width: 60px">Rate (%)</th>
+                                <th>Description</th>
                             </tr>
                             {% for word in group_top_time %}
                             <tr>
                                 <td>
+                                    {% for char in word.term %}
+                                        <div class="hoverable-text">
+                                            {{ char }}
+                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </td>
+                                <td>{{word.term_freq}}</td>
+                                <td>{{word.term_rate}}</td>
+                                <td style="text-align: left">
                                     {% for char in word.term %}
                                         <div class="hoverable-text">
                                             {{ char|get_description }}
@@ -125,8 +138,6 @@ Results | BLOC
                                         {% if not forloop.last %},&nbsp;{% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{word.term_freq}}</td>
-                                <td>{{word.term_rate}}</td>
                             </tr>
                             {% endfor %}
                         </table>

@@ -661,7 +661,7 @@ table {
 	border-spacing: 0;
 	width: 100%;
 	line-height: normal;
-	text-align: center;
+	text-align: left;
 
 }
   
@@ -699,13 +699,15 @@ tr:nth-child(odd):not(:first-child) {
 		flex-basis: 0;
 		border-radius: 10px 10px 0 0;
 		background-color: var(--c-background-trans);
+		border: none;
 
 		&:not(:last-child) {
 			margin-right: 0.5rem;
 		}
 
 		&.active {
-			color: var(--c-text-action);
+			color: var(--c-text-accent);
+			background-color: var(--c-accent-primary);
 			font-weight: bold;
 		}
 	}
