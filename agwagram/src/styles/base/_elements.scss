@@ -1,0 +1,36 @@
+@use '../' as *;
+
+// Headers
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: 0.015em;
+}
+
+h1 {
+    margin: $sm 0;
+    font-size: 32px;
+}
+
+h2 {
+    margin: $sm 0;
+    font-size: 24px;
+}
+
+h3 {
+    margin: $xs 0;
+    font-size: 20px;
+}
+
+// Links
+a {
+    text-decoration: none;
+    color: var(--c-primary);
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

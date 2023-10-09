@@ -1,0 +1,48 @@
+@use './styles' as *;
+@use './styles/base';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+html {
+    height: 100%;
+    display: block;
+    box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+        width: $sm;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--c-border-light);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--c-border-light);
+        border-radius: $sm;
+        border: $xs solid var(--c-border-light);
+    }
+}
+
+::selection {
+    background: var(--c-primary-fade);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'proxima-nova', sans-serif;
+    font-size: $mdFont;
+    line-height: 1.5;
+    color: var(--c-text-primary);
+    background-color: var(--c-background);
+    overflow-x: hidden;
+}

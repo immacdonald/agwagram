@@ -1,0 +1,23 @@
+@use '../styles' as *;
+
+.footer {
+    width: 100%;
+    height: $footerHeight;
+    display: flex;
+    justify-content: center;
+    background-color: var(--c-bg-neutral-dark);
+    border-top: 1px solid var(--c-border-light);
+    color: var(--c-fg-neutral-inverse);
+    font-size: $smFont;
+}
+
+.container {
+    @extend .full;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    height: fit-content;
+}

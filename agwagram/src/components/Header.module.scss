@@ -1,0 +1,84 @@
+@use '../styles' as *;
+@use 'sass:math';
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $headerHeight !important;
+    border-bottom: 1px solid var(--c-b-neutral);
+    background-color: var(--c-bg-neutral);
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 $xxl;
+}
+
+.logo {
+    font-weight: 900;
+    font-style: italic;
+    font-size: $lgFont;
+    white-space: nowrap;
+    user-select: none;
+    color: var(--c-primary);
+    margin-right: $xxl;
+}
+
+.navigation {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: $lg;
+    margin-left: $xxl;
+
+    > div {
+        padding: $sm;
+        border-radius: $sm;
+        transition: color var(--t-fast);
+        text-align: center;
+
+        &:hover {
+            a {
+                color: var(--c-primary-light);
+            }
+        }
+
+        &[data-selected='true'] {
+            a {
+                color: var(--c-primary);
+
+                &::after {
+                    content: '';
+                    $width: 32px;
+                    width: $width;
+                    height: 3px;
+                    background-color: var(--c-primary);
+                    position: absolute;
+                    bottom: -4px;
+                    left: 50%;
+                    margin-left: math.div($width, -2);
+                }
+            }
+        }
+
+        a {
+            position: relative;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        font-size: $mdFont;
+        color: var(--c-text-primary);
+    }
+}

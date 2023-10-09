@@ -1,0 +1,91 @@
+@use 'sass:color';
+
+
+$primary: #143aa2;
+
+:root {
+    --c-white: rgb(255, 255, 255);
+    --c-grey-1: rgb(243, 243, 243);
+    --c-grey-2: rgb(235, 235, 235);
+    --c-grey-3: rgb(206, 206, 206);
+    --c-grey-4: rgb(163, 163, 163);
+    --c-grey-5: rgb(122, 122, 122);
+    --c-grey-6: rgb(82, 82, 82);
+    --c-grey-7: rgb(61, 61, 61);
+    --c-grey-8: rgb(41, 41, 41);
+    --c-grey-9: rgb(31, 31, 31);
+    --c-grey-10: rgb(20, 20, 20);
+    --c-black: rgb(1, 2, 3);
+    --s-primary: #143aa2;
+
+    // Foreground Colors
+    //--c-fg-neutral-light: var(--s-white);
+	--c-fg-neutral: var(--c-black);
+    --c-fg-neutral-inverse: var(--c-grey-1);
+    //--c-text-action: var(--s-white);
+	//--c-text-accent: var(--s-white);
+    --c-primary: var(--s-primary);
+	--c-secondary: #6ea9fc;
+
+    // Border
+    --c-b-neutral: var(--c-grey-2);
+
+	
+    // Background colors
+    --c-bg-neutral-light: var(--c-grey-1):  
+    --c-bg-neutral: var(--c-grey-2);
+    --c-bg-neutral-dim: var(--c-grey-3);
+    --c-bg-neutral-dark: var(--c-grey-10);
+    
+	//--c-background-primary: #000000;
+	//--c-background-secondary: #2159c0;
+	//--c-background-tertiary: #161618;
+	//--c-background-trans: #a6cbff20;
+
+	//--c-disabled-background: var(--c-background-tertiary);
+	//--c-disabled-color: #494848;
+
+    --t-fast: 0.25s ease;
+    --t-mid: 0.5s ease;
+    --t-slow: 1s ease;
+}
+
+/*html[data-theme='dark'] {
+
+}
+
+html[data-theme='light'] {
+	--c-text-primary: var(--s-black);
+	--c-text-secondary: #686b87;
+	--c-text-action: var(--s-black);
+	--c-text-accent: var(--s-white);
+
+	--c-primary: var(--s-primary);
+	--c-secondary: #6ea9fc;
+
+	--c-border-primary: var(--s-lightgrey);
+	
+	--c-background-primary: #fdfcff;
+	--c-background-secondary: #a6cbff;
+	--c-background-tertiary: var(--s-lightgrey);
+	--c-background-trans: #a6cbff20;
+
+	--c-disabled-background: var(--c-background-tertiary);
+	--c-disabled-color: #cfd1d6;
+}*/
+
+/*
+    --c-text-primary: #333;
+    --c-text-action: #636363;
+    --c-text-light: rgb(245, 245, 245);
+
+    --c-primary-fade: #{color.scale($primary, $lightness: 50%)};
+    --c-primary-light: #{color.scale($primary, $lightness: 10%)};
+    --c-primary: #{$primary};
+    --c-primary-dark: #{color.scale($primary, $lightness: -25%)};
+
+    --c-background-light: #f8f8f8;
+    --c-background: #f0f0f0;
+    --c-background-dark: #272727;
+    --c-border-dark: #272727;
+    */
