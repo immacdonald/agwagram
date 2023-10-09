@@ -16,7 +16,7 @@ $primary: #143aa2;
     --c-grey-9: rgb(31, 31, 31);
     --c-grey-10: rgb(20, 20, 20);
     --c-black: rgb(1, 2, 3);
-    --s-primary: #143aa2;
+    --s-primary: #{$primary};
 
     // Foreground Colors
     //--c-fg-neutral-light: var(--s-white);
