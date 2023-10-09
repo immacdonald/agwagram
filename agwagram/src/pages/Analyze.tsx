@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import style from './Analyze.module.scss';
+import Search from '../images/icons/search.svg';
 
 const MAX_COUNT: number = 5;
 
@@ -38,6 +39,14 @@ const Analyze: React.FC = () => {
             <div className={style.columns}>
                 <div>
                     <h3>Analyze By Username</h3>
+                    <p>
+                        Search for one or more accounts (separated by a comma) by their current Twitter username.
+                    </p>
+                    <br />
+                    <div className={style.search}>
+                        <input placeholder="OSoMe_IU, POTUS"/>
+                        <button><img src={Search}/></button>
+                    </div>
                 </div>
                 <div>
                     <h3>Analyze By File</h3>

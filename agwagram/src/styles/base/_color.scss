@@ -9,8 +9,8 @@ $primary: #143aa2;
     --c-grey-2: rgb(249, 249, 249);
     --c-grey-3: rgb(235, 235, 235);
     --c-grey-4: rgb(221, 221, 221);
-    //--c-grey-5: rgb(122, 122, 122);
-    //--c-grey-6: rgb(82, 82, 82);
+    --c-grey-5: rgb(203, 203, 203);
+    --c-grey-6: rgb(167, 167, 167);
     //--c-grey-7: rgb(61, 61, 61);
     //--c-grey-8: rgb(41, 41, 41);
     //--c-grey-9: rgb(31, 31, 31);
@@ -44,8 +44,8 @@ $primary: #143aa2;
 	//--c-background-trans: #a6cbff20;
 
     // Effect Colors
-	--c-disabled-background: #161618;
-	--c-disabled-color: #494848;
+	--c-disabled-background: var(--c-grey-6);
+	--c-disabled-color: var(--c-grey-5);
 
     // Transitions
     --t-fast: 0.25s ease;
