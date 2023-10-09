@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import blocData from '../static/data.json';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-function About() {
+function Testing() {
   console.log(blocData['action']);
 
   const changeRate = [
@@ -85,4 +85,4 @@ function About() {
   )
 }
 
-export default About;
+export default Testing;
