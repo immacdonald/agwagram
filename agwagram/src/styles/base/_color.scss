@@ -1,19 +1,19 @@
 @use 'sass:color';
 
-
 $primary: #143aa2;
 
 :root {
+    // Palette Colors
     --c-white: rgb(255, 255, 255);
-    --c-grey-1: rgb(243, 243, 243);
-    --c-grey-2: rgb(235, 235, 235);
-    --c-grey-3: rgb(206, 206, 206);
-    --c-grey-4: rgb(163, 163, 163);
-    --c-grey-5: rgb(122, 122, 122);
-    --c-grey-6: rgb(82, 82, 82);
-    --c-grey-7: rgb(61, 61, 61);
-    --c-grey-8: rgb(41, 41, 41);
-    --c-grey-9: rgb(31, 31, 31);
+    --c-grey-1: rgb(252, 252, 252);
+    --c-grey-2: rgb(249, 249, 249);
+    --c-grey-3: rgb(235, 235, 235);
+    //--c-grey-4: rgb(163, 163, 163);
+    //--c-grey-5: rgb(122, 122, 122);
+    //--c-grey-6: rgb(82, 82, 82);
+    //--c-grey-7: rgb(61, 61, 61);
+    //--c-grey-8: rgb(41, 41, 41);
+    //--c-grey-9: rgb(31, 31, 31);
     --c-grey-10: rgb(20, 20, 20);
     --c-black: rgb(1, 2, 3);
     --s-primary: #{$primary};
@@ -24,15 +24,16 @@ $primary: #143aa2;
     --c-fg-neutral-inverse: var(--c-grey-1);
     //--c-text-action: var(--s-white);
 	//--c-text-accent: var(--s-white);
+    --c-primary-fade: #{color.scale($primary, $lightness: 70%)};
+    --c-primary-light: #{color.scale($primary, $lightness: 10%)};
     --c-primary: var(--s-primary);
 	--c-secondary: #6ea9fc;
 
-    // Border
-    --c-b-neutral: var(--c-grey-2);
+    // Border Colors
+    --c-b-neutral: var(--c-grey-3);
 
-	
-    // Background colors
-    --c-bg-neutral-light: var(--c-grey-1):  
+    // Background
+    --c-bg-neutral-light: var(--c-grey-1);
     --c-bg-neutral: var(--c-grey-2);
     --c-bg-neutral-dim: var(--c-grey-3);
     --c-bg-neutral-dark: var(--c-grey-10);
@@ -42,9 +43,11 @@ $primary: #143aa2;
 	//--c-background-tertiary: #161618;
 	//--c-background-trans: #a6cbff20;
 
+    // Effect Colors
 	//--c-disabled-background: var(--c-background-tertiary);
 	//--c-disabled-color: #494848;
 
+    // Transitions
     --t-fast: 0.25s ease;
     --t-mid: 0.5s ease;
     --t-slow: 1s ease;

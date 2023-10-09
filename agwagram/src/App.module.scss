@@ -16,7 +16,7 @@
     overflow-y: auto;
 
     > div {
-        box-sizing: border-box;
         @extend .full;
+        padding: $lg 0;
     }
 }

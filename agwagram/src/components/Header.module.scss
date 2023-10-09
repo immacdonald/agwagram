@@ -15,17 +15,19 @@
     display: flex;
     align-items: center;
     width: 100%;
+    height: 48px;
     padding: 0 $xxl;
 }
 
 .logo {
-    font-weight: 900;
-    font-style: italic;
-    font-size: $lgFont;
-    white-space: nowrap;
-    user-select: none;
-    color: var(--c-primary);
-    margin-right: $xxl;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    
+    > img {
+		height: 40px;
+		aspect-ratio: 4;
+    }
 }
 
 .navigation {
@@ -47,10 +49,8 @@
         transition: color var(--t-fast);
         text-align: center;
 
-        &:hover {
-            a {
-                color: var(--c-primary-light);
-            }
+        a:hover {
+            color: var(--c-primary-light);
         }
 
         &[data-selected='true'] {
@@ -59,9 +59,9 @@
 
                 &::after {
                     content: '';
-                    $width: 32px;
+                    $width: 40px;
                     width: $width;
-                    height: 3px;
+                    height: 2px;
                     background-color: var(--c-primary);
                     position: absolute;
                     bottom: -4px;
@@ -78,7 +78,8 @@
 
     a {
         text-decoration: none;
-        font-size: $mdFont;
-        color: var(--c-text-primary);
+        font-size: $lgFont;
+        font-weight: 600;
+        color: var(--c-fg-neutral);
     }
 }
