@@ -2,7 +2,7 @@ function Methodology() {
     return (
         <div>
             <h1>About <em>Agwagram</em></h1>
-            <p> 
+            <p>
                 Agwagram is built on top of BLOC, or Behavioral Language for Online Classification, a language that represents social media account behaviors, including both benign and malicious ones. 
                 It is not limited to human behavior, but can also capture the behaviors of cyborgs and bots. 
                 BLOC represents online activities as BLOC words, consisting of symbols drawn from different alphabets to indicate the temporality of actions or forms of content. 

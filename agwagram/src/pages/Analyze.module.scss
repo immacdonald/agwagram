@@ -1,0 +1,33 @@
+@use '../styles' as *;
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.columns {
+    display: flex;
+    height: 100%;
+
+    > div {
+        width: 50%;
+        min-height: 320px;
+        height: fit-content;
+        padding: $md;
+        border-radius: $mdRadius;
+        border: 1px solid var(--c-b-neutral);
+        background-color: var(--c-bg-neutral-light);
+
+        &:not(:last-of-type) {
+            margin-right: $xs;
+        }
+
+        &:not(:first-of-type) {
+            margin-left: $xs;
+        }
+
+        > h3 {
+            text-align: center;
+        }
+    }
+}

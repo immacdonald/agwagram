@@ -9,7 +9,7 @@
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 
 html {
@@ -38,7 +38,7 @@ html {
 
 body {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     font-family: 'proxima-nova', sans-serif;
     font-size: $mdFont;
     line-height: 1.5;
