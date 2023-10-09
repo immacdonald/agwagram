@@ -1,6 +1,6 @@
 import DynamicLink from './DynamicLink';
 import style from './Header.module.scss';
-import Logo from '../static/images/agwagram.png';
+import Logo from '../images/agwagram.png';
 
 function Header() {
     return (

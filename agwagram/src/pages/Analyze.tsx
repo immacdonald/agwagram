@@ -1,6 +1,37 @@
+import React, { useState } from 'react';
 import style from './Analyze.module.scss';
 
-function Analyze() {
+const MAX_COUNT: number = 5;
+
+const Analyze: React.FC = () => {
+
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+    const [fileLimit, setFileLimit] = useState<boolean>(false);
+
+    const handleUploadFiles = (files: File[]) => {
+        const uploaded: File[] = [...uploadedFiles];
+        let limitExceeded = false;
+        files.some((file) => {
+            if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+                uploaded.push(file);
+                if (uploaded.length === MAX_COUNT) setFileLimit(true);
+                if (uploaded.length > MAX_COUNT) {
+                    alert(`You can only add a maximum of ${MAX_COUNT} files`);
+                    setFileLimit(false);
+                    limitExceeded = true;
+                    return true;
+                }
+            }
+            return false; // Added for clarity, but not necessary
+        });
+        if (!limitExceeded) setUploadedFiles(uploaded);
+    };
+
+    const handleFileEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const chosenFiles = Array.from(e.target.files || []);
+        handleUploadFiles(chosenFiles);
+    };
+
     return (
         <div className={style.content}>
             <h1>Analyze</h1>
@@ -19,6 +50,24 @@ function Analyze() {
                     <br />
                     <div>
                         <strong>Note:</strong> JSON files are expected to contain the Tweet data as an array of Tweet objects, while the JSONL files are expected to be formatted with each line being a Tweet, <em>not</em> an account.
+                    </div>
+                    <br />
+                    <input id='fileUpload' type='file' multiple
+                        accept='application/pdf, image/png'
+                        onChange={handleFileEvent}
+                        disabled={fileLimit}
+			        />
+
+                    <div className={style.submit}>
+                        <button>Upload Files</button>
+                    </div>
+
+                    <div>
+                        {uploadedFiles.map(file => (
+                            <div >
+                                {file.name}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

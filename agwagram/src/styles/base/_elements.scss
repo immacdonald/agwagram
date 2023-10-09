@@ -34,3 +34,47 @@ a {
         text-decoration: underline;
     }
 }
+
+// Buttons
+button {
+	@include button;
+}
+
+// Interactables
+input[type="file"] {
+    width: 100%;
+	height: 96px;
+	border: 1px solid var(--c-b-neutral);
+	border-radius: $smRadius;
+	margin-top: $md;
+    transition: border-color ease 0.25s;
+
+	&::before {
+		content: "";
+		-webkit-mask: url('./images/upload_file.svg') no-repeat 100% 100%;
+		mask: url('./images/upload_file.svg') no-repeat 100% 100%;
+		-webkit-mask-size: cover;
+		mask-size: cover;
+  		background-color: var(--c-fg-neutral);
+		transition: background-color ease 0.25s;
+		width: 64px;
+		height: 64px;
+		margin: auto;
+		margin-top: $md;
+		margin-bottom: $xxl;
+	}
+
+	&:hover {
+        border-color: var(--c-primary);
+
+		&::before {
+		    background-color: var(--c-primary);
+		}
+	}
+
+	&::file-selector-button{
+		@include button;
+	}
+
+	display: flex;
+}
