@@ -165,6 +165,8 @@ def process_bloc_string(bloc):
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
+from .serializers import *
 
 class Analyze(APIView):
     def post(self, request):
@@ -182,3 +184,38 @@ class Analyze(APIView):
 
         except Exception as e:
             return Response({"error": "An error occurred: " + str(e)}, status=500)
+        
+
+class Ping(APIView):
+    def get(self, request):
+        return Response({"result": 'BLOC Services are fully operational.'}, status=status.HTTP_200_OK)
+    
+class PingPong(APIView):
+    def get(self, request):
+        serializer = PingPongSerializer(data=request.GET)
+        if serializer.is_valid():
+            return Response({"result": f"Received {serializer.validated_data['ping']}."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "No data provided to the API call."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AnalyzeFiles(APIView):
+    def post(self, request):
+        try:
+            tweet_files = request.FILES.getlist('tweet_files')
+            print(tweet_files)
+
+            # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
+            converted_files = []
+            for file in tweet_files:
+                converted_file = handle_uploaded_file(file)
+                converted_files.append(converted_file.name)
+
+            results = bloc_handler.analyze_tweet_file(converted_files)
+
+            for temp_file in converted_files:
+                os.remove(temp_file)
+
+            return Response({"result": results}, status=status.HTTP_200_OK)
+        except:
+            return Response({"error": "Something went wrong."}, status=status.HTTP_400_BAD_REQUEST)
