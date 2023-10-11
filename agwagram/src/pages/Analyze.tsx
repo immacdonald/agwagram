@@ -1,37 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import style from './Analyze.module.scss';
-import Search from '../images/icons/search.svg';
-
-const MAX_COUNT: number = 5;
+import SearchInput from '../components/SearchInput';
+import FileUploadPortal from '../components/FileUploadPortal';
 
 const Analyze: React.FC = () => {
+    const submitFiles = (files : File[]) => {
+        console.log(files);
+    }
 
-    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-    const [fileLimit, setFileLimit] = useState<boolean>(false);
-
-    const handleUploadFiles = (files: File[]) => {
-        const uploaded: File[] = [...uploadedFiles];
-        let limitExceeded = false;
-        files.some((file) => {
-            if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-                uploaded.push(file);
-                if (uploaded.length === MAX_COUNT) setFileLimit(true);
-                if (uploaded.length > MAX_COUNT) {
-                    alert(`You can only add a maximum of ${MAX_COUNT} files`);
-                    setFileLimit(false);
-                    limitExceeded = true;
-                    return true;
-                }
-            }
-            return false; // Added for clarity, but not necessary
-        });
-        if (!limitExceeded) setUploadedFiles(uploaded);
-    };
-
-    const handleFileEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const chosenFiles = Array.from(e.target.files || []);
-        handleUploadFiles(chosenFiles);
-    };
+    const searchUsername = (input : string) => {
+        console.log("Searching for: " + input);
+    }
 
     return (
         <div className={style.content}>
@@ -43,10 +22,7 @@ const Analyze: React.FC = () => {
                         Search for one or more accounts (separated by a comma) by their current Twitter username.
                     </p>
                     <br />
-                    <div className={style.search}>
-                        <input placeholder="OSoMe_IU, POTUS"/>
-                        <button><img src={Search}/></button>
-                    </div>
+                    <SearchInput submit={searchUsername}/>
                 </div>
                 <div>
                     <h3>Analyze By File</h3>
@@ -61,23 +37,7 @@ const Analyze: React.FC = () => {
                         <strong>Note:</strong> JSON files are expected to contain the Tweet data as an array of Tweet objects, while the JSONL files are expected to be formatted with each line being a Tweet, <em>not</em> an account.
                     </div>
                     <br />
-                    <input id='fileUpload' type='file' multiple
-                        accept='application/pdf, image/png'
-                        onChange={handleFileEvent}
-                        disabled={fileLimit}
-			        />
-
-                    <div className={style.submit}>
-                        <button>Upload Files</button>
-                    </div>
-
-                    <div>
-                        {uploadedFiles.map(file => (
-                            <div >
-                                {file.name}
-                            </div>
-                        ))}
-                    </div>
+                    <FileUploadPortal submit={submitFiles}/>
                 </div>
             </div>
         </div>

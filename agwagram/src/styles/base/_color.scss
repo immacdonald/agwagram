@@ -13,20 +13,22 @@ $primary: #143aa2;
     --c-grey-6: rgb(167, 167, 167);
     //--c-grey-7: rgb(61, 61, 61);
     //--c-grey-8: rgb(41, 41, 41);
-    //--c-grey-9: rgb(31, 31, 31);
+    --c-grey-9: rgb(31, 31, 31);
     --c-grey-10: rgb(20, 20, 20);
     --c-black: rgb(1, 2, 3);
-    --s-primary: #{$primary};
+
 
     // Foreground Colors
     //--c-fg-neutral-light: var(--s-white);
 	--c-fg-neutral: var(--c-black);
+    --c-fg-neutral-dim: var(--c-grey-10);
+    --c-fg-neutral-dark: var(--c-grey-9);
     --c-fg-neutral-inverse: var(--c-grey-1);
     //--c-text-action: var(--s-white);
 	//--c-text-accent: var(--s-white);
     --c-primary-fade: #{color.scale($primary, $lightness: 70%)};
     --c-primary-light: #{color.scale($primary, $lightness: 10%)};
-    --c-primary: var(--s-primary);
+    --c-primary: #{$primary};
 	--c-secondary: #6ea9fc;
 
     // Border Colors
@@ -35,7 +37,7 @@ $primary: #143aa2;
     // Background
     --c-bg-neutral-light: var(--c-grey-1);
     --c-bg-neutral: var(--c-grey-2);
-    --c-bg-neutral-dim: var(--c-grey-4);
+    --c-bg-neutral-dim: var(--c-grey-3);
     --c-bg-neutral-dark: var(--c-grey-10);
     
 	//--c-background-primary: #000000;
@@ -51,6 +53,9 @@ $primary: #143aa2;
     --t-fast: 0.25s ease;
     --t-mid: 0.5s ease;
     --t-slow: 1s ease;
+
+    --b-thin: 1px solid;
+    --b-thick: 2px solid;
 }
 
 /*html[data-theme='dark'] {

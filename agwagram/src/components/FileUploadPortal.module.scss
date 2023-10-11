@@ -1,0 +1,17 @@
+@use '../styles' as *;
+
+.submit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: $lg;
+}
+
+.fileList {
+    font-size: $xsFont;
+    margin-top: $sm;
+
+    > div {
+
+    }
+}
