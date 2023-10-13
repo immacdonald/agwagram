@@ -1,6 +1,3 @@
-$headerHeight: 64px;
-$footerHeight: 48px;
-
 // Spacing
 $xs: 4px;
 $sm: 8px;
@@ -19,3 +16,11 @@ $lgFont: 18px;
 $smRadius: 8px;
 $mdRadius: 16px;
 $lgRadius: 32px;
+
+// Responsive design
+$smallResponsiveWidth: 800px;
+$mediumResponsiveWidth: 1200px;
+$headerMobileWidth: 672px;
+
+$headerHeight: 64px;
+$footerHeight: 48px;

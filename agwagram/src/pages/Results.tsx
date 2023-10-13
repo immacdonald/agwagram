@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
 import BarChart from '../images/icons/bar_chart.svg?react';
+import Card from '../components/Card';
 
 const Results: React.FC = () => {
     const {
@@ -39,29 +40,18 @@ const Results: React.FC = () => {
                     </div>
                     <div className={style.contentMain}>
                         <div className={style.cardGrid}>
-                            <article className={style.card}>
-                                <div className={style.cardHeader}>
-                                    <div>
-                                        <span className={style.icon}><BarChart/></span>
-                                        <h3>Action Analysis</h3>
-                                    </div>
-                                </div>
-                                <div className={style.cardBody}>
-                                    <p>
-                                        {String(account.bloc_action)}
-                                        {/*{% for char in account.bloc_action %}
-                                            <div className={style.hoverableText}>{{ char }}
-                                                {% if char|get_description != '' %}
-                                                    <span className={style.hoverable-tooltip">{{ char|get_description }}</span>
-                                                {% endif %}
-                                            </div>
-                                          {% endfor %}*/}
-                                    </p>
-                                </div>
-                                <div className={style.cardFooter}>
-                                    <a href="methodology">More Details</a>
-                                </div>
-                            </article>
+                            <Card title = "Action Analysis" icon={<BarChart/>}>
+                                <p>
+                                    {String(account.bloc_action)}
+                                    {/*{% for char in account.bloc_action %}
+                                        <div className={style.hoverableText}>{{ char }}
+                                            {% if char|get_description != '' %}
+                                                <span className={style.hoverable-tooltip">{{ char|get_description }}</span>
+                                            {% endif %}
+                                        </div>
+                                        {% endfor %}*/}
+                                </p>
+                            </Card>
                         </div>
                     </div>
                 </div>
