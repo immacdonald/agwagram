@@ -1,4 +1,4 @@
-import React, { useState, createContext, useMemo, ReactNode } from 'react';
+import React, { useState, useEffect, createContext, useMemo, ReactNode } from 'react';
 
 interface AnalysisContextValue {
     results: any | null;
@@ -17,7 +17,16 @@ interface AnalysisContextProviderProps {
 export function AnalysisContextProvider(props: AnalysisContextProviderProps) {
     const { children } = props;
 
-    const [results, setResults] = useState<any | null>(null);
+    const getInitialState = () => {
+        const results = localStorage.getItem('analysis')
+        return results ? JSON.parse(results) : null
+    }
+
+    const [results, setResults] = useState<any | null>(getInitialState);
+
+    useEffect(() => {
+        localStorage.setItem('analysis', JSON.stringify(results))
+    }, [results])
 
     const value: AnalysisContextValue = useMemo(() => ({
         results, setResults,
