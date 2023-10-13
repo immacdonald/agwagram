@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import style from './SearchInput.module.scss';
-import Search from '../images/icons/search.svg';
 
 interface SearchInputProps {
     placeholder?: string;
     submit: Function
-  }
+}
 
 const SearchInput: React.FC<SearchInputProps> = ({ placeholder = "OSoMe_IU, POTUS", submit }: SearchInputProps) => {
 

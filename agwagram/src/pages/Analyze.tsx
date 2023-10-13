@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './Analyze.module.scss';
 import SearchInput from '../components/SearchInput';
 import FileUploadPortal from '../components/FileUploadPortal';
+import { useNavigate } from 'react-router-dom';
+import { AnalysisContext } from '../contexts/AnalysisContext';
 
 const API_URL : string = "http://localhost:8000";
 
 const Analyze: React.FC = () => {
+    const navigate = useNavigate();
+    const {
+        setResults
+    } = useContext(AnalysisContext);
+
     async function uploadFiles(url : string = "", files : File[]) {
         const formData = new FormData()
         files.forEach((file) => {
@@ -22,7 +29,8 @@ const Analyze: React.FC = () => {
     const submitFiles = (files : File[]) => {
         console.log(files);
         uploadFiles(`${API_URL}/api/v1/analyze/file`, files).then((data) => {
-            console.log(data);
+            setResults(data)
+            navigate("/analyze/results");
         });
     }
 
@@ -35,7 +43,8 @@ const Analyze: React.FC = () => {
 
     const searchUsername = (input : string) => {
         analyzeUsername(`${API_URL}/api/v1/analyze/user`, input).then((data) => {
-            console.log(data);
+            setResults(data)
+            navigate("/analyze/results");
         });
     }
 
