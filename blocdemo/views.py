@@ -168,24 +168,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 
-class Analyze(APIView):
-    def post(self, request):
-        # Assuming the data is sent in JSON format
-        try:
-            # Get the value from the POST data
-            data = request.data.get('user')
-            
-            # Process the data and return the response
-            if data is not None:
-                result = "Received value: " + data
-                return Response({"result": result})
-            else:
-                return Response({"error": "Invalid data. 'value' parameter not found."}, status=400)
-
-        except Exception as e:
-            return Response({"error": "An error occurred: " + str(e)}, status=500)
-        
-
 class Ping(APIView):
     def get(self, request):
         return Response({"result": 'BLOC Services are fully operational.'}, status=status.HTTP_200_OK)
@@ -217,5 +199,17 @@ class AnalyzeFiles(APIView):
                 os.remove(temp_file)
 
             return Response({"result": results}, status=status.HTTP_200_OK)
-        except:
-            return Response({"error": "Something went wrong."}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as error:
+            return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)
+        
+class AnalyzeUsers(APIView):
+    def get(self, request):
+        serializer = AnalyzeUserSerializer(data=request.GET)
+        if serializer.is_valid():
+            try:
+                response = bloc_handler.analyze_user(serializer.validated_data['username'])
+                return Response({"result": response}, status=status.HTTP_200_OK)
+            except Exception as error:
+                return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Invalid username data."}, status=status.HTTP_400_BAD_REQUEST)

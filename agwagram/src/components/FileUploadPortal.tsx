@@ -6,7 +6,7 @@ interface FileUploadPortalProps {
     submit: Function;
 }
 
-const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 2, submit }: FileUploadPortalProps) => {
+const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, submit }: FileUploadPortalProps) => {
 
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [fileLimit, setFileLimit] = useState<boolean>(false);
@@ -42,10 +42,10 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 2, submi
     }, [uploadedFiles]);
 
     const removeFile = (index: number) => {
-        console.log("Removing at " + index);
-        console.log(uploadedFiles);
-        setUploadedFiles(uploadedFiles.splice(index, 1));
-        console.log(uploadedFiles);
+        // Copy array to prevent state mutability issues
+        const remaining = [...uploadedFiles]
+        remaining.splice(index, 1)
+        setUploadedFiles(remaining);
     }
 
     const handleFileEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
