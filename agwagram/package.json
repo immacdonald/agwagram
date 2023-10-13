@@ -18,7 +18,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
     "recharts": "^2.8.0",
-    "sass": "^1.64.2"
+    "sass": "^1.64.2",
+    "vite-plugin-svgr": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.4.8",

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
+import BarChart from '../images/icons/bar_chart.svg?react';
 
 const Results: React.FC = () => {
     const {
@@ -9,16 +10,65 @@ const Results: React.FC = () => {
 
     const result = results.result;
 
-    if (results && results['successful_generation']) {
-        return (
-            <div>
-                <h1>Results</h1>
-                <p>
-                    {String(result)}
-                </p>
-            </div>
-        );
+    if (results && result['successful_generation']) {
+        console.log("Successful generation");
+        const accounts = result['account_blocs'];
+        if (accounts.length === 1) {
+            const account = accounts[0];
+            return (
+                <div className={style.content}>
+                    <div className={style.contentHeader}>
+                        <div>
+                            <h1>
+                                BLOC Analysis of <span className={style.specialText}>
+                                    @{account['account_username']}
+                                </span> (<em>{account['account_name']}</em>)
+                            </h1>
+                            {account.tweet_count > 0 ? (
+                                <p>
+                                    Results generated using {account.tweet_count} tweets from {account.first_tweet_date} - {account.last_tweet_date}. 
+                                    {account.elapsed_time > 0 ? ("BLOC process took {account.elapsed_time} seconds to complete.") : false}
+                                </p>
+                            ) : (
+                                <p>
+                                    No results generated due to finding 0 tweets. BLOC process took {account.elapsed_time} seconds to complete.
+                                </p>
+                            )
+                            }
+                        </div>
+                    </div>
+                    <div className={style.contentMain}>
+                        <div className={style.cardGrid}>
+                            <article className={style.card}>
+                                <div className={style.cardHeader}>
+                                    <div>
+                                        <span className={style.icon}><BarChart/></span>
+                                        <h3>Action Analysis</h3>
+                                    </div>
+                                </div>
+                                <div className={style.cardBody}>
+                                    <p>
+                                        {String(account.bloc_action)}
+                                        {/*{% for char in account.bloc_action %}
+                                            <div className={style.hoverableText}>{{ char }}
+                                                {% if char|get_description != '' %}
+                                                    <span className={style.hoverable-tooltip">{{ char|get_description }}</span>
+                                                {% endif %}
+                                            </div>
+                                          {% endfor %}*/}
+                                    </p>
+                                </div>
+                                <div className={style.cardFooter}>
+                                    <a href="methodology">More Details</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
     } else {
+        console.log("Failed generation");
         return (
             <div className={style.contentHeader}>
                 <div>
@@ -27,7 +77,12 @@ const Results: React.FC = () => {
                         {result['errors'].map((error : Record<string, string>) => {
                             return (
                                 <div key={error['account_username']}>
-                                    {error['account_username'] ? (<h3>Error: <span className={style.specialText}>{error['account_username']}</span></h3>) : (<h3>Error</h3>)}
+                                    {error['account_username'] ? 
+                                        (
+                                            <h3>Error: <span className={style.specialText}>{error['account_username']}</span></h3>
+                                        ) : (
+                                            <h3>Error</h3>
+                                    )}
                                     <p>Unable to analyze account due to <em>{error['error_title']}</em>.</p>
                                     <p>Details: <em>{error['error_detail']}</em></p>
                                 </div>
