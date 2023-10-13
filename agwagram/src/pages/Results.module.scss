@@ -1,0 +1,15 @@
+@use '../styles' as *;
+
+.contentHeader {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--c-b-neutral);
+    height: fit-content;
+}
+
+.specialText {
+	padding: 0.25em;
+	background-color: var(--c-primary);
+    color: var(--c-fg-neutral-inverse);
+	border-radius: 8px;
+}
