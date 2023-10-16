@@ -26,9 +26,9 @@ html {
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: var(--c-bg-neutral);
+        background-color: var(--c-bg-neutral-dim);
         border-radius: $sm;
-        border: $xs solid var(--c-bg-neutral);
+        border: $xs solid var(--c-bg-neutral-dim);
     }
 }
 

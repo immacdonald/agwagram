@@ -44,3 +44,29 @@
 	}
 
 }
+
+.scrollable {
+	padding: 0.25rem 0.5rem;
+	max-height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+        width: $sm;
+        height: $sm;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--c-bg-neutral-dim);
+        border-radius: $sm;
+        border: $xs solid var(--c-bg-neutral-dim);
+    }
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: transparent;
+	}
+}

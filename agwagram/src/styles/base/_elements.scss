@@ -26,6 +26,12 @@ h3 {
 	font-weight: normal;
 }
 
+hr {
+	border: none;
+	border-top: var(--b-thin) var(--c-b-neutral);
+	margin: $md 0;
+}
+
 // Links
 a {
     text-decoration: none;
@@ -85,4 +91,28 @@ input[type="file"] {
 	&:disabled {
 		background-color: red;
 	}
+}
+
+// Tables
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	line-height: normal;
+	text-align: left;
+
+}
+  
+th {
+	padding: $sm;
+	border-bottom: var(--b-thin) var(--c-b-neutral);
+}
+
+td {
+	padding: $xs;
+
+}
+  
+tr:nth-child(odd):not(:first-child) {
+	background-color: var(--c-bg-neutral-dim);
 }
