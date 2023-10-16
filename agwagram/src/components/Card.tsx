@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import style from './Card.module.scss';
 import classNames from 'classnames';
+import { Symbols } from 'recharts';
 
 interface CardProps {
     title: string;
@@ -36,7 +37,7 @@ const Card: React.FC<CardProps> = ({ title, size = CardSize.Normal, icon, childr
                 {children}
             </div>
             <div className={style.cardFooter}>
-                <a href="methodology">More Details</a>
+                <a href="/methodology">More Details</a>
             </div>
         </article>
     );
@@ -106,6 +107,117 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                     })}
                     </tbody>
                 </table>
+            </div>
+        </Card>
+    );
+}
+
+interface TopWordsCardProps {
+    title: string;
+    subtitle?: string
+    icon: ReactNode;
+    top: any;
+}
+
+export const TopWordsCard : React.FC<TopWordsCardProps> = ({ title, subtitle, icon, top }: TopWordsCardProps) => {
+    return (
+        <Card title={title} icon={icon} size={CardSize.Wide}>
+            {subtitle ? (<p>{subtitle}</p>) : false}
+            <div className={style.scrollable}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={{"width": "50px"}}>Rank</th>
+                            <th style={{"width": "100px"}}>Word</th>
+                            <th style={{"width": "90px"}}>Frequency</th>
+                            <th style={{"width": "70px"}}>Rate (%)</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {top.map((word : Record<string, string>) => {
+                        return (
+                            <tr>
+                                <td>{word.rank}.</td>
+                                <td>{word.term}
+                                    {/*% for char in word.term
+                                        <div class="hoverable-text">
+                                            {{ char }}
+                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                        </div>
+                                    */}
+                                </td>
+                                <td>{word.term_freq}</td>
+                                <td>{word.term_rate}</td>
+                                <td style={{"textAlign": "left"}}>{word.term}
+                                    {/*% for char in word.term %
+                                    <div class="hoverable-text">
+                                        {{ char|get_description }}
+                                        <span class="hoverable-tooltip">{{ char }}</span>
+                                    </div>
+                                    {% if not forloop.last %},&nbsp;{% endif %}
+                                */}
+                                </td>
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+            </div>
+        </Card>
+    )
+}
+
+interface TopWordsCatergoryCardProps {
+    title: string;
+    subtitle?: string
+    icon: ReactNode;
+    top: any;
+    symbolLabel: string;
+}
+
+export const TopWordsCatergoryCard : React.FC<TopWordsCatergoryCardProps> = ({ title, subtitle, icon, top, symbolLabel }: TopWordsCatergoryCardProps) => {
+    return (
+        <Card title={title} icon={icon} size={CardSize.Wide}>
+            {subtitle ? (<p>{subtitle}</p>) : false}
+            <div className={style.scrollable}>
+            <table>
+                <thead>
+                    <tr>
+                        <th style={{"width": "60px"}}>{symbolLabel}</th>
+                        <th style={{"width": "90px"}}>Frequency</th>
+                        <th style={{"width": "70px"}}>Rate (%)</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {top.map((word : any, i : number) => {
+                    return (
+                        <tr key={i}>
+                            <td>{word.term}
+                                {/*% for char in word.term %}
+                                    <div class="hoverable-text">
+                                        {{ char }}
+                                        <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                    </div>
+                                {% endfor %*/}
+                            </td>
+                            <td>{word.term_freq}</td>
+                            <td>{word.term_rate}</td>
+                            <td style={{"textAlign": "left"}}>{word.term}
+                                {/*% for char in word.term %}
+                                    <div class="hoverable-text">
+                                        {{ char|get_description }}
+                                        <span class="hoverable-tooltip">{{ char }}</span>
+                                    </div>
+                                    {% if not forloop.last %},&nbsp;{% endif %}
+                            {% endfor %*/}
+                            </td>
+                        </tr>
+                    );
+                })}
+                </tbody>
+            </table>
             </div>
         </Card>
     );

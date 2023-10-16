@@ -7,13 +7,14 @@
 
 .contentHeader {
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--c-b-neutral);
+    padding-bottom: $xl;
+    border-bottom: var(--b-thin) var(--c-b-neutral);
     height: fit-content;
 }
 
 .specialText {
 	padding: $xs;
+    margin-right: $sm;
 	background-color: var(--c-primary);
     color: var(--c-fg-neutral-inverse);
 	border-radius: $smRadius;
@@ -24,6 +25,7 @@
 	padding-bottom: 2rem;
 	flex-grow: 1;
 	display: flex;
+    flex-direction: column;
 	align-items: flex-start;
 }
 
@@ -34,6 +36,7 @@
 	row-gap: 1.5rem;
 	//grid-auto-flow: dense;
 	width: 100%;
+    min-height: 320px;
     background-color: var(--c-primary-alpha-light);
     padding: $md;
     border-radius: $mdRadius;
@@ -49,28 +52,6 @@
 
 }
 
-.scrollable {
-	padding: $sm $xs;
-	max-height: 400px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-
-	&::-webkit-scrollbar {
-        width: $sm;
-        height: $sm;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--c-bg-neutral-dim);
-        border-radius: $sm;
-        border: $xs solid var(--c-bg-neutral-dim);
-    }
-
-	&::-webkit-scrollbar-track-piece {
-		background-color: transparent;
-	}
+.tabButtons {
+    padding: 0 $md;
 }
