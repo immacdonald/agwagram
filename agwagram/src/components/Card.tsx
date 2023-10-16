@@ -81,17 +81,20 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
             <hr />
             <div className={style.scrollable}>
                 <table>
-                    <tr>
-                        <th>Behaviour</th>
-                        <th style={{"width": "70px"}}>Pause</th>
-                        <th style={{"width": "70px"}}>Word</th>
-                        <th style={{"width": "70px"}}>Activity</th>
-                        <th style={{"width": "90px"}}>Start Date</th>
-                        <th style={{"width": "90px"}}>End Date</th>
-                    </tr>
-                    {report.change_events.map((change_event : any) => {
+                    <thead>
+                        <tr>
+                            <th>Behaviour</th>
+                            <th style={{"width": "70px"}}>Pause</th>
+                            <th style={{"width": "70px"}}>Word</th>
+                            <th style={{"width": "70px"}}>Activity</th>
+                            <th style={{"width": "90px"}}>Start Date</th>
+                            <th style={{"width": "90px"}}>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {report.change_events.map((change_event : any, i : number) => {
                         return (
-                            <tr>
+                            <tr key={i}>
                                 <td>{change_event.first_segment.action} to {change_event.second_segment.action}</td>
                                 <td>{change_event.change_profile.pause}</td>
                                 <td>{change_event.change_profile.word}</td>
@@ -101,6 +104,7 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                             </tr>
                         )
                     })}
+                    </tbody>
                 </table>
             </div>
         </Card>

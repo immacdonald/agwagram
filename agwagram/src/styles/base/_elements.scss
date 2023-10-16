@@ -113,6 +113,6 @@ td {
 
 }
   
-tr:nth-child(odd):not(:first-child) {
+tr:nth-child(even) {
 	background-color: var(--c-bg-neutral-dim);
 }

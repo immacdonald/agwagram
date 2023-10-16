@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
 import BarChart from '../images/icons/bar_chart.svg?react';
@@ -11,11 +11,18 @@ const Results: React.FC = () => {
 
     const result = results.result;
 
+    const [expertMode, setExpertMode] = useState<boolean>(true);
+
+    const handleExpertToggle = () => {
+        setExpertMode(!expertMode);
+    }
+
     if (results && result['successful_generation']) {
         console.log("Successful generation");
         const accounts = result['account_blocs'];
         if (accounts.length === 1) {
             const account = accounts[0];
+            const top_words : Record<string,string>[] = account.top_bloc_words
             return (
                 <div className={style.content}>
                     <div className={style.contentHeader}>
@@ -36,17 +43,108 @@ const Results: React.FC = () => {
                                 </p>
                             )
                             }
+                            Expert Mode: <input type="checkbox" onChange={handleExpertToggle} checked={expertMode} />
                         </div>
                     </div>
                     <div className={style.contentMain}>
                         <div className={style.cardGrid}>
+                            <Card title="Top 100 Actions/Contents" icon={<BarChart/>} size={CardSize.Wide}>
+                                <p>Displays the top 100 (or less) BLOC words.</p>
+                                <div className={style.scrollable}>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th style={{"width": "50px"}}>Rank</th>
+                                                <th style={{"width": "100px"}}>Word</th>
+                                                <th style={{"width": "90px"}}>Frequency</th>
+                                                <th style={{"width": "70px"}}>Rate (%)</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {top_words.map((word : Record<string, string>) => {
+                                            return (
+                                                <tr>
+                                                    <td>{word.rank}.</td>
+                                                    <td>{word.term}
+                                                        {/*% for char in word.term
+                                                            <div class="hoverable-text">
+                                                                {{ char }}
+                                                                <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                                            </div>
+                                                        */}
+                                                    </td>
+                                                    <td>{word.term_freq}</td>
+                                                    <td>{word.term_rate}</td>
+                                                    <td style={{"textAlign": "left"}}>{word.term}
+                                                        {/*% for char in word.term %
+                                                        <div class="hoverable-text">
+                                                            {{ char|get_description }}
+                                                            <span class="hoverable-tooltip">{{ char }}</span>
+                                                        </div>
+                                                        {% if not forloop.last %},&nbsp;{% endif %}
+                                                    */}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </Card>
+                            <Card title="Top Pauses" icon={<BarChart/>} size={CardSize.Wide}>
+                                <p>Most frequent durations of pause between account activities.</p>
+                                <div className={style.scrollable}>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style={{"width": "60px"}}>Pause</th>
+                                            <th style={{"width": "90px"}}>Frequency</th>
+                                            <th style={{"width": "70px"}}>Rate (%)</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {account.top_time.map((word : any) => {
+                                        return (
+                                            <tr>
+                                                <td>{word.term}
+                                                    {/*% for char in word.term %}
+                                                        <div class="hoverable-text">
+                                                            {{ char }}
+                                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
+                                                        </div>
+                                                    {% endfor %*/}
+                                                </td>
+                                                <td>{word.term_freq}</td>
+                                                <td>{word.term_rate}</td>
+                                                <td style={{"textAlign": "left"}}>{word.term}
+                                                    {/*% for char in word.term %}
+                                                        <div class="hoverable-text">
+                                                            {{ char|get_description }}
+                                                            <span class="hoverable-tooltip">{{ char }}</span>
+                                                        </div>
+                                                        {% if not forloop.last %},&nbsp;{% endif %}
+                                                {% endfor %*/}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                    </tbody>
+                                </table>
+                                </div>
+                            </Card>
                             <ChangeCard title="Action Change Profile" icon={<BarChart/>} report={account.change_report['action']}/>
                             <ChangeCard title="Syntactic Change Profile" icon={<BarChart/>} report={account.change_report['content_syntactic']}/>
-                            <LanguageCard title = "Action" icon={<BarChart/>} bloc={account.bloc_action}/>
-                            <LanguageCard title = "Syntactic" icon={<BarChart/>} bloc={account.bloc_syntactic}/>
-                            <LanguageCard title = "Semantic Entity" icon={<BarChart/>} bloc={account.bloc_semantic_entity}/>
-                            <LanguageCard title = "Semantic Sentiment" icon={<BarChart/>} bloc={account.bloc_semantic_sentiment}/>
-                            <LanguageCard title = "Change" icon={<BarChart/>} bloc={account.bloc_change}/>
+                            {expertMode ? (
+                                <>
+                                    <LanguageCard title = "Action" icon={<BarChart/>} bloc={account.bloc_action}/>
+                                    <LanguageCard title = "Syntactic" icon={<BarChart/>} bloc={account.bloc_syntactic}/>
+                                    <LanguageCard title = "Semantic Entity" icon={<BarChart/>} bloc={account.bloc_semantic_entity}/>
+                                    <LanguageCard title = "Semantic Sentiment" icon={<BarChart/>} bloc={account.bloc_semantic_sentiment}/>
+                                    <LanguageCard title = "Change" icon={<BarChart/>} bloc={account.bloc_change}/>
+                                </>
+                            ) : false}
                         </div>
                     </div>
                 </div>
