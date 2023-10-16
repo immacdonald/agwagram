@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
 import BarChart from '../images/icons/bar_chart.svg?react';
-import Card, { CardSize, LanguageCard } from '../components/Card';
+import Card, { CardSize, ChangeCard, LanguageCard } from '../components/Card';
 
 const Results: React.FC = () => {
     const {
@@ -40,45 +40,12 @@ const Results: React.FC = () => {
                     </div>
                     <div className={style.contentMain}>
                         <div className={style.cardGrid}>
-                            <Card title="Action Change Analysis" icon={<BarChart/>} size={CardSize.Wide}>
-                                <p>
-                                    <strong>Change Rates</strong>: {account.change_report['action'].change_profile.change_rate}
-                                    <br />
-                                    <strong>Average Change: </strong>
-                                    Word: {account.change_report['action'].change_profile.average_change.word },
-                                    Pause: {account.change_report['action'].change_profile.average_change.pause },
-                                    Activity: {account.change_report['action'].change_profile.average_change.activity}
-                                </p>
-                                <hr />
-                                <div className={style.scrollable}>
-                                    <table>
-                                        <tr>
-                                            <th>Behaviour</th>
-                                            <th style={{"width": "70px"}}>Pause</th>
-                                            <th style={{"width": "70px"}}>Word</th>
-                                            <th style={{"width": "70px"}}>Activity</th>
-                                            <th style={{"width": "90px"}}>Start Date</th>
-                                            <th style={{"width": "90px"}}>End Date</th>
-                                        </tr>
-                                        {account.change_report['action'].change_events.map((change_event : any) => {
-                                            return (
-                                                <tr>
-                                                    <td>{change_event.first_segment.action} to {change_event.second_segment.action}</td>
-                                                    <td>{change_event.change_profile.pause}</td>
-                                                    <td>{change_event.change_profile.word}</td>
-                                                    <td>{change_event.change_profile.activity}</td>
-                                                    <td>{change_event.first_segment.local_dates[0]}</td>
-                                                    <td>{change_event.second_segment.local_dates[0]}</td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </table>
-                                </div>
-                            </Card>
+                            <ChangeCard title="Action Change Profile" icon={<BarChart/>} report={account.change_report['action']}/>
+                            <ChangeCard title="Syntactic Change Profile" icon={<BarChart/>} report={account.change_report['content_syntactic']}/>
                             <LanguageCard title = "Action" icon={<BarChart/>} bloc={account.bloc_action}/>
-                            <LanguageCard title = "Content Syntactic" icon={<BarChart/>} bloc={account.bloc_syntactic}/>
-                            <LanguageCard title = "Content Semantic Entity" icon={<BarChart/>} bloc={account.bloc_semantic_entity}/>
-                            <LanguageCard title = "Content Semantic Sentiment" icon={<BarChart/>} bloc={account.bloc_semantic_sentiment}/>
+                            <LanguageCard title = "Syntactic" icon={<BarChart/>} bloc={account.bloc_syntactic}/>
+                            <LanguageCard title = "Semantic Entity" icon={<BarChart/>} bloc={account.bloc_semantic_entity}/>
+                            <LanguageCard title = "Semantic Sentiment" icon={<BarChart/>} bloc={account.bloc_semantic_sentiment}/>
                             <LanguageCard title = "Change" icon={<BarChart/>} bloc={account.bloc_change}/>
                         </div>
                     </div>

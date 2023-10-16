@@ -79,7 +79,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	border-top: 1px solid var(--c-b-neutral);
+	border-top: var(--b-thin) var(--c-b-neutral);
 	
     a {
 		color: var(--c-fg-neutral);
@@ -100,4 +100,30 @@
     > svg {
         width: 30px;
     }
+}
+
+.scrollable {
+	padding: $sm $xs;
+	max-height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+        width: $sm;
+        height: $sm;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--c-bg-neutral-dim);
+        border-radius: $sm;
+        border: $xs solid var(--c-bg-neutral-dim);
+    }
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: transparent;
+	}
 }
