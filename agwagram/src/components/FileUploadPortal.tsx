@@ -74,7 +74,7 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, submi
                 {fileList}
             </div>
             <div className={style.submit}>
-                <button onClick={() => submit(uploadedFiles)} disabled={fileLimit}>Upload Files</button>
+                <button onClick={() => submit(uploadedFiles)} disabled={!uploadedFiles.length}>Upload Files</button>
             </div>
         </div>
     )

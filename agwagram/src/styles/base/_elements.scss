@@ -89,7 +89,13 @@ input[type="file"] {
 	}
 
 	&:disabled {
-		background-color: red;
+		background-color: var(--c-disabled-color);
+		transition: none;
+
+		&::before {
+			background-color: var(--c-bg-neutral);
+			transition: none;
+		}
 	}
 }
 
@@ -114,5 +120,5 @@ td {
 }
   
 tr:nth-child(even) {
-	background-color: var(--c-bg-neutral-dim);
+	background-color: var(--c-primary-alpha);
 }

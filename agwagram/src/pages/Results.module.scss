@@ -13,10 +13,10 @@
 }
 
 .specialText {
-	padding: 0.25em;
+	padding: $xs;
 	background-color: var(--c-primary);
     color: var(--c-fg-neutral-inverse);
-	border-radius: 8px;
+	border-radius: $smRadius;
 }
 
 .contentMain {
@@ -29,18 +29,22 @@
 
 .cardGrid {
 	display: grid;
-	grid-template-columns: repeat(1, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	column-gap: 1.5rem;
 	row-gap: 1.5rem;
 	//grid-auto-flow: dense;
 	width: 100%;
+    background-color: var(--c-primary-alpha-light);
+    padding: $md;
+    border-radius: $mdRadius;
+    box-shadow: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
 
 	@media (min-width: 800px) {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(8, 1fr);
 	}
 
 	@media (min-width: 1200px) {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(12, 1fr);
 	}
 
 }

@@ -1,6 +1,7 @@
 @use 'sass:color';
 
 $primary: #143aa2;
+//$primary: #c02121;
 
 :root {
     // Palette Colors
@@ -29,10 +30,9 @@ $primary: #143aa2;
     --c-primary-fade: #{color.scale($primary, $lightness: 70%)};
     --c-primary-light: #{color.scale($primary, $lightness: 10%)};
     --c-primary: #{$primary};
+    --c-primary-alpha-light: #{rgba($primary, 0.04)};
+    --c-primary-alpha: #{rgba($primary, 0.16)};
 	--c-secondary: #6ea9fc;
-
-    // Border Colors
-    --c-b-neutral: var(--c-grey-3);
 
     // Background
     --c-bg-neutral-light: var(--c-grey-1);
@@ -54,8 +54,13 @@ $primary: #143aa2;
     --t-mid: 0.5s ease;
     --t-slow: 1s ease;
 
+    // Border
+    --c-b-neutral: var(--c-grey-3);
     --b-thin: 1px solid;
     --b-thick: 2px solid;
+
+    // Shadow
+    --shadow-high: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
 }
 
 /*html[data-theme='dark'] {

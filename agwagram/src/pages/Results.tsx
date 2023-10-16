@@ -18,7 +18,6 @@ const Results: React.FC = () => {
     }
 
     if (results && result['successful_generation']) {
-        console.log("Successful generation");
         const accounts = result['account_blocs'];
         if (accounts.length === 1) {
             const account = accounts[0];
@@ -105,9 +104,9 @@ const Results: React.FC = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {account.top_time.map((word : any) => {
+                                    {account.top_time.map((word : any, i : number) => {
                                         return (
-                                            <tr>
+                                            <tr key={i}>
                                                 <td>{word.term}
                                                     {/*% for char in word.term %}
                                                         <div class="hoverable-text">
@@ -149,6 +148,18 @@ const Results: React.FC = () => {
                     </div>
                 </div>
             );
+        } else {
+            return (
+                <div className={style.content}>
+                    <div className={style.contentHeader}>
+                        <div>
+                            <h1>
+                                Multiple accounts detected - currently unavailable.
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            )
         }
     } else {
         console.log("Failed generation");

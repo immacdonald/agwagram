@@ -3,29 +3,31 @@
 .card {
 	background-color: var(--c-bg-neutral-light);
 	box-shadow: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
-	border: 1px solid var(--c-b-neutral);
-	border-radius: 8px;
-	//overflow: hidden;
+	border: var(--b-thin) var(--c-b-neutral);
+	border-radius: $smRadius;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	flex-grow: 1;
-	grid-column-end: span 1;
+	grid-column-end: span 4;
 	grid-row-end: span 1;
 
 	&.full {
 		@media (min-width: $smallResponsiveWidth) {
-			grid-column-end: span 2; 
+			grid-column-end: span 8; 
 		}
 	
 		@media (min-width: $mediumResponsiveWidth) {
-			grid-column-end: span 3; 
+			grid-column-end: span 12; 
 		}
 	}
 
 	&.wide {
 		@media (min-width: $smallResponsiveWidth) {
-			grid-column-end: span 2; 
+			grid-column-end: span 8; 
+		}
+		@media (min-width: $mediumResponsiveWidth) {
+			grid-column-end: span 6; 
 		}
 	}
 }
@@ -42,7 +44,7 @@
 		span {
 			width: 40px;
 			height: 40px;
-			border-radius: 8px;
+			border-radius: $smRadius;
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
