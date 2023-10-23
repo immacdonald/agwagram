@@ -54,4 +54,25 @@
 
 .tabButtons {
     padding: 0 $md;
+	width: 100%;
+
+	> button {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		border-bottom: none;
+		background-color: var(--c-primary-alpha-light);
+
+		&:not(:last-of-type) {
+            margin-right: $sm;
+        }
+
+        &:not(:first-of-type) {
+            margin-left: $sm;
+        }
+	}
+}
+
+button[data-active=true] {
+	background-color: var(--c-primary) !important;
+	color: var(--c-fg-neutral-inverse) !important;
 }

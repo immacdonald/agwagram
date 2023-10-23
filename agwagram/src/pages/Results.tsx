@@ -22,7 +22,7 @@ const Results: React.FC = () => {
         return (
             <>
                 <TopWordsCard
-                    title="Top 100 Actions/Contents"
+                    title="Top 100 Behaviours"
                     subtitle="Displays the top 100 (or less) BLOC words."
                     icon={<BarChart/>}
                     top={account.top_bloc_words}
@@ -97,10 +97,10 @@ const Results: React.FC = () => {
                     </div>
                     <div className={style.contentMain}>
                     <div className={style.tabButtons}>
-                        <button className={style.tabButton} onClick={() => setAnalysisView(-1)}>Group Analysis</button>
+                        <button className={style.tabButton} data-active={analysisView == -1 ? true : false} onClick={() => setAnalysisView(-1)}>Group Analysis</button>
                         {accounts.map((account : any, i : number) => {
                             return (
-                                <button className={style.tabButton} onClick={() => setAnalysisView(i)}>@{account.account_username}</button>
+                                <button className={style.tabButton} data-active={i == analysisView ? true : false} onClick={() => setAnalysisView(i)}>@{account.account_username}</button>
                             )
                         })}
                     </div>
@@ -108,7 +108,7 @@ const Results: React.FC = () => {
                             {analysisView > -1 ? getAccountAnalysis(accounts[analysisView]) : 
                                 <>
                                     <TopWordsCard
-                                        title="Top 100 Actions/Contents"
+                                        title="Top 100 Behaviours"
                                         subtitle="Displays the top 100 (or less) BLOC words between all the accounts analyzed."
                                         icon={<BarChart/>}
                                         top={result['group_top_bloc_words']}
