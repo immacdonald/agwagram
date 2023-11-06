@@ -2,12 +2,11 @@ import React, { useState, useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
 import BarChart from '../images/icons/bar_chart.svg?react';
-import Card, { CardSize, ChangeCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard } from '../components/Card';
+import Card, { ChangeCard, ChangeProfileCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard } from '../components/Card';
+import { Link } from 'react-router-dom';
 
 const Results: React.FC = () => {
-    const {
-        results
-    } = useContext(AnalysisContext);
+    const { results, setResults } = useContext(AnalysisContext);
 
     const result = results.result;
 
@@ -16,6 +15,10 @@ const Results: React.FC = () => {
 
     const handleExpertToggle = () => {
         setExpertMode(!expertMode);
+    }
+
+    const returnToAnalysis = () => {
+        setResults(null);
     }
 
     const getAccountAnalysis = (account: any) => {
@@ -34,6 +37,7 @@ const Results: React.FC = () => {
                     top={account.top_time}
                     symbolLabel="Pause"
                 />
+                <ChangeProfileCard title="Change Profile Details" icon={<BarChart/>} reports={account.change_report}/>
                 <ChangeCard title="Action Change Profile" icon={<BarChart/>} report={account.change_report['action']}/>
                 <ChangeCard title="Syntactic Change Profile" icon={<BarChart/>} report={account.change_report['content_syntactic']}/>
                 {expertMode ? (
@@ -89,21 +93,25 @@ const Results: React.FC = () => {
                     <div className={style.contentHeader}>
                         <div>
                             <h1>Group Analysis</h1> 
+                            <Link to="/analyze" onClick={returnToAnalysis} className={style.analyzeAnother}>&#8592; Analyze Another</Link>
                             <p>Successfully generated results for {accounts.map((account : any) => {
                                 return (<span className={style.specialText}>@{account.account_username} </span>)})}
                             </p>
-                            Expert Mode: <input type="checkbox" onChange={handleExpertToggle} checked={expertMode} />
+                            Expert Mode: <div className={style.toggle}>
+                                <input type="checkbox"onChange={handleExpertToggle} checked={expertMode} />
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                     <div className={style.contentMain}>
-                    <div className={style.tabButtons}>
-                        <button className={style.tabButton} data-active={analysisView == -1 ? true : false} onClick={() => setAnalysisView(-1)}>Group Analysis</button>
-                        {accounts.map((account : any, i : number) => {
-                            return (
-                                <button className={style.tabButton} data-active={i == analysisView ? true : false} onClick={() => setAnalysisView(i)}>@{account.account_username}</button>
-                            )
-                        })}
-                    </div>
+                        <div className={style.tabButtons}>
+                            <button className={style.tabButton} data-active={analysisView == -1 ? true : false} onClick={() => setAnalysisView(-1)}>Group Analysis</button>
+                            {accounts.map((account : any, i : number) => {
+                                return (
+                                    <button className={style.tabButton} data-active={i == analysisView ? true : false} onClick={() => setAnalysisView(i)}>@{account.account_username}</button>
+                                )
+                            })}
+                        </div>
                         <div className={style.cardGrid}>
                             {analysisView > -1 ? getAccountAnalysis(accounts[analysisView]) : 
                                 <>
