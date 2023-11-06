@@ -4,6 +4,7 @@ import { AnalysisContext } from '../contexts/AnalysisContext';
 import BarChart from '../images/icons/bar_chart.svg?react';
 import Card, { ChangeCard, ChangeProfileCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard } from '../components/Card';
 import { Link } from 'react-router-dom';
+import Toggle from '../components/Toggle';
 
 const Results: React.FC = () => {
     const { results, setResults } = useContext(AnalysisContext);
@@ -97,10 +98,7 @@ const Results: React.FC = () => {
                             <p>Successfully generated results for {accounts.map((account : any) => {
                                 return (<span className={style.specialText}>@{account.account_username} </span>)})}
                             </p>
-                            Expert Mode: <div className={style.toggle}>
-                                <input type="checkbox"onChange={handleExpertToggle} checked={expertMode} />
-                                <span></span>
-                            </div>
+                            Expert Mode: <Toggle state={expertMode} onChange={handleExpertToggle}/>
                         </div>
                     </div>
                     <div className={style.contentMain}>
