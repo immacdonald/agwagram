@@ -2,7 +2,7 @@
 
 .card {
 	background-color: var(--c-bg-neutral-light);
-	box-shadow: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
+	box-shadow: var(--shadow);
 	border: var(--b-thin) var(--c-b-neutral);
 	border-radius: $smRadius;
 	display: flex;

@@ -15,6 +15,7 @@ from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 import os
+import json
 
 import logging
 logger = logging.getLogger("mainLogger")
@@ -213,3 +214,11 @@ class AnalyzeUsers(APIView):
                 return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"error": "Invalid username data."}, status=status.HTTP_400_BAD_REQUEST)
+        
+class GetSymbols(APIView):
+    def get(self, request):
+        try:
+            response = json.dumps(symbols.get_all_symbols())
+            return Response({"result": response}, status=status.HTTP_200_OK)
+        except Exception as error:
+            return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)

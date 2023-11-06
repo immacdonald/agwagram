@@ -1,7 +1,6 @@
 import style from './App.module.scss';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Testing from './pages/Testing';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Methodology from './pages/Methodology';

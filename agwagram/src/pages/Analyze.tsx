@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import style from './Analyze.module.scss';
 import SearchInput from '../components/SearchInput';
 import FileUploadPortal from '../components/FileUploadPortal';
@@ -10,6 +10,7 @@ const API_URL : string = "http://localhost:8000";
 const Analyze: React.FC = () => {
     const navigate = useNavigate();
     const {
+        results,
         setResults
     } = useContext(AnalysisContext);
 
@@ -47,6 +48,12 @@ const Analyze: React.FC = () => {
             navigate("/analyze/results");
         });
     }
+
+    useEffect(() => {
+        if(results) {
+            navigate("/analyze/results");
+        }
+    }, []);
 
     return (
         <div className={style.content}>

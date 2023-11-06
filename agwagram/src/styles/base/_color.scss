@@ -5,9 +5,9 @@ $primary: #143aa2;
 
 :root {
     // Palette Colors
-    --c-white: rgb(255, 255, 255);
-    --c-grey-1: rgb(252, 252, 252);
-    --c-grey-2: rgb(249, 249, 249);
+    --c-white: rgb(253, 253, 253);
+    --c-grey-1: rgb(251, 251, 251);
+    --c-grey-2: rgb(248, 248, 248);
     --c-grey-3: rgb(235, 235, 235);
     --c-grey-4: rgb(221, 221, 221);
     --c-grey-5: rgb(203, 203, 203);
@@ -60,7 +60,7 @@ $primary: #143aa2;
     --b-thick: 2px solid;
 
     // Shadow
-    --shadow-high: 0 3px 3px 0 rgba(#000, 0.05), 0 5px 15px 0 rgba(#000, 0.05);
+    --shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05), 0 15px 15px 0 rgba(0, 0, 0, 0.05);
 }
 
 /*html[data-theme='dark'] {
@@ -86,19 +86,3 @@ html[data-theme='light'] {
 	--c-disabled-background: var(--c-background-tertiary);
 	--c-disabled-color: #cfd1d6;
 }*/
-
-/*
-    --c-text-primary: #333;
-    --c-text-action: #636363;
-    --c-text-light: rgb(245, 245, 245);
-
-    --c-primary-fade: #{color.scale($primary, $lightness: 50%)};
-    --c-primary-light: #{color.scale($primary, $lightness: 10%)};
-    --c-primary: #{$primary};
-    --c-primary-dark: #{color.scale($primary, $lightness: -25%)};
-
-    --c-background-light: #f8f8f8;
-    --c-background: #f0f0f0;
-    --c-background-dark: #272727;
-    --c-border-dark: #272727;
-    */

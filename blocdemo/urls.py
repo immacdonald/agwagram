@@ -17,4 +17,5 @@ urlpatterns = [
     path(f'{API_PATH}/pingpong', views.PingPong.as_view(), name="pingpong"),
     path(f'{API_PATH}/analyze/file', views.AnalyzeFiles.as_view(), name="analyze-files"),
     path(f'{API_PATH}/analyze/user', views.AnalyzeUsers.as_view(), name="analyze-user"),
+    path(f'{API_PATH}/symbols', views.GetSymbols.as_view(), name="symbols"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
