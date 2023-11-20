@@ -75,7 +75,6 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
     const [sortedField, setSortedField] = React.useState<string | null>('time');
 
     const tableContent = useMemo(() => {
-        console.log("sorting by " + sortedField);
         let sorted = [...(report.change_events)];
         if (sortedField == 'sim') {
             sorted.sort((a, b) => a.sim - b.sim);
@@ -256,9 +255,9 @@ export const TopWordsCard : React.FC<TopWordsCardProps> = ({ title, subtitle, ic
                         </tr>
                     </thead>
                     <tbody>
-                    {top.map((word : Record<string, string>) => {
+                    {top.map((word : Record<string, string>, index : number) => {
                         return (
-                            <tr>
+                            <tr key={index}>
                                 <td>{word.rank}.</td>
                                 <td><DefinitionTooltip word={word.term}/></td>
                                 <td>{word.term_freq}</td>
@@ -313,3 +312,49 @@ export const TopWordsCatergoryCard : React.FC<TopWordsCatergoryCardProps> = ({ t
         </Card>
     );
 }
+
+interface LinkedDataCardProps {
+    title: string;
+    icon: ReactNode;
+    data: any
+}
+
+export const LinkedDataCard : React.FC<LinkedDataCardProps> = ({ title, icon, data }: LinkedDataCardProps) => {
+    console.log(data);
+    //const chars = data.split('');
+
+    return (
+        <Card title={title} icon={icon} size={CardSize.Normal}>
+            {/*{chars.map((char : string, index : number) => (
+                <DefinitionTooltip word={char}/>
+            ))}*/}
+        </Card>
+    );
+
+    /*
+        {% for char in account.bloc_action %}
+                    {% if char|get_type != 'Action' %}
+                        {{ char|get_description }}
+                    {% else %}
+                        {% with count=account.counter.count %}
+                        {% with data=account.linked_data|index:count %}
+                            {% if not forloop.first %}&nbsp;{% endif %}
+                            <div class="hoverable-text"><strong>{{ char|get_description }}</strong>
+                                <span class="hoverable-tooltip large">
+                                    Tweeted: {{ data.created_at }} <br>
+                                    Content: {{ data.content_syntactic|get_description }} 
+                                    {% if data.content_semantic_entity %}
+                                        <br>
+                                        Subject: {{ data.content_semantic_entity|get_description }} 
+                                    {% endif %}
+                                </span>
+                            </div>
+                            {{ account.counter.increment }}
+                        {% endwith %}
+                        {% endwith %}
+                    {% endif %}
+                    {% if not forloop.last %},&nbsp;{% endif %}
+                {% endfor %}
+    */
+}
+

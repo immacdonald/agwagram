@@ -20,6 +20,8 @@ interface AnalysisContextProviderProps {
     children: ReactNode;
 }
 
+const API_URL : string = "http://localhost:8080";
+
 export function AnalysisContextProvider(props: AnalysisContextProviderProps) {
     const { children } = props;
 
@@ -29,7 +31,7 @@ export function AnalysisContextProvider(props: AnalysisContextProviderProps) {
     }
 
     const getSymbols = () => {
-        fetch('http://localhost:8000/api/v1/symbols')
+        fetch(`${API_URL}/api/v1/symbols`)
             .then((response) => response.json())
             .then((data) => {
                 // Update the component's state with the fetched data

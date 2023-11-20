@@ -96,7 +96,9 @@ const Results: React.FC = () => {
                             <h1>Group Analysis</h1> 
                             <Link to="/analyze" onClick={returnToAnalysis} className={style.analyzeAnother}>&#8592; Analyze Another</Link>
                             <p>Successfully generated results for {accounts.map((account : any) => {
-                                return (<span className={style.specialText}>@{account.account_username} </span>)})}
+                                return (
+                                    <span className={style.specialText} key={account.account_username}>@{account.account_username} </span>)
+                                })}
                             </p>
                             Expert Mode: <Toggle state={expertMode} onChange={handleExpertToggle}/>
                         </div>
@@ -106,7 +108,7 @@ const Results: React.FC = () => {
                             <button className={style.tabButton} data-active={analysisView == -1 ? true : false} onClick={() => setAnalysisView(-1)}>Group Analysis</button>
                             {accounts.map((account : any, i : number) => {
                                 return (
-                                    <button className={style.tabButton} data-active={i == analysisView ? true : false} onClick={() => setAnalysisView(i)}>@{account.account_username}</button>
+                                    <button className={style.tabButton} key={i} data-active={i == analysisView ? true : false} onClick={() => setAnalysisView(i)}>@{account.account_username}</button>
                                 )
                             })}
                         </div>
@@ -136,9 +138,9 @@ const Results: React.FC = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {result['pairwise_sim'].map((u_pair : any) => {
+                                                {result['pairwise_sim'].map((u_pair : any, index: number) => {
                                                     return (
-                                                        <tr>
+                                                        <tr key={index}>
                                                             <td>{`${+(u_pair.sim * 100).toFixed(1)}%`}</td>
                                                             <td>{u_pair.user_pair[0]}</td>
                                                             <td>{u_pair.user_pair[1]}</td>

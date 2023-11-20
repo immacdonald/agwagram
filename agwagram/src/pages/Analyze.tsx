@@ -5,7 +5,7 @@ import FileUploadPortal from '../components/FileUploadPortal';
 import { useNavigate } from 'react-router-dom';
 import { AnalysisContext } from '../contexts/AnalysisContext';
 
-const API_URL : string = "http://localhost:8000";
+const API_URL : string = "http://localhost:8080";
 
 const Analyze: React.FC = () => {
     const navigate = useNavigate();
