@@ -1,18 +1,19 @@
 import DynamicLink from './DynamicLink';
 import style from './Header.module.scss';
 import Logo from '../images/agwagram.png';
+import { Link } from 'react-router-dom';
 
 function Header() {
     return (
         <header className={style.header}>
             <div className={style.content}>
-                <div className={style.logo}>
+                <Link to='/' className={style.logo}>
                     <img src={Logo} />
-                </div>
+                </Link>
                 <div className={style.navigation}>
                     <nav className={style.navLinks}>
                         <DynamicLink link="/" label="Home" />
-                        <DynamicLink link="/analyze" label="Analyze" />
+                        <DynamicLink link="/analyze" label="Analyze" secondaryLink="/analyze/results" />
                         <DynamicLink link="/methodology" label="Methodology" />
                     </nav>
                 </div>

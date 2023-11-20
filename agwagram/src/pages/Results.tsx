@@ -9,7 +9,7 @@ import Toggle from '../components/Toggle';
 const Results: React.FC = () => {
     const { results, setResults } = useContext(AnalysisContext);
 
-    const [expertMode, setExpertMode] = useState<boolean>(true);
+    const [expertMode, setExpertMode] = useState<boolean>(false);
     const [analysisView, setAnalysisView] = useState<number>(-1);
 
     const handleExpertToggle = () => {
