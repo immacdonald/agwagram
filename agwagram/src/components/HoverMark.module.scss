@@ -1,0 +1,9 @@
+@use '../styles' as *;
+
+.hoverMark {
+    background-color: transparent;
+
+    &:hover {
+        background-color: var(--c-primary-fade);
+    }
+}

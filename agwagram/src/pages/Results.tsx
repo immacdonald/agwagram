@@ -9,8 +9,6 @@ import Toggle from '../components/Toggle';
 const Results: React.FC = () => {
     const { results, setResults } = useContext(AnalysisContext);
 
-    const result = results.result;
-
     const [expertMode, setExpertMode] = useState<boolean>(true);
     const [analysisView, setAnalysisView] = useState<number>(-1);
 
@@ -26,7 +24,7 @@ const Results: React.FC = () => {
         return (
             <>
                 <TopWordsCard
-                    title="Top 100 Behaviours"
+                    title="Top 100 Behaviors"
                     subtitle="Displays the top 100 (or less) BLOC words."
                     icon={<BarChart/>}
                     top={account.top_bloc_words}
@@ -54,7 +52,8 @@ const Results: React.FC = () => {
         );
     }
 
-    if (results && result['successful_generation']) {
+    if (results && results['result'] && results['result']['successful_generation']) {
+        const result = results.result;
         const accounts = result['account_blocs'];
         if (accounts.length === 1) {
             const account = accounts[0];
@@ -67,6 +66,7 @@ const Results: React.FC = () => {
                                     @{account['account_username']}
                                 </span> (<em>{account['account_name']}</em>)
                             </h1>
+                            <Link to="/analyze" onClick={returnToAnalysis} className={style.analyzeAnother}>&#8592; Analyze Another</Link>
                             {account.tweet_count > 0 ? (
                                 <p>
                                     Results generated using {account.tweet_count} tweets from {account.first_tweet_date} - {account.last_tweet_date}. 
@@ -78,7 +78,7 @@ const Results: React.FC = () => {
                                 </p>
                             )
                             }
-                            Expert Mode: <input type="checkbox" onChange={handleExpertToggle} checked={expertMode} />
+                            Expert Mode: <Toggle state={expertMode} onChange={handleExpertToggle}/>
                         </div>
                     </div>
                     <div className={style.contentMain}>
@@ -114,7 +114,7 @@ const Results: React.FC = () => {
                             {analysisView > -1 ? getAccountAnalysis(accounts[analysisView]) : 
                                 <>
                                     <TopWordsCard
-                                        title="Top 100 Behaviours"
+                                        title="Top 100 Behaviors"
                                         subtitle="Displays the top 100 (or less) BLOC words between all the accounts analyzed."
                                         icon={<BarChart/>}
                                         top={result['group_top_bloc_words']}
@@ -157,10 +157,13 @@ const Results: React.FC = () => {
         }
     } else {
         console.log("Failed generation");
-        return (
-            <div className={style.contentHeader}>
-                <div>
-                    <h1>Analysis Failed</h1>
+        if(results['result']) {
+            const result = results.result;
+            return (
+                <div className={style.contentHeader}>
+                    <div>
+                        <h1>Analysis Failed</h1>
+                        <Link to="/analyze" onClick={returnToAnalysis} className={style.analyzeAnother}>&#8592; Analyze Another</Link>
                         <p>Unable to generate BLOC analysis results for the following accounts:  {result['query'].join(', ')}</p>
                         {result['errors'].map((error : Record<string, string>) => {
                             return (
@@ -176,9 +179,20 @@ const Results: React.FC = () => {
                                 </div>
                             );
                         })}
+                    </div>
                 </div>
-            </div>
-        )
+            );
+        } else {
+            return (
+                <div className={style.contentHeader}>
+                    <div>
+                        <h1>Analysis Failed</h1>
+                        <Link to="/analyze" onClick={returnToAnalysis} className={style.analyzeAnother}>&#8592; Analyze Another</Link>
+                        <p>Unable to analyze account due to <em>{results.error}</em>.</p>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 

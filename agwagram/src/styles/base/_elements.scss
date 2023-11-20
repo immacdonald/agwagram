@@ -120,5 +120,9 @@ td {
 }
   
 tr:nth-child(even) {
+	background-color: var(--c-bg-neutral-dim);
+}
+
+mark {
 	background-color: var(--c-primary-alpha);
 }

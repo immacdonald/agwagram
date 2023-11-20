@@ -15,7 +15,7 @@ function Methodology() {
             </p>
             <br/>
             <p>
-                BLOC outperforms previous state-of-the-art methods for detecting bot coordinated behaviour in terms of efficiency and accuracy, while using significantly fewer features.
+                BLOC outperforms previous state-of-the-art methods for detecting bot coordinated behavior in terms of efficiency and accuracy, while using significantly fewer features.
                 For more information, please see the BLOC paper: <a href="https://arxiv.org/abs/2211.00639">A General Language for Modeling Social Media Account Behavior</a> as 
                 well as the <a href="https://github.com/anwala/bloc">BLOC Project GitHub.</a>
             </p>

@@ -1,8 +1,8 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode } from 'react';
 import style from './Card.module.scss';
 import classNames from 'classnames';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { AnalysisContext } from '../contexts/AnalysisContext';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as GraphTooltip, Legend, ResponsiveContainer } from 'recharts';
+import { SymbolTooltip, DefinitionTooltip } from './BLOCComponents';
 
 interface CardProps {
     title: string;
@@ -70,15 +70,18 @@ interface ChangeCardProps {
 }
 
 export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: ChangeCardProps) => {
+    // Only show pause change if it has a value
+    const showPause : boolean = report.change_profile.average_change.pause >= 0;
+
     return (
         <Card title={title} icon={icon} size={CardSize.Full}>
             <p>
-                <strong>Change Rates</strong>: {report.change_profile.change_rate}
+                <strong>Change Rate</strong>: {report.change_profile.change_rate}
                 <br />
                 <strong>Average Change: </strong>
-                Word: {report.change_profile.average_change.word },
-                Pause: {report.change_profile.average_change.pause },
-                Activity: {report.change_profile.average_change.activity}
+                {`Word: ${report.change_profile.average_change.word}, `}
+                {showPause ? (`Pause: ${report.change_profile.average_change.pause }, `) : false}
+                {`Activity: ${report.change_profile.average_change.activity}`}
             </p>
             <hr />
             <div className={style.scrollable}>
@@ -87,8 +90,9 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                         <tr>
                             <th>Start Behavior</th>
                             <th>End Behavior</th>
-                            <th style={{"width": "70px"}}>Pause</th>
+                            <th>Similarity</th>
                             <th style={{"width": "70px"}}>Word</th>
+                            {showPause ? (<th style={{"width": "70px"}}>Pause</th>) : false}
                             <th style={{"width": "70px"}}>Activity</th>
                             <th style={{"width": "90px"}}>Start Date</th>
                             <th style={{"width": "90px"}}>End Date</th>
@@ -98,10 +102,11 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                     {report.change_events.map((change_event : any, i : number) => {
                         return (
                             <tr key={i}>
-                                <td>{change_event.first_segment.action}</td>
-                                <td>{change_event.second_segment.action}</td>
-                                <td>{change_event.change_profile.pause}</td>
+                                <td><DefinitionTooltip word={change_event.first_segment.action}/></td>
+                                <td><DefinitionTooltip word={change_event.second_segment.action}/></td>
+                                <td>{+change_event.sim.toFixed(2)}</td>
                                 <td>{change_event.change_profile.word}</td>
+                                {showPause ? (<td>{change_event.change_profile.pause}</td>) : false}
                                 <td>{change_event.change_profile.activity}</td>
                                 <td>{change_event.first_segment.local_dates[0]}</td>
                                 <td>{change_event.second_segment.local_dates[0]}</td>
@@ -168,7 +173,7 @@ export const ChangeProfileCard : React.FC<ChangeProfileCardProps> = ({ title, ic
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="Name" />
                         <YAxis />
-                        <Tooltip />
+                        <GraphTooltip />
                         <Legend />
                         <Bar dataKey="Rate" fill="#143aa2" />
                         </BarChart>
@@ -191,7 +196,7 @@ export const ChangeProfileCard : React.FC<ChangeProfileCardProps> = ({ title, ic
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="Name" />
                         <YAxis />
-                        <Tooltip />
+                        <GraphTooltip />
                         <Legend />
                         <Bar dataKey="Word" fill="#143aa2" />
                         <Bar dataKey="Pause" fill="#2159c0" />
@@ -212,8 +217,6 @@ interface TopWordsCardProps {
 }
 
 export const TopWordsCard : React.FC<TopWordsCardProps> = ({ title, subtitle, icon, top }: TopWordsCardProps) => {
-    const { symbolToDefinition } = useContext(AnalysisContext);
-
     return (
         <Card title={title} icon={icon} size={CardSize.Wide}>
             {subtitle ? (<p>{subtitle}</p>) : false}
@@ -233,25 +236,10 @@ export const TopWordsCard : React.FC<TopWordsCardProps> = ({ title, subtitle, ic
                         return (
                             <tr>
                                 <td>{word.rank}.</td>
-                                <td>{word.term}
-                                    {/*% for char in word.term
-                                        <div class="hoverable-text">
-                                            {{ char }}
-                                            <span class="hoverable-tooltip">{{ char|get_description }}</span>
-                                        </div>
-                                    */}
-                                </td>
+                                <td><DefinitionTooltip word={word.term}/></td>
                                 <td>{word.term_freq}</td>
                                 <td>{word.term_rate}</td>
-                                <td style={{"textAlign": "left"}}>{symbolToDefinition(word.term)}
-                                    {/*% for char in word.term %
-                                    <div class="hoverable-text">
-                                        {{ char|get_description }}
-                                        <span class="hoverable-tooltip">{{ char }}</span>
-                                    </div>
-                                    {% if not forloop.last %},&nbsp;{% endif %}
-                                */}
-                                </td>
+                                <td style={{"textAlign": "left"}}><SymbolTooltip word={word.term}/></td>
                             </tr>
                         )
                     })}
@@ -271,8 +259,6 @@ interface TopWordsCatergoryCardProps {
 }
 
 export const TopWordsCatergoryCard : React.FC<TopWordsCatergoryCardProps> = ({ title, subtitle, icon, top, symbolLabel }: TopWordsCatergoryCardProps) => {
-    const { symbolToDefinition } = useContext(AnalysisContext);
-
     return (
         <Card title={title} icon={icon} size={CardSize.Wide}>
             {subtitle ? (<p>{subtitle}</p>) : false}
@@ -290,25 +276,10 @@ export const TopWordsCatergoryCard : React.FC<TopWordsCatergoryCardProps> = ({ t
                 {top.map((word : any, i : number) => {
                     return (
                         <tr key={i}>
-                            <td>{word.term}
-                                {/*% for char in word.term %}
-                                    <div class="hoverable-text">
-                                        {{ char }}
-                                        <span class="hoverable-tooltip">{{ char|get_description }}</span>
-                                    </div>
-                                {% endfor %*/}
-                            </td>
+                            <td><DefinitionTooltip word={word.term}/></td>
                             <td>{word.term_freq}</td>
                             <td>{word.term_rate}</td>
-                            <td style={{"textAlign": "left"}}>{symbolToDefinition(word.term)}
-                                {/*% for char in word.term %}
-                                    <div class="hoverable-text">
-                                        {{ char|get_description }}
-                                        <span class="hoverable-tooltip">{{ char }}</span>
-                                    </div>
-                                    {% if not forloop.last %},&nbsp;{% endif %}
-                            {% endfor %*/}
-                            </td>
+                            <td style={{"textAlign": "left"}}><SymbolTooltip word={word.term}/></td>
                         </tr>
                     );
                 })}
@@ -318,10 +289,3 @@ export const TopWordsCatergoryCard : React.FC<TopWordsCatergoryCardProps> = ({ t
         </Card>
     );
 }
-
-/*<div className={style.hoverableText}>{{ char }}
-                                            {% if char|get_description != '' %}
-                                                <span className={style.hoverable-tooltip">{{ char|get_description }}</span>
-                                            {% endif %}
-                                        </div>
-                                        {% endfor %}*/

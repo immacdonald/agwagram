@@ -30,8 +30,8 @@ $primary: #143aa2;
     --c-primary-fade: #{color.scale($primary, $lightness: 70%)};
     --c-primary-light: #{color.scale($primary, $lightness: 10%)};
     --c-primary: #{$primary};
-    --c-primary-alpha-light: #{rgba($primary, 0.04)};
-    --c-primary-alpha: #{rgba($primary, 0.16)};
+    --c-primary-alpha-light: #{rgba($primary, 0.05)};
+    --c-primary-alpha: #{rgba($primary, 0.25)};
 	--c-secondary: #6ea9fc;
 
     // Background
