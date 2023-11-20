@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import style from './Card.module.scss';
 import classNames from 'classnames';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as GraphTooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -57,7 +57,7 @@ export const LanguageCard : React.FC<LanguageCardProps> = ({ title, icon, bloc }
     return (
         <Card title={title} icon={icon} size={CardSize.Normal}>
             {chars.map((char, index) => (
-                <span key={index}>{char}</span>
+                <DefinitionTooltip word={char}/>
             ))}
         </Card>
     );
@@ -72,6 +72,43 @@ interface ChangeCardProps {
 export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: ChangeCardProps) => {
     // Only show pause change if it has a value
     const showPause : boolean = report.change_profile.average_change.pause >= 0;
+    const [sortedField, setSortedField] = React.useState<string | null>('time');
+
+    const tableContent = useMemo(() => {
+        console.log("sorting by " + sortedField);
+        let sorted = [...(report.change_events)];
+        if (sortedField == 'sim') {
+            sorted.sort((a, b) => a.sim - b.sim);
+            sorted.reverse();
+        } else if (sortedField == 'time') {
+            sorted.sort((a, b) => {
+            if (a.first_segment.local_dates[0] < b.first_segment.local_dates[0]) {
+                return -1;
+            }
+            if (a.first_segment.local_dates[0] > b.first_segment.local_dates[0]) {
+                return 1;
+            }
+            return 0;
+            });
+        }
+
+        report.change_events = sorted;
+
+        return (report.change_events.map((change_event : any, i : number) => {
+            return (
+                <tr key={i}>
+                    <td><DefinitionTooltip word={change_event.first_segment.action}/></td>
+                    <td><DefinitionTooltip word={change_event.second_segment.action}/></td>
+                    <td>{+change_event.sim.toFixed(2)}</td>
+                    <td>{change_event.change_profile.word}</td>
+                    {showPause ? (<td>{change_event.change_profile.pause}</td>) : false}
+                    <td>{change_event.change_profile.activity}</td>
+                    <td>{change_event.first_segment.local_dates[0]}</td>
+                    <td>{change_event.second_segment.local_dates[0]}</td>
+                </tr>
+            )
+        }))
+    }, [sortedField]);
 
     return (
         <Card title={title} icon={icon} size={CardSize.Full}>
@@ -88,31 +125,18 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                 <table>
                     <thead>
                         <tr>
-                            <th>Start Behavior</th>
-                            <th>End Behavior</th>
-                            <th>Similarity</th>
+                            <th style={{"width": "180px"}}>Start Behavior</th>
+                            <th style={{"width": "180px"}}>End Behavior</th>
+                            <th><button type="button" onClick={() => setSortedField('sim')}>Similarity{sortedField == 'sim' ? ' >' : false}</button></th>
                             <th style={{"width": "70px"}}>Word</th>
                             {showPause ? (<th style={{"width": "70px"}}>Pause</th>) : false}
                             <th style={{"width": "70px"}}>Activity</th>
-                            <th style={{"width": "90px"}}>Start Date</th>
+                            <th><button type="button" onClick={() => setSortedField('time')}>Start Date{sortedField == 'time' ? ' >' : false}</button></th>
                             <th style={{"width": "90px"}}>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {report.change_events.map((change_event : any, i : number) => {
-                        return (
-                            <tr key={i}>
-                                <td><DefinitionTooltip word={change_event.first_segment.action}/></td>
-                                <td><DefinitionTooltip word={change_event.second_segment.action}/></td>
-                                <td>{+change_event.sim.toFixed(2)}</td>
-                                <td>{change_event.change_profile.word}</td>
-                                {showPause ? (<td>{change_event.change_profile.pause}</td>) : false}
-                                <td>{change_event.change_profile.activity}</td>
-                                <td>{change_event.first_segment.local_dates[0]}</td>
-                                <td>{change_event.second_segment.local_dates[0]}</td>
-                            </tr>
-                        )
-                    })}
+                        {tableContent}
                     </tbody>
                 </table>
             </div>
