@@ -12,7 +12,15 @@ export default defineConfig(({ command }) => {
 });
 
 const baseConfig = {
-    plugins: [svgr(), react()]
+    plugins: [svgr(), react()],
+    server: {
+        watch: {
+         usePolling: true,
+        },
+        host: true, // Here
+        strictPort: true,
+        port: 8000, 
+    }
 };
 
 function devConfig() {

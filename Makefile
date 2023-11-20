@@ -35,6 +35,10 @@ virtualenv:
 remove_virtualenv:
 	rm -rf venv
 
+# Runs the frontend locally (no Docker)
+frontend:
+	cd agwagram; npm run dev
+
 # Runs the Django server locally (no Docker)
 run_local:
 	test -d venv || $(MAKE) virtualenv
@@ -43,7 +47,9 @@ run_local:
 	$(call setup_env, development)
 	python3 manage.py makemigrations
 	python3 manage.py migrate
-	python3 manage.py runserver 0.0.0.0:${PORT}
+	python3 manage.py runserver 0.0.0.0:${PORT} &
+	$(MAKE) frontend
+	
 
 # flake8 linter
 run_flake8:
