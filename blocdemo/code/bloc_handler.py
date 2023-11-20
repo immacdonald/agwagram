@@ -270,8 +270,8 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             'top_change': top_change,
             # Linked Data
             'linked_data': linked_data
-        })
-    
+            })
+
     return result
 
 
@@ -340,13 +340,12 @@ def link_change_report(raw_report):
         report[alphabet]['change_profile'] = {
             'change_rate': round_format(raw_report['change_report']['change_rates'][alphabet]),
             'average_change': {
-                'word': round_format(raw_report['change_report']['avg_change_profile'][alphabet]['word']),
-                'pause': round_format(raw_report['change_report']['avg_change_profile'][alphabet]['pause']),
-                'activity': round_format(raw_report['change_report']['avg_change_profile'][alphabet]['activity']),
+                'word': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['word']),
+                'pause': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['pause']),
+                'activity': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['activity']),
             }
         }
 
-    print(report)
     return report
 
 def round_format(value):

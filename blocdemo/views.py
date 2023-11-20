@@ -186,7 +186,6 @@ class AnalyzeFiles(APIView):
     def post(self, request):
         try:
             tweet_files = request.FILES.getlist('tweet_files')
-            print(tweet_files)
 
             # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
             converted_files = []
