@@ -1,6 +1,5 @@
 import React, { useContext, Fragment } from 'react';
 import { AnalysisContext } from '../contexts/AnalysisContext';
-import Tooltip from './Tooltip';
 import HoverMark from './HoverMark';
 
 interface BLOCTooltipProps {
@@ -12,9 +11,7 @@ export const DefinitionTooltip: React.FC<BLOCTooltipProps> = ({ word }: BLOCTool
     return (
         [...word].map((c, index) => (
             <Fragment key={index}>
-                <Tooltip content={symbolToDefinition(c)}>
-                    <HoverMark text={c} />
-                </Tooltip>
+                <HoverMark text={c} data-title={symbolToDefinition(c)} />
             </Fragment>
         ))
     )
@@ -25,9 +22,7 @@ export const SymbolTooltip: React.FC<BLOCTooltipProps> = ({ word }: BLOCTooltipP
     return (
         [...word].map((c, index, array) => (
             <Fragment key={index}>
-                <Tooltip content={c}>
-                    <HoverMark text={symbolToDefinition(c)} />
-                </Tooltip>
+                <HoverMark text={symbolToDefinition(c)} data-title={c} />
                 {index !== array.length - 1 && ", "}
             </Fragment>
         ))

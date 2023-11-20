@@ -126,3 +126,40 @@ tr:nth-child(even) {
 mark {
 	background-color: var(--c-primary-alpha);
 }
+
+// Misc.
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+*[data-title]:not([disabled]) {
+    position: relative;
+
+    &:hover:after {
+        content: attr(data-title);
+        position: absolute;
+		top: -100%;
+        left: 50%;
+        transform: translate(-50%, -$md);
+        min-width: $xxl;
+		padding: $xs $md;
+		border-radius: $smRadius;
+        background-color: var(--c-bg-neutral-dark);
+		text-align: center;
+		color: var(--c-fg-neutral-inverse);
+        font-size: $mdFont;
+        font-weight: 500;
+        white-space: nowrap;
+        z-index: 100;
+        opacity: 0;
+        animation: 0s ease-out 1s 1 appear;
+        animation-fill-mode: forwards;
+        box-shadow: var(--shadow-low);
+        filter: none;
+    }
+}

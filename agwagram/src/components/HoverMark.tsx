@@ -4,9 +4,9 @@ interface HoverMarkProps {
     text: string
 }
 
-function HoverMark({ text }: HoverMarkProps) {
+function HoverMark({ text, ...rest }: HoverMarkProps) {
     return (
-        <mark className={style.hoverMark}>{text}</mark>
+        <mark className={style.hoverMark} {...rest}>{text}</mark>
     );
 }
 
