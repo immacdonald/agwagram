@@ -13,13 +13,13 @@ export default function useComponentVisible(initialIsVisible: boolean): Componen
   
     const handleClickOutside = useCallback((event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        setIsComponentVisible(false);
+        //setIsComponentVisible(false);
       }
     }, [setIsComponentVisible]);
   
     const handleEscapeKeyDown = useCallback((event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsComponentVisible(false);
+        //setIsComponentVisible(false);
       }
     }, [setIsComponentVisible]);
   

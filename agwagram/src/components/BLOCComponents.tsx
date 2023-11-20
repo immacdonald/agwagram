@@ -11,7 +11,7 @@ export const DefinitionTooltip: React.FC<BLOCTooltipProps> = ({ word }: BLOCTool
     return (
         [...word].map((c, index) => (
             <Fragment key={index}>
-                <HoverMark text={c} data-title={symbolToDefinition(c)} />
+                {symbolToDefinition(c) != '' ? (<HoverMark text={c} data-title={symbolToDefinition(c)} />) : (<span>{c}</span>)}
             </Fragment>
         ))
     )
@@ -22,7 +22,7 @@ export const SymbolTooltip: React.FC<BLOCTooltipProps> = ({ word }: BLOCTooltipP
     return (
         [...word].map((c, index, array) => (
             <Fragment key={index}>
-                <HoverMark text={symbolToDefinition(c)} data-title={c} />
+                {symbolToDefinition(c) != '' ? (<HoverMark text={symbolToDefinition(c)} data-title={c} />) : (<span>{symbolToDefinition(c)}</span>)}
                 {index !== array.length - 1 && ", "}
             </Fragment>
         ))
