@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
-import { BarChart, Chart, Dataset, Group, Hub, Link, Pause, Person, Timeline } from '../icons';
+import { BarChart, Chart, Dataset, Group, Hub, Link as LinkIcon, Pause, Person, Timeline } from '../icons';
 import Card, { ChangeCard, ChangeProfileCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard, LinkedDataCard, CardSize } from '../components/Card';
+import { Link } from 'react-router-dom';
 import Toggle from '../components/Toggle';
 import { formatDate } from '../Global';
 
@@ -55,7 +56,7 @@ const Results: React.FC = () => {
                         <LanguageCard title = "Semantic Entity" icon={<Dataset/>} bloc={account.bloc_semantic_entity}/>
                         <LanguageCard title = "Semantic Sentiment" icon={<Dataset/>} bloc={account.bloc_semantic_sentiment}/>
                         <LanguageCard title = "Change" icon={<Dataset/>} bloc={account.bloc_change}/>
-                        <LinkedDataCard title = "LinkedData" icon={<Link/>} data={account.linked_data}/>
+                        <LinkedDataCard title = "LinkedData" icon={<LinkIcon/>} data={account.linked_data}/>
                     </>
                 ) : false}
             </>
