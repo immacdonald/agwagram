@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
-import BarChart from '../images/icons/bar_chart.svg?react';
+import { BarChart, Chart, Dataset, Group, Hub, Link, Pause, Person, Timeline } from '../icons';
 import Card, { ChangeCard, ChangeProfileCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard, LinkedDataCard, CardSize } from '../components/Card';
-import { Link } from 'react-router-dom';
 import Toggle from '../components/Toggle';
 import { formatDate } from '../Global';
 
@@ -26,7 +25,7 @@ const Results: React.FC = () => {
             <>
                 <Card
                     title="Account Overview"
-                    icon={<BarChart/>}
+                    icon={<Person/>}
                     size={CardSize.Full}
                 >
                     <h2>Analysis of @{account.account_username}</h2>
@@ -42,21 +41,21 @@ const Results: React.FC = () => {
                 <TopWordsCatergoryCard
                     title="Top Pauses"
                     subtitle="Most frequent durations of pause between account activities."
-                    icon={<BarChart/>} 
+                    icon={<Pause/>} 
                     top={account.top_time}
                     symbolLabel="Pause"
                 />
-                <ChangeProfileCard title="Change Profile Details" icon={<BarChart/>} reports={account.change_report}/>
-                <ChangeCard title="Action Change Profile" icon={<BarChart/>} report={account.change_report['action']}/>
-                <ChangeCard title="Syntactic Change Profile" icon={<BarChart/>} report={account.change_report['content_syntactic']}/>
+                <ChangeProfileCard title="Change Profile Details" icon={<Chart/>} reports={account.change_report}/>
+                <ChangeCard title="Action Change Profile" icon={<Timeline/>} report={account.change_report['action']}/>
+                <ChangeCard title="Syntactic Change Profile" icon={<Timeline/>} report={account.change_report['content_syntactic']}/>
                 {expertMode ? (
                     <>
-                        <LanguageCard title = "Action" icon={<BarChart/>} bloc={account.bloc_action}/>
-                        <LanguageCard title = "Syntactic" icon={<BarChart/>} bloc={account.bloc_syntactic}/>
-                        <LanguageCard title = "Semantic Entity" icon={<BarChart/>} bloc={account.bloc_semantic_entity}/>
-                        <LanguageCard title = "Semantic Sentiment" icon={<BarChart/>} bloc={account.bloc_semantic_sentiment}/>
-                        <LanguageCard title = "Change" icon={<BarChart/>} bloc={account.bloc_change}/>
-                        <LinkedDataCard title = "LinkedData" icon={<BarChart/>} data={account.linked_data}/>
+                        <LanguageCard title = "Action" icon={<Dataset/>} bloc={account.bloc_action}/>
+                        <LanguageCard title = "Syntactic" icon={<Dataset/>} bloc={account.bloc_syntactic}/>
+                        <LanguageCard title = "Semantic Entity" icon={<Dataset/>} bloc={account.bloc_semantic_entity}/>
+                        <LanguageCard title = "Semantic Sentiment" icon={<Dataset/>} bloc={account.bloc_semantic_sentiment}/>
+                        <LanguageCard title = "Change" icon={<Dataset/>} bloc={account.bloc_change}/>
+                        <LinkedDataCard title = "LinkedData" icon={<Link/>} data={account.linked_data}/>
                     </>
                 ) : false}
             </>
@@ -128,7 +127,7 @@ const Results: React.FC = () => {
                                 <>
                                     <Card
                                         title="Accounts Overview"
-                                        icon={<BarChart/>}
+                                        icon={<Group/>}
                                         size={CardSize.Full}
                                     >
                                         <h2>Analysis of {accounts.map((account: any) => `@${account.account_username}`).join(', ')}</h2>
@@ -143,11 +142,11 @@ const Results: React.FC = () => {
                                     <TopWordsCatergoryCard
                                         title="Top Pauses"
                                         subtitle="Most frequent durations of pause between activities of each account."
-                                        icon={<BarChart/>}
+                                        icon={<Pause/>}
                                         top={result['group_top_time']}
                                         symbolLabel="Pause"
                                     />
-                                    <Card title="Pairwise Similarity" icon={<BarChart/>}>
+                                    <Card title="Pairwise Similarity" icon={<Hub/>}>
                                         <table>
                                             <thead>
                                                 <tr>

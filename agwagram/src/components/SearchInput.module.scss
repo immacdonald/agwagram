@@ -58,8 +58,8 @@ $height: 40px;
 
         &::before {
             content: "";
-            -webkit-mask: url('../images/icons/search.svg') no-repeat 100% 100%;
-            mask: url('../images/icons/search.svg') no-repeat 100% 100%;
+            -webkit-mask: url('../icons/search.svg') no-repeat 100% 100%;
+            mask: url('../icons/search.svg') no-repeat 100% 100%;
             -webkit-mask-size: cover;
             mask-size: cover;
             background-color: var(--c-fg-theme-dark);
