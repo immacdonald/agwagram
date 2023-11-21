@@ -1,7 +1,7 @@
 # Agwagram
 
 ## About
-Agwagram is a web interface that allows users to analyze online accounts using the novel BLOC algorithm to explore behaviours and signs of coordinated actions, bots, and other vectors for spreading disinformation. This tool is specifically designed for the analysis of user accounts on [X (formerly) Twitter](https://www.twitter.com). More information about the underlying BLOC algorithm can be found on Dr. Alexander Nwala's [BLOC GitHub](https://github.com/anwala/bloc).
+Agwagram is a web interface that allows users to analyze online accounts using the novel BLOC algorithm to explore behaviors and signs of coordinated actions, bots, and other vectors for spreading disinformation. This tool is specifically designed for the analysis of user accounts on [X (formerly) Twitter](https://www.twitter.com). More information about the underlying BLOC algorithm can be found on Dr. Alexander Nwala's [BLOC GitHub](https://github.com/anwala/bloc).
 
 ## Development
 
