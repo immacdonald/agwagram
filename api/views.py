@@ -2,18 +2,12 @@ from django.shortcuts import render
 
 from .code import bloc_handler
 from .code import symbols
-from .code.django_counter import DjangoCounter
 from .code.file_handling import handle_uploaded_file
 
 from datetime import datetime
 
-from .forms import UsernameSearchForm, UploadFileForm
-
 from django.views import View
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
-from django.shortcuts import redirect
 import os
 import json
 
@@ -23,55 +17,6 @@ logger = logging.getLogger("mainLogger")
 
 class MainView(TemplateView):
     template_name = 'main.html'
-
-
-class MethodologyView(TemplateView):
-    template_name = 'methodology.html'
-
-
-class AnalyzeUser(FormView):
-    form_class = UsernameSearchForm
-    template_name = 'analyze_user.html'
-    success_url = reverse_lazy('results')
-
-    def form_valid(self, form):
-        username = form.cleaned_data['username']
-        self.request.session['results'] = bloc_handler.analyze_user(username)
-        return redirect(self.get_success_url())
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['previous_results'] = 'results' in self.request.session
-        return context
-    
-class AnalyzeFile(FormView):
-    form_class = UploadFileForm
-    template_name = 'analyze_file.html'
-    enctype = 'multipart/form-data'
-    success_url = reverse_lazy('results')
-
-    def form_valid(self, form):
-        tweet_files = self.request.FILES.getlist('tweet_files')
-
-        # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
-        converted_files = []
-        for file in tweet_files:
-            converted_file = handle_uploaded_file(file)
-            converted_files.append(converted_file.name)
-
-        results = bloc_handler.analyze_tweet_file(converted_files)
-
-        for temp_file in converted_files:
-            os.remove(temp_file)
-
-        self.request.session['results'] = results
-
-        return redirect(self.get_success_url())
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['previous_results'] = 'results' in self.request.session
-        return context
 
 
 class AnalysisResultsView(View):
@@ -153,8 +98,7 @@ def format_account_data(account):
         "top_time": account['top_time'],
         'change_report': account['change_report'],
         # Linked Data
-        'linked_data': account['linked_data'],
-        'counter': DjangoCounter()
+        'linked_data': account['linked_data']
     }
 
     return output_data
