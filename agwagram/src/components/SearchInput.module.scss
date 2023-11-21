@@ -19,7 +19,7 @@ $height: 40px;
 		height: $height;
         width: 100%;
 		line-height: 1;
-        background-color: var(--c-bg-neutral);
+        background-color: var(--c-bg-theme);
         border: var(--b-thin) var(--c-b-neutral);
 		border-radius: $smRadius;
 		color: var(--c-text-action);
@@ -53,7 +53,7 @@ $height: 40px;
 		border: 0;
         border-radius: 100%;
 		background-color: transparent;
-		color: var(--c-fg-neutral);
+		color: var(--c-fg-theme);
         padding: 0;
 
         &::before {
@@ -62,7 +62,7 @@ $height: 40px;
             mask: url('../images/icons/search.svg') no-repeat 100% 100%;
             -webkit-mask-size: cover;
             mask-size: cover;
-            background-color: var(--c-fg-neutral-dark);
+            background-color: var(--c-fg-theme-dark);
             transition: background-color var(--t-fast);
             width: 30px;
             height: 30px;
@@ -70,7 +70,7 @@ $height: 40px;
 
 		&:focus,
 		&:hover {
-			background-color: var(--c-bg-neutral-dim);
+			background-color: var(--c-bg-theme-dim);
 
             &::before {
                 background-color: var(--c-primary);

@@ -22,7 +22,6 @@ const Results: React.FC = () => {
     }
 
     const getAccountAnalysis = (account: any) => {
-        console.log(account);
         return (
             <>
                 <Card
@@ -127,6 +126,14 @@ const Results: React.FC = () => {
                         <div className={style.cardGrid}>
                             {analysisView > -1 ? getAccountAnalysis(accounts[analysisView]) : 
                                 <>
+                                    <Card
+                                        title="Accounts Overview"
+                                        icon={<BarChart/>}
+                                        size={CardSize.Full}
+                                    >
+                                        <h2>Analysis of {accounts.map((account: any) => `@${account.account_username}`).join(', ')}</h2>
+                                        <p>Results generated using {result['total_tweets']} tweets.</p>
+                                    </Card>
                                     <TopWordsCard
                                         title="Top 100 Behaviors"
                                         subtitle="Displays the top 100 (or less) BLOC words between all the accounts analyzed."

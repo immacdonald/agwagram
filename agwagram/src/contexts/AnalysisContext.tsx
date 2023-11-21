@@ -7,6 +7,7 @@ interface AnalysisContextValue {
     symbols: any | null;
     setSymbols: React.Dispatch<React.SetStateAction<any | null>>;
     symbolToDefinition : (bloc: string) => string;
+    setTheme: Function;
 }
 
 export const AnalysisContext = createContext<AnalysisContextValue>({
@@ -15,6 +16,7 @@ export const AnalysisContext = createContext<AnalysisContextValue>({
     symbols: null,
     setSymbols: () => {},
     symbolToDefinition: () => "",
+    setTheme: () => {},
 });
 
 interface AnalysisContextProviderProps {
@@ -44,6 +46,7 @@ export function AnalysisContextProvider(props: AnalysisContextProviderProps) {
 
     const [results, setResults] = useState<any | null>(getInitialState);
     const [symbols, setSymbols] = useState<any | null>(getSymbols);
+    const [lightTheme, setLightTheme] = useState<boolean>(true);
 
     const symbolToDefinition = (bloc: string) : string => {
         if (!symbols) {
@@ -54,13 +57,27 @@ export function AnalysisContextProvider(props: AnalysisContextProviderProps) {
         return definitions.join(', ');
     }
 
+    const setTheme = (light?: boolean) => {
+        if (light == true) {
+            setLightTheme(true);
+        } else if (light === false) {
+            setLightTheme(false);
+        } else {
+            setLightTheme(!lightTheme);
+        }
+    }
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', lightTheme ? 'light' : 'dark');
+    }, [lightTheme]);
+
     useEffect(() => {
         localStorage.setItem('analysis', JSON.stringify(results))
     }, [results])
 
     const value: AnalysisContextValue = useMemo(() => ({
-        results, setResults, symbols, setSymbols, symbolToDefinition
-    }), [results, setResults, symbols, setSymbols]);
+        results, setResults, symbols, setSymbols, symbolToDefinition, setTheme
+    }), [results, setResults, symbols, setSymbols, setTheme]);
 
     return (
         <AnalysisContext.Provider value={value}>

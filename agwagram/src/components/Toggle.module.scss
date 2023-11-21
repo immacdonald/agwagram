@@ -21,7 +21,7 @@
 		width: $_width;
 		height: $_fullHeight;
 		border-radius: $_fullHeight;
-		background-color: var(--c-bg-neutral-dim);
+		background-color: var(--c-bg-theme-dim);
 		position: relative;
 		transition: 0.15s ease;
 		pointer-events: none;
@@ -33,7 +33,7 @@
 			pointer-events: none;
 			height: $_height;
 			width: $_height;
-			background-color: var(--c-fg-neutral-inverse);
+			background-color: var(--c-fg-theme-inverse);
 			border-radius: 50%;
 			box-shadow: 0 1px 3px 0 rgba(#000, 0.15);
 			transition: 0.15s ease;

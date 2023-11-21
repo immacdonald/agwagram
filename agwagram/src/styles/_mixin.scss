@@ -12,10 +12,10 @@
 	border-radius: $smRadius;
 	line-height: 1;
 	border: 1px solid var(--c-b-neutral);
-	color: var(--c-fg-neutral);
+	color: var(--c-fg-theme);
 	font-size: 0.875rem;
 	transition: 0.15s ease;
-	background-color: var(--c-bg-neutral);
+	background-color: var(--c-bg-theme);
 
 	.icon {
 		margin-right: 0.5rem;

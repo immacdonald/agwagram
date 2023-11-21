@@ -22,13 +22,13 @@ html {
     }
 
     &::-webkit-scrollbar-track {
-        background: var(--c-bg-neutral);
+        background: var(--c-bg-theme);
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: var(--c-bg-neutral-dim);
+        background-color: var(--c-bg-theme-dim);
         border-radius: $sm;
-        border: $xs solid var(--c-bg-neutral-dim);
+        border: $xs solid var(--c-bg-theme-dim);
     }
 }
 
@@ -42,7 +42,7 @@ body {
     font-family: 'proxima-nova', sans-serif;
     font-size: $mdFont;
     line-height: 1.5;
-    color: var(--c-fg-neutral);
-    background-color: var(--c-bg-neutral);
+    color: var(--c-fg-theme);
+    background-color: var(--c-bg-theme);
     overflow-x: hidden;
 }

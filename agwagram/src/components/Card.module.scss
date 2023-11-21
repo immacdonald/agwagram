@@ -1,7 +1,7 @@
 @use '../styles' as *;
 
 .card {
-	background-color: var(--c-bg-neutral-light);
+	background-color: var(--c-bg-theme-light);
 	box-shadow: var(--shadow);
 	border: var(--b-thin) var(--c-b-neutral);
 	border-radius: $smRadius;
@@ -85,7 +85,7 @@
 	border-top: var(--b-thin) var(--c-b-neutral);
 	
     a {
-		color: var(--c-fg-neutral);
+		color: var(--c-fg-theme);
 		font-weight: 500;
 		font-size: 0.875rem;
 
@@ -121,9 +121,9 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: var(--c-bg-neutral-dim);
+        background-color: var(--c-bg-theme-dim);
         border-radius: $sm;
-        border: $xs solid var(--c-bg-neutral-dim);
+        border: $xs solid var(--c-bg-theme-dim);
     }
 
 	&::-webkit-scrollbar-track-piece {

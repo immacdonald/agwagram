@@ -67,7 +67,7 @@ input[type="file"] {
 		mask: url('./images/upload_file.svg') no-repeat 100% 100%;
 		-webkit-mask-size: cover;
 		mask-size: cover;
-  		background-color: var(--c-fg-neutral);
+  		background-color: var(--c-fg-theme);
 		transition: background-color var(--t-fast);
 		width: 64px;
 		height: 64px;
@@ -93,7 +93,7 @@ input[type="file"] {
 		transition: none;
 
 		&::before {
-			background-color: var(--c-bg-neutral);
+			background-color: var(--c-bg-theme);
 			transition: none;
 		}
 	}
@@ -120,7 +120,7 @@ td {
 }
   
 tr:nth-child(even) {
-	background-color: var(--c-bg-neutral-dim);
+	background-color: var(--c-bg-theme-dim);
 }
 
 mark {
@@ -150,9 +150,9 @@ mark {
         min-width: $xxl;
 		padding: $xs $md;
 		border-radius: $smRadius;
-        background-color: var(--c-bg-neutral-dark);
+        background-color: var(--c-bg-dark);
 		text-align: center;
-		color: var(--c-fg-neutral-inverse);
+		color: var(--c-fg-light);
         font-size: $mdFont;
         font-weight: 500;
         white-space: pre-line;

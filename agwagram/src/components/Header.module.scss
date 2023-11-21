@@ -8,7 +8,7 @@
     justify-content: center;
     height: $headerHeight !important;
     border-bottom: 1px solid var(--c-b-neutral);
-    background-color: var(--c-bg-neutral-light);
+    background-color: var(--c-bg-theme-light);
 }
 
 .content {
@@ -34,14 +34,9 @@
     display: flex;
     flex-grow: 1;
     align-items: center;
-    justify-content: space-between;
-}
-
-.navLinks {
-    display: flex;
-    align-items: center;
+    justify-content: right;
     gap: $lg;
-    margin-left: $xxl;
+    margin: 0 $xxl;
 
     > div {
         padding: $sm;
@@ -80,6 +75,6 @@
         text-decoration: none;
         font-size: $lgFont;
         font-weight: 600;
-        color: var(--c-fg-neutral);
+        color: var(--c-fg-theme);
     }
 }
