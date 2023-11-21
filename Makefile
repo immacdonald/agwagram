@@ -1,7 +1,7 @@
 # Loads a .env file by name (without extension)
 define setup_env
     $(eval ENV_FILE := $(1).env)
-    @echo " - setup env $(ENV_FILE)"
+    @echo " Setup env $(ENV_FILE)"
     $(eval include $(1).env)
     $(eval export)
 endef
@@ -27,24 +27,32 @@ secret_file:
 
 # Makes the virtual environment for local execution
 virtualenv:
-	python3 -m venv venv
-	. ./venv/bin/activate
-	pip3 install --upgrade pip
-	pip3 install -r requirements.txt
+	cd bloc && python3 -m venv venv && . ./venv/bin/activate && pip3 install --upgrade pip && pip3 install -r requirements.txt
 
 remove_virtualenv:
 	rm -rf venv
 
+# Runs the frontend locally (no Docker)
+frontend:
+	$(call setup_env, development)
+	cd agwagram && npm run dev
+
+backend:
+	$(call setup_env, development)
+	$(MAKE) virtualenv
+	cd bloc && python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:${PORT} &
+
 # Runs the Django server locally (no Docker)
 run_local:
-	test -d venv || $(MAKE) virtualenv
-	. ./venv/bin/activate
 	$(call setup_env, secrets)
-	$(call setup_env, development)
-	python3 manage.py makemigrations
-	python3 manage.py migrate
-	python3 manage.py runserver 0.0.0.0:${PORT}
+	$(MAKE) backend
+	$(MAKE) frontend
+	
 
-# flake8 linter
-run_flake8:
-	flake8
+# Backend flake8 linting
+lint_backend:
+	cd bloc && flake8
+
+# Frontend ESLint and Prettier formatting
+lint_frontend:
+	cd agwagram && npm run format
