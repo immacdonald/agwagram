@@ -49,6 +49,10 @@ run_local:
 	$(MAKE) frontend
 	
 
-# flake8 and ESLint linting
-run_linter:
+# Backend flake8 linting
+lint_backend:
 	cd bloc && flake8
+
+# Frontend ESLint and Prettier formatting
+lint_frontend:
+	cd agwagram && npm run format

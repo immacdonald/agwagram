@@ -1,13 +1,13 @@
-@use '../styles' as *;
+@use "../styles" as *;
 
 .submit {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: $lg;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: $lg;
 }
 
 .fileList {
-    font-size: $xsFont;
-    margin-top: $sm;
+  font-size: $xsFont;
+  margin-top: $sm;
 }

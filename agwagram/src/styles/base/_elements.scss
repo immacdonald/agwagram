@@ -1,4 +1,4 @@
-@use '../' as *;
+@use "../" as *;
 
 // Headers
 h1,
@@ -7,160 +7,158 @@ h3,
 h4,
 h5,
 h6 {
-    letter-spacing: 0.015em;
+  letter-spacing: 0.015em;
 }
 
 h1 {
-    margin: $sm 0;
-    font-size: 32px;
+  margin: $sm 0;
+  font-size: 32px;
 }
 
 h2 {
-    margin: $sm 0;
-    font-size: 24px;
+  margin: $sm 0;
+  font-size: 24px;
 }
 
 h3 {
-    margin: $xs 0;
-    font-size: 20px;
-	font-weight: normal;
+  margin: $xs 0;
+  font-size: 20px;
+  font-weight: normal;
 }
 
 hr {
-	border: none;
-	border-top: var(--b-thin) var(--c-b-neutral);
-	margin: $md 0;
+  border: none;
+  border-top: var(--b-thin) var(--c-b-neutral);
+  margin: $md 0;
 }
 
 // Links
 a {
-    text-decoration: none;
-    color: var(--c-primary);
+  text-decoration: none;
+  color: var(--c-primary);
 
-    &:hover {
-        text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 // Buttons
 button {
-	@include button;
+  @include button;
 }
 
 // Interactables
 :focus {
-	outline: 0;
+  outline: 0;
 }
 
 input[type="file"] {
-    width: 100%;
-	height: 96px;
-	display: flex;
-	border: var(--b-thin) var(--c-b-neutral);
-	border-radius: $smRadius;
-	margin-top: $md;
-    transition: border-color var(--t-fast);
+  width: 100%;
+  height: 96px;
+  display: flex;
+  border: var(--b-thin) var(--c-b-neutral);
+  border-radius: $smRadius;
+  margin-top: $md;
+  transition: border-color var(--t-fast);
 
-	&::before {
-		content: "";
-		-webkit-mask: url('./images/upload_file.svg') no-repeat 100% 100%;
-		mask: url('./images/upload_file.svg') no-repeat 100% 100%;
-		-webkit-mask-size: cover;
-		mask-size: cover;
-  		background-color: var(--c-fg-theme);
-		transition: background-color var(--t-fast);
-		width: 64px;
-		height: 64px;
-		margin: auto;
-		margin-top: $md;
-		margin-bottom: $xxl;
-	}
+  &::before {
+    content: "";
+    -webkit-mask: url("./images/upload_file.svg") no-repeat 100% 100%;
+    mask: url("./images/upload_file.svg") no-repeat 100% 100%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: var(--c-fg-theme);
+    transition: background-color var(--t-fast);
+    width: 64px;
+    height: 64px;
+    margin: auto;
+    margin-top: $md;
+    margin-bottom: $xxl;
+  }
 
-	&:hover {
-        border-color: var(--c-primary);
+  &:hover {
+    border-color: var(--c-primary);
 
-		&::before {
-		    background-color: var(--c-primary);
-		}
-	}
+    &::before {
+      background-color: var(--c-primary);
+    }
+  }
 
-	&::file-selector-button{
-		@include button;
-	}
+  &::file-selector-button {
+    @include button;
+  }
 
-	&:disabled {
-		background-color: var(--c-disabled-color);
-		transition: none;
+  &:disabled {
+    background-color: var(--c-disabled-color);
+    transition: none;
 
-		&::before {
-			background-color: var(--c-bg-theme);
-			transition: none;
-		}
-	}
+    &::before {
+      background-color: var(--c-bg-theme);
+      transition: none;
+    }
+  }
 }
 
 // Tables
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-	line-height: normal;
-	text-align: left;
-
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  line-height: normal;
+  text-align: left;
 }
-  
+
 th {
-	padding: $sm;
-	border-bottom: var(--b-thin) var(--c-b-neutral);
+  padding: $sm;
+  border-bottom: var(--b-thin) var(--c-b-neutral);
 }
 
 td {
-	padding: $xs;
-
+  padding: $xs;
 }
-  
+
 tr:nth-child(even) {
-	background-color: var(--c-bg-theme-dim);
+  background-color: var(--c-bg-theme-dim);
 }
 
 mark {
-	background-color: var(--c-primary-alpha);
+  background-color: var(--c-primary-alpha);
 }
 
 // Misc.
 @keyframes appear {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 *[data-title]:not([disabled]) {
-    position: relative;
+  position: relative;
 
-    &:hover:after {
-        content: attr(data-title);
-        position: absolute;
-		top: -100%;
-        left: 50%;
-        transform: translate(-50%, -$md);
-		width: max-content;
-        min-width: $xxl;
-		padding: $xs $md;
-		border-radius: $smRadius;
-        background-color: var(--c-bg-dark);
-		text-align: center;
-		color: var(--c-fg-light);
-        font-size: $mdFont;
-        font-weight: 500;
-        white-space: pre-line;
-        z-index: 100;
-        opacity: 0;
-        animation: 0s ease-out 1s 1 appear;
-        animation-fill-mode: forwards;
-        box-shadow: var(--shadow-low);
-        filter: none;
-    }
+  &:hover:after {
+    content: attr(data-title);
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -$md);
+    width: max-content;
+    min-width: $xxl;
+    padding: $xs $md;
+    border-radius: $smRadius;
+    background-color: var(--c-bg-dark);
+    text-align: center;
+    color: var(--c-fg-light);
+    font-size: $mdFont;
+    font-weight: 500;
+    white-space: pre-line;
+    z-index: 100;
+    opacity: 0;
+    animation: 0s ease-out 1s 1 appear;
+    animation-fill-mode: forwards;
+    box-shadow: var(--shadow-low);
+    filter: none;
+  }
 }

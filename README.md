@@ -54,7 +54,13 @@ This executes the Makefile commands for running the backend and frontend. The fi
 The [Flake8](https://flake8.pycqa.org/en/latest/) code formatter is used for BLOC Services to enforce syntax and formatting guidelines. It can be automatically invoked using the Makefile:
 
 ```bash
-make run_linter
+make lint_backend
+```
+
+A combination of ESLint and Prettier is used for linting and formatting the Agwagram codebase. It can also be invoked using the Makefile:
+
+```bash
+make lint_frontend
 ```
 
 ## Contributors

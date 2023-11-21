@@ -1,36 +1,36 @@
-@use '../styles' as *;
+@use "../styles" as *;
 
 .content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .columns {
-    display: flex;
-    height: 100%;
-    margin-top: $xl;
+  display: flex;
+  height: 100%;
+  margin-top: $xl;
 
-    > div {
-        width: 50%;
-        min-height: 320px;
-        height: fit-content;
-        padding: $md;
-        border-radius: $mdRadius;
-        border: 1px solid var(--c-b-neutral);
-        background-color: var(--c-bg-theme-light);
-        box-shadow: var(--shadow);
+  > div {
+    width: 50%;
+    min-height: 320px;
+    height: fit-content;
+    padding: $md;
+    border-radius: $mdRadius;
+    border: 1px solid var(--c-b-neutral);
+    background-color: var(--c-bg-theme-light);
+    box-shadow: var(--shadow);
 
-        &:not(:last-of-type) {
-            margin-right: $sm;
-        }
-
-        &:not(:first-of-type) {
-            margin-left: $sm;
-        }
-
-        > h3 {
-            text-align: center;
-            margin-bottom: $lg;
-        }
+    &:not(:last-of-type) {
+      margin-right: $sm;
     }
+
+    &:not(:first-of-type) {
+      margin-left: $sm;
+    }
+
+    > h3 {
+      text-align: center;
+      margin-bottom: $lg;
+    }
+  }
 }

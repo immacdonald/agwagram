@@ -1,132 +1,131 @@
-@use '../styles' as *;
+@use "../styles" as *;
 
 .card {
-	background-color: var(--c-bg-theme-light);
-	box-shadow: var(--shadow);
-	border: var(--b-thin) var(--c-b-neutral);
-	border-radius: $smRadius;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	min-height: 320px;
-	flex-grow: 1;
-	grid-column-end: span 4;
-	grid-row-end: span 1;
+  background-color: var(--c-bg-theme-light);
+  box-shadow: var(--shadow);
+  border: var(--b-thin) var(--c-b-neutral);
+  border-radius: $smRadius;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 320px;
+  flex-grow: 1;
+  grid-column-end: span 4;
+  grid-row-end: span 1;
 
-	&.full {
-		@media (min-width: $smallResponsiveWidth) {
-			grid-column-end: span 8; 
-		}
-	
-		@media (min-width: $mediumResponsiveWidth) {
-			grid-column-end: span 12; 
-		}
-	}
+  &.full {
+    @media (min-width: $smallResponsiveWidth) {
+      grid-column-end: span 8;
+    }
 
-	&.wide {
-		@media (min-width: $smallResponsiveWidth) {
-			grid-column-end: span 8; 
-		}
-		@media (min-width: $mediumResponsiveWidth) {
-			grid-column-end: span 6; 
-		}
-	}
+    @media (min-width: $mediumResponsiveWidth) {
+      grid-column-end: span 12;
+    }
+  }
+
+  &.wide {
+    @media (min-width: $smallResponsiveWidth) {
+      grid-column-end: span 8;
+    }
+    @media (min-width: $mediumResponsiveWidth) {
+      grid-column-end: span 6;
+    }
+  }
 }
 
 .cardHeader {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: $lg $md $md $md;
-	div {
-		display: flex;
-		align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $lg $md $md $md;
+  div {
+    display: flex;
+    align-items: center;
 
-		span {
-			width: 40px;
-			height: 40px;
-			border-radius: $smRadius;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-		}
-	}
+    span {
+      width: 40px;
+      height: 40px;
+      border-radius: $smRadius;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
 .cardToggleBody {
-	padding: 0rem 1.25rem;
-	font-size: 0.875rem;
-	max-height: 0px;
-	overflow: hidden;
-	transition: max-height 0.5s ease-in-out;
-	background-color: var(--c-background-secondary);
-	margin: 0px 20px;
-	border-radius: 8px;
+  padding: 0rem 1.25rem;
+  font-size: 0.875rem;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+  background-color: var(--c-background-secondary);
+  margin: 0px 20px;
+  border-radius: 8px;
 
-	&.active {
-		--extended-height: 0px;
-		max-height: var(--extended-height);
-	}
-
+  &.active {
+    --extended-height: 0px;
+    max-height: var(--extended-height);
+  }
 }
 
 .cardBody {
-	padding: 0.5rem 1.25rem;
-	font-size: 0.875rem;
-	overflow-wrap: anywhere;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
 }
-  
-.cardFooter {
-	margin-top: auto;
-	padding: 0.5rem 1.25rem;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	border-top: var(--b-thin) var(--c-b-neutral);
-	
-    a {
-		color: var(--c-fg-theme);
-		font-weight: 500;
-		font-size: 0.875rem;
 
-        &:hover {
-            color: var(--c-primary);
-            text-decoration: none;
-        }
-	}
+.cardFooter {
+  margin-top: auto;
+  padding: 0.5rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: var(--b-thin) var(--c-b-neutral);
+
+  a {
+    color: var(--c-fg-theme);
+    font-weight: 500;
+    font-size: 0.875rem;
+
+    &:hover {
+      color: var(--c-primary);
+      text-decoration: none;
+    }
+  }
 }
 
 .icon {
-    width: 32px;
-    margin-right: 0.5rem;
+  width: 32px;
+  margin-right: 0.5rem;
 
-    > svg {
-        width: 30px;
-    }
+  > svg {
+    width: 30px;
+  }
 }
 
 .scrollable {
-	padding: $sm $xs;
-	max-height: 400px;
-	overflow-y: scroll;
-	overflow-x: hidden;
+  padding: $sm $xs;
+  max-height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
-	&::-webkit-scrollbar {
-        width: $sm;
-        height: $sm;
-    }
+  &::-webkit-scrollbar {
+    width: $sm;
+    height: $sm;
+  }
 
-    &::-webkit-scrollbar-track {
-        background: transparent;
-    }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--c-bg-theme-dim);
-        border-radius: $sm;
-        border: $xs solid var(--c-bg-theme-dim);
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--c-bg-theme-dim);
+    border-radius: $sm;
+    border: $xs solid var(--c-bg-theme-dim);
+  }
 
-	&::-webkit-scrollbar-track-piece {
-		background-color: transparent;
-	}
+  &::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
 }
