@@ -14,3 +14,5 @@ export const formatDate = (input: Date | string): string => {
     day: "numeric",
   });
 };
+
+export const VERSION: string = "0.9.0";
