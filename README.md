@@ -5,7 +5,7 @@ Agwagram is a web interface that allows users to analyze online accounts using t
 
 ## Development
 
-Current version: **0.9.0**
+Current version: **0.9.1**
 
 ### Installation & Local Operation
 Agwagram is a [Dockerized](https://www.docker.com/) web application containing two components, a frontend interface (Agwagram) built with [React](https://react.dev/) and a backend BLOC Services API built with [Django](https://www.djangoproject.com/). The frontend is a React + [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) project. It is most stable when ran using Docker, but can also be operated without the use of Docker for testing purposes. The project contains a `Makefile` with commands for the setup and usage of the development environment.
