@@ -5,11 +5,12 @@ services:
     env_file:
       - ./secrets.env
       - ./development.env
-    build: .
+    build:
+      context: ./bloc
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT}"
     container_name: bloc
     volumes:
-      - .:/bloc
+      - ./bloc:/bloc
     ports:
       - "${PORT}:${PORT}"
 
