@@ -15,4 +15,4 @@ export const formatDate = (input: Date | string): string => {
   });
 };
 
-export const VERSION: string = "1.0.0";
+export const VERSION: string = "1.0.1";
