@@ -1,12 +1,12 @@
 # Agwagram
 
 ## About
-Agwagram is being developed for Dr. Nwala as a web interface for his novel BLOC methodology for analyzing online accounts to discover coordinated actions, bots, and other behaviours. This tool is specifically designed for the analysis of user accounts on [Twitter](https://www.twitter.com). More information about the underlying BLOC algorithm can be found on his [BLOC GitHub](https://github.com/anwala/bloc).
+Agwagram is a web interface that allows users to analyze online accounts using the novel BLOC algorithm to explore behaviours and signs of coordinated actions, bots, and other vectors for spreading disinformation. This tool is specifically designed for the analysis of user accounts on [X (formerly) Twitter](https://www.twitter.com). More information about the underlying BLOC algorithm can be found on Dr. Alexander Nwala's [BLOC GitHub](https://github.com/anwala/bloc).
 
 ## Development
 
 ### Installation & Local Operation
-Agwagram is a [Dockerized](https://www.docker.com/) web application containing two components, a frontend interface (Agwagram) built with [React](https://react.dev/) and a backend BLOC Services API built with [Django](https://www.djangoproject.com/). It is most stable when ran using Docker, but can also be operated without the use of Docker for testing purposes. The project contains a `Makefile` with commands for the setup and usage of the development environment.
+Agwagram is a [Dockerized](https://www.docker.com/) web application containing two components, a frontend interface (Agwagram) built with [React](https://react.dev/) and a backend BLOC Services API built with [Django](https://www.djangoproject.com/). The frontend is a React + [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) project. It is most stable when ran using Docker, but can also be operated without the use of Docker for testing purposes. The project contains a `Makefile` with commands for the setup and usage of the development environment.
 
 #### With Docker
 To start, you will need to have [Docker](https://www.docker.com/) installed and running locally. Clone the website locally with:
@@ -57,7 +57,7 @@ The [Flake8](https://flake8.pycqa.org/en/latest/) code formatter is used for BLO
 make lint_backend
 ```
 
-A combination of ESLint and Prettier is used for linting and formatting the Agwagram codebase. It can also be invoked using the Makefile:
+A combination of [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) is used for linting and formatting the Agwagram codebase. It can also be invoked using the Makefile:
 
 ```bash
 make lint_frontend
