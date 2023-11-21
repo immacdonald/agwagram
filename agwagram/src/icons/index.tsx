@@ -1,4 +1,5 @@
 
+// Icons sourced from https://fonts.google.com/icons using: weight 400, grade 0, optical size 24px, mix of filled and unfilled
 import BarChartSVG from './bar_chart.svg?react';
 import ChartSVG from './chart.svg?react';
 import DarkModeSVG from './dark_mode.svg?react';
