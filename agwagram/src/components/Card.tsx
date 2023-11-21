@@ -1,8 +1,10 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { Fragment, ReactNode, useMemo } from 'react';
 import style from './Card.module.scss';
 import classNames from 'classnames';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as GraphTooltip, Legend, ResponsiveContainer } from 'recharts';
-import { SymbolTooltip, DefinitionTooltip } from './BLOCComponents';
+import { SymbolTooltip, DefinitionTooltip, GetDefinition } from './BLOCComponents';
+import HoverMark from './HoverMark';
+import { formatDate } from '../Global';
 
 interface CardProps {
     title: string;
@@ -56,9 +58,11 @@ export const LanguageCard : React.FC<LanguageCardProps> = ({ title, icon, bloc }
     const chars = bloc.split('');
     return (
         <Card title={title} icon={icon} size={CardSize.Normal}>
-            {chars.map((char, index) => (
-                <DefinitionTooltip word={char}/>
-            ))}
+            <div className={style.scrollable}>
+                {chars.length > 0 ? (chars.map((char) => (
+                    <DefinitionTooltip word={char}/>
+                ))) : (<p>No analysis available.</p>)}
+            </div>
         </Card>
     );
 }
@@ -78,7 +82,7 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
         let sorted = [...(report.change_events)];
         if (sortedField == 'sim') {
             sorted.sort((a, b) => a.sim - b.sim);
-            sorted.reverse();
+            //sorted.reverse();
         } else if (sortedField == 'time') {
             sorted.sort((a, b) => {
             if (a.first_segment.local_dates[0] < b.first_segment.local_dates[0]) {
@@ -102,8 +106,8 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                     <td>{change_event.change_profile.word}</td>
                     {showPause ? (<td>{change_event.change_profile.pause}</td>) : false}
                     <td>{change_event.change_profile.activity}</td>
-                    <td>{change_event.first_segment.local_dates[0]}</td>
-                    <td>{change_event.second_segment.local_dates[0]}</td>
+                    <td>{formatDate(change_event.first_segment.local_dates[0])}</td>
+                    <td>{formatDate(change_event.second_segment.local_dates[0])}</td>
                 </tr>
             )
         }))
@@ -130,8 +134,8 @@ export const ChangeCard : React.FC<ChangeCardProps> = ({ title, icon, report }: 
                             <th style={{"width": "70px"}}>Word</th>
                             {showPause ? (<th style={{"width": "70px"}}>Pause</th>) : false}
                             <th style={{"width": "70px"}}>Activity</th>
-                            <th><button type="button" onClick={() => setSortedField('time')}>Start Date{sortedField == 'time' ? ' >' : false}</button></th>
-                            <th style={{"width": "90px"}}>End Date</th>
+                            <th style={{"width": "170px"}}><button type="button" onClick={() => setSortedField('time')}>Start Date{sortedField == 'time' ? ' >' : false}</button></th>
+                            <th style={{"width": "170px"}}>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -152,12 +156,9 @@ interface ChangeProfileCardProps {
 export const ChangeProfileCard : React.FC<ChangeProfileCardProps> = ({ title, icon, reports }: ChangeProfileCardProps) => {
     const changeRate = [
         {
-            Name: 'Action',
-            Rate: reports['action']['change_profile']['change_rate']
-        },
-        {
-            Name: 'Syntactic',
-            Rate: reports['content_syntactic']['change_profile']['change_rate']
+            Name: 'Change Rate',
+            Content: reports['action']['change_profile']['change_rate'],
+            Syntactic: reports['content_syntactic']['change_profile']['change_rate']
         }
     ];
     
@@ -198,7 +199,8 @@ export const ChangeProfileCard : React.FC<ChangeProfileCardProps> = ({ title, ic
                         <YAxis />
                         <GraphTooltip />
                         <Legend />
-                        <Bar dataKey="Rate" fill="#143aa2" />
+                        <Bar dataKey="Content" fill="#143aa2" />
+                        <Bar dataKey="Syntactic" fill="#a31444" />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
@@ -222,8 +224,8 @@ export const ChangeProfileCard : React.FC<ChangeProfileCardProps> = ({ title, ic
                         <GraphTooltip />
                         <Legend />
                         <Bar dataKey="Word" fill="#143aa2" />
-                        <Bar dataKey="Pause" fill="#2159c0" />
-                        <Bar dataKey="Activity" fill="#6ea9fc" />
+                        <Bar dataKey="Pause" fill="#a31444" />
+                        <Bar dataKey="Activity" fill="#a37a14" />
                         </BarChart>
                     </ResponsiveContainer>
                     </div>
@@ -320,41 +322,27 @@ interface LinkedDataCardProps {
 }
 
 export const LinkedDataCard : React.FC<LinkedDataCardProps> = ({ title, icon, data }: LinkedDataCardProps) => {
-    console.log(data);
-    //const chars = data.split('');
-
     return (
-        <Card title={title} icon={icon} size={CardSize.Normal}>
-            {/*{chars.map((char : string, index : number) => (
-                <DefinitionTooltip word={char}/>
-            ))}*/}
+        <Card title={title} icon={icon} size={CardSize.Wide}>
+            <div className={style.scrollable}>
+                {data.map((datum : any, index : number) => {
+                    let titleString = `Tweeted: ${datum.created_at}`;
+                    if (datum.content_syntactic != '') {
+                        titleString += `\nContent: ${GetDefinition(datum.content_syntactic)}`;
+                    }
+                    if (datum.content_semantic_entity != '') {
+                        titleString += `\nSubject: ${GetDefinition(datum.content_semantic_entity)}`;
+                    }
+
+                    return (
+                        <Fragment key={index}>
+                            <HoverMark data-title={titleString} text={GetDefinition(datum['action'])} />
+                            {index !== data.length - 1 && ", "}
+                        </Fragment>
+                    )
+                })}
+            </div>
         </Card>
     );
-
-    /*
-        {% for char in account.bloc_action %}
-                    {% if char|get_type != 'Action' %}
-                        {{ char|get_description }}
-                    {% else %}
-                        {% with count=account.counter.count %}
-                        {% with data=account.linked_data|index:count %}
-                            {% if not forloop.first %}&nbsp;{% endif %}
-                            <div class="hoverable-text"><strong>{{ char|get_description }}</strong>
-                                <span class="hoverable-tooltip large">
-                                    Tweeted: {{ data.created_at }} <br>
-                                    Content: {{ data.content_syntactic|get_description }} 
-                                    {% if data.content_semantic_entity %}
-                                        <br>
-                                        Subject: {{ data.content_semantic_entity|get_description }} 
-                                    {% endif %}
-                                </span>
-                            </div>
-                            {{ account.counter.increment }}
-                        {% endwith %}
-                        {% endwith %}
-                    {% endif %}
-                    {% if not forloop.last %},&nbsp;{% endif %}
-                {% endfor %}
-    */
 }
 

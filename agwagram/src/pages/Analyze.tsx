@@ -4,8 +4,7 @@ import SearchInput from '../components/SearchInput';
 import FileUploadPortal from '../components/FileUploadPortal';
 import { useNavigate } from 'react-router-dom';
 import { AnalysisContext } from '../contexts/AnalysisContext';
-
-const API_URL : string = "http://localhost:8080";
+import { API_URL } from '../Global';
 
 const Analyze: React.FC = () => {
     const navigate = useNavigate();
@@ -29,7 +28,7 @@ const Analyze: React.FC = () => {
     
     const submitFiles = (files : File[]) => {
         console.log(files);
-        uploadFiles(`${API_URL}/api/v1/analyze/file`, files).then((data) => {
+        uploadFiles(`${API_URL}/analyze/file`, files).then((data) => {
             setResults(data)
             navigate("/analyze/results");
         });
@@ -43,7 +42,7 @@ const Analyze: React.FC = () => {
       }
 
     const searchUsername = (input : string) => {
-        analyzeUsername(`${API_URL}/api/v1/analyze/user`, input).then((data) => {
+        analyzeUsername(`${API_URL}/analyze/user`, input).then((data) => {
             setResults(data)
             navigate("/analyze/results");
         });

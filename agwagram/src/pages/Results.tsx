@@ -2,9 +2,10 @@ import React, { useState, useContext } from 'react';
 import style from './Results.module.scss'
 import { AnalysisContext } from '../contexts/AnalysisContext';
 import BarChart from '../images/icons/bar_chart.svg?react';
-import Card, { ChangeCard, ChangeProfileCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard } from '../components/Card';
+import Card, { ChangeCard, ChangeProfileCard, LanguageCard, TopWordsCard, TopWordsCatergoryCard, LinkedDataCard, CardSize } from '../components/Card';
 import { Link } from 'react-router-dom';
 import Toggle from '../components/Toggle';
+import { formatDate } from '../Global';
 
 const Results: React.FC = () => {
     const { results, setResults } = useContext(AnalysisContext);
@@ -21,8 +22,18 @@ const Results: React.FC = () => {
     }
 
     const getAccountAnalysis = (account: any) => {
+        console.log(account);
         return (
             <>
+                <Card
+                    title="Account Overview"
+                    icon={<BarChart/>}
+                    size={CardSize.Full}
+                >
+                    <h2>Analysis of @{account.account_username}</h2>
+                    <p>Results generated using {account.tweet_count} tweets from {formatDate(account.first_tweet_date)} to {formatDate(account.last_tweet_date)}.</p>
+                    {account.elapsed_time > 0 && <p>Analysis process took {account.elapsed_time} seconds to complete.</p>}
+                </Card>
                 <TopWordsCard
                     title="Top 100 Behaviors"
                     subtitle="Displays the top 100 (or less) BLOC words."
@@ -46,6 +57,7 @@ const Results: React.FC = () => {
                         <LanguageCard title = "Semantic Entity" icon={<BarChart/>} bloc={account.bloc_semantic_entity}/>
                         <LanguageCard title = "Semantic Sentiment" icon={<BarChart/>} bloc={account.bloc_semantic_sentiment}/>
                         <LanguageCard title = "Change" icon={<BarChart/>} bloc={account.bloc_change}/>
+                        <LinkedDataCard title = "LinkedData" icon={<BarChart/>} data={account.linked_data}/>
                     </>
                 ) : false}
             </>

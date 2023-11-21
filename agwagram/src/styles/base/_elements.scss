@@ -146,6 +146,7 @@ mark {
 		top: -100%;
         left: 50%;
         transform: translate(-50%, -$md);
+		width: max-content;
         min-width: $xxl;
 		padding: $xs $md;
 		border-radius: $smRadius;
@@ -154,7 +155,7 @@ mark {
 		color: var(--c-fg-neutral-inverse);
         font-size: $mdFont;
         font-weight: 500;
-        white-space: nowrap;
+        white-space: pre-line;
         z-index: 100;
         opacity: 0;
         animation: 0s ease-out 1s 1 appear;
