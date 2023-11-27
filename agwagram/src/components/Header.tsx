@@ -15,13 +15,6 @@ function Header() {
           <img src={Logo} />
         </Link>
         <nav className={style.navigation}>
-          <DynamicLink link="/" label="Home" />
-          <DynamicLink
-            link="/analyze"
-            label="Analyze"
-            secondaryLink="/analyze/results"
-          />
-          <DynamicLink link="/methodology" label="Methodology" />
         </nav>
         <div>
           <button onClick={() => setTheme()}>Theme</button>

@@ -13,10 +13,12 @@
   width: 100%;
   flex: 1 0 auto;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-  > div {
-    @extend .full;
-    padding: $lg 0;
+  > section {
+    width: 100%;
+    padding: $xl 10%;
+    margin: 0 0 $md;
   }
 }

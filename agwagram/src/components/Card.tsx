@@ -53,7 +53,7 @@ const Card: React.FC<CardProps> = ({
       </div>
       <div className={style.cardBody}>{children}</div>
       <div className={style.cardFooter}>
-        <a href="/methodology">More Details</a>
+        {/*<a href="/methodology">More Details</a>*/}
       </div>
     </article>
   );
