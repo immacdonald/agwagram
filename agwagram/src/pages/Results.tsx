@@ -19,6 +19,7 @@ import Card, {
   TopWordsCard,
   TopWordsCatergoryCard,
   LinkedDataCard,
+  GroupChangeCard,
   CardSize,
 } from "../components/Card";
 import { Link } from "react-router-dom";
@@ -282,6 +283,7 @@ const Results: React.FC = () => {
                       </tbody>
                     </table>
                   </Card>
+                  <GroupChangeCard title="Comparative Change Between Accounts" icon={<Chart />} reports={result.account_blocs}/>
                 </>
               )}
             </div>

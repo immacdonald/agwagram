@@ -2,6 +2,8 @@ import React, { Fragment, ReactNode, useMemo } from "react";
 import style from "./Card.module.scss";
 import classNames from "classnames";
 import {
+  LineChart,
+  Line,
   BarChart,
   Bar,
   XAxis,
@@ -17,7 +19,7 @@ import {
   GetDefinition,
 } from "./BLOCComponents";
 import HoverMark from "./HoverMark";
-import { formatDate } from "../Global";
+import { formatDate, graphColor } from "../Global";
 
 interface CardProps {
   title: string;
@@ -106,12 +108,28 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     if (sortedField == "sim") {
       sorted.sort((a, b) => a.sim - b.sim);
       //sorted.reverse();
-    } else if (sortedField == "time") {
+    } else if (sortedField == "word") {
+      sorted.sort((a, b) => a.change_profile.word - b.change_profile.word);
+    } else if (sortedField == "pause") {
+      sorted.sort((a, b) => a.change_profile.pause - b.change_profile.pause);
+    } else if (sortedField == "activity") {
+      sorted.sort((a, b) => a.change_profile.activity - b.change_profile.activity);
+    } else if (sortedField == "start") {
       sorted.sort((a, b) => {
         if (a.first_segment.local_dates[0] < b.first_segment.local_dates[0]) {
           return -1;
         }
         if (a.first_segment.local_dates[0] > b.first_segment.local_dates[0]) {
+          return 1;
+        }
+        return 0;
+      });
+    } else if (sortedField == "end") {
+      sorted.sort((a, b) => {
+        if (a.second_segment.local_dates[0] < b.second_segment.local_dates[0]) {
+          return -1;
+        }
+        if (a.second_segment.local_dates[0] > b.second_segment.local_dates[0]) {
           return 1;
         }
         return 0;
@@ -140,6 +158,14 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     });
   }, [sortedField]);
 
+  const changeChronology : any[] = [];
+  report.change_events.forEach((event : any) => { 
+    changeChronology.push({
+      "Date": event.first_segment.local_dates[0],
+      "Similarity": +event.sim.toFixed(2)
+    })
+  })
+
   return (
     <Card title={title} icon={icon} size={CardSize.Full}>
       <p>
@@ -153,6 +179,31 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
         {`Activity: ${report.change_profile.average_change.activity}`}
       </p>
       <hr />
+      <div style={{ width: "100%", height: "400px" }}>
+          <h3>Change Profile</h3>
+          <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          width={500}
+          height={300}
+          data={changeChronology}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="Date" tickFormatter={formatDate}/>
+          <YAxis />
+          <GraphTooltip />
+          <Legend />
+          <Line type="monotone" dataKey="Similarity" stroke={graphColor(0)} dot={false}/>
+        </LineChart>
+      </ResponsiveContainer>
+      </div>
+      <br />
+      <hr />
       <div className={style.scrollable}>
         <table>
           <thead>
@@ -164,15 +215,31 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
                   Similarity{sortedField == "sim" ? " >" : false}
                 </button>
               </th>
-              <th style={{ width: "70px" }}>Word</th>
-              {showPause ? <th style={{ width: "70px" }}>Pause</th> : false}
-              <th style={{ width: "70px" }}>Activity</th>
-              <th style={{ width: "170px" }}>
-                <button type="button" onClick={() => setSortedField("time")}>
-                  Start Date{sortedField == "time" ? " >" : false}
+              <th style={{ width: "70px" }}>
+                <button type="button" onClick={() => setSortedField("word")}>
+                  Word{sortedField == "word" ? " >" : false}
                 </button>
               </th>
-              <th style={{ width: "170px" }}>End Date</th>
+              {showPause ? <th style={{ width: "70px" }}>
+              <button type="button" onClick={() => setSortedField("pause")}>
+                  Pause{sortedField == "pause" ? " >" : false}
+                </button>
+              </th> : false}
+              <th style={{ width: "70px" }}>
+              <button type="button" onClick={() => setSortedField("activity")}>
+                  Activity{sortedField == "activity" ? " >" : false}
+                </button>
+              </th>
+              <th style={{ width: "170px" }}>
+                <button type="button" onClick={() => setSortedField("start")}>
+                  Start Date{sortedField == "start" ? " >" : false}
+                </button>
+              </th>
+              <th style={{ width: "170px" }}>
+                <button type="button" onClick={() => setSortedField("end")}>
+                  End Date{sortedField == "end" ? " >" : false}
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>{tableContent}</tbody>
@@ -244,8 +311,8 @@ export const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({
               <YAxis />
               <GraphTooltip />
               <Legend />
-              <Bar dataKey="Content" fill="#143aa2" />
-              <Bar dataKey="Syntactic" fill="#a31444" />
+              <Bar dataKey="Content" fill={graphColor(0)} />
+              <Bar dataKey="Syntactic" fill={graphColor(1)} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -268,9 +335,9 @@ export const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({
               <YAxis />
               <GraphTooltip />
               <Legend />
-              <Bar dataKey="Word" fill="#143aa2" />
-              <Bar dataKey="Pause" fill="#a31444" />
-              <Bar dataKey="Activity" fill="#a37a14" />
+              <Bar dataKey="Word" fill={graphColor(0)} />
+              <Bar dataKey="Pause" fill={graphColor(1)} />
+              <Bar dataKey="Activity" fill={graphColor(2)} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -416,6 +483,58 @@ export const LinkedDataCard: React.FC<LinkedDataCardProps> = ({
             </Fragment>
           );
         })}
+      </div>
+    </Card>
+  );
+};
+
+interface GroupChangeCardProps {
+  title: string;
+  icon: ReactNode;
+  reports: any;
+}
+
+export const GroupChangeCard: React.FC<GroupChangeCardProps> = ({
+  title,
+  icon,
+  reports,
+}) => {
+  const changeChronology : any[] = [];
+  reports.forEach((report : any ) => {
+    report.change_report.action.change_events.forEach((event : any) => { 
+      changeChronology.push({
+        "Date": event.first_segment.local_dates[0],
+        [report.account_username]: +event.sim.toFixed(2)
+      })
+    })
+  });
+
+  return (
+    <Card title={title} icon={icon} size={CardSize.Full}>
+      <div style={{ width: "100%", height: "400px" }}>
+          <h3>Similarity Over Time</h3>
+          <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          width={500}
+          height={300}
+          data={changeChronology}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="Date" tickFormatter={formatDate}/>
+          <YAxis />
+          <GraphTooltip />
+          <Legend />
+          {reports.map((report : any, i : number) => {
+             return <Line type="monotone" dataKey={report.account_username} stroke={graphColor(i)} dot={false} key={i}/>
+          })}
+        </LineChart>
+      </ResponsiveContainer>
       </div>
     </Card>
   );

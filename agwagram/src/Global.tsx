@@ -15,4 +15,14 @@ export const formatDate = (input: Date | string): string => {
   });
 };
 
+export const GRAPH_COLORS = [
+  "#143aa2",
+  "#a31444",
+  "#a37a14"
+]
+
+export const graphColor = (index : number) : string => {
+  return GRAPH_COLORS[index % GRAPH_COLORS.length];
+}
+
 export const VERSION: string = "1.0.1";

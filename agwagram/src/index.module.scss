@@ -40,9 +40,10 @@ body {
   width: 100vw;
   height: 100%;
   font-family: "proxima-nova", sans-serif;
-  font-size: $mdFont;
+  font-size: $lgFont;
   line-height: 1.5;
   color: var(--c-fg-theme);
   background-color: var(--c-bg-theme);
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }

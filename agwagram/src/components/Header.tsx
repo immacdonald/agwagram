@@ -1,4 +1,3 @@
-import DynamicLink from "./DynamicLink";
 import style from "./Header.module.scss";
 import Logo from "../images/agwagram.png";
 import { Link } from "react-router-dom";

@@ -1,4 +1,3 @@
-import Results from "./Results";
 import Analyze from "./Analyze";
 
 function Home() {

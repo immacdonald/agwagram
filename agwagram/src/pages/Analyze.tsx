@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import style from "./Analyze.module.scss";
 import SearchInput from "../components/SearchInput";
 import FileUploadPortal from "../components/FileUploadPortal";
-import { useNavigate } from "react-router-dom";
 import { AnalysisContext } from "../contexts/AnalysisContext";
 import { API_URL } from "../Global";
 import Results from "./Results";
 
 const Analyze: React.FC = () => {
-  const navigate = useNavigate();
   const { results, setResults } = useContext(AnalysisContext);
   const [displayResults, setDisplayResults] = useState<boolean>(false);
 
