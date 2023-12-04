@@ -32,6 +32,14 @@ hr {
   margin: $md 0;
 }
 
+p {
+  line-height: 2em;
+
+  &:not(:last-child) {
+    margin: 0 0 2em 0;
+  }
+}
+
 // Links
 a {
   text-decoration: none;

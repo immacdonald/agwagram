@@ -19,6 +19,7 @@ import Card, {
   TopWordsCard,
   TopWordsCatergoryCard,
   LinkedDataCard,
+  GroupChangeCard,
   CardSize,
 } from "../components/Card";
 import { Link } from "react-router-dom";
@@ -144,7 +145,7 @@ const Results: React.FC = () => {
                 (<em>{account["account_name"]}</em>)
               </h1>
               <Link
-                to="/analyze"
+                to="/"
                 onClick={returnToAnalysis}
                 className={style.analyzeAnother}
               >
@@ -180,7 +181,7 @@ const Results: React.FC = () => {
             <div>
               <h1>Group Analysis</h1>
               <Link
-                to="/analyze"
+                to="/"
                 onClick={returnToAnalysis}
                 className={style.analyzeAnother}
               >
@@ -282,6 +283,7 @@ const Results: React.FC = () => {
                       </tbody>
                     </table>
                   </Card>
+                  <GroupChangeCard title="Comparative Change Between Accounts" icon={<Chart />} reports={result.account_blocs}/>
                 </>
               )}
             </div>
@@ -291,14 +293,14 @@ const Results: React.FC = () => {
     }
   } else {
     console.log("Failed generation");
-    if (results["result"]) {
+    if (results && results["result"]) {
       const result = results.result;
       return (
         <div className={style.contentHeader}>
           <div>
             <h1>Analysis Failed</h1>
             <Link
-              to="/analyze"
+              to="/"
               onClick={returnToAnalysis}
               className={style.analyzeAnother}
             >
@@ -340,14 +342,14 @@ const Results: React.FC = () => {
           <div>
             <h1>Analysis Failed</h1>
             <Link
-              to="/analyze"
+              to="/"
               onClick={returnToAnalysis}
               className={style.analyzeAnother}
             >
               &#8592; Analyze Another
             </Link>
             <p>
-              Unable to analyze account due to <em>{results.error}</em>.
+              Unable to analyze account due to an error.
             </p>
           </div>
         </div>

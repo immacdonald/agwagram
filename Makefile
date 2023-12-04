@@ -27,10 +27,7 @@ secret_file:
 
 # Makes the virtual environment for local execution
 virtualenv:
-	cd bloc && python3 -m venv venv && . ./venv/bin/activate && pip3 install --upgrade pip && pip3 install -r requirements.txt
-
-remove_virtualenv:
-	rm -rf venv
+	cd bloc && rm -rf ./venv && python3 -m venv venv && . ./venv/bin/activate && pip3 install --upgrade pip && pip3 install -r requirements.txt
 
 # Runs the frontend locally (no Docker)
 frontend:
