@@ -166,6 +166,14 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     })
   })
 
+  const sortButton = (text : string, code : string) : ReactNode => {
+    return (
+      <button type="button" className={style.clearButton} onClick={() => setSortedField(code)}>
+          {text}{sortedField == code ? " >" : false}
+      </button>
+    )
+  }
+
   return (
     <Card title={title} icon={icon} size={CardSize.Full}>
       <p>
@@ -210,36 +218,12 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
             <tr>
               <th style={{ width: "180px" }}>Start Behavior</th>
               <th style={{ width: "180px" }}>End Behavior</th>
-              <th>
-                <button type="button" onClick={() => setSortedField("sim")}>
-                  Similarity{sortedField == "sim" ? " >" : false}
-                </button>
-              </th>
-              <th style={{ width: "70px" }}>
-                <button type="button" onClick={() => setSortedField("word")}>
-                  Word{sortedField == "word" ? " >" : false}
-                </button>
-              </th>
-              {showPause ? <th style={{ width: "70px" }}>
-              <button type="button" onClick={() => setSortedField("pause")}>
-                  Pause{sortedField == "pause" ? " >" : false}
-                </button>
-              </th> : false}
-              <th style={{ width: "70px" }}>
-              <button type="button" onClick={() => setSortedField("activity")}>
-                  Activity{sortedField == "activity" ? " >" : false}
-                </button>
-              </th>
-              <th style={{ width: "170px" }}>
-                <button type="button" onClick={() => setSortedField("start")}>
-                  Start Date{sortedField == "start" ? " >" : false}
-                </button>
-              </th>
-              <th style={{ width: "170px" }}>
-                <button type="button" onClick={() => setSortedField("end")}>
-                  End Date{sortedField == "end" ? " >" : false}
-                </button>
-              </th>
+              <th>{sortButton("Similarity", "sim")}</th>
+              <th style={{ width: "70px" }}>{sortButton("Word", "word")}</th>
+              {showPause ? <th style={{ width: "70px" }}>{sortButton("Pause", "pause")}</th> : false}
+              <th style={{ width: "90px" }}>{sortButton("Activity", "activity")}</th>
+              <th style={{ width: "170px" }}>{sortButton("Start Date", "start")}</th>
+              <th style={{ width: "170px" }}>{sortButton("End Date", "end")}</th>
             </tr>
           </thead>
           <tbody>{tableContent}</tbody>

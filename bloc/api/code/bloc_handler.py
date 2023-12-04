@@ -16,7 +16,6 @@ from .file_handling import *
 
 TOP_WORD_LIMIT = 100
 
-
 def verify_user_exists(user_list):
     oauth2 = osometweet.OAuth2(bearer_token=settings.BEARER_TOKEN, manage_rate_limits=False)
     ot = osometweet.OsomeTweet(oauth2)
@@ -331,22 +330,22 @@ def link_change_report(raw_report):
             del(change_event['fst_doc_seg_id'])
             del(change_event['sec_doc_seg_id'])
             # Round change profile
-            change_event['change_profile']['pause'] = round_format(change_event["change_profile"]["pause"])
-            change_event['change_profile']['word'] = round_format(change_event["change_profile"]["word"])
-            change_event['change_profile']['activity'] = round_format(change_event["change_profile"]["activity"])
+            change_event['change_profile']['pause'] = round_format(change_event["change_profile"]["pause"] / 100)
+            change_event['change_profile']['word'] = round_format(change_event["change_profile"]["word"] / 100)
+            change_event['change_profile']['activity'] = round_format(change_event["change_profile"]["activity"] / 100)
             reports.append(change_event)
 
         report[alphabet]['change_events'] = reports
         report[alphabet]['change_profile'] = {
             'change_rate': round_format(raw_report['change_report']['change_rates'][alphabet]),
             'average_change': {
-                'word': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['word']),
-                'pause': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['pause']),
-                'activity': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['activity']),
+                'word': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['word'] / 100),
+                'pause': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['pause'] / 100),
+                'activity': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['activity'] / 100),
             }
         }
 
     return report
 
 def round_format(value):
-    return f'{float(value):.1%}'[:-1]
+    return f'{float(value):.2%}'[:-1]
