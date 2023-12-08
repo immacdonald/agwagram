@@ -1,4 +1,4 @@
-const API_BASE: string = window.location.origin; //"http://localhost:8080";
+const API_BASE: string = window.location.origin == "http://localhost:8000" ? "http://localhost:8080" : window.location.origin
 export const API_URL: string = `${API_BASE}/api/v1`;
 
 export const formatDate = (input: Date | string): string => {

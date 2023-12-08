@@ -8,7 +8,6 @@ RUN npm ci --silent
 COPY ./agwagram/ ./
 RUN npm run build
 
-# The second stage
 # Copy React static files and start nginx
 FROM nginx:stable-alpine
 COPY --from=build /app/frontend/dist /usr/share/nginx/html

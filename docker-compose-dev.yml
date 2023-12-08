@@ -1,24 +1,33 @@
 version: '3'
 
 services:
-  backend:
+  db:
+    image: mysql:8.2
+    restart: always
     env_file:
-      - ./secrets.env
+      - docker/.env
+    ports:
+      - "3307:3306"
+  backend:
+    restart: unless-stopped
+    env_file:
       - ./development.env
+      - docker/.env
     build:
       context: ./bloc
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT}"
+    entrypoint: /bloc/dev-entrypoint.sh
     container_name: bloc
     volumes:
       - ./bloc:/bloc
     ports:
       - "${PORT}:${PORT}"
-
+    depends_on:
+      - db
   frontend:
     env_file:
       - ./development.env
     build:
-      context: ./agwagram 
+      context: ./agwagram
     command: sh -c "npm rebuild esbuild && npm run dev"
     container_name: agwagram
     volumes:
@@ -28,5 +37,3 @@ services:
     stdin_open: true
     depends_on:
       - backend
-
-      
