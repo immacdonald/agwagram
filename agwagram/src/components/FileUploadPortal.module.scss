@@ -11,3 +11,11 @@
   font-size: $xsFont;
   margin-top: $sm;
 }
+
+.clearButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-left: $sm;
+}
