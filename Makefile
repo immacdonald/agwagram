@@ -10,12 +10,12 @@ endef
 build:
 	echo 'Building BLOC website Docker image'
 	$(call setup_env, development)
-	docker-compose build --no-cache
+	docker-compose -f docker-compose-dev.yml build --no-cache
 
 run:
 	echo 'Running BLOC website'
 	$(call setup_env, development)
-	docker-compose up
+	docker-compose docker-compose-dev.yml up
 
 docker:
 	$(MAKE) build

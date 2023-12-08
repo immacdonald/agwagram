@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  backend:
+    env_file:
+      - ./secrets.env
+      - ./development.env
+    build:
+      context: ./bloc
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT}"
+    container_name: bloc
+    volumes:
+      - ./bloc:/bloc
+    ports:
+      - "${PORT}:${PORT}"
+
+  frontend:
+    env_file:
+      - ./development.env
+    build:
+      context: ./agwagram 
+    command: sh -c "npm rebuild esbuild && npm run dev"
+    container_name: agwagram
+    volumes:
+      - ./agwagram:/agwagram
+    ports:
+      - "${VITE_PORT}:${VITE_PORT}"
+    stdin_open: true
+    depends_on:
+      - backend
+
+      
