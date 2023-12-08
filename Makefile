@@ -44,6 +44,13 @@ run_local:
 	$(call setup_env, secrets)
 	$(MAKE) backend
 	$(MAKE) frontend
+
+# Creates a built version of frontend/backend using dev settings
+qa:
+	docker-compose up --build
+
+prod:
+	docker-compose -f docker-compose-prod.yml up --build
 	
 
 # Backend flake8 linting
