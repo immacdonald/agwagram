@@ -1,4 +1,4 @@
-const API_BASE: string = "http://localhost:8080";
+const API_BASE: string = window.location.origin == "http://localhost:8000" ? "http://localhost:8080" : window.location.origin
 export const API_URL: string = `${API_BASE}/api/v1`;
 
 export const formatDate = (input: Date | string): string => {
@@ -25,4 +25,4 @@ export const graphColor = (index : number) : string => {
   return GRAPH_COLORS[index % GRAPH_COLORS.length];
 }
 
-export const VERSION: string = "1.1.0";
+export const VERSION: string = "1.2.0";
