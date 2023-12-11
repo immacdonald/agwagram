@@ -162,7 +162,10 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
   report.change_events.forEach((event : any) => { 
     changeChronology.push({
       "Date": event.first_segment.local_dates[0],
-      "Similarity": +event.sim.toFixed(2)
+      "Similarity": +event.sim.toFixed(2),
+      "Word": event.change_profile.word,
+      "Pause": event.change_profile.pause,
+      "Activity": event.change_profile.activity
     })
   })
 
@@ -206,7 +209,10 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
           <YAxis />
           <GraphTooltip />
           <Legend />
-          <Line type="monotone" dataKey="Similarity" stroke={graphColor(0)} dot={false}/>
+          <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false}/>
+          <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false}/>
+          {showPause ? <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false}/> : false}
+          <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false}/>
         </LineChart>
       </ResponsiveContainer>
       </div>
@@ -520,6 +526,7 @@ export const GroupChangeCard: React.FC<GroupChangeCardProps> = ({
         </LineChart>
       </ResponsiveContainer>
       </div>
+      <br />
     </Card>
   );
 };

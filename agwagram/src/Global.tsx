@@ -18,11 +18,12 @@ export const formatDate = (input: Date | string): string => {
 export const GRAPH_COLORS = [
   "#143aa2",
   "#a31444",
-  "#a37a14"
+  "#a37a14",
+  '#11a2a3'
 ]
 
 export const graphColor = (index : number) : string => {
   return GRAPH_COLORS[index % GRAPH_COLORS.length];
 }
 
-export const VERSION: string = "1.2.0";
+export const VERSION: string = "1.3.0";
