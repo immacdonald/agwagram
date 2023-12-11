@@ -8,6 +8,7 @@ django-appconf==1.0.5
 django-cors-headers==4.3.0
 djangorestframework==3.14
 flake8==6.0.0
+gunicorn==21.2.0
 idna==3.4
 joblib==1.2.0
 nltk==3.8.1
@@ -30,3 +31,4 @@ tqdm==4.65.0
 twitterbloc @ git+https://github.com/anwala/bloc@b12377b
 typing_extensions==4.6.3
 urllib3==1.26.18
+whitenoise==6.6.0
