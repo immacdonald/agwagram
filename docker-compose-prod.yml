@@ -25,15 +25,16 @@ services:
   nginx:
     restart: unless-stopped
     build:
-      context: .
-      dockerfile: ./docker/nginx/Dockerfile
+        context: .
+        dockerfile: ./docker/nginx/Dockerfile
     ports:
-      - 80:80
+        - 80:80
+        - 443:443
     volumes:
-      - static_volume:/app/backend/django_static
-      - ./docker/nginx/development:/etc/nginx/conf.d
-    depends_on:
-      - backend
+        - static_volume:/app/backend/static
+        - ./docker/nginx/production:/etc/nginx/conf.d
+    depends_on: 
+        - backend
 
 volumes:
   static_volume: {}
