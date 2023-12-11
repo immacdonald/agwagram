@@ -17,6 +17,8 @@ services:
     command: /app/backend/run_dev_server.sh
     env_file:
       - docker/.env
+    environment:
+      DJANGO_DEBUG: "True"
     expose:
       - 8000
     depends_on:
