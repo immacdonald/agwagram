@@ -130,6 +130,17 @@
   }
 }
 
+.changeGraphToggles {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: $xs;
+
+  > span:not(:last-child) {
+    margin-right: $md;
+  }
+}
+
 .clearButton {
   background-color: transparent;
   border: none;

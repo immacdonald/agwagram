@@ -19,6 +19,7 @@ import {
   GetDefinition,
 } from "./BLOCComponents";
 import HoverMark from "./HoverMark";
+import Toggle from "./Toggle";
 import { formatDate, graphColor } from "../Global";
 
 interface CardProps {
@@ -165,6 +166,10 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     "activity": true
   })
 
+  const toggleChangeGraphDisplay = (key : string) => {
+    setChangeGraph({...changeGraph, [key]: !changeGraph[key]})
+  }
+
   const changeChronology : any[] = [];
   report.change_events.forEach((event : any) => { 
     changeChronology.push({
@@ -197,9 +202,15 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
         {`Activity: ${report.change_profile.average_change.activity}`}
       </p>
       <hr />
-      <div style={{ width: "100%", height: "400px" }}>
+      <div style={{ width: "100%", height: "480px" }}>
           <h3>Change Profile</h3>
-          <ResponsiveContainer width="100%" height="100%">
+          <div className={style.changeGraphToggles}>
+            <span>Similarity <Toggle state={changeGraph['similarity']} onChange={() => (toggleChangeGraphDisplay("similarity"))} /></span>
+            <span>Word <Toggle state={changeGraph['word']} onChange={() => (toggleChangeGraphDisplay("word"))} /></span>
+            <span>Pause <Toggle state={changeGraph['pause']} onChange={() => (toggleChangeGraphDisplay("pause"))} /></span>
+            <span>Activity <Toggle state={changeGraph['activity']} onChange={() => (toggleChangeGraphDisplay("activity"))} /></span>
+          </div>
+          <ResponsiveContainer width="100%" height="85%">
         <LineChart
           width={500}
           height={300}
