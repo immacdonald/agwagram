@@ -24,7 +24,6 @@ const Analyze: React.FC = () => {
   }
 
   const submitFiles = (files: File[]) => {
-    console.log(files);
     uploadFiles(`${API_URL}/analyze/file`, files).then((data) => {
       setResults(data);
     });
@@ -47,19 +46,58 @@ const Analyze: React.FC = () => {
     setDisplayResults(results)
   }, [results]);
 
+  const openJsonFile = (file : string) => {
+    const jsonFilePath = `/static/samples/${file}`;
+    window.open(jsonFilePath, '_blank');
+  };
+
+  const submitJsonFile = async (file : string) => {
+    try {
+        const response = await fetch(`/static/samples/${file}`);
+        const data = await response.blob();
+        // Convert Blob to File object
+        const actualFile = new File([data], file, { type: 'application/json' });
+        submitFiles([actualFile]);
+    } catch (error) {
+        console.error('Error fetching or submitting file:', error);
+    }
+  };
+
+  const exampleFile = (file : string, title : string) => {
+    return (
+      <div className={style.example}>
+        <button onClick={() => submitJsonFile(file)}>{title}</button>
+        <button onClick={() => openJsonFile(file)}>View JSON File</button>
+      </div>
+    )
+  }
+
   return !displayResults ? (
     <div className={style.content}>
       <h1>Analyze</h1>
       <div className={style.columns}>
         <div>
-          <h3>Analyze By Username</h3>
-          <p>
-            Search for one or more accounts (separated by a comma) by their
-            current Twitter username.
-          </p>
-          <SearchInput submit={searchUsername} />
+          {false && <div className={style.card}>
+            <h3>Analyze From Example File</h3>
+            <p>
+              Test the capabilities of Agwagram using one of our example Twitter data files.
+            </p>
+            <div>
+              {exampleFile("sample_storygraphbot.jsonl", "@StoryGraphBot Example")}
+              {exampleFile("sample_jesus.jsonl", "@Jesus Example")}
+              {exampleFile("sample_combined.json", "Combined Example")}
+            </div>
+          </div>}
+          <div className={style.card}>
+            <h3>Analyze By Username <b>(Coming Soon)</b></h3>
+            <p>
+              Search for one or more accounts (separated by a comma) by their
+              current Twitter username.
+            </p>
+            <SearchInput submit={searchUsername} />
+          </div>
         </div>
-        <div>
+        <div className={style.card}>
           <h3>Analyze By File</h3>
           <p>
             Upload files containing Tweet data to be analyzed using the BLOC

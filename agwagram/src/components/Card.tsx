@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode, useMemo } from "react";
+import React, { Fragment, ReactNode, useMemo, useState } from "react";
 import style from "./Card.module.scss";
 import classNames from "classnames";
 import {
@@ -19,6 +19,7 @@ import {
   GetDefinition,
 } from "./BLOCComponents";
 import HoverMark from "./HoverMark";
+import Toggle from "./Toggle";
 import { formatDate, graphColor } from "../Global";
 
 interface CardProps {
@@ -101,7 +102,7 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
 }: ChangeCardProps) => {
   // Only show pause change if it has a value
   const showPause: boolean = report.change_profile.average_change.pause >= 0;
-  const [sortedField, setSortedField] = React.useState<string | null>("time");
+  const [sortedField, setSortedField] = useState<string | null>("time");
 
   const tableContent = useMemo(() => {
     let sorted = [...report.change_events];
@@ -158,6 +159,17 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     });
   }, [sortedField]);
 
+  const [changeGraph, setChangeGraph] = useState<{[Key: string]: boolean}>({
+    "similarity": true,
+    "word": true,
+    "pause": true,
+    "activity": true
+  })
+
+  const toggleChangeGraphDisplay = (key : string) => {
+    setChangeGraph({...changeGraph, [key]: !changeGraph[key]})
+  }
+
   const changeChronology : any[] = [];
   report.change_events.forEach((event : any) => { 
     changeChronology.push({
@@ -190,9 +202,15 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
         {`Activity: ${report.change_profile.average_change.activity}`}
       </p>
       <hr />
-      <div style={{ width: "100%", height: "400px" }}>
+      <div style={{ width: "100%", height: "480px" }}>
           <h3>Change Profile</h3>
-          <ResponsiveContainer width="100%" height="100%">
+          <div className={style.changeGraphToggles}>
+            <span>Similarity <Toggle state={changeGraph['similarity']} onChange={() => (toggleChangeGraphDisplay("similarity"))} /></span>
+            <span>Word <Toggle state={changeGraph['word']} onChange={() => (toggleChangeGraphDisplay("word"))} /></span>
+            <span>Pause <Toggle state={changeGraph['pause']} onChange={() => (toggleChangeGraphDisplay("pause"))} /></span>
+            <span>Activity <Toggle state={changeGraph['activity']} onChange={() => (toggleChangeGraphDisplay("activity"))} /></span>
+          </div>
+          <ResponsiveContainer width="100%" height="85%">
         <LineChart
           width={500}
           height={300}
@@ -209,10 +227,10 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
           <YAxis />
           <GraphTooltip />
           <Legend />
-          <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false}/>
-          <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false}/>
-          {showPause ? <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false}/> : false}
-          <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false}/>
+          {changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false}/>}
+          {changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false}/>}
+          {showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false}/>}
+          {changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false}/>}
         </LineChart>
       </ResponsiveContainer>
       </div>
@@ -448,7 +466,7 @@ export const LinkedDataCard: React.FC<LinkedDataCardProps> = ({
   data,
 }: LinkedDataCardProps) => {
   return (
-    <Card title={title} icon={icon} size={CardSize.Wide}>
+    <Card title={title} icon={icon} size={CardSize.Full}>
       <div className={style.scrollable}>
         {data.map((datum: any, index: number) => {
           let titleString = `Tweeted: ${datum.created_at}`;
