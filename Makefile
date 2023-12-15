@@ -10,12 +10,9 @@ dev:
 	$(call setup_env, development)
 	docker-compose -f docker-compose-dev.yml up --build
 
-# Creates a built version of frontend/backend using dev settings
-qa:
+prod:
 	docker-compose up --build
 
-prod:
-	docker-compose -f docker-compose-prod.yml up --build
 	
 
 # Backend flake8 linting

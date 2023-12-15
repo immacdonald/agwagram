@@ -12,6 +12,4 @@ COPY docker/backend/run_dev_server.sh /app/backend
 
 WORKDIR /app/backend
 
-RUN python manage.py collectstatic --noinput
-
 CMD ["gunicorn", "blocservices.wsgi", "--bind", "0.0.0.0:8000", "--workers", "4", "--threads", "4"]
