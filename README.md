@@ -34,7 +34,7 @@ To run the BLOC Services Django server on a port besides the default of `8080`, 
 For the testing (QA) and production version of the website the React frontend is built out as static files and served using `nginx`. The Django server is served with `gunicorn`. In the QA build of Agwagram both the frontend and backend are served at the same URL. Use the following command:
 
 ```bash
-make qa
+make prod
 ```
 
 ### Linting
