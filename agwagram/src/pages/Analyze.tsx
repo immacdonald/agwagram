@@ -77,7 +77,7 @@ const Analyze: React.FC = () => {
       <h1>Analyze</h1>
       <div className={style.columns}>
         <div>
-          <div className={style.card}>
+          {false && <div className={style.card}>
             <h3>Analyze From Example File</h3>
             <p>
               Test the capabilities of Agwagram using one of our example Twitter data files.
@@ -87,7 +87,7 @@ const Analyze: React.FC = () => {
               {exampleFile("sample_jesus.jsonl", "@Jesus Example")}
               {exampleFile("sample_combined.json", "Combined Example")}
             </div>
-          </div>
+          </div>}
           <div className={style.card}>
             <h3>Analyze By Username <b>(Coming Soon)</b></h3>
             <p>
