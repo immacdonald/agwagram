@@ -1,5 +1,5 @@
 # Build React static files
-FROM node:20 as build
+FROM docker.io/library/node:20 as build
 
 WORKDIR /app/frontend
 COPY ./agwagram/package.json ./
@@ -9,6 +9,7 @@ COPY ./agwagram/ ./
 RUN npm run build
 
 # Copy React static files and start nginx
-FROM nginx:stable-alpine
+FROM docker.io/library/nginx:stable-alpine
+
 COPY --from=build /app/frontend/dist /usr/share/nginx/html
-CMD ["nginx", "-g", "daemon off;"]
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf

@@ -11,9 +11,7 @@ do
     sleep 2
 done
 
-python3 manage.py collectstatic --noinput
-
-gunicorn blocservices.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
+python manage.py runserver 0.0.0.0:8000
 
 # Options to DEBUG Django server
 # Optional commands to replace abouve gunicorn command
