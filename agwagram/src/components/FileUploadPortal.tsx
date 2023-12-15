@@ -32,11 +32,8 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({
       return false;
     });
     if (!limitExceeded) {
-      console.log("Uploaded!");
       setUploadedFiles(uploaded);
     }
-    console.log("Uploaded files:");
-    console.log(uploadedFiles);
   };
 
   useEffect(() => {

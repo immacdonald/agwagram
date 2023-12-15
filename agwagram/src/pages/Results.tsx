@@ -292,7 +292,6 @@ const Results: React.FC = () => {
       );
     }
   } else {
-    console.log("Failed generation");
     if (results && results["result"]) {
       const result = results.result;
       return (

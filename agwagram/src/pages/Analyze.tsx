@@ -24,7 +24,6 @@ const Analyze: React.FC = () => {
   }
 
   const submitFiles = (files: File[]) => {
-    console.log(files);
     uploadFiles(`${API_URL}/analyze/file`, files).then((data) => {
       setResults(data);
     });
