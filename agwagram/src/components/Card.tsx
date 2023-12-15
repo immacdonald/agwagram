@@ -455,7 +455,7 @@ export const LinkedDataCard: React.FC<LinkedDataCardProps> = ({
   data,
 }: LinkedDataCardProps) => {
   return (
-    <Card title={title} icon={icon} size={CardSize.Wide}>
+    <Card title={title} icon={icon} size={CardSize.Full}>
       <div className={style.scrollable}>
         {data.map((datum: any, index: number) => {
           let titleString = `Tweeted: ${datum.created_at}`;

@@ -152,21 +152,24 @@ const Results: React.FC = () => {
                 &#8592; Analyze Another
               </Link>
               {account.tweet_count > 0 ? (
-                <p>
-                  Results generated using {account.tweet_count} tweets from{" "}
-                  {account.first_tweet_date} - {account.last_tweet_date}.
-                  {account.elapsed_time > 0
-                    ? "BLOC process took {account.elapsed_time} seconds to complete."
-                    : false}
-                </p>
+                <>
+                  <br />                
+                  Expert Mode:{" "}
+                  <Toggle state={expertMode} onChange={handleExpertToggle} />
+                  <p>
+                    Results generated using {account.tweet_count} tweets from{" "}
+                    {account.first_tweet_date} - {account.last_tweet_date}.
+                    {account.elapsed_time > 0
+                      ? "BLOC process took {account.elapsed_time} seconds to complete."
+                      : false}
+                  </p>
+                </>
               ) : (
                 <p>
                   No results generated due to finding 0 tweets. BLOC process
                   took {account.elapsed_time} seconds to complete.
                 </p>
               )}
-              Expert Mode:{" "}
-              <Toggle state={expertMode} onChange={handleExpertToggle} />
             </div>
           </div>
           <div className={style.contentMain}>
@@ -187,7 +190,11 @@ const Results: React.FC = () => {
               >
                 &#8592; Analyze Another
               </Link>
+              <br />                
+              Expert Mode:{" "}
+              <Toggle state={expertMode} onChange={handleExpertToggle} />
               <p>
+                
                 Successfully generated results for{" "}
                 {accounts.map((account: any) => {
                   return (
@@ -200,8 +207,6 @@ const Results: React.FC = () => {
                   );
                 })}
               </p>
-              Expert Mode:{" "}
-              <Toggle state={expertMode} onChange={handleExpertToggle} />
             </div>
           </div>
           <div className={style.contentMain}>
