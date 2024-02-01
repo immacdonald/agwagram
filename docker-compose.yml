@@ -29,6 +29,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
+    environment:
+      - BACKEND_HOSTNAME=backend
     ports:
       - 80:80
     depends_on:
