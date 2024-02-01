@@ -23,9 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
+if os.path.isfile(SECRET_KEY):
+    with open(SECRET_KEY, 'r') as f:
+        SECRET_KEY = f.read().rstrip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
+
+MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
+if os.path.isfile(MYSQL_PASSWORD):
+    with open(MYSQL_PASSWORD, 'r') as f:
+        MYSQL_PASSWORD = f.read().rstrip()
 
 ALLOWED_HOSTS = []
 
@@ -88,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('MYSQL_DATABASE'),
         'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
+        'PASSWORD': MYSQL_PASSWORD,
         'HOST': os.environ.get('DB_HOST', 'db'),  # Use 'db' as default from .env
         'PORT': os.environ.get('DB_PORT', '3306'),  # Use '3306' as default from .env
     }
