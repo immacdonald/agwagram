@@ -1,0 +1,83 @@
+---
+variables:
+  DOCKER_BUILDKIT: 1
+
+stages:
+- test
+- build
+
+include:
+- template: Security/SAST.gitlab-ci.yml
+
+trivy_security_scan:
+  stage: test
+  image:
+    name: ghcr.io/aquasecurity/trivy:latest
+    entrypoint: [""]
+  script:
+    - trivy --version
+    - trivy repo . --exit-code 0 --no-progress
+    - trivy repo . --exit-code 1 --severity CRITICAL --no-progress
+    - echo "Critical vulnerabilities cause this step to fail and need to be fixed to successfully deploy."
+
+backend_build_head:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - export BUILD_TIME=$(date +%s)
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${PWD}"
+      --dockerfile "docker/backend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/backend:latest-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}-${BUILD_TIME}"
+
+frontend_build_head:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - export BUILD_TIME=$(date +%s)
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${PWD}"
+      --dockerfile "docker/nginx/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/frontend:latest-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}-${BUILD_TIME}"
+
+backend_build_release:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${PWD}"
+      --dockerfile "docker/backend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/backend:${CI_COMMIT_TAG}"
+  rules:
+    - if: $CI_COMMIT_TAG
+
+frontend_build_release:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${PWD}"
+      --dockerfile "docker/nginx/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/frontend:${CI_COMMIT_TAG}"
+  rules:
+    - if: $CI_COMMIT_TAG
