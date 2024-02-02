@@ -2,10 +2,10 @@
 FROM docker.io/library/node:20 as build
 
 WORKDIR /app/frontend
-COPY agwagram/package.json .
-COPY agwagram/package-lock.json .
+COPY ./agwagram/package.json ./
+COPY ./agwagram/package-lock.json ./
 RUN npm ci --silent
-COPY agwagram/ .
+COPY ./agwagram/ ./
 RUN npm run build
 
 # Copy React static files and start nginx
