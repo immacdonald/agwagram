@@ -12,4 +12,4 @@ COPY docker/backend/run_dev_server.sh /app/backend
 
 WORKDIR /app/backend
 
-CMD ["gunicorn", "blocservices.wsgi", "--bind", "0.0.0.0:8000", "--workers", "4", "--threads", "4"]
+CMD ["gunicorn", "blocservices.wsgi", "--bind", "0.0.0.0:8000", "--workers", "4", "--threads", "4", "--log-config", "gunicorn-logging.conf"]
