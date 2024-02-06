@@ -5,6 +5,7 @@ import FileUploadPortal from "../components/FileUploadPortal";
 import { AnalysisContext } from "../contexts/AnalysisContext";
 import { API_URL } from "../Global";
 import Results from "./Results";
+import { Link } from "react-router-dom";
 
 const Analyze: React.FC = () => {
   const { results, setResults } = useContext(AnalysisContext);
@@ -46,11 +47,6 @@ const Analyze: React.FC = () => {
     setDisplayResults(results)
   }, [results]);
 
-  const openJsonFile = (file : string) => {
-    const jsonFilePath = `/static/samples/${file}`;
-    window.open(jsonFilePath, '_blank');
-  };
-
   const submitJsonFile = async (file : string) => {
     try {
         const response = await fetch(`/static/samples/${file}`);
@@ -63,11 +59,11 @@ const Analyze: React.FC = () => {
     }
   };
 
-  const exampleFile = (file : string, title : string) => {
+  const exampleFile = (file: string, title: string, format: string = "JSON") => {
     return (
       <div className={style.example}>
         <button onClick={() => submitJsonFile(file)}>{title}</button>
-        <button onClick={() => openJsonFile(file)}>View JSON File</button>
+        <Link to={`/static/${file}`} target="_blank" download>Download {format} File</Link>
       </div>
     )
   }
@@ -77,15 +73,15 @@ const Analyze: React.FC = () => {
       <h1>Analyze</h1>
       <div className={style.columns}>
         <div>
-          {false && <div className={style.card}>
+          {true && <div className={style.card}>
             <h3>Analyze From Example File</h3>
             <p>
               Test the capabilities of Agwagram using one of our example Twitter data files.
             </p>
             <div>
-              {exampleFile("sample_storygraphbot.jsonl", "@StoryGraphBot Example")}
-              {exampleFile("sample_jesus.jsonl", "@Jesus Example")}
-              {exampleFile("sample_combined.json", "Combined Example")}
+              {exampleFile("sample_storygraphbot.jsonl", "@StoryGraphBot Example", "JSONL")}
+              {exampleFile("sample_jesus.jsonl", "@Jesus Example", "JSONL")}
+              {exampleFile("sample_combined.json", "Combined Example", "JSON")}
             </div>
           </div>}
           <div className={style.card}>
