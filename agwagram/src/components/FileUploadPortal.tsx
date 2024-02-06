@@ -56,7 +56,9 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({
     return uploadedFiles.map((file: File, i: number) => (
       <div key={file.name}>
         <strong>{i + 1}.</strong> {file.name}
-        <button className={style.clearButton} onClick={() => removeFile(i)}>X</button>
+        <button className={style.clearButton} onClick={() => removeFile(i)}>
+          X
+        </button>
       </div>
     ));
   }, [uploadedFiles]);

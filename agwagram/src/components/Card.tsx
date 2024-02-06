@@ -114,7 +114,9 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     } else if (sortedField == "pause") {
       sorted.sort((a, b) => a.change_profile.pause - b.change_profile.pause);
     } else if (sortedField == "activity") {
-      sorted.sort((a, b) => a.change_profile.activity - b.change_profile.activity);
+      sorted.sort(
+        (a, b) => a.change_profile.activity - b.change_profile.activity,
+      );
     } else if (sortedField == "start") {
       sorted.sort((a, b) => {
         if (a.first_segment.local_dates[0] < b.first_segment.local_dates[0]) {
@@ -159,35 +161,40 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
     });
   }, [sortedField]);
 
-  const [changeGraph, setChangeGraph] = useState<{[Key: string]: boolean}>({
-    "similarity": true,
-    "word": true,
-    "pause": true,
-    "activity": true
-  })
+  const [changeGraph, setChangeGraph] = useState<{ [Key: string]: boolean }>({
+    similarity: true,
+    word: true,
+    pause: true,
+    activity: true,
+  });
 
-  const toggleChangeGraphDisplay = (key : string) => {
-    setChangeGraph({...changeGraph, [key]: !changeGraph[key]})
-  }
+  const toggleChangeGraphDisplay = (key: string) => {
+    setChangeGraph({ ...changeGraph, [key]: !changeGraph[key] });
+  };
 
-  const changeChronology : any[] = [];
-  report.change_events.forEach((event : any) => { 
+  const changeChronology: any[] = [];
+  report.change_events.forEach((event: any) => {
     changeChronology.push({
-      "Date": event.first_segment.local_dates[0],
-      "Similarity": +event.sim.toFixed(2),
-      "Word": event.change_profile.word,
-      "Pause": event.change_profile.pause,
-      "Activity": event.change_profile.activity
-    })
-  })
+      Date: event.first_segment.local_dates[0],
+      Similarity: +event.sim.toFixed(2),
+      Word: event.change_profile.word,
+      Pause: event.change_profile.pause,
+      Activity: event.change_profile.activity,
+    });
+  });
 
-  const sortButton = (text : string, code : string) : ReactNode => {
+  const sortButton = (text: string, code: string): ReactNode => {
     return (
-      <button type="button" className={style.clearButton} onClick={() => setSortedField(code)}>
-          {text}{sortedField == code ? " >" : false}
+      <button
+        type="button"
+        className={style.clearButton}
+        onClick={() => setSortedField(code)}
+      >
+        {text}
+        {sortedField == code ? " >" : false}
       </button>
-    )
-  }
+    );
+  };
 
   return (
     <Card title={title} icon={icon} size={CardSize.Full}>
@@ -203,36 +210,88 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
       </p>
       <hr />
       <div style={{ width: "100%", height: "480px" }}>
-          <h3>Change Profile</h3>
-          <div className={style.changeGraphToggles}>
-            <span>Similarity <Toggle state={changeGraph['similarity']} onChange={() => (toggleChangeGraphDisplay("similarity"))} /></span>
-            <span>Word <Toggle state={changeGraph['word']} onChange={() => (toggleChangeGraphDisplay("word"))} /></span>
-            <span>Pause <Toggle state={changeGraph['pause']} onChange={() => (toggleChangeGraphDisplay("pause"))} /></span>
-            <span>Activity <Toggle state={changeGraph['activity']} onChange={() => (toggleChangeGraphDisplay("activity"))} /></span>
-          </div>
-          <ResponsiveContainer width="100%" height="85%">
-        <LineChart
-          width={500}
-          height={300}
-          data={changeChronology}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Date" tickFormatter={formatDate}/>
-          <YAxis />
-          <GraphTooltip />
-          <Legend />
-          {changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false}/>}
-          {changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false}/>}
-          {showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false}/>}
-          {changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false}/>}
-        </LineChart>
-      </ResponsiveContainer>
+        <h3>Change Profile</h3>
+        <div className={style.changeGraphToggles}>
+          <span>
+            Similarity{" "}
+            <Toggle
+              state={changeGraph["similarity"]}
+              onChange={() => toggleChangeGraphDisplay("similarity")}
+            />
+          </span>
+          <span>
+            Word{" "}
+            <Toggle
+              state={changeGraph["word"]}
+              onChange={() => toggleChangeGraphDisplay("word")}
+            />
+          </span>
+          <span>
+            Pause{" "}
+            <Toggle
+              state={changeGraph["pause"]}
+              onChange={() => toggleChangeGraphDisplay("pause")}
+            />
+          </span>
+          <span>
+            Activity{" "}
+            <Toggle
+              state={changeGraph["activity"]}
+              onChange={() => toggleChangeGraphDisplay("activity")}
+            />
+          </span>
+        </div>
+        <ResponsiveContainer width="100%" height="85%">
+          <LineChart
+            width={500}
+            height={300}
+            data={changeChronology}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="Date" tickFormatter={formatDate} />
+            <YAxis />
+            <GraphTooltip />
+            <Legend />
+            {changeGraph["similarity"] && (
+              <Line
+                type="monotone"
+                dataKey="Similarity"
+                stroke={graphColor(3)}
+                dot={false}
+              />
+            )}
+            {changeGraph["word"] && (
+              <Line
+                type="monotone"
+                dataKey="Word"
+                stroke={graphColor(0)}
+                dot={false}
+              />
+            )}
+            {showPause && changeGraph["pause"] && (
+              <Line
+                type="monotone"
+                dataKey="Pause"
+                stroke={graphColor(1)}
+                dot={false}
+              />
+            )}
+            {changeGraph["activity"] && (
+              <Line
+                type="monotone"
+                dataKey="Activity"
+                stroke={graphColor(2)}
+                dot={false}
+              />
+            )}
+          </LineChart>
+        </ResponsiveContainer>
       </div>
       <br />
       <hr />
@@ -244,10 +303,22 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({
               <th style={{ width: "180px" }}>End Behavior</th>
               <th>{sortButton("Similarity", "sim")}</th>
               <th style={{ width: "70px" }}>{sortButton("Word", "word")}</th>
-              {showPause ? <th style={{ width: "70px" }}>{sortButton("Pause", "pause")}</th> : false}
-              <th style={{ width: "90px" }}>{sortButton("Activity", "activity")}</th>
-              <th style={{ width: "170px" }}>{sortButton("Start Date", "start")}</th>
-              <th style={{ width: "170px" }}>{sortButton("End Date", "end")}</th>
+              {showPause ? (
+                <th style={{ width: "70px" }}>
+                  {sortButton("Pause", "pause")}
+                </th>
+              ) : (
+                false
+              )}
+              <th style={{ width: "90px" }}>
+                {sortButton("Activity", "activity")}
+              </th>
+              <th style={{ width: "170px" }}>
+                {sortButton("Start Date", "start")}
+              </th>
+              <th style={{ width: "170px" }}>
+                {sortButton("End Date", "end")}
+              </th>
             </tr>
           </thead>
           <tbody>{tableContent}</tbody>
@@ -507,42 +578,50 @@ export const GroupChangeCard: React.FC<GroupChangeCardProps> = ({
   icon,
   reports,
 }) => {
-  const changeChronology : any[] = [];
-  reports.forEach((report : any ) => {
-    report.change_report.action.change_events.forEach((event : any) => { 
+  const changeChronology: any[] = [];
+  reports.forEach((report: any) => {
+    report.change_report.action.change_events.forEach((event: any) => {
       changeChronology.push({
-        "Date": event.first_segment.local_dates[0],
-        [report.account_username]: +event.sim.toFixed(2)
-      })
-    })
+        Date: event.first_segment.local_dates[0],
+        [report.account_username]: +event.sim.toFixed(2),
+      });
+    });
   });
 
   return (
     <Card title={title} icon={icon} size={CardSize.Full}>
       <div style={{ width: "100%", height: "400px" }}>
-          <h3>Similarity Over Time</h3>
-          <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          width={500}
-          height={300}
-          data={changeChronology}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Date" tickFormatter={formatDate}/>
-          <YAxis />
-          <GraphTooltip />
-          <Legend />
-          {reports.map((report : any, i : number) => {
-             return <Line type="monotone" dataKey={report.account_username} stroke={graphColor(i)} dot={false} key={i}/>
-          })}
-        </LineChart>
-      </ResponsiveContainer>
+        <h3>Similarity Over Time</h3>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            width={500}
+            height={300}
+            data={changeChronology}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="Date" tickFormatter={formatDate} />
+            <YAxis />
+            <GraphTooltip />
+            <Legend />
+            {reports.map((report: any, i: number) => {
+              return (
+                <Line
+                  type="monotone"
+                  dataKey={report.account_username}
+                  stroke={graphColor(i)}
+                  dot={false}
+                  key={i}
+                />
+              );
+            })}
+          </LineChart>
+        </ResponsiveContainer>
       </div>
       <br />
     </Card>

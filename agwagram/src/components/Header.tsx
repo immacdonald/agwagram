@@ -13,8 +13,7 @@ function Header() {
         <Link to="/" className={style.logo}>
           <img src={Logo} />
         </Link>
-        <nav className={style.navigation}>
-        </nav>
+        <nav className={style.navigation}></nav>
         <div>
           <button onClick={() => setTheme()}>Theme</button>
         </div>

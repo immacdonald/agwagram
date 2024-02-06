@@ -44,48 +44,67 @@ const Analyze: React.FC = () => {
   };
 
   useEffect(() => {
-    setDisplayResults(results)
+    setDisplayResults(results);
   }, [results]);
 
-  const submitJsonFile = async (file : string) => {
+  const submitJsonFile = async (file: string) => {
     try {
-        const response = await fetch(`/static/samples/${file}`);
-        const data = await response.blob();
-        // Convert Blob to File object
-        const actualFile = new File([data], file, { type: 'application/json' });
-        submitFiles([actualFile]);
+      const response = await fetch(`/static/samples/${file}`);
+      const data = await response.blob();
+      // Convert Blob to File object
+      const actualFile = new File([data], file, { type: "application/json" });
+      submitFiles([actualFile]);
     } catch (error) {
-        console.error('Error fetching or submitting file:', error);
+      console.error("Error fetching or submitting file:", error);
     }
   };
 
-  const exampleFile = (file: string, title: string, format: string = "JSON") => {
+  const exampleFile = (
+    file: string,
+    title: string,
+    format: string = "JSON",
+  ) => {
     return (
       <div className={style.example}>
         <button onClick={() => submitJsonFile(file)}>{title}</button>
-        <Link to={`/static/${file}`} target="_blank" download>Download {format} File</Link>
+        <Link to={`/static/${file}`} target="_blank" download>
+          Download {format} File
+        </Link>
       </div>
-    )
-  }
+    );
+  };
 
   return !displayResults ? (
     <div className={style.content}>
       <h1>Analyze</h1>
       <div className={style.columns}>
         <div>
-          {true && <div className={style.card}>
-            <h3>Analyze From Example File</h3>
-            <p>
-              Test the capabilities of Agwagram using one of our example Twitter data files.
-            </p>
-            <div>
-              {exampleFile("sample_storygraphbot.jsonl", "@StoryGraphBot Example", "JSONL")}
-              {exampleFile("sample_jesus.jsonl", "@Jesus Example", "JSONL")}
-              {exampleFile("sample_combined.json", "Combined Example", "JSON")}
+          {true && (
+            <div className={style.card}>
+              <h3>Analyze From Example File</h3>
+              <p>
+                Test the capabilities of Agwagram using one of our example
+                Twitter data files.
+              </p>
+              <div>
+                {exampleFile(
+                  "sample_storygraphbot.jsonl",
+                  "@StoryGraphBot Example",
+                  "JSONL",
+                )}
+                {exampleFile("sample_jesus.jsonl", "@Jesus Example", "JSONL")}
+                {exampleFile(
+                  "sample_combined.json",
+                  "Combined Example",
+                  "JSON",
+                )}
+              </div>
             </div>
-          </div>}
+          )}
           <div className={style.card}>
-            <h3>Analyze By Username <b>(Coming Soon)</b></h3>
+            <h3>
+              Analyze By Username <b>(Coming Soon)</b>
+            </h3>
             <p>
               Search for one or more accounts (separated by a comma) by their
               current Twitter username.
@@ -112,7 +131,9 @@ const Analyze: React.FC = () => {
         </div>
       </div>
     </div>
-  ) : <Results/>;
+  ) : (
+    <Results />
+  );
 };
 
 export default Analyze;

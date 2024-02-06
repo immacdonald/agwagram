@@ -153,7 +153,7 @@ const Results: React.FC = () => {
               </Link>
               {account.tweet_count > 0 ? (
                 <>
-                  <br />                
+                  <br />
                   Expert Mode:{" "}
                   <Toggle state={expertMode} onChange={handleExpertToggle} />
                   <p>
@@ -190,11 +190,10 @@ const Results: React.FC = () => {
               >
                 &#8592; Analyze Another
               </Link>
-              <br />                
+              <br />
               Expert Mode:{" "}
               <Toggle state={expertMode} onChange={handleExpertToggle} />
               <p>
-                
                 Successfully generated results for{" "}
                 {accounts.map((account: any) => {
                   return (
@@ -288,7 +287,11 @@ const Results: React.FC = () => {
                       </tbody>
                     </table>
                   </Card>
-                  <GroupChangeCard title="Comparative Change Between Accounts" icon={<Chart />} reports={result.account_blocs}/>
+                  <GroupChangeCard
+                    title="Comparative Change Between Accounts"
+                    icon={<Chart />}
+                    reports={result.account_blocs}
+                  />
                 </>
               )}
             </div>
@@ -352,9 +355,7 @@ const Results: React.FC = () => {
             >
               &#8592; Analyze Another
             </Link>
-            <p>
-              Unable to analyze account due to an error.
-            </p>
+            <p>Unable to analyze account due to an error.</p>
           </div>
         </div>
       );
