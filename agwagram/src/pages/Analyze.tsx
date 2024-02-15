@@ -49,7 +49,8 @@ const Analyze: React.FC = () => {
 
   const submitJsonFile = async (file: string) => {
     try {
-      const response = await fetch(`/static/samples/${file}`);
+      setSelectedExample(file);
+      const response = await fetch(`/static/${file}`);
       const data = await response.blob();
       // Convert Blob to File object
       const actualFile = new File([data], file, { type: "application/json" });
@@ -64,9 +65,11 @@ const Analyze: React.FC = () => {
     title: string,
     format: string = "JSON",
   ) => {
+    const customStyle = { backgroundColor: "#143aa2", color: "white" } as React.CSSProperties;
     return (
+      
       <div className={style.example}>
-        <button onClick={() => submitJsonFile(file)}>{title}</button>
+        <button onClick={() => submitJsonFile(file)} style={file == selectedExample ? customStyle : undefined}>{title}</button>
         <Link to={`/static/${file}`} target="_blank" download>
           Download {format} File
         </Link>
@@ -74,7 +77,16 @@ const Analyze: React.FC = () => {
     );
   };
 
-  return !displayResults ? (
+  useEffect(() => {
+    if(results == null) {
+      console.log("First load");
+      submitJsonFile("sample_storygraphbot.jsonl")
+    }
+  }, [])
+
+  const [selectedExample, setSelectedExample] = useState<string>("");
+
+  return (
     <div className={style.content}>
       <h1>Analyze</h1>
       <div className={style.columns}>
@@ -89,13 +101,13 @@ const Analyze: React.FC = () => {
               <div>
                 {exampleFile(
                   "sample_storygraphbot.jsonl",
-                  "@StoryGraphBot Example",
+                  "@StoryGraphBot",
                   "JSONL",
                 )}
-                {exampleFile("sample_jesus.jsonl", "@Jesus Example", "JSONL")}
+                {exampleFile("sample_jesus.jsonl", "@Jesus", "JSONL")}
                 {exampleFile(
                   "sample_combined.json",
-                  "Combined Example",
+                  "Combined",
                   "JSON",
                 )}
               </div>
@@ -130,10 +142,13 @@ const Analyze: React.FC = () => {
           <FileUploadPortal submit={submitFiles} />
         </div>
       </div>
-    </div>
-  ) : (
+      {displayResults && <>
+      <hr />
     <Results />
-  );
+    </>}
+    </div>
+
+  )
 };
 
 export default Analyze;
