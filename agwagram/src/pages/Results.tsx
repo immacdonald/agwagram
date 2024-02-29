@@ -21,6 +21,7 @@ import Card, {
   LinkedDataCard,
   GroupChangeCard,
   CardSize,
+  GridCard,
 } from "../components/Card";
 import { Link } from "react-router-dom";
 import Toggle from "../components/Toggle";
@@ -68,6 +69,11 @@ const Results: React.FC = () => {
           icon={<Pause />}
           top={account.top_time}
           symbolLabel="Pause"
+        />
+        <GridCard
+          title="Grid View"
+          icon={<Dataset/>}
+          bloc={account.bloc_action}
         />
         <ChangeProfileCard
           title="Change Profile Details"

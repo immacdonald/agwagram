@@ -13,8 +13,6 @@ dev:
 prod:
 	docker-compose up --build
 
-	
-
 # Backend flake8 linting
 lint_backend:
 	cd bloc && flake8

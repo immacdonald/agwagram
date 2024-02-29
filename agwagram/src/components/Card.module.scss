@@ -27,6 +27,7 @@
     @media (min-width: $smallResponsiveWidth) {
       grid-column-end: span 8;
     }
+
     @media (min-width: $mediumResponsiveWidth) {
       grid-column-end: span 6;
     }
@@ -38,6 +39,7 @@
   align-items: center;
   justify-content: space-between;
   padding: $lg $md $md $md;
+
   div {
     display: flex;
     align-items: center;
@@ -99,7 +101,7 @@
   width: 32px;
   margin-right: 0.5rem;
 
-  > svg {
+  >svg {
     width: 30px;
   }
 }
@@ -136,7 +138,7 @@
   justify-content: center;
   padding: $xs;
 
-  > span:not(:last-child) {
+  >span:not(:last-child) {
     margin-right: $md;
   }
 }
@@ -146,4 +148,65 @@
   border: none;
   padding: 0;
   cursor: pointer;
+}
+
+.gridControl {
+  --v-height: auto;
+
+  .gridCard {
+    display: flex;
+    flex-direction: column;
+
+    .grid {
+      width: auto;
+      min-height: 240px;
+      display: grid;
+      padding: $sm;
+      background-color: var(--c-background-secondary);
+
+      .item {
+        aspect-ratio: 1;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+      }
+
+      .label {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        width: 100px;
+      }
+
+      /*>span {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        filter: brightness(1.3);
+      }
+    }*/
+    }
+
+    .tools {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: $sm;
+      margin-bottom: $sm;
+      height: 80px;
+    }
+
+    [class ^="react-transform-wrapper"] {
+      width: 100%;
+      height: var(--v-height);
+    }
+  }
 }
