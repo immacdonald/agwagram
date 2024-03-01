@@ -12,17 +12,18 @@ import {
   Person,
   Timeline,
 } from "../icons";
-import Card, {
+import {
+  Card,
+  CardSize,
   ChangeCard,
   ChangeProfileCard,
   LanguageCard,
   TopWordsCard,
-  TopWordsCatergoryCard,
+  TopWordsCategoryCard,
   LinkedDataCard,
   GroupChangeCard,
-  CardSize,
   GridCard,
-} from "../components/Card";
+} from "../components/cards";
 import { Link } from "react-router-dom";
 import Toggle from "../components/Toggle";
 import { formatDate } from "../Global";
@@ -63,7 +64,7 @@ const Results: React.FC = () => {
           icon={<BarChart />}
           top={account.top_bloc_words}
         />
-        <TopWordsCatergoryCard
+        <TopWordsCategoryCard
           title="Top Pauses"
           subtitle="Most frequent durations of pause between account activities."
           icon={<Pause />}
@@ -262,7 +263,7 @@ const Results: React.FC = () => {
                     icon={<BarChart />}
                     top={result["group_top_bloc_words"]}
                   />
-                  <TopWordsCatergoryCard
+                  <TopWordsCategoryCard
                     title="Top Pauses"
                     subtitle="Most frequent durations of pause between activities of each account."
                     icon={<Pause />}
