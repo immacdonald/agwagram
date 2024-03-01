@@ -74,7 +74,7 @@ const Results: React.FC = () => {
         <GridCard
           title="Grid View"
           icon={<Dataset/>}
-          bloc={account.bloc_action}
+          data={account.linked_data}
         />
         <ChangeProfileCard
           title="Change Profile Details"

@@ -15,6 +15,7 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({
     icon,
     data,
 }: LinkedDataCardProps) => {
+    console.log(data);
     return (
         <Card title={title} icon={icon} size={CardSize.Full}>
             <div className={style.scrollable}>
