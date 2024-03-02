@@ -5,7 +5,6 @@ from . import symbols
 def link_data(tweets):
     linked_data = []
     for tweet in tweets:
-        print(tweet)
         date_obj = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y')
 
         # Format datetime object as desired
