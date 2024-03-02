@@ -1,7 +1,8 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Card, { CardSize } from "./Card";
 import style from "./Card.module.scss";
+import { AnalysisContext } from "../../contexts/AnalysisContext";
 
 interface GridCardProps {
     title: string;
@@ -9,7 +10,7 @@ interface GridCardProps {
     data: any;
 }
 
-const symbolColors: Record<string, string> = {
+/*const symbolColors: Record<string, string> = {
     'P': '#a0634a',
     'p': '#00baaf',
     'R': '#7689d6',
@@ -25,6 +26,24 @@ const symbolColors: Record<string, string> = {
     '⚃': '#8d92e4',
     '⚄': '#7ca9f2',
     '⚅': '#70d1fa'
+}*/
+
+const symbolColors: Record<string, string> = {
+    'P': '#000000',
+    'p': '#5fcecf',
+    'R': '#000000',
+    'r': '#ea3323',
+    'T': '#48752c',
+    'π': '#ea33f7',
+    'ρ': '#f9da78',
+    // Pauses
+    '□': '#ffffff',
+    '⚀': '#b7b7b7',
+    '⚁': '#b7b7b7',
+    '⚂': '#8a8a8a',
+    '⚃': '#8a8a8a',
+    '⚄': '#636363',
+    '⚅': '#636363'
 }
 
 const GridCard: React.FC<GridCardProps> = ({
@@ -32,6 +51,7 @@ const GridCard: React.FC<GridCardProps> = ({
     icon,
     data,
 }: GridCardProps) => {
+    const { symbolToDefinition } = useContext(AnalysisContext);
 
     const fixedLinkedData: any = []
     data.forEach((datum: any) => {
@@ -67,12 +87,12 @@ const GridCard: React.FC<GridCardProps> = ({
         const scale = (ref.current?.clientWidth || 1) / (gridRef.current?.clientWidth || 1);
         const theoreticalHeight = gridSize * 24;
 
-        console.log("Grid size", gridSize, "theoretical height", theoreticalHeight, "Scale", scale)
+        //console.log("Grid size", gridSize, "theoretical height", theoreticalHeight, "Scale", scale)
 
         setHeight(theoreticalHeight * scale);
         setScale(scale);
-        console.log(ref.current?.offsetWidth)
-    }, [window.innerWidth]);
+        //console.log(ref.current?.offsetWidth)
+    }, []);
 
     const controlProperties = { "--v-height": `${height}px` } as React.CSSProperties;
 
@@ -109,11 +129,21 @@ const GridCard: React.FC<GridCardProps> = ({
                             <div ref={ref} className={style.gridCard}>
                                 <TransformComponent>
                                     <div ref={gridRef} className={style.grid} style={{ gridTemplateColumns: `repeat(${gridSize + 1}, 1fr)`, width: (gridSize * 24 + 150) }}>
-                                        {gridItems.map((item, index) => (
-                                            <div className={index % (gridSize + 1) > 0 ? style.item : style.label} key={index} style={{ backgroundColor: `${symbolColors[item.action] || 'transparent'}` }}>
-                                                {item.action ?? item}
-                                            </div>
-                                        ))}
+                                        {gridItems.map((item, index) => {
+                                            if (index % (gridSize + 1) == 0) {
+                                                return (
+                                                    <div className={style.label} key={index}>
+                                                        {item}
+                                                    </div>
+                                                )
+                                            } else {
+                                                return (
+                                                    <div className={style.item} key={index} style={{ backgroundColor: `${symbolColors[item.action]}` }} data-title={`${symbolToDefinition(item.action)}\n${item.created_at}`}>
+                                                        {item.action}
+                                                    </div>
+                                                )
+                                            }
+                                        })}
                                     </div>
                                 </TransformComponent>
                                 <div className={style.tools}>
