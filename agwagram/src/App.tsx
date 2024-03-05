@@ -6,13 +6,13 @@ import Footer from "./components/Page/Footer";
 
 function App() {
   return (
-    <>
+  <div className={style.app}>
       <Header />
         <Routes>
           <Route path="/" Component={Home} />
         </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -3,6 +3,7 @@ import Logo from "../images/agwagram.png";
 import { Link } from "react-router-dom";
 import { AnalysisContext } from "../contexts/AnalysisContext";
 import { useContext } from "react";
+import Button from "./Input/Button";
 
 function Header() {
   const { setTheme } = useContext(AnalysisContext);
@@ -15,7 +16,7 @@ function Header() {
         </Link>
         <nav className={style.navigation}></nav>
         <div>
-          <button onClick={() => setTheme()}>Theme</button>
+          <Button onClick={() => setTheme()} label="Theme" />
         </div>
       </div>
     </header>

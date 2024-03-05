@@ -7,6 +7,7 @@ import { API_URL } from "../Global";
 import Results from "./Results";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
+import Button from "../components/Input/Button";
 
 const Analyze: React.FC = () => {
     const { results, setResults } = useContext(AnalysisContext);
@@ -72,7 +73,7 @@ const Analyze: React.FC = () => {
         return (
 
             <div className={style.example}>
-                <button onClick={() => submitJsonFile(file)} style={file == selectedExample ? customStyle : undefined}>{title}</button>
+                <Button onClick={() => submitJsonFile(file)} style={file == selectedExample ? customStyle : undefined} label={title}  visual="outline" />
                 <Link to={`/static/${file}`} target="_blank" download>
                     Download {format} File
                 </Link>

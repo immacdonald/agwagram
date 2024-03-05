@@ -3,6 +3,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Card, { CardSize } from "./Card";
 import style from "./Card.module.scss";
 import { AnalysisContext } from "../../contexts/AnalysisContext";
+import Button from "../Input/Button";
 
 interface GridCardProps {
     title: string;
@@ -147,9 +148,9 @@ const GridCard: React.FC<GridCardProps> = ({
                                     </div>
                                 </TransformComponent>
                                 <div className={style.tools}>
-                                    <button onClick={() => zoomIn()}>+</button>
-                                    <button onClick={() => zoomOut()}>-</button>
-                                    <button onClick={() => resetTransform()}>x</button>
+                                    <Button onClick={() => zoomIn()} label="+" visual="filled"/>
+                                    <Button onClick={() => zoomOut()} label="-" visual="filled"/>
+                                    <Button onClick={() => resetTransform()} label="X" visual="filled"/>
                                 </div>
                             </div>
                         )

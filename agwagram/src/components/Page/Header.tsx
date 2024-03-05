@@ -3,6 +3,7 @@ import Logo from "../../images/agwagram.png";
 import style from './Header.module.scss';
 import { useContext } from 'react';
 import { AnalysisContext } from '../../contexts/AnalysisContext';
+import Button from '../Input/Button';
 
 const Header: React.FC = () => {
     const { setTheme } = useContext(AnalysisContext);
@@ -15,7 +16,7 @@ const Header: React.FC = () => {
                 </Link>
                 <div className={style.navigation}>
                     <nav className={style.navLinks}>
-                        <button onClick={() => setTheme()}>Theme</button>
+                        <Button onClick={() => setTheme()} label="Theme" />
                     </nav>
                 </div>
             </div>
