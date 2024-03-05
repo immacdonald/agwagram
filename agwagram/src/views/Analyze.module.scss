@@ -21,13 +21,22 @@
       margin-left: $sm;
     }
   }
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+
+    > div {
+      width: 100%;
+      margin: 0;
+    }
+  }
 }
 
 .card {
-  min-height: 320px;
+  min-height: 250px;
   height: fit-content;
   padding: $md;
-  border-radius: $mdRadius;
+  border-radius: $radius-md;
   border: 1px solid var(--c-b-neutral);
   background-color: var(--c-bg-theme-light);
   box-shadow: var(--shadow);
@@ -42,7 +51,7 @@
 .example {
   width: 100%;
   padding: $sm;
-  border-radius: $smRadius;
+  border-radius: $radius-sm;
   display: flex;
   justify-content: start;
   border: 1px solid var(--c-b-neutral);

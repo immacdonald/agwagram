@@ -28,7 +28,7 @@ h3 {
 
 hr {
   border: none;
-  border-top: var(--b-thin) var(--c-b-neutral);
+  border-top: var(--b-light);
   margin: $md 0;
 }
 
@@ -64,8 +64,8 @@ input[type="file"] {
   width: 100%;
   height: 96px;
   display: flex;
-  border: var(--b-thin) var(--c-b-neutral);
-  border-radius: $smRadius;
+  border: var(--b-light);
+  border-radius: $radius-sm;
   margin-top: $md;
   transition: border-color var(--t-fast);
 
@@ -118,7 +118,7 @@ table {
 
 th {
   padding: $sm;
-  border-bottom: var(--b-thin) var(--c-b-neutral);
+  border-bottom: var(--b-light);
 }
 
 td {
@@ -155,16 +155,16 @@ mark {
     width: max-content;
     min-width: $xxl;
     padding: $xs $md;
-    border-radius: $smRadius;
+    border-radius: $radius-sm;
     background-color: var(--c-bg-dark);
     text-align: center;
     color: var(--c-fg-light);
-    font-size: $mdFont;
+    font-size: $font-md;
     font-weight: 500;
     white-space: pre-line;
     z-index: 100;
     opacity: 0;
-    animation: 0s ease-out 1s 1 appear;
+    animation: 0s ease-out 0.25s 1 appear;
     animation-fill-mode: forwards;
     box-shadow: var(--shadow-low);
     filter: none;

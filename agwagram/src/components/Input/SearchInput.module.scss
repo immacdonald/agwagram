@@ -1,4 +1,4 @@
-@use "../styles" as *;
+@use "../../styles" as *;
 
 $height: 40px;
 
@@ -20,8 +20,8 @@ $height: 40px;
     width: 100%;
     line-height: 1;
     background-color: var(--c-bg-theme);
-    border: var(--b-thin) var(--c-b-neutral);
-    border-radius: $smRadius;
+    border: var(--b-light);
+    border-radius: $radius-sm;
     color: var(--c-text-action);
     transition: var(--t-fast);
 

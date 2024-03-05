@@ -3,8 +3,8 @@
 .card {
   background-color: var(--c-bg-theme-light);
   box-shadow: var(--shadow);
-  border: var(--b-thin) var(--c-b-neutral);
-  border-radius: $smRadius;
+  border: var(--b-light);
+  border-radius: $radius-sm;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -14,21 +14,21 @@
   grid-row-end: span 1;
 
   &.full {
-    @media (min-width: $smallResponsiveWidth) {
+    @media (min-width: $screen-sm) {
       grid-column-end: span 8;
     }
 
-    @media (min-width: $mediumResponsiveWidth) {
+    @media (min-width: $screen-md) {
       grid-column-end: span 12;
     }
   }
 
   &.wide {
-    @media (min-width: $smallResponsiveWidth) {
+    @media (min-width: $screen-sm) {
       grid-column-end: span 8;
     }
 
-    @media (min-width: $mediumResponsiveWidth) {
+    @media (min-width: $screen-md) {
       grid-column-end: span 6;
     }
   }
@@ -37,21 +37,15 @@
 .cardHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: $lg $md $md $md;
 
-  div {
-    display: flex;
+  span {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-sm;
+    display: inline-flex;
     align-items: center;
-
-    span {
-      width: 40px;
-      height: 40px;
-      border-radius: $smRadius;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+    justify-content: center;
   }
 }
 
@@ -83,7 +77,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-top: var(--b-thin) var(--c-b-neutral);
+  border-top: var(--b-light);
 
   a {
     color: var(--c-fg-theme);

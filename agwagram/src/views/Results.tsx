@@ -25,7 +25,7 @@ import {
   GridCard,
 } from "../components/cards";
 import { Link } from "react-router-dom";
-import Toggle from "../components/Toggle";
+import Toggle from "../components/Input/Toggle";
 import { formatDate } from "../Global";
 
 const Results: React.FC = () => {

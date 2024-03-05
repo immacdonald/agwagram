@@ -2,7 +2,7 @@ import { ReactNode, useState, useMemo } from "react";
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Tooltip } from "recharts";
 import { formatDate, graphColor } from "../../Global";
 import { DefinitionTooltip } from "../BLOCComponents";
-import Toggle from "../Toggle";
+import Toggle from "../Input/Toggle";
 import Card, { CardSize } from "./Card";
 import style from "./Card.module.scss";
 

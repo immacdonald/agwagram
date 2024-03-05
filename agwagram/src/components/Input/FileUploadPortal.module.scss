@@ -1,4 +1,4 @@
-@use "../styles" as *;
+@use "../../styles" as *;
 
 .submit {
   width: 100%;
@@ -8,7 +8,7 @@
 }
 
 .fileList {
-  font-size: $xsFont;
+  font-size: $font-xs;
   margin-top: $sm;
 }
 

@@ -29,10 +29,8 @@ const Card: React.FC<CardProps> = ({
     return (
         <article className={cardClass}>
             <div className={style.cardHeader}>
-                <div>
-                    <span className={style.icon}>{icon}</span>
-                    <h3>{title}</h3>
-                </div>
+                <span className={style.icon}>{icon}</span>
+                <h3>{title}</h3>
             </div>
             <div className={style.cardBody}>{children}</div>
             <div className={style.cardFooter}>

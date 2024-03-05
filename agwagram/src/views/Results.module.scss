@@ -8,7 +8,7 @@
 .contentHeader {
   margin-bottom: 1rem;
   padding-bottom: $xl;
-  border-bottom: var(--b-thin) var(--c-b-neutral);
+  border-bottom: var(--b-light);
   height: fit-content;
 }
 
@@ -17,7 +17,7 @@
   margin-right: $sm;
   background-color: var(--c-primary);
   color: var(--c-fg-on-primary);
-  border-radius: $smRadius;
+  border-radius: $radius-sm;
 }
 
 .contentMain {
@@ -39,7 +39,7 @@
   min-height: 320px;
   background-color: var(--c-primary-alpha-light);
   padding: $md;
-  border-radius: $mdRadius;
+  border-radius: $radius-md;
   box-shadow: var(--shadow);
 
   @media (min-width: 800px) {

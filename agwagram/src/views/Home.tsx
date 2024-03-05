@@ -1,9 +1,11 @@
+import Page from "../components/Page/Page";
+import Section from "../components/Page/Section";
 import Analyze from "./Analyze";
 
 function Home() {
   return (
-    <>
-      <section>
+    <Page>
+      <Section alt>
         <h1>
           Welcome to <em>Agwagram</em>
         </h1>
@@ -21,11 +23,11 @@ function Home() {
           essential tool for anyone looking to study and detect coordinated
           disinformation on social media platforms.
         </p>
-      </section>
-      <section style={{ backgroundColor: "var(--c-bg-theme-light)" }}>
+      </Section>
+      <Section>
         <Analyze />
-      </section>
-      <section>
+      </Section>
+      <Section alt>
         <h2>Methodology</h2>
         <p>
           Agwagram is built on top of BLOC, or Behavioral Language for Online
@@ -56,8 +58,8 @@ function Home() {
           as well as the{" "}
           <a href="https://github.com/anwala/bloc">BLOC Project GitHub.</a>
         </p>
-      </section>
-    </>
+      </Section>
+    </Page>
   );
 }
 

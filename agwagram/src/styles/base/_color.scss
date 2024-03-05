@@ -1,13 +1,12 @@
 @use "sass:color";
 
 $primary: #143aa2;
-//$primary: #c02121;
 
 :root {
   // Palette Colors
   --c-white: rgb(253, 253, 253);
   --c-grey-1: rgb(251, 251, 251);
-  --c-grey-2: rgb(248, 248, 248);
+  --c-grey-2: rgb(244, 244, 244);
   --c-grey-3: rgb(235, 235, 235);
   --c-grey-4: rgb(221, 221, 221);
   --c-grey-5: rgb(203, 203, 203);
@@ -29,8 +28,8 @@ $primary: #143aa2;
   --c-bg-dark: var(--c-grey-10);
 
   // Border
-  --b-thin: 1px solid;
-  --b-thick: 2px solid;
+  --b-light: 1px solid var(--c-bg-theme-dim);
+  --b-dark: 1px solid var(--c-bg-dark);
 
   // Transitions
   --t-fast: 0.25s ease;
@@ -61,9 +60,6 @@ html[data-theme="light"] {
   // Effect Colors
   --c-disabled-background: var(--c-grey-6);
   --c-disabled-color: var(--c-grey-5);
-
-  // Border
-  --c-b-neutral: var(--c-grey-3);
 }
 
 html[data-theme="dark"] {
@@ -84,7 +80,4 @@ html[data-theme="dark"] {
   // Effect Colors
   --c-disabled-background: var(--c-grey-7);
   --c-disabled-color: var(--c-grey-6);
-
-  // Border
-  --c-b-neutral: var(--c-grey-8);
 }
