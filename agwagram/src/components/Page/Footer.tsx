@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer className={style.footer}>
             <div>
-                <h6>&copy; Ian MacDonald & Dr. Alexander Nwala 2023</h6>
+                <p>&copy; Ian MacDonald & Dr. Alexander Nwala 2023</p>
             </div>
         </footer>
     );

@@ -1,10 +1,10 @@
-import { ReactNode, useState, useMemo } from "react";
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Tooltip } from "recharts";
-import { formatDate, graphColor } from "../../Global";
-import { DefinitionTooltip } from "../BLOCComponents";
-import Toggle from "../Input/Toggle";
-import Card, { CardSize } from "./Card";
-import style from "./Card.module.scss";
+import { ReactNode, useMemo, useState } from 'react';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { formatDate, graphColor } from '../../Global';
+import { DefinitionTooltip } from '../BLOCComponents';
+import Toggle from '../Input/Toggle';
+import Card, { CardSize } from './Card';
+import style from './Card.module.scss';
 
 interface ChangeCardProps {
     title: string;
@@ -12,29 +12,23 @@ interface ChangeCardProps {
     report: any;
 }
 
-const ChangeCard: React.FC<ChangeCardProps> = ({
-    title,
-    icon,
-    report,
-}: ChangeCardProps) => {
+const ChangeCard: React.FC<ChangeCardProps> = ({ title, icon, report }: ChangeCardProps) => {
     // Only show pause change if it has a value
     const showPause: boolean = report.change_profile.average_change.pause >= 0;
-    const [sortedField, setSortedField] = useState<string | null>("time");
+    const [sortedField, setSortedField] = useState<string | null>('time');
 
     const tableContent = useMemo(() => {
-        let sorted = [...report.change_events];
-        if (sortedField == "sim") {
+        const sorted = [...report.change_events];
+        if (sortedField == 'sim') {
             sorted.sort((a, b) => a.sim - b.sim);
             //sorted.reverse();
-        } else if (sortedField == "word") {
+        } else if (sortedField == 'word') {
             sorted.sort((a, b) => a.change_profile.word - b.change_profile.word);
-        } else if (sortedField == "pause") {
+        } else if (sortedField == 'pause') {
             sorted.sort((a, b) => a.change_profile.pause - b.change_profile.pause);
-        } else if (sortedField == "activity") {
-            sorted.sort(
-                (a, b) => a.change_profile.activity - b.change_profile.activity,
-            );
-        } else if (sortedField == "start") {
+        } else if (sortedField == 'activity') {
+            sorted.sort((a, b) => a.change_profile.activity - b.change_profile.activity);
+        } else if (sortedField == 'start') {
             sorted.sort((a, b) => {
                 if (a.first_segment.local_dates[0] < b.first_segment.local_dates[0]) {
                     return -1;
@@ -44,7 +38,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
                 }
                 return 0;
             });
-        } else if (sortedField == "end") {
+        } else if (sortedField == 'end') {
             sorted.sort((a, b) => {
                 if (a.second_segment.local_dates[0] < b.second_segment.local_dates[0]) {
                     return -1;
@@ -56,9 +50,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
             });
         }
 
-        report.change_events = sorted;
-
-        return report.change_events.map((change_event: any, i: number) => {
+        return sorted.map((change_event: any, i: number) => {
             return (
                 <tr key={i}>
                     <td>
@@ -82,7 +74,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
         similarity: true,
         word: true,
         pause: true,
-        activity: true,
+        activity: true
     });
 
     const toggleChangeGraphDisplay = (key: string) => {
@@ -96,19 +88,15 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
             Similarity: +event.sim.toFixed(2),
             Word: event.change_profile.word,
             Pause: event.change_profile.pause,
-            Activity: event.change_profile.activity,
+            Activity: event.change_profile.activity
         });
     });
 
     const sortButton = (text: string, code: string): ReactNode => {
         return (
-            <button
-                type="button"
-                className={style.clearButton}
-                onClick={() => setSortedField(code)}
-            >
+            <button type="button" className={style.clearButton} onClick={() => setSortedField(code)}>
                 {text}
-                {sortedField == code ? " >" : false}
+                {sortedField == code ? ' >' : false}
             </button>
         );
     };
@@ -120,42 +108,24 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
                 <br />
                 <strong>Average Change: </strong>
                 {`Word: ${report.change_profile.average_change.word}, `}
-                {showPause
-                    ? `Pause: ${report.change_profile.average_change.pause}, `
-                    : false}
+                {showPause ? `Pause: ${report.change_profile.average_change.pause}, ` : false}
                 {`Activity: ${report.change_profile.average_change.activity}`}
             </p>
             <hr />
-            <div style={{ width: "100%", height: "480px" }}>
+            <div style={{ width: '100%', height: '480px' }}>
                 <h3>Change Profile</h3>
                 <div className={style.changeGraphToggles}>
                     <span>
-                        Similarity{" "}
-                        <Toggle
-                            state={changeGraph["similarity"]}
-                            onChange={() => toggleChangeGraphDisplay("similarity")}
-                        />
+                        Similarity <Toggle state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
                     </span>
                     <span>
-                        Word{" "}
-                        <Toggle
-                            state={changeGraph["word"]}
-                            onChange={() => toggleChangeGraphDisplay("word")}
-                        />
+                        Word <Toggle state={changeGraph['word']} onChange={() => toggleChangeGraphDisplay('word')} />
                     </span>
                     <span>
-                        Pause{" "}
-                        <Toggle
-                            state={changeGraph["pause"]}
-                            onChange={() => toggleChangeGraphDisplay("pause")}
-                        />
+                        Pause <Toggle state={changeGraph['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
                     </span>
                     <span>
-                        Activity{" "}
-                        <Toggle
-                            state={changeGraph["activity"]}
-                            onChange={() => toggleChangeGraphDisplay("activity")}
-                        />
+                        Activity <Toggle state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
                     </span>
                 </div>
                 <ResponsiveContainer width="100%" height="85%">
@@ -167,7 +137,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
                             top: 5,
                             right: 30,
                             left: 20,
-                            bottom: 5,
+                            bottom: 5
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
@@ -175,38 +145,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        {changeGraph["similarity"] && (
-                            <Line
-                                type="monotone"
-                                dataKey="Similarity"
-                                stroke={graphColor(3)}
-                                dot={false}
-                            />
-                        )}
-                        {changeGraph["word"] && (
-                            <Line
-                                type="monotone"
-                                dataKey="Word"
-                                stroke={graphColor(0)}
-                                dot={false}
-                            />
-                        )}
-                        {showPause && changeGraph["pause"] && (
-                            <Line
-                                type="monotone"
-                                dataKey="Pause"
-                                stroke={graphColor(1)}
-                                dot={false}
-                            />
-                        )}
-                        {changeGraph["activity"] && (
-                            <Line
-                                type="monotone"
-                                dataKey="Activity"
-                                stroke={graphColor(2)}
-                                dot={false}
-                            />
-                        )}
+                        {changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false} />}
+                        {changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false} />}
+                        {showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false} />}
+                        {changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false} />}
                     </LineChart>
                 </ResponsiveContainer>
             </div>
@@ -216,26 +158,14 @@ const ChangeCard: React.FC<ChangeCardProps> = ({
                 <table>
                     <thead>
                         <tr>
-                            <th style={{ width: "180px" }}>Start Behavior</th>
-                            <th style={{ width: "180px" }}>End Behavior</th>
-                            <th>{sortButton("Similarity", "sim")}</th>
-                            <th style={{ width: "70px" }}>{sortButton("Word", "word")}</th>
-                            {showPause ? (
-                                <th style={{ width: "70px" }}>
-                                    {sortButton("Pause", "pause")}
-                                </th>
-                            ) : (
-                                false
-                            )}
-                            <th style={{ width: "90px" }}>
-                                {sortButton("Activity", "activity")}
-                            </th>
-                            <th style={{ width: "170px" }}>
-                                {sortButton("Start Date", "start")}
-                            </th>
-                            <th style={{ width: "170px" }}>
-                                {sortButton("End Date", "end")}
-                            </th>
+                            <th style={{ width: '180px' }}>Start Behavior</th>
+                            <th style={{ width: '180px' }}>End Behavior</th>
+                            <th>{sortButton('Similarity', 'sim')}</th>
+                            <th style={{ width: '70px' }}>{sortButton('Word', 'word')}</th>
+                            {showPause ? <th style={{ width: '70px' }}>{sortButton('Pause', 'pause')}</th> : false}
+                            <th style={{ width: '90px' }}>{sortButton('Activity', 'activity')}</th>
+                            <th style={{ width: '170px' }}>{sortButton('Start Date', 'start')}</th>
+                            <th style={{ width: '170px' }}>{sortButton('End Date', 'end')}</th>
                         </tr>
                     </thead>
                     <tbody>{tableContent}</tbody>

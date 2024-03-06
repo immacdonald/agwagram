@@ -8,6 +8,7 @@ from .serializers import *
 from .code import bloc_handler
 from .code import symbols
 from .code.file_handling import handle_uploaded_file
+from django.http import JsonResponse
 
 
 import logging
@@ -44,10 +45,12 @@ class AnalyzeFiles(APIView):
 
 
 class AnalyzeUsers(APIView):
-    def get(self, request):
-        serializer = AnalyzeUserSerializer(data=request.GET)
+    def post(self, request):
+        # Use request.data for POST requests
+        serializer = AnalyzeUserSerializer(data=request.data)  
         if serializer.is_valid():
             try:
+                # Access the username from validated data
                 response = bloc_handler.analyze_user(serializer.validated_data['username'])
                 return Response({"result": response}, status=status.HTTP_200_OK)
             except Exception as error:
@@ -60,6 +63,6 @@ class GetSymbols(APIView):
     def get(self, request):
         try:
             response = json.dumps(symbols.get_all_symbols())
-            return Response({"result": response}, status=status.HTTP_200_OK)
+            return JsonResponse(symbols.get_all_symbols())
         except Exception as error:
             return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)

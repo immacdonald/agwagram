@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
-import { DefinitionTooltip, SymbolTooltip } from "../BLOCComponents";
-import Card, { CardSize } from "./Card";
-import style from "./Card.module.scss";
+import { ReactNode } from 'react';
+import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
+import Card, { CardSize } from './Card';
+import style from './Card.module.scss';
 
 interface TopWordsCardProps {
     title: string;
@@ -10,12 +10,7 @@ interface TopWordsCardProps {
     top: any;
 }
 
-const TopWordsCard: React.FC<TopWordsCardProps> = ({
-    title,
-    subtitle,
-    icon,
-    top,
-}: TopWordsCardProps) => {
+const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, icon, top }: TopWordsCardProps) => {
     return (
         <Card title={title} icon={icon} size={CardSize.Wide}>
             {subtitle ? <p>{subtitle}</p> : false}
@@ -23,10 +18,10 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({
                 <table>
                     <thead>
                         <tr>
-                            <th style={{ width: "50px" }}>Rank</th>
-                            <th style={{ width: "100px" }}>Word</th>
-                            <th style={{ width: "90px" }}>Frequency</th>
-                            <th style={{ width: "70px" }}>Rate (%)</th>
+                            <th style={{ width: '50px' }}>Rank</th>
+                            <th style={{ width: '100px' }}>Word</th>
+                            <th style={{ width: '90px' }}>Frequency</th>
+                            <th style={{ width: '70px' }}>Rate (%)</th>
                             <th>Description</th>
                         </tr>
                     </thead>
@@ -40,7 +35,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({
                                     </td>
                                     <td>{word.term_freq}</td>
                                     <td>{word.term_rate}</td>
-                                    <td style={{ textAlign: "left" }}>
+                                    <td style={{ textAlign: 'left' }}>
                                         <SymbolTooltip word={word.term} />
                                     </td>
                                 </tr>

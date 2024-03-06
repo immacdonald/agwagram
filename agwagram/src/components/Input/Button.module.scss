@@ -192,9 +192,9 @@
     }
 
     &[disabled] {
-        background-color: var(--c-bg-light);
+        background-color: var(--c-bg-theme-light);
         border: none;
-        color: var(--c-fg-light);
+        color: var(--c-fg-theme-light);
         cursor: not-allowed;
         filter: brightness(var(--f-disabled-brightness)) saturate(var(--f-disabled-saturation));
     }

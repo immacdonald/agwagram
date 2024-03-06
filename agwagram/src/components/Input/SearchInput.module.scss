@@ -1,80 +1,80 @@
-@use "../../styles" as *;
+@use '../../styles' as *;
 
 $height: 40px;
 
 .search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  input {
-    font: inherit;
-    color: inherit;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 $xxl 0 $sm;
-    height: $height;
-    width: 100%;
-    line-height: 1;
-    background-color: var(--c-bg-theme);
-    border: var(--b-light);
-    border-radius: $radius-sm;
-    color: var(--c-text-action);
-    transition: var(--t-fast);
-
-    &::placeholder {
-      color: var(--c-disabled-color);
-    }
-
-    &:focus,
-    &:hover {
-      border-color: var(--c-primary);
-    }
-  }
-
-  &:has(button:hover) > input {
-    border-color: var(--c-primary);
-  }
-
-  button {
-    $offset: 2px;
-
-    position: absolute;
-    right: $offset;
-    bottom: $offset;
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: $height - $offset - $offset;
-    width: $height - $offset - $offset;
-    border: 0;
-    border-radius: 100%;
-    background-color: transparent;
-    color: var(--c-fg-theme);
-    padding: 0;
+    width: 100%;
 
-    &::before {
-      content: "";
-      -webkit-mask: url("../icons/search.svg") no-repeat 100% 100%;
-      mask: url("../icons/search.svg") no-repeat 100% 100%;
-      -webkit-mask-size: cover;
-      mask-size: cover;
-      background-color: var(--c-fg-theme-dark);
-      transition: background-color var(--t-fast);
-      width: 30px;
-      height: 30px;
+    input {
+        font: inherit;
+        color: inherit;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 $xxl 0 $sm;
+        height: $height;
+        width: 100%;
+        line-height: 1;
+        background-color: var(--c-bg-theme);
+        border: var(--b-light);
+        border-radius: $radius-sm;
+        color: var(--c-text-action);
+        transition: var(--t-fast);
+
+        &::placeholder {
+            color: var(--c-disabled-color);
+        }
+
+        &:focus,
+        &:hover {
+            border-color: var(--c-primary);
+        }
     }
 
-    &:focus,
-    &:hover {
-      background-color: var(--c-bg-theme-dim);
-
-      &::before {
-        background-color: var(--c-primary);
-      }
+    &:has(button:hover) > input {
+        border-color: var(--c-primary);
     }
-  }
+
+    button {
+        $offset: 2px;
+
+        position: absolute;
+        right: $offset;
+        bottom: $offset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $height - $offset - $offset;
+        width: $height - $offset - $offset;
+        border: 0;
+        border-radius: 100%;
+        background-color: transparent;
+        color: var(--c-fg-theme);
+        padding: 0;
+
+        &::before {
+            content: '';
+            -webkit-mask: url('../icons/search.svg') no-repeat 100% 100%;
+            mask: url('../icons/search.svg') no-repeat 100% 100%;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: var(--c-fg-theme-dark);
+            transition: background-color var(--t-fast);
+            width: 30px;
+            height: 30px;
+        }
+
+        &:focus,
+        &:hover {
+            background-color: var(--c-bg-theme-dim);
+
+            &::before {
+                background-color: var(--c-primary);
+            }
+        }
+    }
 }

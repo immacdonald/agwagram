@@ -1,12 +1,18 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Logo from "../../images/agwagram.png";
-import style from './Header.module.scss';
-import { useContext } from 'react';
-import { AnalysisContext } from '../../contexts/AnalysisContext';
+import { selectTheme, setTheme } from '../../data/settingsSlice';
+import Logo from '../../images/agwagram.png';
 import Button from '../Input/Button';
+import style from './Header.module.scss';
 
 const Header: React.FC = () => {
-    const { setTheme } = useContext(AnalysisContext);
+    const dispatch = useDispatch();
+    const theme = useSelector(selectTheme);
+
+    function switchTheme() {
+        const switchTo = theme == 'light' ? 'dark' : 'light';
+        dispatch(setTheme(switchTo));
+    }
 
     return (
         <header className={style.header}>
@@ -16,7 +22,7 @@ const Header: React.FC = () => {
                 </Link>
                 <div className={style.navigation}>
                     <nav className={style.navLinks}>
-                        <Button onClick={() => setTheme()} label="Theme" />
+                        <Button onClick={() => switchTheme()} label="Theme" />
                     </nav>
                 </div>
             </div>

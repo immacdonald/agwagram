@@ -1,59 +1,59 @@
-@use "../../styles" as *;
+@use '../../styles' as *;
 
 .toggle {
-  $_padding: 4px;
-  $_height: 1em;
-  $_fullHeight: calc($_height + $_padding + $_padding);
-  $_width: 40px;
+    $_padding: 4px;
+    $_height: 1em;
+    $_fullHeight: calc($_height + $_padding + $_padding);
+    $_width: 40px;
 
-  width: $_width;
-  display: inline-block;
-  position: relative;
-  top: calc($_padding * 2);
-
-  &:hover > span {
-    border-color: var(--c-primary);
-  }
-
-  span {
-    display: flex;
-    align-items: center;
     width: $_width;
-    height: $_fullHeight;
-    border-radius: $_fullHeight;
-    background-color: var(--c-bg-theme-dim);
+    display: inline-block;
     position: relative;
-    transition: 0.15s ease;
-    pointer-events: none;
-    border: 1px solid var(--c-b-neutral);
-    &:before {
-      content: "";
-      display: block;
-      position: absolute;
-      pointer-events: none;
-      height: $_height;
-      width: $_height;
-      background-color: var(--c-fg-theme-inverse);
-      border-radius: 50%;
-      box-shadow: 0 1px 3px 0 rgba(#000, 0.15);
-      transition: 0.15s ease;
-      transform: translateX($_padding);
-    }
-  }
+    top: calc($_padding * 2);
 
-  input {
-    width: $_width;
-    height: $_fullHeight;
-    font-size: inherit;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    opacity: 0;
-    &:checked + span {
-      background-color: var(--c-primary);
-      &:before {
-        transform: translateX(calc(100% + $_padding));
-      }
+    &:hover > span {
+        border-color: var(--c-primary);
     }
-  }
+
+    span {
+        display: flex;
+        align-items: center;
+        width: $_width;
+        height: $_fullHeight;
+        border-radius: $_fullHeight;
+        background-color: var(--c-bg-theme-dim);
+        position: relative;
+        transition: 0.15s ease;
+        pointer-events: none;
+        border: 1px solid var(--c-b-neutral);
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            pointer-events: none;
+            height: $_height;
+            width: $_height;
+            background-color: var(--c-fg-theme-inverse);
+            border-radius: 50%;
+            box-shadow: 0 1px 3px 0 rgba(#000, 0.15);
+            transition: 0.15s ease;
+            transform: translateX($_padding);
+        }
+    }
+
+    input {
+        width: $_width;
+        height: $_fullHeight;
+        font-size: inherit;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        opacity: 0;
+        &:checked + span {
+            background-color: var(--c-primary);
+            &:before {
+                transform: translateX(calc(100% + $_padding));
+            }
+        }
+    }
 }

@@ -11,7 +11,7 @@
     align-items: start;
     padding: $lg max(calc((100% - $screen-lg) / 2), 3%);
     background-color: var(--c-bg-dark);
-    color: var(--c-fg-inverse);
+    color: var(--c-fg-light);
     font-size: $font-xs;
 
     > div {
@@ -36,19 +36,12 @@
         }
     }
 
-    h6 {
-        color: var(--c-fg-inverse);
-        font-size: $font-sm;
-        margin-bottom: $xxs;
-        font-weight: $bold;
-    }
-
     p {
         margin: 0;
     }
 
     a {
-        color: var(--c-fg-inverse);
+        color: var(--c-fg-light);
         text-decoration: none;
     }
 }

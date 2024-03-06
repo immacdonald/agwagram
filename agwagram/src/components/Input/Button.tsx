@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { CSSProperties, MouseEvent, useCallback, useMemo } from 'react';
+import React, { CSSProperties, MouseEvent, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
 import style from './Button.module.scss';
@@ -59,7 +59,7 @@ const Button: React.FC<ButtonProps> = ({
 
     const navigate = useNavigate();
 
-    const handleMouseClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    const handleMouseClick = (e: MouseEvent<HTMLButtonElement>) => {
         if (!allowPropagation) {
             e.stopPropagation();
         }
@@ -69,7 +69,7 @@ const Button: React.FC<ButtonProps> = ({
         } else if (link != undefined) {
             navigate(link);
         }
-    }, []);
+    };
 
     const visibility = useMemo(() => (isLoading ? ({ visibility: 'hidden' } as CSSProperties) : undefined), [isLoading]);
 
