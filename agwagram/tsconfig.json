@@ -23,6 +23,6 @@
         /* Types */
         "types": ["vite-plugin-svgr/client"]
     },
-    "include": ["src", "custom.d.ts"],
+    "include": ["src", "custom.d.ts", "types.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

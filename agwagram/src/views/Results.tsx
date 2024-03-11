@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../Global';
@@ -15,19 +15,39 @@ const Results: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const handleExpertToggle = () => {
-        setExpertMode(!expertMode);
+    const handleExpertToggle = () => setExpertMode(!expertMode);
+
+    const resultState = useSelector(selectResults);
+
+    const [hasPreviousResults, setHasPreviousResults] = useState<boolean>(false);
+    const results = useMemo(() => {
+        if (hasPreviousResults && resultState.data) {
+            // Not the first load
+            console.log("Hey");
+            document.getElementById("results")?.scrollIntoView();
+        } else if (hasPreviousResults) {
+            console.log("Results but no data?");
+        }
+        setHasPreviousResults(true);
+        return resultState.data;
+    }, [resultState])
+
+    const returnToAnalysis = () => {
+        dispatch(clearResults());
+        document.getElementById("analyze")?.scrollIntoView();
     };
 
-    const results = useSelector(selectResults);
+    const expertToggle = false && (
+        <>
+            Expert Mode: <Toggle state={expertMode} onChange={handleExpertToggle} />
+        </>
+    )
 
-    const returnToAnalysis = () => dispatch(clearResults());
-
-    const getAccountAnalysis = (account: any) => {
+    const getAccountAnalysis = (account: AccountBloc) => {
         return (
             <>
                 <Card title="Account Overview" icon={<Person />} size={CardSize.Full}>
-                    <h2>Analysis of @{account.account_username}</h2>
+                    <h2 id="results">Analysis of @{account.account_username}</h2>
                     <p>
                         Results generated using {account.tweet_count} tweets from {formatDate(account.first_tweet_date)} to {formatDate(account.last_tweet_date)}.
                     </p>
@@ -37,8 +57,8 @@ const Results: React.FC = () => {
                 <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent durations of pause between account activities." icon={<Pause />} top={account.top_time} symbolLabel="Pause" />
                 <GridCard title="Grid View" icon={<Dataset />} data={account.linked_data} />
                 <ChangeProfileCard title="Change Profile Details" icon={<Chart />} reports={account.change_report} />
-                <ChangeCard title="Action Change Profile" icon={<Timeline />} report={account.change_report['action']} />
-                <ChangeCard title="Syntactic Change Profile" icon={<Timeline />} report={account.change_report['content_syntactic']} />
+                <ChangeCard title="Action Change Profile" icon={<Timeline />} report={account.change_report.action} />
+                <ChangeCard title="Syntactic Change Profile" icon={<Timeline />} report={account.change_report.content_syntactic} />
                 {expertMode ? (
                     <>
                         <LanguageCard title="Action" icon={<Dataset />} bloc={account.bloc_action} />
@@ -55,9 +75,8 @@ const Results: React.FC = () => {
         );
     };
 
-    if (results && results['result'] && results['result']['successful_generation']) {
-        const result: any = results.result;
-        const accounts = result['account_blocs'];
+    if (results && results.successful_generation) {
+        const accounts = results.account_blocs;
         if (accounts.length === 1) {
             const account = accounts[0];
             return (
@@ -65,7 +84,7 @@ const Results: React.FC = () => {
                     <div className={style.contentHeader}>
                         <div>
                             <h1>
-                                Analysis of <span className={style.specialText}>@{account['account_username']}</span> (<em>{account['account_name']}</em>)
+                                Analysis of <span className={style.specialText}>@{account.account_username}</span> (<i>{account.account_name}</i>)
                             </h1>
                             <Link to="/" onClick={returnToAnalysis} className={style.analyzeAnother}>
                                 &#8592; Analyze Another
@@ -73,7 +92,7 @@ const Results: React.FC = () => {
                             {account.tweet_count > 0 ? (
                                 <>
                                     <br />
-                                    Expert Mode: <Toggle state={expertMode} onChange={handleExpertToggle} />
+                                    {expertToggle}
                                     <p>
                                         Results generated using {account.tweet_count} tweets from {account.first_tweet_date} - {account.last_tweet_date}.
                                         {account.elapsed_time > 0 ? 'BLOC process took {account.elapsed_time} seconds to complete.' : false}
@@ -99,7 +118,7 @@ const Results: React.FC = () => {
                                 &#8592; Analyze Another
                             </Link>
                             <br />
-                            Expert Mode: <Toggle state={expertMode} onChange={handleExpertToggle} />
+                            {expertToggle}
                             <p>
                                 Successfully generated results for{' '}
                                 {accounts.map((account: any) => {
@@ -132,19 +151,19 @@ const Results: React.FC = () => {
                                 <>
                                     <Card title="Accounts Overview" icon={<Group />} size={CardSize.Full}>
                                         <h2>Analysis of {accounts.map((account: any) => `@${account.account_username}`).join(', ')}</h2>
-                                        <p>Results generated using {result['total_tweets']} tweets.</p>
+                                        <p>Results generated using {results.total_tweets} tweets.</p>
                                     </Card>
                                     <TopWordsCard
                                         title="Top 100 Behaviors"
                                         subtitle="Displays the top 100 (or less) BLOC words between all the accounts analyzed."
                                         icon={<BarChart />}
-                                        top={result['group_top_bloc_words']}
+                                        top={results.group_top_bloc_words}
                                     />
                                     <TopWordsCategoryCard
                                         title="Top Pauses"
                                         subtitle="Most frequent durations of pause between activities of each account."
                                         icon={<Pause />}
-                                        top={result['group_top_time']}
+                                        top={results.group_top_time}
                                         symbolLabel="Pause"
                                     />
                                     <Card title="Pairwise Similarity" icon={<Hub />}>
@@ -157,7 +176,7 @@ const Results: React.FC = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {result['pairwise_sim'].map((u_pair: any, index: number) => {
+                                                {results.pairwise_sim.map((u_pair: any, index: number) => {
                                                     return (
                                                         <tr key={index}>
                                                             <td>{`${+(u_pair.sim * 100).toFixed(1)}%`}</td>
@@ -169,7 +188,7 @@ const Results: React.FC = () => {
                                             </tbody>
                                         </table>
                                     </Card>
-                                    <GroupChangeCard title="Comparative Change Between Accounts" icon={<Chart />} reports={result.account_blocs} />
+                                    <GroupChangeCard title="Comparative Change Between Accounts" icon={<Chart />} reports={results.account_blocs} />
                                 </>
                             )}
                         </div>
@@ -178,8 +197,7 @@ const Results: React.FC = () => {
             );
         }
     } else {
-        if (results && results['result']) {
-            const result: any = results.result;
+        if (results) {
             return (
                 <div className={style.contentHeader}>
                     <div>
@@ -187,22 +205,22 @@ const Results: React.FC = () => {
                         <Link to="/" onClick={returnToAnalysis} className={style.analyzeAnother}>
                             &#8592; Analyze Another
                         </Link>
-                        <p>Unable to generate BLOC analysis results for the following accounts: {result['query'].join(', ')}</p>
-                        {result['errors'].map((error: Record<string, string>) => {
+                        <p>Unable to generate BLOC analysis results for the following accounts: {results.query.join(', ')}</p>
+                        {results.errors.map((error: Record<string, string>) => {
                             return (
-                                <div key={error['account_username']}>
-                                    {error['account_username'] ? (
+                                <div key={error.account_username}>
+                                    {error.account_username ? (
                                         <h3>
-                                            Error: <span className={style.specialText}>{error['account_username']}</span>
+                                            Error: <span className={style.specialText}>{error.account_username}</span>
                                         </h3>
                                     ) : (
                                         <h3>Error</h3>
                                     )}
                                     <p>
-                                        Unable to analyze account due to <em>{error['error_title']}</em>.
+                                        Unable to analyze account due to <i>{error.error_title}</i>.
                                     </p>
                                     <p>
-                                        Details: <em>{error['error_detail']}</em>
+                                        Details: <i>{error.error_detail}</i>
                                     </p>
                                 </div>
                             );
@@ -210,19 +228,8 @@ const Results: React.FC = () => {
                     </div>
                 </div>
             );
-        } else {
+        } else if (resultState.loading) {
             return <Loading />;
-            return (
-                <div className={style.contentHeader}>
-                    <div>
-                        <h1>Analysis Failed</h1>
-                        <Link to="/" onClick={returnToAnalysis} className={style.analyzeAnother}>
-                            &#8592; Analyze Another
-                        </Link>
-                        <p>Unable to analyze account due to an error.</p>
-                    </div>
-                </div>
-            );
         }
     }
 };

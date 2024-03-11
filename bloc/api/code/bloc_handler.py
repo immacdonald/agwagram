@@ -46,6 +46,7 @@ def verify_user_exists(user_list):
 
     return 0, user_data['data']
 
+import traceback
 
 def analyze_tweet_file(files = None):
     if(files):
@@ -78,7 +79,13 @@ def analyze_tweet_file(files = None):
         for user in users.values():
             bloc_params['screen_names_or_ids'] = user['id']
 
+            print("Adding bloc sequences")
+            for exact in user['tweets']:
+                print(f"*{exact['created_at']}*")
+                print(type(exact['created_at']))
+
             all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **bloc_params))
+            
             user_data.append(
                 {
                     'id': user['id'],
@@ -87,11 +94,15 @@ def analyze_tweet_file(files = None):
                     'length': len(user['tweets'])
                 }
             )
-    
+
         user_ids = [user['id'] for user in user_data]
         bloc_params['screen_names_or_ids'] = user_ids
 
-        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
+        try:
+            return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
+        except Exception as e:
+            print(f"Exception occurred: {e}")
+            traceback.print_exc()
 
 
 def analyze_user(usernames):
@@ -336,14 +347,18 @@ def link_change_report(raw_report):
             reports.append(change_event)
 
         report[alphabet]['change_events'] = reports
-        report[alphabet]['change_profile'] = {
-            'change_rate': round_format(raw_report['change_report']['change_rates'][alphabet]),
-            'average_change': {
-                'word': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['word'] / 100),
-                'pause': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['pause'] / 100),
-                'activity': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['activity'] / 100),
+
+        if len(raw_report['change_report']['change_rates']) > 0:
+            report[alphabet]['change_profile'] = {
+                'change_rate': round_format(raw_report['change_report']['change_rates'][alphabet]),
+                'average_change': {
+                    'word': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['word'] / 100),
+                    'pause': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['pause'] / 100),
+                    'activity': round_format(raw_report['change_report']['avg_change_profile_no_filter'][alphabet]['activity'] / 100),
+                }
             }
-        }
+        else:
+            report[alphabet]['change_profile'] = None
 
     return report
 

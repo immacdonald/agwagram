@@ -7,7 +7,7 @@ interface HoverMarkProps {
 function HoverMark({ text, ...rest }: HoverMarkProps) {
     return (
         <mark className={style.hoverMark} {...rest}>
-            {text}
+            <em>{text}</em>
         </mark>
     );
 }

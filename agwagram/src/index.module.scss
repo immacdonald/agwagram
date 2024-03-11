@@ -16,24 +16,25 @@ html {
     height: 100%;
     display: block;
     box-sizing: border-box;
-
-    &::-webkit-scrollbar {
-        width: $sm;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: var(--c-bg-theme);
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--c-bg-theme-dim);
-        border-radius: $sm;
-        border: $xs solid var(--c-bg-theme-dim);
-    }
+    scroll-behavior: smooth;
 }
 
 ::selection {
     background: var(--c-primary-fade);
+}
+
+::-webkit-scrollbar {
+    width: $sm;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--c-bg-theme);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--c-bg-theme-dim);
+    border-radius: $sm;
+    border: $xs solid var(--c-bg-theme-dim);
 }
 
 body {

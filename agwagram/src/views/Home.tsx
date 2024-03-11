@@ -1,18 +1,22 @@
+import { useSelector } from 'react-redux';
 import { Results } from '.';
 import Page from '../components/Page/Page';
 import Section from '../components/Page/Section';
 import Analyze from './Analyze';
+import { selectResults } from '../data/settingsSlice';
 
 function Home() {
+    const resultState = useSelector(selectResults);
+
     return (
         <Page>
             <Section>
                 <h1>
-                    Welcome to <em>Agwagram</em>
+                    Welcome to <i>Agwagram</i>
                 </h1>
                 <p>
                     Agwagram is a cutting-edge online behavioral analysis tool designed to help researchers, journalists, social media analysts, and any other interested parties in identifying and
-                    quantitatively describing the behavior of <em>Twitter</em> (known now as <em>X</em>) accounts. With the global rise of misinformation, it offers a unique solution to track shifts
+                    quantitatively describing the behavior of <i>Twitter</i> (known now as <i>X</i>) accounts. With the global rise of misinformation, it offers a unique solution to track shifts
                     in behavior, powered by the novel BLOC language algorithm, and identify potential bot accounts with ease. Capable of detecting a broad range of legitimate and suspicious behaviors,
                     as well as accounts which display both, Agwagram offers a flexible and generalizable method for analyzing Twitter accounts - making it an essential tool for anyone looking to study
                     and detect coordinated disinformation on social media platforms.
@@ -21,9 +25,11 @@ function Home() {
             <Section alt>
                 <Analyze />
             </Section>
-            <Section>
+            {(resultState.data || resultState.loading) && (
+              <Section>
                 <Results />
-            </Section>
+              </Section>
+            )}
             <Section alt>
                 <h2>Methodology</h2>
                 <p>

@@ -149,7 +149,7 @@ mark {
     &:hover:after {
         content: attr(data-title);
         position: absolute;
-        top: -100%;
+        top: -150%;
         left: 50%;
         transform: translate(-50%, -$md);
         width: max-content;
@@ -163,10 +163,16 @@ mark {
         font-weight: 500;
         white-space: pre-line;
         z-index: 100;
-        opacity: 0;
-        animation: 0s ease-out 0.25s 1 appear;
-        animation-fill-mode: forwards;
+        opacity: 1;
+        //animation: 0s ease-out 0.25s 1 appear;
+        //animation-fill-mode: forwards;
         box-shadow: var(--shadow-low);
         filter: none;
     }
+}
+
+em {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+    font-style: normal;
+    font-weight: 600;
 }

@@ -6,49 +6,54 @@ import SearchInput from '../components/Input/SearchInput';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { getStaticFile } from '../utility';
 import style from './Analyze.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 
 const Analyze: React.FC = () => {
-    const [setFiles] = useSetAnalyzeFilesMutation({ fixedCacheKey: 'analysis' });
-    const [setUser] = useSetAnalyzeUserMutation({ fixedCacheKey: 'analysis' });
+    const [setFiles] = useSetAnalyzeFilesMutation();
+    const [setUser] = useSetAnalyzeUserMutation();
 
-    const submitFiles = (files: File[]) => {
+    const dispatch = useDispatch();
+    const results = useSelector(selectResults);
+
+    const submitFiles = (files: File[], example?: string) => {
+        dispatch(clearResults());
+        dispatch(setLoading(true));
+        if(example) {
+            dispatch(setExample(example));
+        }
         setFiles(files);
     };
 
     const searchUsername = (username: string) => {
+        dispatch(clearResults());
+        dispatch(setLoading(true));
         setUser(username);
     };
 
     const submitJsonFile = (file: string) => {
-        try {
-            setSelectedExample(file);
-            getStaticFile(file).then((data) => submitFiles([data]));
-        } catch (error) {
-            console.error('Error fetching or submitting file:', error);
-        }
+        getStaticFile(file).then((data) => submitFiles([data], file));
     };
 
     const exampleFile = (file: string, title: string, format: string = 'JSON') => {
         return (
             <div className={style.example}>
-                <Button onClick={() => submitJsonFile(file)} label={title} visual={file == selectedExample ? 'filled' : 'outline'} />
-                <Link to={`/static/${file}`} target="_blank" download>
-                    Download {format} File
-                </Link>
+                <Button onClick={() => submitJsonFile(file)} label={title} visual={file == results.example ? 'filled' : 'outline'} />
+                <Link to={`/static/${file}`} target="_blank" download>Download {format} File</Link>
             </div>
         );
     };
 
     useEffect(() => {
-        console.log('First load');
-        submitJsonFile('sample_storygraphbot.jsonl');
+        if (!results.data) {
+            // On first load preview one of the example files
+            submitJsonFile('sample_storygraphbot.jsonl');
+        }
     }, []);
-
-    const [selectedExample, setSelectedExample] = useState<string>('');
 
     return (
         <>
-            <h1>Analyze</h1>
+            <h1 id="analyze">Analyze</h1>
             <div className={style.columns}>
                 <div>
                     {true && (
@@ -78,7 +83,7 @@ const Analyze: React.FC = () => {
                     </p>
                     <p>
                         <strong>Note:</strong> JSON files are expected to contain the Tweet data as an array of Tweet objects, while the JSONL files are expected to be formatted with each line being a
-                        Tweet, <em>not</em> an account.
+                        Tweet, <i>not</i> an account.
                     </p>
                     <FileUploadPortal submit={submitFiles} />
                 </div>

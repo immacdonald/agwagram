@@ -20,7 +20,7 @@ export const api = createApi({
                 return definitions.join(', ');
             }
         }),
-        setAnalyzeUser: builder.mutation<any, string>({
+        setAnalyzeUser: builder.mutation<Analysis, string>({
             query: (username) => {
                 return {
                     url: `/analyze/user`,
@@ -28,12 +28,8 @@ export const api = createApi({
                     body: { username }
                 };
             },
-            transformResponse(response: any) {
-                console.log(response);
-                return response;
-            }
         }),
-        setAnalyzeFiles: builder.mutation<any, File[]>({
+        setAnalyzeFiles: builder.mutation<Analysis, File[]>({
             query: (files) => {
                 const formData = new FormData();
                 files.forEach((file: File) => {
@@ -46,10 +42,6 @@ export const api = createApi({
                     body: formData
                 };
             },
-            transformResponse(response: any) {
-                console.log(response);
-                return response;
-            }
         })
     })
 });

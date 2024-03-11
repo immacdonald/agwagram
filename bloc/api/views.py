@@ -21,7 +21,7 @@ class MainView(TemplateView):
 
 class Ping(APIView):
     def get(self, request):
-        return Response({"result": 'BLOC Services are fully operational.'}, status=status.HTTP_200_OK)
+        return Response({"response": 'BLOC Services are fully operational.'}, status=status.HTTP_200_OK)
 
 
 class AnalyzeFiles(APIView):
@@ -34,14 +34,17 @@ class AnalyzeFiles(APIView):
                 converted_file = handle_uploaded_file(file)
                 converted_files.append(converted_file.name)
 
+            print("Made file")
             results = bloc_handler.analyze_tweet_file(converted_files)
+            print("Made results")
 
             for temp_file in converted_files:
                 os.remove(temp_file)
 
-            return Response({"result": results}, status=status.HTTP_200_OK)
+            return Response(results, status=status.HTTP_200_OK)
         except Exception as error:
-            return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)
+            print(error)
+            return Response({"error": f"{error}"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AnalyzeUsers(APIView):
@@ -51,10 +54,11 @@ class AnalyzeUsers(APIView):
         if serializer.is_valid():
             try:
                 # Access the username from validated data
-                response = bloc_handler.analyze_user(serializer.validated_data['username'])
-                return Response({"result": response}, status=status.HTTP_200_OK)
+                results = bloc_handler.analyze_user(serializer.validated_data['username'])
+                return Response(results, status=status.HTTP_200_OK)
             except Exception as error:
-                return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)
+                print(error)
+                return Response({"error": f"{error}"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"error": "Invalid username data."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -65,4 +69,4 @@ class GetSymbols(APIView):
             response = json.dumps(symbols.get_all_symbols())
             return JsonResponse(symbols.get_all_symbols())
         except Exception as error:
-            return Response({"error": f"Something went wrong: {error}"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": f"{error}"}, status=status.HTTP_400_BAD_REQUEST)

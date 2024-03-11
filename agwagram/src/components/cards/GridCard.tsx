@@ -4,6 +4,7 @@ import { useGetSymbolsQuery } from '../../data/apiSlice';
 import Button from '../Input/Button';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
+import Toggle from '../Input/Toggle';
 
 interface GridCardProps {
     title: string;
@@ -30,6 +31,7 @@ interface GridCardProps {
 }*/
 
 const symbolColors: Record<string, string> = {
+    // Action
     P: '#000000',
     p: '#5fcecf',
     R: '#000000',
@@ -37,6 +39,11 @@ const symbolColors: Record<string, string> = {
     T: '#48752c',
     π: '#ea33f7',
     ρ: '#f9da78',
+    // Content
+    E: '#5fcecf',
+    H: '#ea3323',
+    m: '#5fcecf',
+    U: '#ea33f7',
     // Pauses
     '□': '#ffffff',
     '⚀': '#b7b7b7',
@@ -47,16 +54,38 @@ const symbolColors: Record<string, string> = {
     '⚅': '#636363'
 };
 
+function formatDate(input: string) {
+    const date = new Date(input);
+
+    // Get the year, month, and day from the date object
+    const year = date.getFullYear();
+    let month: any = date.getMonth() + 1; // getMonth() returns 0-11
+    let day: any = date.getDate();
+
+    // Pad the month and day with leading zeros if necessary
+    month = month.toString().padStart(2, '0');
+    day = day.toString().padStart(2, '0');
+
+    // Combine components into the desired format
+    return `${year}-${month}-${day}`;
+}
+
 const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps) => {
     const fixedLinkedData: any = [];
     data.forEach((datum: any) => {
         if (datum.action.length > 1) {
-            fixedLinkedData.push({ ...datum, action: datum.action[0] });
-            fixedLinkedData.push({ ...datum, action: datum.action[1] });
+            fixedLinkedData.push({ ...datum, action: datum.action[0], content: datum.content_syntactic[0] });
+            fixedLinkedData.push({ ...datum, action: datum.action[1], content: datum.content_syntactic[1] });
         } else {
-            fixedLinkedData.push({ ...datum, action: datum.action[0] });
+            fixedLinkedData.push({ ...datum, action: datum.action[0], content: datum.content_syntactic[0] });
         }
     });
+
+    if(fixedLinkedData.length < 36) {
+        return <Card title={title} icon={icon} size={CardSize.Full}>
+            <p>Cannot display grid for {fixedLinkedData.length} data points.</p>
+        </Card>
+    }
 
     const ref = useRef<any>();
     const gridRef = useRef<any>();
@@ -72,7 +101,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
         const endIndex = startIndex + gridSize;
         const rowData = fixedLinkedData.slice(startIndex, endIndex);
 
-        gridItems.push(`${(rowData[0].created_at as string).split('@')[0].trim()}`);
+        gridItems.push(`${formatDate((rowData[0].created_at as string).split('@')[0].trim())}`);
         gridItems.push(...rowData);
     }
 
@@ -105,33 +134,49 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
         return definitions.join(', ');
     };
 
+    const [showAction, setShowAction] = useState<boolean>(true)
+    const toggleShowAction = () => {
+        setShowAction(!showAction);
+    };
+
+    const [showDates, setShowDates] = useState<boolean>(false)
+    const toggleShowDates = () => {
+        setShowDates(!showDates);
+    };
+
+    const displayKey = showAction ? "action" : "content";
+
     return (
         <Card title={title} icon={icon} size={CardSize.Full}>
-            <div className={style.legend}>
+            <div style={{display: "flex", justifyContent: "space-evenly", marginBottom: "12px"}}>
+            <span>{showAction ? "Show Action" : "Show Content Syntactic"} <Toggle state={showAction} onChange={() => toggleShowAction()} /></span>
+            <span>Show Date Labels <Toggle state={showDates} onChange={() => toggleShowDates()} /></span>
+            </div>
+            <div className={style.legend}> 
                 <div className={style.legendList}>
                     {legend.map((item) => {
                         return (
                             <div className={style.legendKey} key={item.symbol}>
                                 <span style={{ backgroundColor: item.color }}></span>
-                                {item.symbol}
+                                <em>{item.symbol}</em>
                             </div>
                         );
                     })}
                 </div>
             </div>
             <div className={style.gridControl} style={controlProperties}>
-                <TransformWrapper initialScale={scale} minScale={scale} maxScale={5} initialPositionX={0} initialPositionY={0}>
+                <TransformWrapper initialScale={scale} minScale={scale} maxScale={2} initialPositionX={0} initialPositionY={0}>
                     {({ zoomIn, zoomOut, resetTransform, setTransform }) => {
                         setTransform(0, 0, scale);
                         return (
                             <div ref={ref} className={style.gridCard}>
                                 <TransformComponent>
-                                    <div ref={gridRef} className={style.grid} style={{ gridTemplateColumns: `repeat(${gridSize + 1}, 1fr)`, width: gridSize * 24 + 150 }}>
+                                    <div ref={gridRef} className={style.grid} style={{ gridTemplateColumns: `repeat(${gridSize + 1}, 1fr)`, width: gridSize * 24 + 80 }}>
                                         {gridItems.map((item, index) => {
                                             if (index % (gridSize + 1) == 0) {
                                                 return (
                                                     <div className={style.label} key={index}>
-                                                        {item}
+                                                        {showDates && item}
                                                     </div>
                                                 );
                                             } else {
@@ -139,10 +184,10 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
                                                     <div
                                                         className={style.item}
                                                         key={index}
-                                                        style={{ backgroundColor: `${symbolColors[item.action]}` }}
-                                                        data-title={`${symbolToDefinition(item.action)}\n${item.created_at}`}
+                                                        style={{ backgroundColor: `${symbolColors[item[displayKey]]}` }}
+                                                        data-title={`${symbolToDefinition(item[displayKey])}\n${item.created_at}`}
                                                     >
-                                                        {item.action}
+                                                        <em>{item[displayKey]}</em>
                                                     </div>
                                                 );
                                             }
