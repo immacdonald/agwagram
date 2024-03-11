@@ -1,46 +1,46 @@
-@use "./format" as *;
+@use './format' as *;
 
 @mixin button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font: inherit;
-  color: inherit;
-  text-decoration: none;
-  padding: $xs $md;
-  height: 36px;
-  border-radius: $smRadius;
-  line-height: 1;
-  border: 1px solid var(--c-b-neutral);
-  color: var(--c-fg-theme);
-  font-size: 0.875rem;
-  transition: 0.15s ease;
-  background-color: var(--c-bg-theme);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font: inherit;
+	color: inherit;
+	text-decoration: none;
+	padding: $xs $md;
+	height: 36px;
+	border-radius: $radius-sm;
+	line-height: 1;
+	border: 1px solid var(--c-b-neutral);
+	color: var(--c-fg-theme);
+	font-size: 0.875rem;
+	transition: 0.15s ease;
+	background-color: var(--c-bg-theme);
 
-  .icon {
-    margin-right: 0.5rem;
-    font-size: 1.25em;
-  }
+	.icon {
+		margin-right: 0.5rem;
+		font-size: 1.25em;
+	}
 
-  span {
-    font-weight: 500;
-  }
+	span {
+		font-weight: 500;
+	}
 
-  &:hover,
-  &:focus {
-    border-color: var(--c-primary);
-    color: var(--c-primary);
-  }
+	&:hover,
+	&:focus {
+		border-color: var(--c-primary);
+		color: var(--c-primary);
+	}
 
-  &.disabled {
-    background-color: var(--c-disabled-background);
-    color: var(--c-disabled-color);
-    border-color: var(--c-disabled-background);
-    pointer-events: none;
-  }
+	&.disabled {
+		background-color: var(--c-disabled-background);
+		color: var(--c-disabled-color);
+		border-color: var(--c-disabled-background);
+		pointer-events: none;
+	}
 
-  &.active {
-    color: var(--c-primary);
-    background-color: var(--c-primary);
-  }
+	&.active {
+		color: var(--c-primary);
+		background-color: var(--c-primary);
+	}
 }

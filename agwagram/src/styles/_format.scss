@@ -1,27 +1,34 @@
+// Breakpoints
+$screen-xxs: 480px;
+$screen-xs: 576px;
+$screen-sm: 768px;
+$screen-md: 980px;
+$screen-lg: 1280px;
+$screen-xl: 1440px;
+
 // Spacing
-$xxs: 2px;
-$xs: 4px;
-$sm: 8px;
-$md: 16px;
-$lg: 24px;
-$xl: 32px;
-$xxl: 48px;
+$xxs: 0.125rem;
+$xs: 0.25rem;
+$sm: 0.5rem;
+$md: 1rem;
+$lg: 1.5rem;
+$xl: 2rem;
+$xxl: 3rem;
+$xxxl: 4rem;
 
-// Font Sizing
-$xsFont: 12px;
-$smFont: 14px;
-$mdFont: 16px;
-$lgFont: 18px;
+// Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
 
-// Border radius
-$smRadius: 8px;
-$mdRadius: 16px;
-$lgRadius: 32px;
+// Font
+$font-xs: 0.75rem;
+$font-sm: 0.875rem;
+$font-md: 1rem;
+$font-lg: 1.125rem;
 
-// Responsive design
-$smallResponsiveWidth: 800px;
-$mediumResponsiveWidth: 1200px;
-$headerMobileWidth: 672px;
-
-$headerHeight: 64px;
-$footerHeight: 96px;
+$normal: 400;
+$semi: 500;
+$semi-bold: 600;
+$bold: 700;
+$heavy: 800;

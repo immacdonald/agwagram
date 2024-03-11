@@ -1,237 +1,231 @@
-@use "../../styles" as *;
+@use '../../styles' as *;
 
 .card {
-  background-color: var(--c-bg-theme-light);
-  box-shadow: var(--shadow);
-  border: var(--b-thin) var(--c-b-neutral);
-  border-radius: $smRadius;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 200px;
-  flex-grow: 1;
-  grid-column-end: span 4;
-  grid-row-end: span 1;
+	background-color: var(--c-bg-theme-light);
+	box-shadow: var(--shadow);
+	border: var(--b-light);
+	border-radius: $radius-sm;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-height: 200px;
+	flex-grow: 1;
+	grid-column-end: span 4;
+	grid-row-end: span 1;
 
-  &.full {
-    @media (min-width: $smallResponsiveWidth) {
-      grid-column-end: span 8;
-    }
+	&.full {
+		@media (min-width: $screen-sm) {
+			grid-column-end: span 8;
+		}
 
-    @media (min-width: $mediumResponsiveWidth) {
-      grid-column-end: span 12;
-    }
-  }
+		@media (min-width: $screen-md) {
+			grid-column-end: span 12;
+		}
+	}
 
-  &.wide {
-    @media (min-width: $smallResponsiveWidth) {
-      grid-column-end: span 8;
-    }
+	&.wide {
+		@media (min-width: $screen-sm) {
+			grid-column-end: span 8;
+		}
 
-    @media (min-width: $mediumResponsiveWidth) {
-      grid-column-end: span 6;
-    }
-  }
+		@media (min-width: $screen-md) {
+			grid-column-end: span 6;
+		}
+	}
 }
 
 .cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $lg $md $md $md;
+	display: flex;
+	align-items: center;
+	padding: $lg $md $md $md;
 
-  div {
-    display: flex;
-    align-items: center;
-
-    span {
-      width: 40px;
-      height: 40px;
-      border-radius: $smRadius;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
+	span {
+		width: 40px;
+		height: 40px;
+		border-radius: $radius-sm;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
 
 .cardToggleBody {
-  padding: 0rem 1.25rem;
-  font-size: 0.875rem;
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height 0.5s ease-in-out;
-  background-color: var(--c-background-secondary);
-  margin: 0px 20px;
-  border-radius: 8px;
+	padding: 0rem 1.25rem;
+	font-size: 0.875rem;
+	max-height: 0px;
+	overflow: hidden;
+	transition: max-height 0.5s ease-in-out;
+	background-color: var(--c-background-secondary);
+	margin: 0px 20px;
+	border-radius: 8px;
 
-  &.active {
-    --extended-height: 0px;
-    max-height: var(--extended-height);
-  }
+	&.active {
+		--extended-height: 0px;
+		max-height: var(--extended-height);
+	}
 }
 
 .cardBody {
-  padding: 0.5rem 1.25rem;
-  font-size: 0.875rem;
-  overflow-wrap: anywhere;
+	padding: 0.5rem 1.25rem;
+	font-size: 0.875rem;
+	overflow-wrap: anywhere;
 }
 
 .cardFooter {
-  margin-top: auto;
-  padding: 0.5rem 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  border-top: var(--b-thin) var(--c-b-neutral);
+	margin-top: auto;
+	padding: 0.5rem 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	border-top: var(--b-light);
 
-  a {
-    color: var(--c-fg-theme);
-    font-weight: 500;
-    font-size: 0.875rem;
+	a {
+		color: var(--c-fg-theme);
+		font-weight: 500;
+		font-size: 0.875rem;
 
-    &:hover {
-      color: var(--c-primary);
-      text-decoration: none;
-    }
-  }
+		&:hover {
+			color: var(--c-primary);
+			text-decoration: none;
+		}
+	}
 }
 
 .icon {
-  width: 32px;
-  margin-right: 0.5rem;
+	width: 32px;
+	margin-right: 0.5rem;
 
-  >svg {
-    width: 30px;
-  }
+	> svg {
+		width: 30px;
+	}
 }
 
 .scrollable {
-  padding: $sm $xs;
-  max-height: 400px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+	padding: $sm $xs;
+	max-height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
 
-  &::-webkit-scrollbar {
-    width: $sm;
-    height: $sm;
-  }
+	&::-webkit-scrollbar {
+		width: $sm;
+		height: $sm;
+	}
 
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
 
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--c-bg-theme-dim);
-    border-radius: $sm;
-    border: $xs solid var(--c-bg-theme-dim);
-  }
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--c-bg-theme-dim);
+		border-radius: $sm;
+		border: $xs solid var(--c-bg-theme-dim);
+	}
 
-  &::-webkit-scrollbar-track-piece {
-    background-color: transparent;
-  }
+	&::-webkit-scrollbar-track-piece {
+		background-color: transparent;
+	}
 }
 
 .changeGraphToggles {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: $xs;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: $xs;
 
-  >span:not(:last-child) {
-    margin-right: $md;
-  }
+	> span:not(:last-child) {
+		margin-right: $md;
+	}
 }
 
 .clearButton {
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
 }
 
 .gridControl {
-  --v-height: auto;
+	--v-height: auto;
 
-  .gridCard {
-    display: flex;
-    flex-direction: column;
+	.gridCard {
+		display: flex;
+		flex-direction: column;
 
-    .grid {
-      width: auto;
-      min-height: 240px;
-      display: grid;
-      //padding: $sm;
-      background-color: var(--c-background-secondary);
+		.grid {
+			width: auto;
+			min-height: 240px;
+			display: grid;
+			//padding: $sm;
+			background-color: var(--c-background-secondary);
 
-      .item {
-        aspect-ratio: 1;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 24px;
-        height: 24px;
+			.item {
+				aspect-ratio: 1;
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
+				width: 24px;
+				height: 24px;
 
-        &:hover {
-          filter: brightness(1.3);
-          z-index: 5;
-        }
-      }
+				&:hover {
+					filter: brightness(1.3);
+					z-index: 5;
+				}
+			}
 
-      .label {
-        display: inline-flex;
-        justify-content: start;
-        align-items: center;
-        width: 150px;
-        font-size: 12px;
-      }
-    }
+			.label {
+				display: inline-flex;
+				justify-content: start;
+				align-items: center;
+				width: 80px;
+				font-size: 12px;
+			}
+		}
 
-    .tools {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: $sm;
-      margin-bottom: $sm;
-      height: 80px;
-    }
+		.tools {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			gap: $sm;
+			margin-bottom: $sm;
+			height: 80px;
+		}
 
-    [class ^="react-transform-wrapper"] {
-      width: 100%;
-      height: var(--v-height);
-    }
-  }
+		[class^='react-transform-wrapper'] {
+			width: 100%;
+			height: var(--v-height);
+		}
+	}
 }
 
 $legendWidth: 100px;
 
 .legend {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 0 8px;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	padding: 0 8px;
 
-  .legendList {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
-    justify-content: center;
-  }
+	.legendList {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
+		justify-content: center;
+	}
 }
 
 .legendKey {
-  display: flex;
-  align-items: center;
-  width: 100%;
+	display: flex;
+	align-items: center;
+	width: 100%;
 
-  > span {
-      text-align: left;
-      margin-left: 0;
-      margin-right: 8px;
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-  }
+	> span {
+		text-align: left;
+		margin-left: 0;
+		margin-right: 8px;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+	}
 }

@@ -1,29 +1,9 @@
-@use "./styles" as *;
+@use './styles' as *;
 
 .app {
-  width: 100vw;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.content {
-  min-height: #{calc(100% - $headerHeight - $footerHeight)};
-  width: 100%;
-  flex: 1 0 auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-
-  > section {
-    width: 100%;
-    padding: $xl 5%;
-    margin: 0 0 $md;
-
-    &:last-of-type {
-      padding-bottom: $xxl;
-      margin-bottom: $xxl;
-    }
-  }
+	width: 100vw;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
