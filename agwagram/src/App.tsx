@@ -8,23 +8,23 @@ import { selectTheme } from './data/settingsSlice';
 import { Home } from './views';
 
 function App() {
-    const theme = useSelector(selectTheme);
+	const theme = useSelector(selectTheme);
 
-    useEffect(() => {
-        if (theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-        }
-    }, [theme]);
+	useEffect(() => {
+		if (theme) {
+			document.documentElement.setAttribute('data-theme', theme);
+		}
+	}, [theme]);
 
-    return (
-        <div className={style.app}>
-            <Header />
-            <Routes>
-                <Route path="/" Component={Home} />
-            </Routes>
-            <Footer />
-        </div>
-    );
+	return (
+		<div className={style.app}>
+			<Header />
+			<Routes>
+				<Route path="/" Component={Home} />
+			</Routes>
+			<Footer />
+		</div>
+	);
 }
 
 export default App;

@@ -2,49 +2,49 @@
 @use './styles/base';
 
 * {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 *,
 *:before,
 *:after {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-    height: 100%;
-    display: block;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+	height: 100%;
+	display: block;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
 }
 
 ::selection {
-    background: var(--c-primary-fade);
+	background: var(--c-primary-fade);
 }
 
 ::-webkit-scrollbar {
-    width: $sm;
+	width: $sm;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--c-bg-theme);
+	background: var(--c-bg-theme);
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--c-bg-theme-dim);
-    border-radius: $sm;
-    border: $xs solid var(--c-bg-theme-dim);
+	background-color: var(--c-bg-theme-dim);
+	border-radius: $sm;
+	border: $xs solid var(--c-bg-theme-dim);
 }
 
 body {
-    width: 100vw;
-    height: 100%;
-    font-family: 'Helvetica', sans-serif;
-    font-size: $font-md;
-    line-height: 1.5;
-    color: var(--c-fg-theme);
-    background-color: var(--c-bg-theme);
-    overflow-x: hidden;
-    overscroll-behavior-y: none;
+	width: 100vw;
+	height: 100%;
+	font-family: 'Helvetica', sans-serif;
+	font-size: $font-md;
+	line-height: 1.5;
+	color: var(--c-fg-theme);
+	background-color: var(--c-bg-theme);
+	overflow-x: hidden;
+	overscroll-behavior-y: none;
 }

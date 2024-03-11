@@ -1,11 +1,11 @@
 @use '../styles' as *;
 
 .hoverMark {
-    background-color: transparent;
-    display: inline-block;
-    color: var(--c-fg-theme);
+	background-color: transparent;
+	display: inline-block;
+	color: var(--c-fg-theme);
 
-    &:hover {
-        background-color: var(--c-primary-fade);
-    }
+	&:hover {
+		background-color: var(--c-primary-fade);
+	}
 }

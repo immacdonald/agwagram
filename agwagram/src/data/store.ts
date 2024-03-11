@@ -6,15 +6,15 @@ import settingsReducer from './settingsSlice';
 
 // Define the persist configuration
 const persistConfig = {
-    key: 'root',
-    storage,
-    whitelist: []
+	key: 'root',
+	storage,
+	whitelist: []
 };
 
 // Combine reducers as usual
 const rootReducer = combineReducers({
-    settings: settingsReducer,
-    api: api.reducer
+	settings: settingsReducer,
+	api: api.reducer
 });
 
 // Wrap the rootReducer with persistReducer
@@ -22,13 +22,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Create the store with the persisted reducer
 const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-            }
-        }).concat(api.middleware)
+	reducer: persistedReducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+			}
+		}).concat(api.middleware)
 });
 
 // Enable persistence support

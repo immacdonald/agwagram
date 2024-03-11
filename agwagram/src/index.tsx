@@ -8,13 +8,13 @@ import { persistor, store } from './data/store.ts';
 import './index.module.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <BrowserRouter basename={import.meta.env.BASE_URL}>
-                    <App />
-                </BrowserRouter>
-            </PersistGate>
-        </Provider>
-    </React.StrictMode>
+	<React.StrictMode>
+		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
+				<BrowserRouter basename={import.meta.env.BASE_URL}>
+					<App />
+				</BrowserRouter>
+			</PersistGate>
+		</Provider>
+	</React.StrictMode>
 );
