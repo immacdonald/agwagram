@@ -21,4 +21,4 @@ export const graphColor = (index: number): string => {
 	return GRAPH_COLORS[index % GRAPH_COLORS.length];
 };
 
-export const VERSION: string = '1.7.0';
+export const VERSION: string = '1.7.1';
