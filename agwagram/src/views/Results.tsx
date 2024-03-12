@@ -23,10 +23,9 @@ const Results: React.FC = () => {
 	const results = useMemo(() => {
 		if (hasPreviousResults && resultState.data) {
 			// Not the first load
-			console.log('Hey');
 			document.getElementById('results')?.scrollIntoView();
 		} else if (hasPreviousResults) {
-			console.log('Results but no data?');
+			
 		}
 		setHasPreviousResults(true);
 		return resultState.data;

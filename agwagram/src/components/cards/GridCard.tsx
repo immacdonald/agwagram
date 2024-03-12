@@ -1,10 +1,11 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
 import Button from '../Input/Button';
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
+import Dropdown from '../Input/Dropdown';
 
 interface GridCardProps {
 	title: string;
@@ -44,6 +45,8 @@ const symbolColors: Record<string, string> = {
 	H: '#ea3323',
 	m: '#5fcecf',
 	U: '#ea33f7',
+    t: '#f9da78',
+    q: '#48752c',
 	// Pauses
 	'□': '#ffffff',
 	'⚀': '#b7b7b7',
@@ -71,20 +74,45 @@ function formatDate(input: string) {
 }
 
 const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps) => {
-	const fixedLinkedData: any = [];
-	data.forEach((datum: any) => {
-		if (datum.action.length > 1) {
-			fixedLinkedData.push({ ...datum, action: datum.action[0], content: datum.content_syntactic[0] });
-			fixedLinkedData.push({ ...datum, action: datum.action[1], content: datum.content_syntactic[1] });
-		} else {
-			fixedLinkedData.push({ ...datum, action: datum.action[0], content: datum.content_syntactic[0] });
-		}
-	});
+    const { actionLinkedData, contentLinkedData } = useMemo(() => {
+        const actionLinkedData: any = [];
+        const contentLinkedData: any = [];
 
-	if (fixedLinkedData.length < 36) {
+        data.forEach((datum: any) => {
+            if (datum.action.length > 1) {
+                actionLinkedData.push({ ...datum, content: datum.action[0] });
+                contentLinkedData.push({ ...datum, content: datum.action[0] });
+                actionLinkedData.push({ ...datum, content: datum.action[1]});
+                [...datum.content_syntactic].forEach(char => {
+                    contentLinkedData.push({ ...datum, content: char });
+                });
+            } else {
+                actionLinkedData.push({ ...datum, content: datum.action[0]});
+                [...datum.content_syntactic].forEach(char => {
+                    contentLinkedData.push({ ...datum, content: char });
+                });
+            }
+        });
+
+        return { actionLinkedData, contentLinkedData };
+    }, []);
+
+    const [showAction, setShowAction] = useState<boolean>(true);
+	const toggleShowAction = (value: string) => {
+		if(value == "Action") {
+            setShowAction(true);
+        } else {
+            setShowAction(false);
+        }
+	};
+
+    const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
+
+    
+	if (actionLinkedData.length < 36) {
 		return (
 			<Card title={title} icon={icon} size={CardSize.Full}>
-				<p>Cannot display grid for {fixedLinkedData.length} data points.</p>
+				<p>Cannot display grid for {actionLinkedData.length} data points.</p>
 			</Card>
 		);
 	}
@@ -110,13 +138,9 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 	useEffect(() => {
 		const scale = (ref.current?.clientWidth || 1) / (gridRef.current?.clientWidth || 1);
 		const theoreticalHeight = gridSize * 24;
-
-		//console.log("Grid size", gridSize, "theoretical height", theoreticalHeight, "Scale", scale)
-
 		setHeight(theoreticalHeight * scale);
 		setScale(scale);
-		//console.log(ref.current?.offsetWidth)
-	}, []);
+	}, [fixedLinkedData.length]);
 
 	const controlProperties = { '--v-height': `${height}px` } as React.CSSProperties;
 
@@ -136,28 +160,14 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 		return definitions.join(', ');
 	};
 
-	const [showAction, setShowAction] = useState<boolean>(true);
-	const toggleShowAction = () => {
-		setShowAction(!showAction);
-	};
-
 	const [showDates, setShowDates] = useState<boolean>(false);
 	const toggleShowDates = () => {
 		setShowDates(!showDates);
 	};
 
-	const displayKey = showAction ? 'action' : 'content';
-
 	return (
 		<Card title={title} icon={icon} size={CardSize.Full}>
-			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
-				<span>
-					{showAction ? 'Show Action' : 'Show Content Syntactic'} <Toggle state={showAction} onChange={() => toggleShowAction()} />
-				</span>
-				<span>
-					Show Date Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
-				</span>
-			</div>
+            <p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
 			<div className={style.legend}>
 				<div className={style.legendList}>
 					{legend.map((item) => {
@@ -170,8 +180,16 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 					})}
 				</div>
 			</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
+                <span style={{width: "min(calc(90% - 150px), 600px)"}}>
+				<Dropdown options={["Action", "Content Syntactic"]} isClearable={false} onChange={toggleShowAction} defaultValue="Action"/>
+                </span>
+				<span>
+					Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
+				</span>
+			</div>
 			<div className={style.gridControl} style={controlProperties}>
-				<TransformWrapper initialScale={scale} minScale={scale} maxScale={2} initialPositionX={0} initialPositionY={0}>
+				<TransformWrapper initialScale={scale} minScale={scale - 0.25} maxScale={2} initialPositionX={0} initialPositionY={0}>
 					{({ zoomIn, zoomOut, resetTransform, setTransform }) => {
 						setTransform(0, 0, scale);
 						return (
@@ -182,7 +200,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 											if (index % (gridSize + 1) == 0) {
 												return (
 													<div className={style.label} key={index}>
-														{showDates && item}
+														{item}
 													</div>
 												);
 											} else {
@@ -190,10 +208,10 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 													<div
 														className={style.item}
 														key={index}
-														style={{ backgroundColor: `${symbolColors[item[displayKey]]}` }}
-														data-title={`${symbolToDefinition(item[displayKey])}\n${item.created_at}`}
+														style={{ backgroundColor: `${symbolColors[item.content] ?? "white"}` }}
+														data-title={`${symbolToDefinition(item.content)}\n${item.created_at}`}
 													>
-														<em>{item[displayKey]}</em>
+														{showDates && <em>{item.content}</em>}
 													</div>
 												);
 											}
@@ -201,9 +219,9 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 									</div>
 								</TransformComponent>
 								<div className={style.tools}>
-									<Button onClick={() => zoomIn()} label="+" visual="filled" />
-									<Button onClick={() => zoomOut()} label="-" visual="filled" />
-									<Button onClick={() => resetTransform()} label="X" visual="filled" />
+									<Button onClick={() => zoomIn()} label="+" visual="outline" />
+									<Button onClick={() => zoomOut()} label="-" visual="outline" />
+									<Button onClick={() => resetTransform()} label="X" visual="outline" />
 								</div>
 							</div>
 						);
