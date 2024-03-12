@@ -25,7 +25,7 @@ const Results: React.FC = () => {
 			// Not the first load
 			document.getElementById('results')?.scrollIntoView();
 		} else if (hasPreviousResults) {
-			
+			// Results but no data...
 		}
 		setHasPreviousResults(true);
 		return resultState.data;
