@@ -206,12 +206,14 @@ $legendWidth: 100px;
 	display: flex;
 	flex-direction: column;
 	padding: 0 8px;
+	margin-bottom: 8px;
 
 	.legendList {
 		width: 100%;
 		display: grid;
-		grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
+		grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
 		justify-content: center;
+		align-items: center;
 	}
 }
 

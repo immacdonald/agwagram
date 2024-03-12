@@ -5,6 +5,7 @@ import Button from '../Input/Button';
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
+import Dropdown from '../Input/Dropdown';
 
 interface GridCardProps {
 	title: string;
@@ -137,8 +138,12 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 	};
 
 	const [showAction, setShowAction] = useState<boolean>(true);
-	const toggleShowAction = () => {
-		setShowAction(!showAction);
+	const toggleShowAction = (value: string) => {
+		if(value == "Action") {
+            setShowAction(true);
+        } else {
+            setShowAction(false);
+        }
 	};
 
 	const [showDates, setShowDates] = useState<boolean>(false);
@@ -150,14 +155,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 
 	return (
 		<Card title={title} icon={icon} size={CardSize.Full}>
-			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
-				<span>
-					{showAction ? 'Show Action' : 'Show Content Syntactic'} <Toggle state={showAction} onChange={() => toggleShowAction()} />
-				</span>
-				<span>
-					Show Date Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
-				</span>
-			</div>
+            <p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
 			<div className={style.legend}>
 				<div className={style.legendList}>
 					{legend.map((item) => {
@@ -169,6 +167,14 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 						);
 					})}
 				</div>
+			</div>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
+                <span style={{width: "min(calc(90% - 150px), 600px)"}}>
+				<Dropdown options={["Action", "Content Syntactic"]} isClearable={false} onChange={toggleShowAction} defaultValue="Action"/>
+                </span>
+				<span>
+					Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
+				</span>
 			</div>
 			<div className={style.gridControl} style={controlProperties}>
 				<TransformWrapper initialScale={scale} minScale={scale} maxScale={2} initialPositionX={0} initialPositionY={0}>
@@ -182,7 +188,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 											if (index % (gridSize + 1) == 0) {
 												return (
 													<div className={style.label} key={index}>
-														{showDates && item}
+														{item}
 													</div>
 												);
 											} else {
@@ -193,7 +199,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 														style={{ backgroundColor: `${symbolColors[item[displayKey]]}` }}
 														data-title={`${symbolToDefinition(item[displayKey])}\n${item.created_at}`}
 													>
-														<em>{item[displayKey]}</em>
+														{showDates && <em>{item[displayKey]}</em>}
 													</div>
 												);
 											}
@@ -201,9 +207,9 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 									</div>
 								</TransformComponent>
 								<div className={style.tools}>
-									<Button onClick={() => zoomIn()} label="+" visual="filled" />
-									<Button onClick={() => zoomOut()} label="-" visual="filled" />
-									<Button onClick={() => resetTransform()} label="X" visual="filled" />
+									<Button onClick={() => zoomIn()} label="+" visual="outline" />
+									<Button onClick={() => zoomOut()} label="-" visual="outline" />
+									<Button onClick={() => resetTransform()} label="X" visual="outline" />
 								</div>
 							</div>
 						);
