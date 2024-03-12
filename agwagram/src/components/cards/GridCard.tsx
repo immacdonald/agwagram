@@ -2,10 +2,10 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
 import Button from '../Input/Button';
+import Dropdown from '../Input/Dropdown';
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
-import Dropdown from '../Input/Dropdown';
 
 interface GridCardProps {
 	title: string;
@@ -45,8 +45,8 @@ const symbolColors: Record<string, string> = {
 	H: '#ea3323',
 	m: '#5fcecf',
 	U: '#ea33f7',
-    t: '#f9da78',
-    q: '#48752c',
+	t: '#f9da78',
+	q: '#48752c',
 	// Pauses
 	'□': '#ffffff',
 	'⚀': '#b7b7b7',
@@ -74,41 +74,40 @@ function formatDate(input: string) {
 }
 
 const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps) => {
-    const { actionLinkedData, contentLinkedData } = useMemo(() => {
-        const actionLinkedData: any = [];
-        const contentLinkedData: any = [];
+	const { actionLinkedData, contentLinkedData } = useMemo(() => {
+		const actionLinkedData: any = [];
+		const contentLinkedData: any = [];
 
-        data.forEach((datum: any) => {
-            if (datum.action.length > 1) {
-                actionLinkedData.push({ ...datum, content: datum.action[0] });
-                contentLinkedData.push({ ...datum, content: datum.action[0] });
-                actionLinkedData.push({ ...datum, content: datum.action[1]});
-                [...datum.content_syntactic].forEach(char => {
-                    contentLinkedData.push({ ...datum, content: char });
-                });
-            } else {
-                actionLinkedData.push({ ...datum, content: datum.action[0]});
-                [...datum.content_syntactic].forEach(char => {
-                    contentLinkedData.push({ ...datum, content: char });
-                });
-            }
-        });
+		data.forEach((datum: any) => {
+			if (datum.action.length > 1) {
+				actionLinkedData.push({ ...datum, content: datum.action[0] });
+				contentLinkedData.push({ ...datum, content: datum.action[0] });
+				actionLinkedData.push({ ...datum, content: datum.action[1] });
+				[...datum.content_syntactic].forEach((char) => {
+					contentLinkedData.push({ ...datum, content: char });
+				});
+			} else {
+				actionLinkedData.push({ ...datum, content: datum.action[0] });
+				[...datum.content_syntactic].forEach((char) => {
+					contentLinkedData.push({ ...datum, content: char });
+				});
+			}
+		});
 
-        return { actionLinkedData, contentLinkedData };
-    }, []);
+		return { actionLinkedData, contentLinkedData };
+	}, []);
 
-    const [showAction, setShowAction] = useState<boolean>(true);
+	const [showAction, setShowAction] = useState<boolean>(true);
 	const toggleShowAction = (value: string) => {
-		if(value == "Action") {
-            setShowAction(true);
-        } else {
-            setShowAction(false);
-        }
+		if (value == 'Action') {
+			setShowAction(true);
+		} else {
+			setShowAction(false);
+		}
 	};
 
-    const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
+	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
 
-    
 	if (actionLinkedData.length < 36) {
 		return (
 			<Card title={title} icon={icon} size={CardSize.Full}>
@@ -167,7 +166,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 
 	return (
 		<Card title={title} icon={icon} size={CardSize.Full}>
-            <p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
+			<p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
 			<div className={style.legend}>
 				<div className={style.legendList}>
 					{legend.map((item) => {
@@ -180,10 +179,10 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 					})}
 				</div>
 			</div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
-                <span style={{width: "min(calc(90% - 150px), 600px)"}}>
-				<Dropdown options={["Action", "Content Syntactic"]} isClearable={false} onChange={toggleShowAction} defaultValue="Action"/>
-                </span>
+			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
+				<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
+					<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
+				</span>
 				<span>
 					Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
 				</span>
@@ -208,7 +207,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 													<div
 														className={style.item}
 														key={index}
-														style={{ backgroundColor: `${symbolColors[item.content] ?? "white"}` }}
+														style={{ backgroundColor: `${symbolColors[item.content] ?? 'white'}` }}
 														data-title={`${symbolToDefinition(item.content)}\n${item.created_at}`}
 													>
 														{showDates && <em>{item.content}</em>}
