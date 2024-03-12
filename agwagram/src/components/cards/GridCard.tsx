@@ -156,8 +156,6 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 			return '';
 		}
 
-        //console.log(bloc);
-
 		const definitions = [...bloc].map((c) => symbols[c]);
 		return definitions.join(', ');
 	};

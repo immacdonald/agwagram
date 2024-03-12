@@ -79,11 +79,6 @@ def analyze_tweet_file(files = None):
         for user in users.values():
             bloc_params['screen_names_or_ids'] = user['id']
 
-            print("Adding bloc sequences")
-            for exact in user['tweets']:
-                print(f"*{exact['created_at']}*")
-                print(type(exact['created_at']))
-
             all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **bloc_params))
             
             user_data.append(
@@ -98,11 +93,7 @@ def analyze_tweet_file(files = None):
         user_ids = [user['id'] for user in user_data]
         bloc_params['screen_names_or_ids'] = user_ids
 
-        try:
-            return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
-        except Exception as e:
-            print(f"Exception occurred: {e}")
-            traceback.print_exc()
+        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
 
 
 def analyze_user(usernames):
