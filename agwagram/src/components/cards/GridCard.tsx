@@ -10,6 +10,7 @@ import style from './Card.module.scss';
 interface GridCardProps {
 	title: string;
 	icon: ReactNode;
+	username: string;
 	data: any;
 }
 
@@ -73,7 +74,7 @@ function formatDate(input: string) {
 	return `${year}-${month}-${day}`;
 }
 
-const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps) => {
+const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: GridCardProps) => {
 	const { actionLinkedData, contentLinkedData } = useMemo(() => {
 		const actionLinkedData: any = [];
 		const contentLinkedData: any = [];
@@ -107,8 +108,9 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 	};
 
 	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
+	console.log(fixedLinkedData);
 
-	if (actionLinkedData.length < 36) {
+	if (actionLinkedData.length < 36 || actionLinkedData.length > 6000) {
 		return (
 			<Card title={title} icon={icon} size={CardSize.Full}>
 				<p>Cannot display grid for {actionLinkedData.length} data points.</p>
@@ -164,6 +166,12 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 		setShowDates(!showDates);
 	};
 
+	const routeToTweet = (id: string) => {
+		//console.log(id);
+		const url = `https://twitter.com/${username}/status/${id}`;
+		window.open(url, '_blank');
+	};
+
 	return (
 		<Card title={title} icon={icon} size={CardSize.Full}>
 			<p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
@@ -208,7 +216,8 @@ const GridCard: React.FC<GridCardProps> = ({ title, icon, data }: GridCardProps)
 														className={style.item}
 														key={index}
 														style={{ backgroundColor: `${symbolColors[item.content] ?? 'white'}` }}
-														data-title={`${symbolToDefinition(item.content)}\n${item.created_at}`}
+														data-title={`${symbolToDefinition(item.content)}\n${item.text}\n${item.created_at}`}
+														onClick={() => routeToTweet(item.id)}
 													>
 														{showDates && <em>{item.content}</em>}
 													</div>

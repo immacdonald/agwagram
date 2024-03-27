@@ -24,24 +24,37 @@ class Ping(APIView):
         return Response({"response": 'BLOC Services are fully operational.'}, status=status.HTTP_200_OK)
 
 
+import time
 class AnalyzeFiles(APIView):
     def post(self, request):
+        start: float = time.perf_counter()
+        change_param = request.query_params.get('change_report', 'true')
+        generate_change_report = change_param.lower() == 'true'
+
         try:
+            tic = time.perf_counter()
             tweet_files = request.FILES.getlist('tweet_files')
-            # Use tempfiles to convert the uploaded file to ones that can be accessed intuitively
+
             converted_files = []
             for file in tweet_files:
                 converted_file = handle_uploaded_file(file)
                 converted_files.append(converted_file.name)
 
-            results = bloc_handler.analyze_tweet_file(converted_files)
+            toc = time.perf_counter()
+            print(f"Converted all files in {toc - tic:0.4f} seconds")
+
+            # Assuming bloc_handler.analyze_tweet_file can take use_special_processing as an argument
+            results = bloc_handler.analyze_tweet_file(converted_files, change_report=generate_change_report)
 
             for temp_file in converted_files:
                 os.remove(temp_file)
 
+            end = time.perf_counter()
+            print(f"Processed file in {end - start:0.4f} seconds")
             return Response(results, status=status.HTTP_200_OK)
-        except Exception as error:
-            return Response({"error": f"{error}"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            return Response({"error": "An error occurred processing your request."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class AnalyzeUsers(APIView):

@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '../components/Input/Button';
 import FileUploadPortal from '../components/Input/FileUploadPortal';
 import SearchInput from '../components/Input/SearchInput';
+import Toggle from '../components/Input/Toggle';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 import { getStaticFile } from '../utility';
@@ -22,7 +23,7 @@ const Analyze: React.FC = () => {
 		if (example) {
 			dispatch(setExample(example));
 		}
-		setFiles(files);
+		setFiles({ files, changeReport: generateChange });
 	};
 
 	const searchUsername = (username: string) => {
@@ -52,6 +53,11 @@ const Analyze: React.FC = () => {
 			submitJsonFile('sample_storygraphbot.jsonl');
 		}
 	}, []);
+
+	const [generateChange, setGenerateChange] = useState<boolean>(false);
+	const toggleGenerateChange = () => {
+		setGenerateChange(!generateChange);
+	};
 
 	return (
 		<>
@@ -87,6 +93,9 @@ const Analyze: React.FC = () => {
 						<strong>Note:</strong> JSON files are expected to contain the Tweet data as an array of Tweet objects, while the JSONL files are expected to be formatted with each line being a
 						Tweet, <i>not</i> an account.
 					</p>
+					<span>
+						Generate Change Reports <Toggle state={generateChange} onChange={() => toggleGenerateChange()} />
+					</span>
 					<FileUploadPortal submit={submitFiles} />
 				</div>
 			</div>

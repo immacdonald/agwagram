@@ -54,10 +54,10 @@ const Results: React.FC = () => {
 				</Card>
 				<TopWordsCard title="Top 100 Behaviors" subtitle="Displays the top 100 (or less) BLOC words." icon={<BarChart />} top={account.top_bloc_words} />
 				<TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent durations of pause between account activities." icon={<Pause />} top={account.top_time} symbolLabel="Pause" />
-				<GridCard title="Grid View" icon={<Dataset />} data={account.linked_data} />
-				<ChangeProfileCard title="Change Profile Details" icon={<Chart />} reports={account.change_report} />
-				<ChangeCard title="Action Change Profile" icon={<Timeline />} report={account.change_report.action} />
-				<ChangeCard title="Syntactic Change Profile" icon={<Timeline />} report={account.change_report.content_syntactic} />
+				<GridCard title="Grid View" username={account.account_username} icon={<Dataset />} data={account.linked_data} />
+				{account.change_report.action && <ChangeProfileCard title="Change Profile Details" icon={<Chart />} reports={account.change_report} />}
+				{account.change_report.action && <ChangeCard title="Action Change Profile" icon={<Timeline />} report={account.change_report.action} />}
+				{account.change_report.content_syntactic && <ChangeCard title="Syntactic Change Profile" icon={<Timeline />} report={account.change_report.content_syntactic} />}
 				{expertMode ? (
 					<>
 						<LanguageCard title="Action" icon={<Dataset />} bloc={account.bloc_action} />

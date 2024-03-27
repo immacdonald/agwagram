@@ -149,9 +149,9 @@ mark {
 	&:hover:after {
 		content: attr(data-title);
 		position: absolute;
-		top: -150%;
+		top: -100%;
 		left: 50%;
-		transform: translate(-50%, -$md);
+		transform: translate(-50%, 3rem);
 		width: max-content;
 		min-width: $xxl;
 		padding: $xs $md;
