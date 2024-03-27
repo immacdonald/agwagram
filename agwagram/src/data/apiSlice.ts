@@ -29,7 +29,7 @@ export const api = createApi({
 				};
 			}
 		}),
-		setAnalyzeFiles: builder.mutation<Analysis, {files: File[], changeReport: boolean}>({
+		setAnalyzeFiles: builder.mutation<Analysis, { files: File[]; changeReport: boolean }>({
 			query: (args) => {
 				const formData = new FormData();
 				args.files.forEach((file: File) => {

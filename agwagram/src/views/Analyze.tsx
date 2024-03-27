@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Input/Button';
 import FileUploadPortal from '../components/Input/FileUploadPortal';
 import SearchInput from '../components/Input/SearchInput';
+import Toggle from '../components/Input/Toggle';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 import { getStaticFile } from '../utility';
 import style from './Analyze.module.scss';
-import Toggle from '../components/Input/Toggle';
 
 const Analyze: React.FC = () => {
 	const [setFiles] = useSetAnalyzeFilesMutation();

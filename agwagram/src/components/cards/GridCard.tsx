@@ -170,7 +170,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 		//console.log(id);
 		const url = `https://twitter.com/${username}/status/${id}`;
 		window.open(url, '_blank');
-	}
+	};
 
 	return (
 		<Card title={title} icon={icon} size={CardSize.Full}>
