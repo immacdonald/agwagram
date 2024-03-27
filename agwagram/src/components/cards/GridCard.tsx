@@ -110,7 +110,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
 	console.log(fixedLinkedData);
 
-	if (actionLinkedData.length < 36 || actionLinkedData.length > 6000) {
+	if (actionLinkedData.length < 36) {
 		return (
 			<Card title={title} icon={icon} size={CardSize.Full}>
 				<p>Cannot display grid for {actionLinkedData.length} data points.</p>
