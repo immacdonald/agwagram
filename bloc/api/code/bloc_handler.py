@@ -46,16 +46,21 @@ def verify_user_exists(user_list):
 
     return 0, user_data['data']
 
-import traceback
+import time
 
-def analyze_tweet_file(files = None):
+def analyze_tweet_file(files = None, change_report = True):
     if(files):
+        tic = time.perf_counter()
+        start_file = time.perf_counter()
         tweets = []
         for file in files:
             file_contents = getDictArrayFromFile(file)
             tweets.extend(file_contents)
+        end_file = time.perf_counter()
+        print(f"Got tweets list in {end_file - start_file:0.4f} seconds")
 
         # Sort Tweets by user
+        start_file = time.perf_counter()
         users = {}
         for tweet in tweets:
             user_id = tweet['user']['id']
@@ -68,7 +73,8 @@ def analyze_tweet_file(files = None):
                     'name': tweet['user']['name'],
                     'tweets': [tweet]
                 }
-        
+        end_file = time.perf_counter()
+        print(f"Sorted tweets list in {end_file - start_file:0.4f} seconds")
 
         user_data = []
         all_bloc_output = []
@@ -79,7 +85,10 @@ def analyze_tweet_file(files = None):
         for user in users.values():
             bloc_params['screen_names_or_ids'] = user['id']
 
+            start_file = time.perf_counter()
             all_bloc_output.append(add_bloc_sequences(user['tweets'], all_bloc_symbols=all_bloc_symbols, **bloc_params))
+            end_file = time.perf_counter()
+            print(f"Append output BLOC in {end_file - start_file:0.4f} seconds")
             
             user_data.append(
                 {
@@ -89,11 +98,14 @@ def analyze_tweet_file(files = None):
                     'length': len(user['tweets'])
                 }
             )
+        
 
         user_ids = [user['id'] for user in user_data]
         bloc_params['screen_names_or_ids'] = user_ids
 
-        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False)
+        toc = time.perf_counter()
+        print(f"Generated bloc output for analysis in {toc - tic:0.4f} seconds")
+        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False, change_report = change_report)
 
 
 def analyze_user(usernames):
@@ -122,8 +134,9 @@ def analyze_user(usernames):
 
     return result
 
-def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True):
+def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True, change_report = True):
     # Useful statistics
+    start_bloc = time.perf_counter()
     gen_bloc_args = Namespace(**bloc_params)
     query_count = len(user_data)
     total_tweets = sum([user_bloc['more_details']['total_tweets'] for user_bloc in all_bloc_output])
@@ -172,14 +185,24 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
     recalculate_bloc_word_rate(group_top_time)
     recalculate_bloc_word_rate(group_top_change)
 
+    end_bloc = time.perf_counter()
+    print(f"Got the BLOC word rates and data {end_bloc - start_bloc:0.4f} seconds")
+
     # Generate and sort the pairwise comparisons
+    start_pairwise = time.perf_counter()
     pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
     pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
+    end_pairwise = time.perf_counter()
+    print(f"Generated pairwise sim in {end_pairwise - start_pairwise:0.4f} seconds")
 
     # Generate change reports
-    gen_bloc_args.keep_tweets = False
-    gen_bloc_args.bloc_alphabets = ['action', 'content_syntactic']
-    raw_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
+    if(change_report):
+        start_change = time.perf_counter()
+        gen_bloc_args.keep_tweets = False
+        gen_bloc_args.bloc_alphabets = ['action', 'content_syntactic']
+        raw_change_report = run_subcommands(gen_bloc_args, 'change', all_bloc_output)
+        end_change = time.perf_counter()
+        print(f"Created the change reports in {end_change - start_change:0.4f} seconds")
 
     result = {
         'successful_generation': True,
@@ -196,6 +219,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
     }
 
     for account_bloc, account_data in zip(all_bloc_output, user_data):
+        start_recalc = time.perf_counter()
         bloc_words = user_bloc_words.get(account_data['username'], [])
 
         top_actions = []
@@ -237,12 +261,19 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
         else: 
             elapsed_time = -1
 
-        change_report = {}
-        for report in raw_change_report:
-            if(report['screen_name'] == account_data['username']):
-                change_report = link_change_report(report)
+        formatted_change_report = {}
+        if(change_report):
+            for report in raw_change_report:
+                if(report['screen_name'] == account_data['username']):
+                    formatted_change_report = link_change_report(report)
 
+        end_recalc = time.perf_counter()
+        print(f"Recalculated account word rates {end_recalc - start_recalc:0.4f} seconds")
+
+        start_link = time.perf_counter()
         linked_data = bloc_extension.link_data(all_tweets)
+        end_link = time.perf_counter()
+        print(f"Generated linked data in {end_link - start_link:0.4f} seconds")
 
         result['account_blocs'].append({
             'user_exists': True,
@@ -260,7 +291,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True)
             'bloc_semantic_entity': account_bloc['bloc']['content_semantic_entity'],
             'bloc_semantic_sentiment': account_bloc['bloc']['content_semantic_sentiment'],
             'bloc_change': account_bloc['bloc']['change'],
-            'change_report': change_report,
+            'change_report': formatted_change_report,
             # Top Words
             'top_bloc_words': bloc_words[:TOP_WORD_LIMIT],
             'top_actions': top_actions,

@@ -29,15 +29,15 @@ export const api = createApi({
 				};
 			}
 		}),
-		setAnalyzeFiles: builder.mutation<Analysis, File[]>({
-			query: (files) => {
+		setAnalyzeFiles: builder.mutation<Analysis, {files: File[], changeReport: boolean}>({
+			query: (args) => {
 				const formData = new FormData();
-				files.forEach((file: File) => {
+				args.files.forEach((file: File) => {
 					formData.append('tweet_files', file);
 				});
 
 				return {
-					url: `/analyze/file`,
+					url: `/analyze/file?change_report=${args.changeReport}`,
 					method: 'POST',
 					body: formData
 				};

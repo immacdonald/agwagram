@@ -166,6 +166,7 @@
 		&:focus {
 			outline: none;
 			box-shadow: var(--shadow-low);
+			color: var(--v-text-hover);
 		}
 
 		&:hover,
