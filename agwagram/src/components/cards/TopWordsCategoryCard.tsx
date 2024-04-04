@@ -21,7 +21,7 @@ const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subt
 						<tr>
 							<th style={{ width: '60px' }}>{symbolLabel}</th>
 							<th style={{ width: '90px' }}>Frequency</th>
-							<th style={{ width: '70px' }}>Rate (%)</th>
+							<th style={{ width: '75px' }}>Rate (%)</th>
 							<th>Description</th>
 						</tr>
 					</thead>
