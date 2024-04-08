@@ -10,17 +10,20 @@ interface GroupChangeCardProps {
 }
 
 const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, icon, reports }) => {
+	console.log(reports);
 	const changeChronology: any[] = [];
 	reports.forEach((report: any) => {
-		report.change_report.action.change_events.forEach((event: any) => {
-			changeChronology.push({
-				Date: event.first_segment.local_dates[0],
-				[report.account_username]: +event.sim.toFixed(2)
+		if (report.change_report && report.change_report.change_events) {
+			report.change_report.action.change_events.forEach((event: any) => {
+				changeChronology.push({
+					Date: event.first_segment.local_dates[0],
+					[report.account_username]: +event.sim.toFixed(2)
+				});
 			});
-		});
+		}
 	});
 
-	return (
+	return changeChronology.length > 0 ? (
 		<Card title={title} icon={icon} size={CardSize.Full}>
 			<div style={{ width: '100%', height: '400px' }}>
 				<h3>Similarity Over Time</h3>
@@ -48,6 +51,10 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, icon, reports 
 				</ResponsiveContainer>
 			</div>
 			<br />
+		</Card>
+	) : (
+		<Card title={title} icon={icon} size={CardSize.Full}>
+			<p>No change report generated.</p>
 		</Card>
 	);
 };

@@ -22,7 +22,9 @@ const Header: React.FC = () => {
 				</Link>
 				<div className={style.navigation}>
 					<nav className={style.navLinks}>
-						<Button onClick={() => switchTheme()} label="Theme" />
+						<Button link='/' label="Home" />
+						<Button link='/about' label="About" />
+						<Button onClick={() => switchTheme()} label="Toggle Theme" />
 					</nav>
 				</div>
 			</div>

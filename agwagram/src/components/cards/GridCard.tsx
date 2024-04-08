@@ -33,9 +33,9 @@ interface GridCardProps {
 }*/
 
 const actionLegend: Record<string, string> = {
-	P: '#000000',
+	P: '#84f460',
 	p: '#5fcecf',
-	R: '#000000',
+	R: '#FFA500',
 	r: '#ea3323',
 	T: '#48752c',
 	π: '#ea33f7',
@@ -45,7 +45,7 @@ const actionLegend: Record<string, string> = {
 const contentLegend: Record<string, string> = {
 	E: '#5fcecf',
 	H: '#ea3323',
-	m: '#5fcecf',
+	m: '#84f460',
 	U: '#ea33f7',
 	t: '#f9da78',
 	q: '#48752c',
@@ -111,7 +111,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 	};
 
 	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
-	console.log(fixedLinkedData);
+	//console.log(fixedLinkedData);
 
 	if (actionLinkedData.length < 36) {
 		return (
@@ -219,8 +219,8 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 													<div
 														className={style.item}
 														key={index}
-														style={{ backgroundColor: `${symbolColors[item.content] ?? 'white'}` }}
-														data-title={`${symbolToDefinition(item.content)}\n${item.text}\n${item.created_at}`}
+														style={{ backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }}
+														data-title={`${symbolToDefinition(item.content)} @ ${item.created_at}\n${item.text}`}
 														onClick={() => routeToTweet(item.id)}
 													>
 														{showDates && <em>{item.content}</em>}

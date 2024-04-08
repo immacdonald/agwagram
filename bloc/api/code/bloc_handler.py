@@ -185,6 +185,14 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
     recalculate_bloc_word_rate(group_top_time)
     recalculate_bloc_word_rate(group_top_change)
 
+    time_symbols = symbols.get_time_symbols()
+    group_bloc_words = [bloc for bloc in group_bloc_words if bloc['term'] not in time_symbols]
+
+    n = 1
+    for word in group_bloc_words:
+        word['rank'] = n
+        n = n + 1
+
     end_bloc = time.perf_counter()
     print(f"Got the BLOC word rates and data {end_bloc - start_bloc:0.4f} seconds")
 
@@ -246,6 +254,14 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
                 top_time.append(word)
             elif type == 'Change':
                 top_change.append(word)
+
+        time_symbols = symbols.get_time_symbols()
+        bloc_words = [bloc for bloc in bloc_words if bloc['term'] not in time_symbols]
+
+        n = 1
+        for word in bloc_words:
+            word['rank'] = n
+            n = n + 1
 
         recalculate_bloc_word_rate(top_actions)
         recalculate_bloc_word_rate(top_syntactic)
