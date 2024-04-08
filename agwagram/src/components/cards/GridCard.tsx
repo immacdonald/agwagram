@@ -32,23 +32,26 @@ interface GridCardProps {
     '⚅': '#70d1fa'
 }*/
 
-const symbolColors: Record<string, string> = {
-	// Action
-	P: '#000000',
+const actionLegend: Record<string, string> = {
+	P: '#84f460',
 	p: '#5fcecf',
-	R: '#000000',
+	R: '#FFA500',
 	r: '#ea3323',
 	T: '#48752c',
 	π: '#ea33f7',
-	ρ: '#f9da78',
-	// Content
+	ρ: '#f9da78'
+};
+
+const contentLegend: Record<string, string> = {
 	E: '#5fcecf',
 	H: '#ea3323',
-	m: '#5fcecf',
+	m: '#84f460',
 	U: '#ea33f7',
 	t: '#f9da78',
-	q: '#48752c',
-	// Pauses
+	q: '#48752c'
+};
+
+const pauseLegend: Record<string, string> = {
 	'□': '#ffffff',
 	'⚀': '#b7b7b7',
 	'⚁': '#b7b7b7',
@@ -108,7 +111,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 	};
 
 	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
-	console.log(fixedLinkedData);
+	//console.log(fixedLinkedData);
 
 	if (actionLinkedData.length < 36) {
 		return (
@@ -145,8 +148,9 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 
 	const controlProperties = { '--v-height': `${height}px` } as React.CSSProperties;
 
+	const combinedLegend = { ...(showAction ? actionLegend : contentLegend), ...pauseLegend };
 	const legend: { symbol: string; color: string }[] = [];
-	for (const [key, value] of Object.entries(symbolColors)) {
+	for (const [key, value] of Object.entries(combinedLegend)) {
 		legend.push({ symbol: key, color: value });
 	}
 
@@ -215,8 +219,8 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 													<div
 														className={style.item}
 														key={index}
-														style={{ backgroundColor: `${symbolColors[item.content] ?? 'white'}` }}
-														data-title={`${symbolToDefinition(item.content)}\n${item.text}\n${item.created_at}`}
+														style={{ backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }}
+														data-title={`${symbolToDefinition(item.content)} @ ${item.created_at}\n${item.text}`}
 														onClick={() => routeToTweet(item.id)}
 													>
 														{showDates && <em>{item.content}</em>}

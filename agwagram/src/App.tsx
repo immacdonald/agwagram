@@ -5,7 +5,7 @@ import style from './App.module.scss';
 import Footer from './components/Page/Footer';
 import Header from './components/Page/Header';
 import { selectTheme } from './data/settingsSlice';
-import { Home } from './views';
+import { About, Home } from './views';
 
 function App() {
 	const theme = useSelector(selectTheme);
@@ -20,7 +20,8 @@ function App() {
 		<div className={style.app}>
 			<Header />
 			<Routes>
-				<Route path="/" Component={Home} />
+				<Route path="/" element={<Home />} />
+				<Route path="/about" element={<About />} />
 			</Routes>
 			<Footer />
 		</div>

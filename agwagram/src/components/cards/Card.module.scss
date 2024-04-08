@@ -18,7 +18,7 @@
 			grid-column-end: span 8;
 		}
 
-		@media (min-width: $screen-md) {
+		@media (min-width: $screen-lg) {
 			grid-column-end: span 12;
 		}
 	}
@@ -28,7 +28,7 @@
 			grid-column-end: span 8;
 		}
 
-		@media (min-width: $screen-md) {
+		@media (min-width: $screen-lg) {
 			grid-column-end: span 6;
 		}
 	}

@@ -110,5 +110,8 @@ def get_multi_symbol_meanings(symbols, default='Error'):
     return meaning
 
 
-def get_all_symbols():
+def get_all_symbols() -> dict[str, str]:
     return master_symbol_dict
+
+def get_time_symbols() -> dict[str, str]:
+    return time_symbol_dict

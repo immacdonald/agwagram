@@ -37,16 +37,15 @@
 	//grid-auto-flow: dense;
 	width: 100%;
 	min-height: 320px;
-	background-color: var(--c-primary-alpha-light);
-	padding: $md;
+	//background-color: var(--c-primary-alpha-light);
 	border-radius: $radius-md;
-	box-shadow: var(--shadow);
+	//box-shadow: var(--shadow);
 
-	@media (min-width: 800px) {
+	@media (min-width: $screen-sm) {
 		grid-template-columns: repeat(8, 1fr);
 	}
 
-	@media (min-width: 1200px) {
+	@media (min-width: $screen-lg) {
 		grid-template-columns: repeat(12, 1fr);
 	}
 }

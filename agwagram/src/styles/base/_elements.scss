@@ -154,6 +154,9 @@ mark {
 		transform: translate(-50%, 3rem);
 		width: max-content;
 		min-width: $xxl;
+		max-width: 600px;
+		max-height: 360px;
+		overflow-y: auto;
 		padding: $xs $md;
 		border-radius: $radius-sm;
 		background-color: var(--c-bg-dark);
