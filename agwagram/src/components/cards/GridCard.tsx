@@ -39,8 +39,8 @@ const actionLegend: Record<string, string> = {
 	r: '#ea3323',
 	T: '#48752c',
 	π: '#ea33f7',
-	ρ: '#f9da78',
-}
+	ρ: '#f9da78'
+};
 
 const contentLegend: Record<string, string> = {
 	E: '#5fcecf',
@@ -48,8 +48,8 @@ const contentLegend: Record<string, string> = {
 	m: '#84f460',
 	U: '#ea33f7',
 	t: '#f9da78',
-	q: '#48752c',
-}
+	q: '#48752c'
+};
 
 const pauseLegend: Record<string, string> = {
 	'□': '#ffffff',
@@ -148,7 +148,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 
 	const controlProperties = { '--v-height': `${height}px` } as React.CSSProperties;
 
-	const combinedLegend = {...(showAction ? actionLegend : contentLegend), ...pauseLegend}
+	const combinedLegend = { ...(showAction ? actionLegend : contentLegend), ...pauseLegend };
 	const legend: { symbol: string; color: string }[] = [];
 	for (const [key, value] of Object.entries(combinedLegend)) {
 		legend.push({ symbol: key, color: value });

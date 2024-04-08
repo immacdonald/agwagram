@@ -5,11 +5,13 @@ function About() {
 	return (
 		<Page>
 			<Section>
-				<h1>
-					About
-				</h1>
+				<h1>About</h1>
 				<p>
-					Agwagram is a cutting-edge online behavioral analysis tool designed to help researchers, journalists, social media analysts, and any other interested parties in identifying and quantitatively describing the behavior of <i>Twitter</i> (known now as <i>X</i>) accounts. With the global rise of misinformation, it offers a unique solution to track shifts in behavior, powered by the novel BLOC language algorithm, and identify potential bot accounts with ease. Capable of detecting a broad range of legitimate and suspicious behaviors, as well as accounts which display both, Agwagram offers a flexible and generalizable method for analyzing Twitter accounts - making it an essential tool for anyone looking to study and detect coordinated disinformation on social media platforms.
+					Agwagram is a cutting-edge online behavioral analysis tool designed to help researchers, journalists, social media analysts, and any other interested parties in identifying and
+					quantitatively describing the behavior of <i>Twitter</i> (known now as <i>X</i>) accounts. With the global rise of misinformation, it offers a unique solution to track shifts in
+					behavior, powered by the novel BLOC language algorithm, and identify potential bot accounts with ease. Capable of detecting a broad range of legitimate and suspicious behaviors, as
+					well as accounts which display both, Agwagram offers a flexible and generalizable method for analyzing Twitter accounts - making it an essential tool for anyone looking to study
+					and detect coordinated disinformation on social media platforms.
 				</p>
 				<h2>Methodology</h2>
 				<p>
@@ -27,7 +29,7 @@ function About() {
 					information, please see the BLOC paper: <a href="https://arxiv.org/abs/2211.00639">A General Language for Modeling Social Media Account Behavior</a> as well as the{' '}
 					<a href="https://github.com/anwala/bloc">BLOC Project GitHub.</a>
 				</p>
-				<br/>
+				<br />
 				<h2>Frequently Asked Questions</h2>
 				<p>Coming soon...</p>
 				<h2>Publications</h2>
