@@ -10,6 +10,10 @@ dev:
 	$(call setup_env, development)
 	docker-compose -f docker-compose-dev.yml up --build
 
+dev-backend:
+	$(call setup_env, development)
+	docker-compose -f docker-compose-dev-backend.yml up --build
+
 prod:
 	docker-compose up --build
 

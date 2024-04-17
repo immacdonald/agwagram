@@ -1,15 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Button from './Button';
+import { Button } from '@imacdonald/phantom';
 import style from './FileUploadPortal.module.scss';
+import { Cancel } from '../../icons';
 
 interface FileUploadPortalProps {
 	maxFiles?: number;
+	condensed?: boolean;
 	submit: (file: File[]) => void;
 }
 
-const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, submit }: FileUploadPortalProps) => {
+const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, condensed = false, submit }: FileUploadPortalProps) => {
 	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 	const [fileLimit, setFileLimit] = useState<boolean>(false);
+
+	if(condensed) {
+		//
+	}
 
 	const handleUploadFiles = (files: File[]) => {
 		const uploaded: File[] = [...uploadedFiles];
@@ -52,21 +58,21 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, submi
 
 	const fileList = useMemo(() => {
 		return uploadedFiles.map((file: File, i: number) => (
-			<div key={file.name}>
-				<strong>{i + 1}.</strong> {file.name}
-				<button className={style.clearButton} onClick={() => removeFile(i)}>
-					X
-				</button>
+			<div key={file.name} className={style.fileLabel}>
+				<Button Icon={Cancel} onClick={() => removeFile(i)} mode='error' rounded/>
+				<span>{file.name}</span>
 			</div>
 		));
 	}, [uploadedFiles]);
 
 	return (
-		<div>
-			<input type="file" multiple onChange={handleFileEvent} disabled={fileLimit} />
+		<div className={style.wrapper}>
 			<div className={style.fileList}>{fileList}</div>
-			<div className={style.submit}>
-				<Button onClick={() => submit(uploadedFiles)} disabled={!uploadedFiles.length} label="Upload Files" visual="filled" />
+			<div className={style.inputWrapper}>
+				<input type="file" multiple onChange={handleFileEvent} disabled={fileLimit} />
+				<div className={style.submit}>
+					<Button onClick={() => submit(uploadedFiles)} disabled={!uploadedFiles.length} label="Upload Files" visual="filled" />
+				</div>
 			</div>
 		</div>
 	);

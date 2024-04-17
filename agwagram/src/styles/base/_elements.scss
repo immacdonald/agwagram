@@ -50,11 +50,6 @@ a {
 	}
 }
 
-// Buttons
-button {
-	@include button;
-}
-
 // Interactables
 :focus {
 	outline: 0;
@@ -75,7 +70,7 @@ input[type='file'] {
 		mask: url('./images/upload_file.svg') no-repeat 100% 100%;
 		-webkit-mask-size: cover;
 		mask-size: cover;
-		background-color: var(--c-fg-theme);
+		background-color: var(--c-fg);
 		transition: background-color var(--t-fast);
 		width: 64px;
 		height: 64px;
@@ -92,16 +87,12 @@ input[type='file'] {
 		}
 	}
 
-	&::file-selector-button {
-		@include button;
-	}
-
 	&:disabled {
 		background-color: var(--c-disabled-color);
 		transition: none;
 
 		&::before {
-			background-color: var(--c-bg-theme);
+			background-color: var(--c-bg);
 			transition: none;
 		}
 	}
@@ -126,7 +117,7 @@ td {
 }
 
 tr:nth-child(even) {
-	background-color: var(--c-bg-theme-dim);
+	background-color: var(--c-bg-dim);
 }
 
 mark {
@@ -161,7 +152,7 @@ mark {
 		border-radius: $radius-sm;
 		background-color: var(--c-bg-dark);
 		text-align: center;
-		color: var(--c-fg-light);
+		color: var(--c-fg-inverse);
 		font-size: $font-md;
 		font-weight: 500;
 		white-space: pre-line;
@@ -169,7 +160,7 @@ mark {
 		opacity: 1;
 		//animation: 0s ease-out 0.25s 1 appear;
 		//animation-fill-mode: forwards;
-		box-shadow: var(--shadow-low);
+		box-shadow: var(--shadow-overlay);
 		filter: none;
 	}
 }
@@ -178,4 +169,8 @@ em {
 	font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
 	font-style: normal;
 	font-weight: 600;
+}
+
+section {
+	padding-block: 48px !important;
 }

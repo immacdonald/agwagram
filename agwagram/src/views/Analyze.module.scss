@@ -38,8 +38,8 @@
 	padding: $md;
 	border-radius: $radius-md;
 	border: 1px solid var(--c-b-neutral);
-	background-color: var(--c-bg-theme-light);
-	box-shadow: var(--shadow);
+	background-color: var(--c-bg-light);
+	box-shadow: var(--shadow-lifted);
 	margin-bottom: $xl;
 
 	> h3 {
@@ -59,4 +59,25 @@
 	:last-child {
 		margin-left: auto;
 	}
+}
+
+.split {
+	display: grid;
+	grid-template-columns: 400px 1fr;
+	grid-gap: $xl;
+
+	> div:nth-child(2) {
+		border: var(--b-light);
+		padding: $xl;
+		box-shadow: var(--shadow-lifted);
+	}
+
+	@include respond-max($screen-md) {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+	}
+}
+
+.gradient {
+	background: linear-gradient(180deg, var(--c-bg-light) 0%, var(--c-bg) 10%);
 }

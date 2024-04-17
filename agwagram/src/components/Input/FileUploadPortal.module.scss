@@ -1,15 +1,31 @@
 @use '../../styles' as *;
 
+.wrapper {
+	margin-top: $lg;
+
+}
+
+.inputWrapper {
+	display: grid;
+	align-items: center;
+	grid-template-columns: auto 160px;
+	grid-auto-flow: column;
+
+	input {
+		margin: 0 !important;
+	}
+}
+
 .submit {
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	margin-top: $lg;
 }
 
 .fileList {
-	font-size: $font-xs;
-	margin-top: $sm;
+	font-size: $font-sm;
+	display: flex;
+	flex-direction: column;
 }
 
 .clearButton {
@@ -18,4 +34,10 @@
 	padding: 0;
 	cursor: pointer;
 	margin-left: $sm;
+}
+
+.fileLabel {
+	display: inline-flex;
+	align-items: center;
+	gap: $sm;
 }

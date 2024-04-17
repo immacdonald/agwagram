@@ -1,8 +1,8 @@
 @use '../../styles' as *;
 
 .card {
-	background-color: var(--c-bg-theme-light);
-	box-shadow: var(--shadow);
+	background-color: var(--c-bg-light);
+	box-shadow: var(--shadow-lifted);
 	border: var(--b-light);
 	border-radius: $radius-sm;
 	display: flex;
@@ -80,7 +80,7 @@
 	border-top: var(--b-light);
 
 	a {
-		color: var(--c-fg-theme);
+		color: var(--c-fg);
 		font-weight: 500;
 		font-size: 0.875rem;
 
@@ -116,9 +116,9 @@
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: var(--c-bg-theme-dim);
+		background-color: var(--c-bg-dim);
 		border-radius: $sm;
-		border: $xs solid var(--c-bg-theme-dim);
+		border: $xs solid var(--c-bg-dim);
 	}
 
 	&::-webkit-scrollbar-track-piece {
@@ -187,8 +187,13 @@
 			justify-content: center;
 			align-items: center;
 			gap: $sm;
-			margin-bottom: $sm;
-			height: 80px;
+			position: absolute;
+			bottom: 120px;
+			right: 70px;
+			padding: $sm;
+			background-color: var(--c-bg);
+			box-shadow: var(--shadow-lifted);
+			border-radius: $xl;
 		}
 
 		[class^='react-transform-wrapper'] {
@@ -205,8 +210,10 @@ $legendWidth: 100px;
 	height: auto;
 	display: flex;
 	flex-direction: column;
-	padding: 0 8px;
+	padding: 8px;
 	margin-bottom: 8px;
+	background-color: var(--c-bg);
+	border-radius: $radius-lg;
 
 	.legendList {
 		width: 100%;
@@ -230,4 +237,8 @@ $legendWidth: 100px;
 		width: 16px;
 		height: 16px;
 	}
+}
+
+.popover {
+	min-width: min(500px, 60vw);
 }

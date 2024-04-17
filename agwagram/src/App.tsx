@@ -6,6 +6,7 @@ import Footer from './components/Page/Footer';
 import Header from './components/Page/Header';
 import { selectTheme } from './data/settingsSlice';
 import { About, Home } from './views';
+import { AnchorController } from '@imacdonald/phantom';
 
 function App() {
 	const theme = useSelector(selectTheme);
@@ -18,6 +19,7 @@ function App() {
 
 	return (
 		<div className={style.app}>
+					<AnchorController/>
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />

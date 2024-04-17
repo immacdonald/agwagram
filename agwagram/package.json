@@ -13,6 +13,7 @@
 		"format": "npm run lint && npm run prettier:fix"
 	},
 	"dependencies": {
+		"@imacdonald/phantom": "github:immacdonald/phantom",
 		"@reduxjs/toolkit": "^2.2.1",
 		"classnames": "^2.3.2",
 		"react": "^18.2.0",

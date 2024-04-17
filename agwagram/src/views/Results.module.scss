@@ -39,7 +39,6 @@
 	min-height: 320px;
 	//background-color: var(--c-primary-alpha-light);
 	border-radius: $radius-md;
-	//box-shadow: var(--shadow);
 
 	@media (min-width: $screen-sm) {
 		grid-template-columns: repeat(8, 1fr);
@@ -51,28 +50,9 @@
 }
 
 .tabButtons {
-	padding: 0 $md;
 	width: 100%;
-
-	> button {
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-		border-bottom: none;
-		background-color: var(--c-primary-alpha-light);
-
-		&:not(:last-of-type) {
-			margin-right: $sm;
-		}
-
-		&:not(:first-of-type) {
-			margin-left: $sm;
-		}
-	}
-}
-
-button[data-active='true'] {
-	background-color: var(--c-primary) !important;
-	color: var(--c-fg-on-primary) !important;
+	display: flex;
+	margin-bottom: $lg;
 }
 
 .analyzeAnother {

@@ -19,17 +19,11 @@ $primary: #143aa2;
 
 	--c-primary-alpha-light: #{rgba($primary, 0.05)};
 	--c-primary-alpha: #{rgba($primary, 0.25)};
-
-	// Foreground Colors
-	--c-fg-light: var(--c-grey-1);
 	--c-fg-on-primary: var(--c-grey-1);
 
-	// Background
-	--c-bg-dark: var(--c-grey-10);
-
 	// Border
-	--b-light: 1px solid var(--c-bg-theme-dim);
-	--b-dark: 1px solid var(--c-bg-dark);
+	--b-light: 1px solid var(--c-bg-dim);
+	--b-dark: 1px solid var(--c-grey-10);
 
 	// Transitions
 	--t-fast: 0.25s ease;
@@ -46,24 +40,36 @@ $primary: #143aa2;
 	--f-disabled-brightness: 0.9;
 	--f-hover-brightness: 1.1;
 	--f-active-brightness: 0.8;
+
+	// Alpha
+	$_alpha-base: 144, 144, 144;
+	$_alpha-base-dark: 0, 0, 0;
+	$_primary-base: 42, 99, 147;
+	--a-faint: rgba(#{$_primary-base}, 0.055);
+	--a-low: rgba(#{$_alpha-base}, 0.05);
+	--a-mid: rgba(#{$_alpha-base}, 0.25);
+	--a-dark: rgba(#{$_alpha-base-dark}, 0.025);
+	--a-darker: rgba(#{$_alpha-base-dark}, 0.15);
 }
 
 html[data-theme='light'] {
 	--c-primary: #{$primary};
 
 	// Foreground Colors
-	--c-fg-theme: var(--c-black);
-	--c-fg-theme-dim: var(--c-grey-10);
-	--c-fg-theme-dark: var(--c-grey-9);
-	--c-fg-theme-inverse: var(--c-grey-1);
+	--c-fg-light: var(--c-black);
+	--c-fg: var(--c-black);
+	--c-fg-dim: var(--c-grey-10);
+	--c-fg-dark: var(--c-grey-9);
+	--c-fg-inverse: var(--c-grey-1);
 	--c-primary-fade: #{color.scale($primary, $lightness: 70%)};
 	--c-primary-light: #{color.scale($primary, $lightness: 10%)};
 	--c-primary-dark: #{color.scale($primary, $lightness: -25%)};
 
 	// Background
-	--c-bg-theme-light: var(--c-grey-1);
-	--c-bg-theme: var(--c-grey-2);
-	--c-bg-theme-dim: var(--c-grey-3);
+	--c-bg-light: var(--c-grey-1);
+	--c-bg: var(--c-grey-2);
+	--c-bg-dim: var(--c-grey-3);
+	--c-bg-dark: var(--c-grey-9);
 
 	// Effect Colors
 	--c-disabled-background: var(--c-grey-6);
@@ -73,18 +79,20 @@ html[data-theme='light'] {
 html[data-theme='dark'] {
 	--c-primary: #2159c0;
 	// Foreground Colors
-	--c-fg-theme: var(--c-grey-1);
-	--c-fg-theme-dim: var(--c-grey-2);
-	--c-fg-theme-dark: var(--c-grey-3);
-	--c-fg-theme-inverse: var(--c-grey-10);
+	--c-fg-light: var(--c-white);
+	--c-fg: var(--c-grey-1);
+	--c-fg-dim: var(--c-grey-2);
+	--c-fg-dark: var(--c-grey-3);
+	--c-fg-inverse: var(--c-grey-10);
 	--c-primary-fade: #{color.scale($primary, $lightness: -40%)};
 	--c-primary-light: #{color.scale($primary, $lightness: -10%)};
 	--c-primary-dark: #{color.scale($primary, $lightness: -25%)};
 
 	// Background
-	--c-bg-theme-light: var(--c-grey-10);
-	--c-bg-theme: var(--c-grey-9);
-	--c-bg-theme-dim: var(--c-grey-8);
+	--c-bg-light: var(--c-grey-10);
+	--c-bg: var(--c-grey-9);
+	--c-bg-dim: var(--c-grey-8);
+	--c-bg-dark: var(--c-grey-3);
 
 	// Effect Colors
 	--c-disabled-background: var(--c-grey-7);

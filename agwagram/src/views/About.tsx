@@ -1,9 +1,8 @@
-import Page from '../components/Page/Page';
-import Section from '../components/Page/Section';
+import { Page, Section } from '@imacdonald/phantom';
 
 function About() {
 	return (
-		<Page>
+		<Page title="Agwagram">
 			<Section>
 				<h1>About</h1>
 				<p>

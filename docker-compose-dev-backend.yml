@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.2
+    restart: always
+    env_file:
+      - docker/.env
+    ports:
+      - "3307:3306"
+
+  backend:
+    restart: unless-stopped
+    env_file:
+      - ./development.env
+      - docker/.env
+    build:
+      context: ./bloc
+    entrypoint: /bloc/dev-entrypoint.sh
+    container_name: bloc
+    volumes:
+      - ./bloc:/bloc
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - db

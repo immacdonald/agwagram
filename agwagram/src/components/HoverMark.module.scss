@@ -3,7 +3,7 @@
 .hoverMark {
 	background-color: transparent;
 	display: inline-block;
-	color: var(--c-fg-theme);
+	color: var(--c-fg);
 
 	&:hover {
 		background-color: var(--c-primary-fade);

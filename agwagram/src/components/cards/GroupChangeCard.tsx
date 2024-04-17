@@ -10,7 +10,7 @@ interface GroupChangeCardProps {
 }
 
 const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, icon, reports }) => {
-	console.log(reports);
+	//console.log(reports);
 	const changeChronology: any[] = [];
 	reports.forEach((report: any) => {
 		if (report.change_report && report.change_report.change_events) {

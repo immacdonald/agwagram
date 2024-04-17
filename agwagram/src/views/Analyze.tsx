@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Button from '../components/Input/Button';
+import { Accordion, BooleanDropdown, Button, Dropdown, Row, Section, Split } from '@imacdonald/phantom';
 import FileUploadPortal from '../components/Input/FileUploadPortal';
 import SearchInput from '../components/Input/SearchInput';
 import Toggle from '../components/Input/Toggle';
@@ -9,6 +9,14 @@ import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/a
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 import { getStaticFile } from '../utility';
 import style from './Analyze.module.scss';
+import { Dataset } from '../icons';
+import { TabGroup } from '../components/TabGroup';
+
+const files = [
+	{ file: 'sample_storygraphbot.jsonl', title: '@StoryGraphBot', type: 'JSONL' },
+	{ file: 'sample_jesus.jsonl', title: '@Jesus', type: 'JSONL' },
+	{ file: 'sample_combined.json', title: 'Combined', type: 'JSON' }
+]
 
 const Analyze: React.FC = () => {
 	const [setFiles] = useSetAnalyzeFilesMutation();
@@ -36,21 +44,12 @@ const Analyze: React.FC = () => {
 		getStaticFile(file).then((data) => submitFiles([data], file));
 	};
 
-	const exampleFile = (file: string, title: string, format: string = 'JSON') => {
-		return (
-			<div className={style.example}>
-				<Button onClick={() => submitJsonFile(file)} label={title} visual={file == results.example ? 'filled' : 'outline'} />
-				<Link to={`/static/${file}`} target="_blank" download>
-					Download {format} File
-				</Link>
-			</div>
-		);
-	};
+	const [selectedFile, setSelectedFile] = useState<number>(-1);
 
 	useEffect(() => {
 		if (!results.data) {
 			// On first load preview one of the example files
-			submitJsonFile('sample_storygraphbot.jsonl');
+			setSelectedFile(0);
 		}
 	}, []);
 
@@ -59,46 +58,65 @@ const Analyze: React.FC = () => {
 		setGenerateChange(!generateChange);
 	};
 
+	const changedFile = (title: string) => {
+		setSelectedFile(files.findIndex(file => file.title == title));
+	}
+
+	useEffect(() => {
+		if (selectedFile > -1) {
+			submitJsonFile(files[selectedFile].file);
+		}
+	}, [selectedFile]);
+
+	const helperText = useMemo(() => {
+		if (selectedFile > -1) {
+			const file = files[selectedFile];
+			return (
+				<Link to={`/static/${file.file}`} target="_blank" download>
+					Download {file.title} {file.type} File
+				</Link>
+			);
+		} else {
+			return false;
+		}
+	}, [selectedFile]);
+
 	return (
 		<>
-			<h1 id="analyze">Analyze</h1>
-			<div className={style.columns}>
+			<TabGroup tabLabels={['File', 'Example Files', 'Username']} tabs={[
 				<div>
-					{true && (
-						<div className={style.card}>
-							<h3>Analyze From Example File</h3>
-							<p>Test the capabilities of Agwagram using one of our example Twitter data files.</p>
-							<div>
-								{exampleFile('sample_storygraphbot.jsonl', '@StoryGraphBot', 'JSONL')}
-								{exampleFile('sample_jesus.jsonl', '@Jesus', 'JSONL')}
-								{exampleFile('sample_combined.json', 'Combined', 'JSON')}
-							</div>
-						</div>
-					)}
-					<div className={style.card}>
-						<h3>
-							Analyze By Username <b>(Coming Soon)</b>
-						</h3>
-						<p>Search for one or more accounts (separated by a comma) by their current Twitter username.</p>
-						<SearchInput submit={searchUsername} />
-					</div>
-				</div>
-				<div className={style.card}>
 					<h3>Analyze By File</h3>
-					<p>
-						Upload files containing Tweet data to be analyzed using the BLOC algorithm. Files can be in <strong>JSON</strong> or <strong>JSONL</strong> formats and can be uploaded unzipped
-						or as Gzip files. To upload multiple files at once please select them all in the file selection prompt or drag-and-drop them each in.
-					</p>
-					<p>
-						<strong>Note:</strong> JSON files are expected to contain the Tweet data as an array of Tweet objects, while the JSONL files are expected to be formatted with each line being a
-						Tweet, <i>not</i> an account.
-					</p>
+					<p>Upload files containing Tweet data to be analyzed using the BLOC algorithm.</p>
+					<Accordion label="File Requirements" Icon={Dataset}>
+						<p>
+							Files can be in <strong>JSON</strong> or <strong>JSONL</strong> formats and can be uploaded unzipped
+							or as Gzip files. To upload multiple files at once please select them all in the file selection prompt or drag-and-drop them each in.
+						</p>
+						<p>
+							JSON files are expected to contain the Tweet data as an array of Tweet objects, while the JSONL files are expected to be formatted with each line being a
+							Tweet, <i>not</i> an account.
+						</p>
+					</Accordion>
+					<FileUploadPortal submit={submitFiles} />
 					<span>
 						Generate Change Reports <Toggle state={generateChange} onChange={() => toggleGenerateChange()} />
 					</span>
-					<FileUploadPortal submit={submitFiles} />
+				</div>,
+				<div>
+					<h3>Analyze From Example File</h3>
+					<p>Test the capabilities of Agwagram using one of our example Twitter data files.</p>
+					<Dropdown options={files.map((file: any) => file.title)} placeholder='Select File' onChange={(value: any) => changedFile(value as string)} />
+					{helperText && <p>{helperText}</p>}
+				</div>,
+				<div>
+					<h3>
+						Analyze By Username <b>(Coming Soon)</b>
+					</h3>
+					<p>Search for one or more accounts (separated by a comma) by their current Twitter username.</p>
+					<SearchInput submit={searchUsername} />
 				</div>
-			</div>
+			] as React.ReactNode[]}
+			/>
 		</>
 	);
 };

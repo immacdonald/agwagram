@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectTheme, setTheme } from '../../data/settingsSlice';
 import Logo from '../../images/agwagram.png';
-import Button from '../Input/Button';
+import { Button } from '@imacdonald/phantom';
 import style from './Header.module.scss';
+import { AgwagramIcon, DarkMode, LightMode } from '../../icons';
 
 const Header: React.FC = () => {
 	const dispatch = useDispatch();
@@ -18,13 +19,14 @@ const Header: React.FC = () => {
 		<header className={style.header}>
 			<div className={style.content}>
 				<Link to="/" className={style.logo}>
-					<img src={Logo} />
+					<Button Icon={AgwagramIcon} rounded/>
+					<span><b>Agwagram</b></span>
 				</Link>
 				<div className={style.navigation}>
 					<nav className={style.navLinks}>
 						<Button link="/" label="Home" />
 						<Button link="/about" label="About" />
-						<Button onClick={() => switchTheme()} label="Toggle Theme" />
+						<Button rounded onClick={() => switchTheme()} Icon={theme == 'light' ? LightMode : DarkMode} />
 					</nav>
 				</div>
 			</div>

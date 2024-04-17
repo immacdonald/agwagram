@@ -8,6 +8,7 @@ import { Card, CardSize, ChangeCard, ChangeProfileCard, GridCard, GroupChangeCar
 import { clearResults, selectResults } from '../data/settingsSlice';
 import { BarChart, Chart, Dataset, Group, Hub, Link as LinkIcon, Pause, Person, Timeline } from '../icons';
 import style from './Results.module.scss';
+import { Button } from '@imacdonald/phantom';
 
 const Results: React.FC = () => {
 	const [expertMode, setExpertMode] = useState<boolean>(false);
@@ -33,7 +34,6 @@ const Results: React.FC = () => {
 
 	const returnToAnalysis = () => {
 		dispatch(clearResults());
-		document.getElementById('analyze')?.scrollIntoView();
 	};
 
 	const expertToggle = false && (
@@ -132,14 +132,10 @@ const Results: React.FC = () => {
 					</div>
 					<div className={style.contentMain}>
 						<div className={style.tabButtons}>
-							<button className={style.tabButton} data-active={analysisView == -1 ? true : false} onClick={() => setAnalysisView(-1)}>
-								Group Analysis
-							</button>
+							<Button visual={analysisView == -1 ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(-1)} label="Group Analysis"/>
 							{accounts.map((account: any, i: number) => {
 								return (
-									<button className={style.tabButton} key={i} data-active={i == analysisView ? true : false} onClick={() => setAnalysisView(i)}>
-										@{account.account_username}
-									</button>
+									<Button key={i} visual={analysisView == i ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(i)} label={`@${account.account_username}`}/>
 								);
 							})}
 						</div>

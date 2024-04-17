@@ -1,11 +1,11 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
-import Button from '../Input/Button';
-import Dropdown from '../Input/Dropdown';
+import { Button, Dropdown, Popover, useResponsiveContext } from '@imacdonald/phantom';
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
+import { Recenter, ZoomIn, ZoomOut } from '../../icons';
 
 interface GridCardProps {
 	title: string;
@@ -15,21 +15,21 @@ interface GridCardProps {
 }
 
 /*const symbolColors: Record<string, string> = {
-    'P': '#a0634a',
-    'p': '#00baaf',
-    'R': '#7689d6',
-    'r': '#e8a169',
-    'T': '#fafa70',
-    'π': '#6ac982',
-    'ρ': '#c0aa37',
-    // Pauses
-    '□': '#a1113e',
-    '⚀': '#af458d',
-    '⚁': '#a960b0',
-    '⚂': '#9d7ace',
-    '⚃': '#8d92e4',
-    '⚄': '#7ca9f2',
-    '⚅': '#70d1fa'
+	'P': '#a0634a',
+	'p': '#00baaf',
+	'R': '#7689d6',
+	'r': '#e8a169',
+	'T': '#fafa70',
+	'π': '#6ac982',
+	'ρ': '#c0aa37',
+	// Pauses
+	'□': '#a1113e',
+	'⚀': '#af458d',
+	'⚁': '#a960b0',
+	'⚂': '#9d7ace',
+	'⚃': '#8d92e4',
+	'⚄': '#7ca9f2',
+	'⚅': '#70d1fa'
 }*/
 
 const actionLegend: Record<string, string> = {
@@ -139,12 +139,14 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 		gridItems.push(...rowData);
 	}
 
+	const { windowSize } = useResponsiveContext();
+
 	useEffect(() => {
 		const scale = (ref.current?.clientWidth || 1) / (gridRef.current?.clientWidth || 1);
 		const theoreticalHeight = gridSize * 24;
 		setHeight(theoreticalHeight * scale);
 		setScale(scale);
-	}, [fixedLinkedData.length]);
+	}, [fixedLinkedData.length, windowSize]);
 
 	const controlProperties = { '--v-height': `${height}px` } as React.CSSProperties;
 
@@ -176,9 +178,38 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 		window.open(url, '_blank');
 	};
 
+	const createItemSquare = (item: any, index: number): React.ReactNode => {
+		const popoverContent =
+		<div className={style.popoverContent}>
+			<h3 style={{display: "flex", justifyContent: "space-between"}}><span>{symbolToDefinition(item.content)}</span><span>{item.created_at}</span></h3>
+			<hr style={{margin: "0.5rem 0"}} />
+			<span>{item.text}</span>
+		</div>
+
+		return (
+			<Popover
+				key={index}
+				content={popoverContent}
+				anchorClass={style.item}
+				anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: () => routeToTweet(item.id) }}
+				customStyle={style.popover}
+			>
+				{showDates && <em>{item.content}</em>}
+			</Popover>
+		);
+	}
+
 	return (
 		<Card title={title} icon={icon} size={CardSize.Full}>
 			<p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
+			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
+				<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
+					<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
+				</span>
+				<span>
+					Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
+				</span>
+			</div>
 			<div className={style.legend}>
 				<div className={style.legendList}>
 					{legend.map((item) => {
@@ -190,14 +221,6 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 						);
 					})}
 				</div>
-			</div>
-			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
-				<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
-					<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
-				</span>
-				<span>
-					Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
-				</span>
 			</div>
 			<div className={style.gridControl} style={controlProperties}>
 				<TransformWrapper initialScale={scale} minScale={scale - 0.25} maxScale={2} initialPositionX={0} initialPositionY={0}>
@@ -215,25 +238,15 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 													</div>
 												);
 											} else {
-												return (
-													<div
-														className={style.item}
-														key={index}
-														style={{ backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }}
-														data-title={`${symbolToDefinition(item.content)} @ ${item.created_at}\n${item.text}`}
-														onClick={() => routeToTweet(item.id)}
-													>
-														{showDates && <em>{item.content}</em>}
-													</div>
-												);
+												return createItemSquare(item, index);
 											}
 										})}
 									</div>
 								</TransformComponent>
 								<div className={style.tools}>
-									<Button onClick={() => zoomIn()} label="+" visual="outline" />
-									<Button onClick={() => zoomOut()} label="-" visual="outline" />
-									<Button onClick={() => resetTransform()} label="X" visual="outline" />
+									<Button onClick={() => resetTransform()} Icon={Recenter} rounded />
+									<Button onClick={() => zoomOut()} Icon={ZoomOut} rounded/>
+									<Button onClick={() => zoomIn()} Icon={ZoomIn} rounded/>
 								</div>
 							</div>
 						);
