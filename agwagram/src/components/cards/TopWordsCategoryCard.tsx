@@ -1,7 +1,6 @@
+import { Pause } from '@imacdonald/phantom';
 import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
 import Card, { CardSize } from './Card';
-import style from './Card.module.scss';
-import { Pause } from '../../icons';
 
 interface TopWordsCategoryCardProps {
 	title: string;
@@ -19,7 +18,7 @@ const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subt
 					<tr>
 						<th style={{ width: '60px' }}>{symbolLabel}</th>
 						<th style={{ width: '90px' }}>Frequency</th>
-						<th style={{ width: '75px' }}>Rate (%)</th>
+						<th style={{ width: '85px' }}>Rate (%)</th>
 						<th>Description</th>
 					</tr>
 				</thead>

@@ -1,12 +1,19 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Results } from '.';
-import { Page, Section } from '@imacdonald/phantom';
-import { selectResults } from '../data/settingsSlice';
+import { Button, Card, Page, Section } from '@imacdonald/phantom';
+import { clearResults, selectResults } from '../data/settingsSlice';
 import Analyze from './Analyze';
 import style from './Analyze.module.scss';
+import Loading from '../components/Loading';
 
 function Home() {
 	const resultState = useSelector(selectResults);
+
+	const dispatch = useDispatch();
+
+	const returnToAnalysis = () => {
+		dispatch(clearResults());
+	};
 
 	return (
 		<Page title="Agwagram">
@@ -20,12 +27,20 @@ function Home() {
 						quantitatively describing the behavior of social media accounts. Capable of detecting a broad range of legitimate and suspicious behaviors, Agwagram offers a powerful yet flexible
 						method for analyzing Twitter accounts - making it an essential tool for anyone looking to explore coordinated disinformation on social media platforms.
 					</p>
+					{resultState.data && <Button label="&#8592; Analyze Another" onClick={() => returnToAnalysis()} rounded />}
 				</div>
-				<div>
-					<Analyze />
-				</div>
+				<Card>
+					<Card.Body>
+						<Analyze />
+					</Card.Body>
+				</Card>
 			</Section>
-			{(resultState.data || resultState.loading) && (
+			{resultState.loading && (
+				<Section alt className={style.gradient}>
+					<Loading />
+				</Section>
+			)}
+			{resultState.data && (
 				<Section alt className={style.gradient}>
 					<Results />
 				</Section>

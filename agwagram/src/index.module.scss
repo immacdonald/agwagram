@@ -13,6 +13,7 @@
 }
 
 html {
+	@include scrollbar;
 	height: 100%;
 	display: block;
 	box-sizing: border-box;

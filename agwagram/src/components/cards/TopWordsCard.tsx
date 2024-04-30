@@ -19,7 +19,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: Top
 						<th style={{ width: '55px' }}>Rank</th>
 						<th style={{ width: '100px' }}>Word</th>
 						<th style={{ width: '90px' }}>Frequency</th>
-						<th style={{ width: '75px' }}>Rate (%)</th>
+						<th style={{ width: '85px' }}>Rate (%)</th>
 						<th>Description</th>
 					</tr>
 				</thead>

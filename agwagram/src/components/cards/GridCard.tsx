@@ -1,35 +1,17 @@
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
-import { Button, Dropdown, Popover, useResponsiveContext } from '@imacdonald/phantom';
+import { Button, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext } from '@imacdonald/phantom';
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
-import { Dataset, Recenter, ZoomIn, ZoomOut } from '../../icons';
+import { Dataset } from '../../icons';
 
 interface GridCardProps {
 	title: string;
 	username: string;
 	data: any;
 }
-
-/*const symbolColors: Record<string, string> = {
-	'P': '#a0634a',
-	'p': '#00baaf',
-	'R': '#7689d6',
-	'r': '#e8a169',
-	'T': '#fafa70',
-	'π': '#6ac982',
-	'ρ': '#c0aa37',
-	// Pauses
-	'□': '#a1113e',
-	'⚀': '#af458d',
-	'⚁': '#a960b0',
-	'⚂': '#9d7ace',
-	'⚃': '#8d92e4',
-	'⚄': '#7ca9f2',
-	'⚅': '#70d1fa'
-}*/
 
 const actionLegend: Record<string, string> = {
 	P: '#84f460',

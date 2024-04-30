@@ -1,20 +1,17 @@
-import { Button, Callback } from "@imacdonald/phantom";
+import { Button, Callback, PersonFilled } from "@imacdonald/phantom";
 import { formatDate } from "../Global";
 import { Card, CardSize, ChangeCard, ChangeProfileCard, GridCard, LanguageCard, LinkedDataCard, TopWordsCard, TopWordsCategoryCard } from "../components/cards";
-import { Person } from "../icons";
 
 interface AccountAnalysisProps {
     account: AccountBloc;
-    returnCallback: Callback<void>;
 }
 
-const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account, returnCallback }) => {
+const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
     const expertMode = false;
 
     return (
         <>
-            <Card title="Account Overview" Icon={Person} size={CardSize.Full}>
-                <Button label="&#8592; Analyze Another" onClick={() => returnCallback()} rounded />
+            <Card title="Account Overview" Icon={PersonFilled} size={CardSize.Full}>
                 <h2 id="results">Analysis of @{account.account_username} (<i>{account.account_name}</i>)</h2>
                 <p>
                     {account.tweet_count > 0 ? `Results generated using ${account.tweet_count} tweets from ${formatDate(account.first_tweet_date)} to ${formatDate(account.last_tweet_date)}` : `No results generated due to finding 0 tweets`}

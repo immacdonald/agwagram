@@ -1,5 +1,6 @@
+import { GroupFilled } from "@imacdonald/phantom";
 import { Card, CardSize, GroupChangeCard, TopWordsCard, TopWordsCategoryCard } from "../components/cards";
-import { Group, Hub } from "../icons";
+import { Hub } from "../icons";
 
 interface GroupAnalysisProps {
     accounts: AccountBloc[];
@@ -12,7 +13,7 @@ interface GroupAnalysisProps {
 const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, topBlocWords, topTimes, pairwiseSim }) => {
     return (
         <>
-            <Card title="Accounts Overview" Icon={Group} size={CardSize.Full}>
+            <Card title="Accounts Overview" Icon={GroupFilled} size={CardSize.Full}>
                 <h2>Analysis of {accounts.map((account: any) => `@${account.account_username}`).join(', ')}</h2>
                 <p>Results for {accounts.map((account: any) => <span><b>@{account.account_username}</b> ({account.account_name}), </span>)}generated using {totalTweets} tweets.</p>
             </Card>

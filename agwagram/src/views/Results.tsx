@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Loading from '../components/Loading';
-import { clearResults, selectResults } from '../data/settingsSlice';
+import { useSelector } from 'react-redux';
+import { selectResults } from '../data/settingsSlice';
 import style from './Results.module.scss';
 import { Button } from '@imacdonald/phantom';
 import { AccountAnalysis } from './AccountAnalysis';
@@ -13,17 +11,11 @@ import { BarChart } from '../icons';
 const Results: React.FC = () => {
 	const [analysisView, setAnalysisView] = useState<number>(-1);
 
-	const dispatch = useDispatch();
-
 	const resultState = useSelector(selectResults);
 
 	const results = useMemo(() => {
 		return resultState.data;
 	}, [resultState]);
-
-	const returnToAnalysis = () => {
-		dispatch(clearResults());
-	};
 
 	if (results && results.successful_generation) {
 		const accounts = results.account_blocs;
@@ -31,32 +23,29 @@ const Results: React.FC = () => {
 			const account = accounts[0];
 			return (
 				<div className={style.content}>
-					<div className={style.contentMain}>
-						<div className={style.cardGrid}>
-							<AccountAnalysis account={account} returnCallback={returnToAnalysis} />
-						</div>
+					<div className={style.cardGrid}>
+						<AccountAnalysis account={account} />
 					</div>
 				</div>
 			);
 		} else {
 			return (
 				<div className={style.content}>
-					<div className={style.contentMain}>
-						<div className={style.tabButtons}>
-							<Button visual={analysisView == -1 ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(-1)} label="Group Analysis" />
-							{accounts.map((account: any, i: number) => {
-								return (
-									<Button key={i} visual={analysisView == i ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(i)} label={`@${account.account_username}`} />
-								);
-							})}
-						</div>
-						<div className={style.cardGrid}>
-							{analysisView > -1 ? (
-								<AccountAnalysis account={accounts[analysisView]} returnCallback={returnToAnalysis} />
-							) : (
-								<GroupAnalysis accounts={accounts} totalTweets={results.total_tweets} topBlocWords={results.group_top_bloc_words} topTimes={results.group_top_time} pairwiseSim={results.pairwise_sim} />
-							)}
-						</div>
+
+					<div className={style.tabButtons}>
+						<Button visual={analysisView == -1 ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(-1)} label="Group Analysis" />
+						{accounts.map((account: any, i: number) => {
+							return (
+								<Button key={i} visual={analysisView == i ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(i)} label={`@${account.account_username}`} />
+							);
+						})}
+					</div>
+					<div className={style.cardGrid}>
+						{analysisView > -1 ? (
+							<AccountAnalysis account={accounts[analysisView]} />
+						) : (
+							<GroupAnalysis accounts={accounts} totalTweets={results.total_tweets} topBlocWords={results.group_top_bloc_words} topTimes={results.group_top_time} pairwiseSim={results.pairwise_sim} />
+						)}
 					</div>
 				</div>
 			);
@@ -65,9 +54,6 @@ const Results: React.FC = () => {
 		if (results) {
 			return (
 				<Card title="Analysis Failed" Icon={BarChart}>
-					<Link to="/" onClick={returnToAnalysis} className={style.analyzeAnother}>
-						&#8592; Analyze Another
-					</Link>
 					<p>Unable to generate BLOC analysis results for the following accounts: {results.query.join(', ')}</p>
 					{results.errors.map((error: Record<string, string>) => {
 						return (
@@ -90,8 +76,6 @@ const Results: React.FC = () => {
 					})}
 				</Card>
 			);
-		} else if (resultState.loading) {
-			return <Loading />;
 		}
 	}
 };

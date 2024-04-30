@@ -1,7 +1,7 @@
 @use '../../styles' as *;
 
 .card {
-	background-color: var(--c-bg-light);
+	height: auto !important;
 	width: 100%;
 	grid-column-end: span 4;
 	grid-row-end: span 1;
@@ -27,95 +27,12 @@
 	}
 }
 
-.cardHeader {
-	display: flex;
-	align-items: center;
-	padding: $lg $md $md $md;
-
-	span {
-		width: 40px;
-		height: 40px;
-		border-radius: $radius-sm;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
-}
-
-.cardToggleBody {
-	padding: 0rem 1.25rem;
-	font-size: 0.875rem;
-	max-height: 0px;
-	overflow: hidden;
-	transition: max-height 0.5s ease-in-out;
-	background-color: var(--c-background-secondary);
-	margin: 0px 20px;
-	border-radius: 8px;
-
-	&.active {
-		--extended-height: 0px;
-		max-height: var(--extended-height);
-	}
-}
-
-.cardBody {
-	padding: 0.5rem 1.25rem;
-	font-size: 0.875rem;
-	overflow-wrap: anywhere;
-}
-
-.cardFooter {
-	margin-top: auto;
-	padding: 0.5rem 1.25rem;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	border-top: var(--b-light);
-
-	a {
-		color: var(--c-fg);
-		font-weight: 500;
-		font-size: 0.875rem;
-
-		&:hover {
-			color: var(--c-primary);
-			text-decoration: none;
-		}
-	}
-}
-
 .icon {
 	width: 32px;
 	margin-right: 0.5rem;
 
 	> svg {
 		width: 30px;
-	}
-}
-
-.scrollable {
-	padding: $sm $xs;
-	max-height: 400px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-
-	&::-webkit-scrollbar {
-		width: $sm;
-		height: $sm;
-	}
-
-	&::-webkit-scrollbar-track {
-		background: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: var(--c-bg-dim);
-		border-radius: $sm;
-		border: $xs solid var(--c-bg-dim);
-	}
-
-	&::-webkit-scrollbar-track-piece {
-		background-color: transparent;
 	}
 }
 
@@ -128,13 +45,6 @@
 	> span:not(:last-child) {
 		margin-right: $md;
 	}
-}
-
-.clearButton {
-	background-color: transparent;
-	border: none;
-	padding: 0;
-	cursor: pointer;
 }
 
 .gridControl {

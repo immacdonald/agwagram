@@ -6,6 +6,7 @@ import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
 import { Timeline } from '../../icons';
+import { UnstyledButton } from '@imacdonald/phantom';
 
 interface ChangeCardProps {
 	title: string;
@@ -95,10 +96,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 
 		const sortButton = (text: string, code: string): ReactNode => {
 			return (
-				<button type="button" className={style.clearButton} onClick={() => setSortedField(code)}>
+				<UnstyledButton onClick={() => setSortedField(code)}>
 					{text}
 					{sortedField == code ? ' >' : false}
-				</button>
+				</UnstyledButton>
 			);
 		};
 

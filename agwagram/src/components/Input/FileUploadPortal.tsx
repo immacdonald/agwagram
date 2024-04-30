@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button } from '@imacdonald/phantom';
+import { Button, Cancel } from '@imacdonald/phantom';
 import style from './FileUploadPortal.module.scss';
-import { Cancel } from '../../icons';
 
 interface FileUploadPortalProps {
 	maxFiles?: number;
