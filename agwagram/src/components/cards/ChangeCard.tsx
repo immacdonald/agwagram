@@ -5,14 +5,14 @@ import { DefinitionTooltip } from '../BLOCComponents';
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
+import { Timeline } from '../../icons';
 
 interface ChangeCardProps {
 	title: string;
-	icon: ReactNode;
 	report: any;
 }
 
-const ChangeCard: React.FC<ChangeCardProps> = ({ title, icon, report }: ChangeCardProps) => {
+const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProps) => {
 	if (report.change_profile) {
 		// Only show pause change if it has a value
 		const showPause: boolean = report.change_profile.average_change.pause >= 0;
@@ -103,7 +103,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, icon, report }: ChangeCa
 		};
 
 		return (
-			<Card title={title} icon={icon} size={CardSize.Full}>
+			<Card title={title} Icon={Timeline} size={CardSize.Full} scrollable>
 				<p>
 					<strong>Change Rate</strong>: {report.change_profile.change_rate}
 					<br />
@@ -155,28 +155,26 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, icon, report }: ChangeCa
 				</div>
 				<br />
 				<hr />
-				<div className={style.scrollable}>
-					<table>
-						<thead>
-							<tr>
-								<th style={{ width: '180px' }}>Start Behavior</th>
-								<th style={{ width: '180px' }}>End Behavior</th>
-								<th>{sortButton('Similarity', 'sim')}</th>
-								<th style={{ width: '70px' }}>{sortButton('Word', 'word')}</th>
-								{showPause ? <th style={{ width: '70px' }}>{sortButton('Pause', 'pause')}</th> : false}
-								<th style={{ width: '90px' }}>{sortButton('Activity', 'activity')}</th>
-								<th style={{ width: '170px' }}>{sortButton('Start Date', 'start')}</th>
-								<th style={{ width: '170px' }}>{sortButton('End Date', 'end')}</th>
-							</tr>
-						</thead>
-						<tbody>{tableContent}</tbody>
-					</table>
-				</div>
+				<table>
+					<thead>
+						<tr>
+							<th style={{ width: '180px' }}>Start Behavior</th>
+							<th style={{ width: '180px' }}>End Behavior</th>
+							<th>{sortButton('Similarity', 'sim')}</th>
+							<th style={{ width: '70px' }}>{sortButton('Word', 'word')}</th>
+							{showPause ? <th style={{ width: '70px' }}>{sortButton('Pause', 'pause')}</th> : false}
+							<th style={{ width: '90px' }}>{sortButton('Activity', 'activity')}</th>
+							<th style={{ width: '170px' }}>{sortButton('Start Date', 'start')}</th>
+							<th style={{ width: '170px' }}>{sortButton('End Date', 'end')}</th>
+						</tr>
+					</thead>
+					<tbody>{tableContent}</tbody>
+				</table>
 			</Card>
 		);
 	} else {
 		return (
-			<Card title={title} icon={icon} size={CardSize.Full}>
+			<Card title={title} Icon={Timeline} size={CardSize.Full}>
 				<p>No change report found.</p>
 			</Card>
 		);

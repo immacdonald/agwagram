@@ -2,14 +2,7 @@
 
 .card {
 	background-color: var(--c-bg-light);
-	box-shadow: var(--shadow-lifted);
-	border: var(--b-light);
-	border-radius: $radius-sm;
-	display: flex;
-	flex-direction: column;
 	width: 100%;
-	min-height: 200px;
-	flex-grow: 1;
 	grid-column-end: span 4;
 	grid-row-end: span 1;
 

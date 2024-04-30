@@ -1,15 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Accordion, BooleanDropdown, Button, Dropdown, Row, Section, Split } from '@imacdonald/phantom';
+import { Accordion, Dropdown } from '@imacdonald/phantom';
 import FileUploadPortal from '../components/Input/FileUploadPortal';
 import SearchInput from '../components/Input/SearchInput';
 import Toggle from '../components/Input/Toggle';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 import { getStaticFile } from '../utility';
-import style from './Analyze.module.scss';
-import { Dataset } from '../icons';
 import { TabGroup } from '../components/TabGroup';
 
 const files = [
@@ -87,7 +85,7 @@ const Analyze: React.FC = () => {
 				<div>
 					<h3>Analyze By File</h3>
 					<p>Upload files containing Tweet data to be analyzed using the BLOC algorithm.</p>
-					<Accordion label="File Requirements" Icon={Dataset}>
+					<Accordion label="File Requirements">
 						<p>
 							Files can be in <strong>JSON</strong> or <strong>JSONL</strong> formats and can be uploaded unzipped
 							or as Gzip files. To upload multiple files at once please select them all in the file selection prompt or drag-and-drop them each in.

@@ -1,15 +1,14 @@
-import { ReactNode } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { formatDate, graphColor } from '../../Global';
 import Card, { CardSize } from './Card';
+import { Chart } from '../../icons';
 
 interface GroupChangeCardProps {
 	title: string;
-	icon: ReactNode;
 	reports: any;
 }
 
-const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, icon, reports }) => {
+const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => {
 	//console.log(reports);
 	const changeChronology: any[] = [];
 	reports.forEach((report: any) => {
@@ -24,7 +23,7 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, icon, reports 
 	});
 
 	return changeChronology.length > 0 ? (
-		<Card title={title} icon={icon} size={CardSize.Full}>
+		<Card title={title} Icon={Chart} size={CardSize.Full}>
 			<div style={{ width: '100%', height: '400px' }}>
 				<h3>Similarity Over Time</h3>
 				<ResponsiveContainer width="100%" height="100%">
@@ -53,7 +52,7 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, icon, reports 
 			<br />
 		</Card>
 	) : (
-		<Card title={title} icon={icon} size={CardSize.Full}>
+		<Card title={title} Icon={Chart} size={CardSize.Full}>
 			<p>No change report generated.</p>
 		</Card>
 	);

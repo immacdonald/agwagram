@@ -30,10 +30,6 @@ $primary: #143aa2;
 	--t-mid: 0.5s ease;
 	--t-slow: 1s ease;
 
-	// Shadow
-	--shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05), 0 15px 15px 0 rgba(0, 0, 0, 0.05);
-	--shadow-low: 2px 4px 6px rgba(0, 0, 0, 0.15);
-
 	// Filters
 	--f-disabled-opacity: 0.4;
 	--f-disabled-saturation: 60%;
@@ -74,6 +70,8 @@ html[data-theme='light'] {
 	// Effect Colors
 	--c-disabled-background: var(--c-grey-6);
 	--c-disabled-color: var(--c-grey-5);
+
+
 }
 
 html[data-theme='dark'] {
@@ -97,4 +95,6 @@ html[data-theme='dark'] {
 	// Effect Colors
 	--c-disabled-background: var(--c-grey-7);
 	--c-disabled-color: var(--c-grey-6);
+
+	color-scheme: dark;
 }

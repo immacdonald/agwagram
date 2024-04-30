@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './App.tsx';
 import { persistor, store } from './data/store.ts';
-import '@imacdonald/phantom/ui/variables'
+import '@imacdonald/phantom/style/variables'
 import './index.module.scss';
 import { ResponsiveContextProvider } from '@imacdonald/phantom';
 

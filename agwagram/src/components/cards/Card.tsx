@@ -1,11 +1,13 @@
 import classNames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, { ComponentType, ReactNode } from 'react';
+import { IconProps, Card as PhantomCard } from '@imacdonald/phantom';
 import style from './Card.module.scss';
 
 interface CardProps {
 	title: string;
 	size?: CardSize;
-	icon: ReactNode;
+	Icon: ComponentType<IconProps>;
+	scrollable?: boolean;
 	children?: ReactNode;
 }
 
@@ -15,21 +17,19 @@ export enum CardSize {
 	Full
 }
 
-const Card: React.FC<CardProps> = ({ title, size = CardSize.Normal, icon, children }: CardProps) => {
+const Card: React.FC<CardProps> = ({ title, size = CardSize.Normal, Icon, scrollable = false, children }: CardProps) => {
 	const cardClass = classNames(style.card, {
 		[style.wide]: size == CardSize.Wide,
 		[style.full]: size == CardSize.Full
 	});
 
 	return (
-		<article className={cardClass}>
-			<div className={style.cardHeader}>
-				<span className={style.icon}>{icon}</span>
-				<h3>{title}</h3>
-			</div>
-			<div className={style.cardBody}>{children}</div>
-			<div className={style.cardFooter}>{/*<a href="/methodology">More Details</a>*/}</div>
-		</article>
+		<PhantomCard className={cardClass}>
+			<PhantomCard.Header Icon={Icon} title={title}/>
+			<PhantomCard.Body scrollable={scrollable}>
+				{children}
+			</PhantomCard.Body>
+		</PhantomCard>
 	);
 };
 

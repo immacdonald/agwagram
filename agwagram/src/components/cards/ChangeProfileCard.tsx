@@ -2,14 +2,14 @@ import { ReactNode } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { graphColor } from '../../Global';
 import Card, { CardSize } from './Card';
+import { Chart } from '../../icons';
 
 interface ChangeProfileCardProps {
 	title: string;
-	icon: ReactNode;
 	reports: any;
 }
 
-const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, icon, reports }: ChangeProfileCardProps) => {
+const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }: ChangeProfileCardProps) => {
 	if (reports.action.change_profile || reports.content_syntactic.change_profile) {
 		const changeRate = [
 			{
@@ -35,7 +35,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, icon, repo
 		];
 
 		return (
-			<Card title={title} icon={icon} size={CardSize.Full}>
+			<Card title={title} Icon={Chart} size={CardSize.Full}>
 				<div style={{ display: 'flex', width: '100%', height: '400px' }}>
 					<div style={{ width: '100%', height: '90%' }}>
 						<h3>Change Profile</h3>
@@ -91,7 +91,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, icon, repo
 		);
 	} else {
 		return (
-			<Card title={title} icon={icon} size={CardSize.Full}>
+			<Card title={title} Icon={Chart} size={CardSize.Full}>
 				<div style={{ display: 'flex', width: '100%', height: '400px' }}>
 					<div style={{ width: '100%', height: '90%' }}>
 						<h3>Change Profile</h3>

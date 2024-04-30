@@ -5,11 +5,10 @@ import { Button, Dropdown, Popover, useResponsiveContext } from '@imacdonald/pha
 import Toggle from '../Input/Toggle';
 import Card, { CardSize } from './Card';
 import style from './Card.module.scss';
-import { Recenter, ZoomIn, ZoomOut } from '../../icons';
+import { Dataset, Recenter, ZoomIn, ZoomOut } from '../../icons';
 
 interface GridCardProps {
 	title: string;
-	icon: ReactNode;
 	username: string;
 	data: any;
 }
@@ -77,7 +76,7 @@ function formatDate(input: string) {
 	return `${year}-${month}-${day}`;
 }
 
-const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: GridCardProps) => {
+const GridCard: React.FC<GridCardProps> = ({ title, username, data }: GridCardProps) => {
 	const { actionLinkedData, contentLinkedData } = useMemo(() => {
 		const actionLinkedData: any = [];
 		const contentLinkedData: any = [];
@@ -115,7 +114,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 
 	if (actionLinkedData.length < 36) {
 		return (
-			<Card title={title} icon={icon} size={CardSize.Full}>
+			<Card title={title} Icon={Dataset} size={CardSize.Full}>
 				<p>Cannot display grid for {actionLinkedData.length} data points.</p>
 			</Card>
 		);
@@ -200,7 +199,7 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, icon, data }: Grid
 	}
 
 	return (
-		<Card title={title} icon={icon} size={CardSize.Full}>
+		<Card title={title} Icon={Dataset} size={CardSize.Full}>
 			<p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
 			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
 				<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
