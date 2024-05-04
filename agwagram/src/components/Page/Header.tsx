@@ -1,9 +1,9 @@
+import { Button, MoonFilled, SunFilled } from '@imacdonald/phantom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectTheme, setTheme } from '../../data/settingsSlice';
-import { Button, MoonFilled, SunFilled } from '@imacdonald/phantom';
-import style from './Header.module.scss';
 import { AgwagramIcon } from '../../icons';
+import style from './Header.module.scss';
 
 const Header: React.FC = () => {
 	const dispatch = useDispatch();
@@ -18,8 +18,10 @@ const Header: React.FC = () => {
 		<header className={style.header}>
 			<div className={style.content}>
 				<Link to="/" className={style.logo}>
-					<Button Icon={AgwagramIcon} rounded/>
-					<span><b>Agwagram</b></span>
+					<Button Icon={AgwagramIcon} rounded />
+					<span>
+						<b>Agwagram</b>
+					</span>
 				</Link>
 				<div className={style.navigation}>
 					<nav className={style.navLinks}>

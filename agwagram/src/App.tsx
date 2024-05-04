@@ -1,3 +1,4 @@
+import { AnchorController } from '@imacdonald/phantom';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
@@ -6,7 +7,6 @@ import Footer from './components/Page/Footer';
 import Header from './components/Page/Header';
 import { selectTheme } from './data/settingsSlice';
 import { About, Home } from './views';
-import { AnchorController } from '@imacdonald/phantom';
 
 function App() {
 	const theme = useSelector(selectTheme);
@@ -19,7 +19,7 @@ function App() {
 
 	return (
 		<div className={style.app}>
-					<AnchorController/>
+			<AnchorController />
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />

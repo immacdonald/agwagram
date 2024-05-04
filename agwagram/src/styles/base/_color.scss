@@ -21,6 +21,9 @@ $primary: #143aa2;
 	--c-primary-alpha: #{rgba($primary, 0.25)};
 	--c-fg-on-primary: var(--c-grey-1);
 
+	--c-positive: rgb(131, 194, 118);
+	--c-critical: rgb(227, 63, 72);
+
 	// Border
 	--b-light: 1px solid var(--c-bg-dim);
 	--b-dark: 1px solid var(--c-grey-10);
@@ -70,8 +73,6 @@ html[data-theme='light'] {
 	// Effect Colors
 	--c-disabled-background: var(--c-grey-6);
 	--c-disabled-color: var(--c-grey-5);
-
-
 }
 
 html[data-theme='dark'] {

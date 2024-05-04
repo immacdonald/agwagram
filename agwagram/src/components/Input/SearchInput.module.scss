@@ -19,7 +19,7 @@ $height: 40px;
 		height: $height;
 		width: 100%;
 		line-height: 1;
-		background-color: var(--c-bg);
+		background-color: var(--input-color-bg);
 		border: var(--b-light);
 		border-radius: $radius-sm;
 		color: var(--c-text-action);
@@ -40,41 +40,10 @@ $height: 40px;
 	}
 
 	button {
-		$offset: 2px;
-
 		position: absolute;
-		right: $offset;
-		bottom: $offset;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: $height - $offset - $offset;
-		width: $height - $offset - $offset;
-		border: 0;
-		border-radius: 100%;
-		background-color: transparent;
-		color: var(--c-fg);
-		padding: 0;
-
-		&::before {
-			content: '';
-			-webkit-mask: url('../icons/search.svg') no-repeat 100% 100%;
-			mask: url('../icons/search.svg') no-repeat 100% 100%;
-			-webkit-mask-size: cover;
-			mask-size: cover;
-			background-color: var(--c-fg-dark);
-			transition: background-color var(--t-fast);
-			width: 30px;
-			height: 30px;
-		}
-
-		&:focus,
-		&:hover {
-			background-color: var(--c-bg-dim);
-
-			&::before {
-				background-color: var(--c-primary);
-			}
-		}
+		width: 38px;
+		height: 38px;
+		right: 1px;
+		bottom: 1px;
 	}
 }

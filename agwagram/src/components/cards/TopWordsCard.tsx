@@ -1,7 +1,6 @@
-import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
-import Card, { CardSize } from './Card';
-import style from './Card.module.scss';
 import { BarChart } from '../../icons';
+import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
+import { GridCard, GridCardSize } from '../GridCard';
 
 interface TopWordsCardProps {
 	title: string;
@@ -11,8 +10,8 @@ interface TopWordsCardProps {
 
 const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: TopWordsCardProps) => {
 	return (
-		<Card title={title} Icon={BarChart} size={CardSize.Wide} scrollable>
-			{subtitle ? <span>{subtitle}</span> : false}
+		<GridCard title={title} Icon={BarChart} size={GridCardSize.Wide} scrollable>
+			{subtitle && <span>{subtitle}</span>}
 			<table>
 				<thead>
 					<tr>
@@ -41,7 +40,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: Top
 					})}
 				</tbody>
 			</table>
-		</Card>
+		</GridCard>
 	);
 };
 

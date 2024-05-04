@@ -1,16 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import { Tab, TabGroup } from '@imacdonald/phantom';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { GridCard } from '../components/GridCard';
 import { selectResults } from '../data/settingsSlice';
-import style from './Results.module.scss';
-import { Button } from '@imacdonald/phantom';
+import { BarChart } from '../icons';
 import { AccountAnalysis } from './AccountAnalysis';
 import { GroupAnalysis } from './GroupAnalysis';
-import { Card } from '../components/cards';
-import { BarChart } from '../icons';
+import style from './Results.module.scss';
 
 const Results: React.FC = () => {
-	const [analysisView, setAnalysisView] = useState<number>(-1);
-
 	const resultState = useSelector(selectResults);
 
 	const results = useMemo(() => {
@@ -31,29 +29,31 @@ const Results: React.FC = () => {
 		} else {
 			return (
 				<div className={style.content}>
-
-					<div className={style.tabButtons}>
-						<Button visual={analysisView == -1 ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(-1)} label="Group Analysis" />
-						{accounts.map((account: any, i: number) => {
-							return (
-								<Button key={i} visual={analysisView == i ? 'filled' : 'ghost'} full onClick={() => setAnalysisView(i)} label={`@${account.account_username}`} />
-							);
-						})}
-					</div>
-					<div className={style.cardGrid}>
-						{analysisView > -1 ? (
-							<AccountAnalysis account={accounts[analysisView]} />
-						) : (
-							<GroupAnalysis accounts={accounts} totalTweets={results.total_tweets} topBlocWords={results.group_top_bloc_words} topTimes={results.group_top_time} pairwiseSim={results.pairwise_sim} />
-						)}
-					</div>
+					<TabGroup
+						tabs={[
+							{
+								label: 'Group Analysis',
+								tab: (
+									<GroupAnalysis
+										accounts={accounts}
+										totalTweets={results.total_tweets}
+										topBlocWords={results.group_top_bloc_words}
+										topTimes={results.group_top_time}
+										pairwiseSim={results.pairwise_sim}
+									/>
+								)
+							},
+							...accounts.map((account: AccountBloc) => ({ label: `@${account.account_username}`, tab: <AccountAnalysis account={account} /> }) as Tab)
+						]}
+						containerClass={style.cardGrid}
+					/>
 				</div>
 			);
 		}
 	} else {
 		if (results) {
 			return (
-				<Card title="Analysis Failed" Icon={BarChart}>
+				<GridCard title="Analysis Failed" Icon={BarChart}>
 					<p>Unable to generate BLOC analysis results for the following accounts: {results.query.join(', ')}</p>
 					{results.errors.map((error: Record<string, string>) => {
 						return (
@@ -74,7 +74,7 @@ const Results: React.FC = () => {
 							</div>
 						);
 					})}
-				</Card>
+				</GridCard>
 			);
 		}
 	}

@@ -1,8 +1,7 @@
-import { ReactNode } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { graphColor } from '../../Global';
-import Card, { CardSize } from './Card';
 import { Chart } from '../../icons';
+import { GridCard, GridCardSize } from '../GridCard';
 
 interface ChangeProfileCardProps {
 	title: string;
@@ -35,7 +34,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
 		];
 
 		return (
-			<Card title={title} Icon={Chart} size={CardSize.Full}>
+			<GridCard title={title} Icon={Chart} size={GridCardSize.Full}>
 				<div style={{ display: 'flex', width: '100%', height: '400px' }}>
 					<div style={{ width: '100%', height: '90%' }}>
 						<h3>Change Profile</h3>
@@ -87,18 +86,18 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
 						</ResponsiveContainer>
 					</div>
 				</div>
-			</Card>
+			</GridCard>
 		);
 	} else {
 		return (
-			<Card title={title} Icon={Chart} size={CardSize.Full}>
+			<GridCard title={title} Icon={Chart} size={GridCardSize.Full}>
 				<div style={{ display: 'flex', width: '100%', height: '400px' }}>
 					<div style={{ width: '100%', height: '90%' }}>
 						<h3>Change Profile</h3>
 						<p>No change profile found.</p>
 					</div>
 				</div>
-			</Card>
+			</GridCard>
 		);
 	}
 };

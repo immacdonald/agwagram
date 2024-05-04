@@ -34,20 +34,6 @@
 			gap: $xs;
 		}
 	}
-
-	@include respond-max($screen-sm) {
-		--v-header-height: 96px;
-
-		.content {
-			flex-direction: column;
-			gap: $xs;
-			margin-top: $sm;
-
-			.navigation {
-				margin-left: 0;
-			}
-		}
-	}
 }
 
 .logo {

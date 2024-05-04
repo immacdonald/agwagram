@@ -1,9 +1,8 @@
-import { Fragment, ReactNode } from 'react';
-import { GetDefinition } from '../BLOCComponents';
-import HoverMark from '../HoverMark';
-import Card, { CardSize } from './Card';
-import style from './Card.module.scss';
+import { Fragment } from 'react';
 import { Link } from '../../icons';
+import { GetDefinition } from '../BLOCComponents';
+import { GridCard, GridCardSize } from '../GridCard';
+import HoverMark from '../HoverMark';
 
 interface LinkedDataCardProps {
 	title: string;
@@ -12,7 +11,7 @@ interface LinkedDataCardProps {
 
 const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDataCardProps) => {
 	return (
-		<Card title={title} Icon={Link} size={CardSize.Full} scrollable>
+		<GridCard title={title} Icon={Link} size={GridCardSize.Full} scrollable>
 			{data.map((datum: any, index: number) => {
 				let titleString = `Tweeted: ${datum.created_at}`;
 				if (datum.content_syntactic != '') {
@@ -29,7 +28,7 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDa
 					</Fragment>
 				);
 			})}
-		</Card>
+		</GridCard>
 	);
 };
 

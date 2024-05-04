@@ -1,12 +1,11 @@
+import { Row, UnstyledButton } from '@imacdonald/phantom';
 import { ReactNode, useMemo, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { formatDate, graphColor } from '../../Global';
-import { DefinitionTooltip } from '../BLOCComponents';
-import Toggle from '../Input/Toggle';
-import Card, { CardSize } from './Card';
-import style from './Card.module.scss';
 import { Timeline } from '../../icons';
-import { UnstyledButton } from '@imacdonald/phantom';
+import { DefinitionTooltip } from '../BLOCComponents';
+import { GridCard, GridCardSize } from '../GridCard';
+import Toggle from '../Input/Toggle';
 
 interface ChangeCardProps {
 	title: string;
@@ -104,7 +103,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 		};
 
 		return (
-			<Card title={title} Icon={Timeline} size={CardSize.Full} scrollable>
+			<GridCard title={title} Icon={Timeline} size={GridCardSize.Full} scrollable>
 				<p>
 					<strong>Change Rate</strong>: {report.change_profile.change_rate}
 					<br />
@@ -116,7 +115,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 				<hr />
 				<div style={{ width: '100%', height: '480px' }}>
 					<h3>Change Profile</h3>
-					<div className={style.changeGraphToggles}>
+					<Row>
 						<span>
 							Similarity <Toggle state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
 						</span>
@@ -129,7 +128,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 						<span>
 							Activity <Toggle state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
 						</span>
-					</div>
+					</Row>
 					<ResponsiveContainer width="100%" height="85%">
 						<LineChart
 							width={500}
@@ -171,13 +170,13 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 					</thead>
 					<tbody>{tableContent}</tbody>
 				</table>
-			</Card>
+			</GridCard>
 		);
 	} else {
 		return (
-			<Card title={title} Icon={Timeline} size={CardSize.Full}>
+			<GridCard title={title} Icon={Timeline} size={GridCardSize.Full}>
 				<p>No change report found.</p>
-			</Card>
+			</GridCard>
 		);
 	}
 };

@@ -1,0 +1,28 @@
+@use '../../styles' as *;
+
+.card {
+	height: auto !important;
+	width: 100%;
+	grid-column-end: span 4;
+	grid-row-end: span 1;
+
+	&.full {
+		@media (min-width: $screen-sm) {
+			grid-column-end: span 8;
+		}
+
+		@media (min-width: $screen-lg) {
+			grid-column-end: span 12;
+		}
+	}
+
+	&.wide {
+		@media (min-width: $screen-sm) {
+			grid-column-end: span 8;
+		}
+
+		@media (min-width: $screen-lg) {
+			grid-column-end: span 6;
+		}
+	}
+}

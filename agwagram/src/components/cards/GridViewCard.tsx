@@ -1,13 +1,13 @@
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { Button, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext } from '@imacdonald/phantom';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
-import { Button, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext } from '@imacdonald/phantom';
-import Toggle from '../Input/Toggle';
-import Card, { CardSize } from './Card';
-import style from './Card.module.scss';
 import { Dataset } from '../../icons';
+import { GridCard, GridCardSize } from '../GridCard';
+import Toggle from '../Input/Toggle';
+import style from './GridViewCard.module.scss';
 
-interface GridCardProps {
+interface GridViewCardProps {
 	title: string;
 	username: string;
 	data: any;
@@ -58,7 +58,7 @@ function formatDate(input: string) {
 	return `${year}-${month}-${day}`;
 }
 
-const GridCard: React.FC<GridCardProps> = ({ title, username, data }: GridCardProps) => {
+const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) => {
 	const { actionLinkedData, contentLinkedData } = useMemo(() => {
 		const actionLinkedData: any = [];
 		const contentLinkedData: any = [];
@@ -96,9 +96,9 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, data }: GridCardPr
 
 	if (actionLinkedData.length < 36) {
 		return (
-			<Card title={title} Icon={Dataset} size={CardSize.Full}>
+			<GridCard title={title} Icon={Dataset} size={GridCardSize.Full}>
 				<p>Cannot display grid for {actionLinkedData.length} data points.</p>
-			</Card>
+			</GridCard>
 		);
 	}
 
@@ -160,12 +160,16 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, data }: GridCardPr
 	};
 
 	const createItemSquare = (item: any, index: number): React.ReactNode => {
-		const popoverContent =
-		<div className={style.popoverContent}>
-			<h3 style={{display: "flex", justifyContent: "space-between"}}><span>{symbolToDefinition(item.content)}</span><span>{item.created_at}</span></h3>
-			<hr style={{margin: "0.5rem 0"}} />
-			<span>{item.text}</span>
-		</div>
+		const popoverContent = (
+			<div className={style.popoverContent}>
+				<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
+					<span>{symbolToDefinition(item.content)}</span>
+					<span>{item.created_at}</span>
+				</h3>
+				<hr style={{ margin: '0.5rem 0' }} />
+				<span>{item.text}</span>
+			</div>
+		);
 
 		return (
 			<Popover
@@ -178,10 +182,10 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, data }: GridCardPr
 				{showDates && <em>{item.content}</em>}
 			</Popover>
 		);
-	}
+	};
 
 	return (
-		<Card title={title} Icon={Dataset} size={CardSize.Full}>
+		<GridCard title={title} Icon={Dataset} size={GridCardSize.Full}>
 			<p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
 			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
 				<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
@@ -226,16 +230,16 @@ const GridCard: React.FC<GridCardProps> = ({ title, username, data }: GridCardPr
 								</TransformComponent>
 								<div className={style.tools}>
 									<Button onClick={() => resetTransform()} Icon={Recenter} rounded />
-									<Button onClick={() => zoomOut()} Icon={ZoomOut} rounded/>
-									<Button onClick={() => zoomIn()} Icon={ZoomIn} rounded/>
+									<Button onClick={() => zoomOut()} Icon={ZoomOut} rounded />
+									<Button onClick={() => zoomIn()} Icon={ZoomIn} rounded />
 								</div>
 							</div>
 						);
 					}}
 				</TransformWrapper>
 			</div>
-		</Card>
+		</GridCard>
 	);
 };
 
-export default GridCard;
+export default GridViewCard;

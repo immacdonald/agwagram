@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Cancel } from '@imacdonald/phantom';
+import React, { useEffect, useMemo, useState } from 'react';
 import style from './FileUploadPortal.module.scss';
 
 interface FileUploadPortalProps {
@@ -12,7 +12,7 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, conde
 	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 	const [fileLimit, setFileLimit] = useState<boolean>(false);
 
-	if(condensed) {
+	if (condensed) {
 		//
 	}
 
@@ -58,7 +58,7 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, conde
 	const fileList = useMemo(() => {
 		return uploadedFiles.map((file: File, i: number) => (
 			<div key={file.name} className={style.fileLabel}>
-				<Button Icon={Cancel} onClick={() => removeFile(i)} mode='error' rounded/>
+				<Button Icon={Cancel} onClick={() => removeFile(i)} context="critical" rounded />
 				<span>{file.name}</span>
 			</div>
 		));
@@ -70,7 +70,7 @@ const FileUploadPortal: React.FC<FileUploadPortalProps> = ({ maxFiles = 4, conde
 			<div className={style.inputWrapper}>
 				<input type="file" multiple onChange={handleFileEvent} disabled={fileLimit} />
 				<div className={style.submit}>
-					<Button onClick={() => submit(uploadedFiles)} disabled={!uploadedFiles.length} label="Upload Files" visual="filled" />
+					<Button onClick={() => submit(uploadedFiles)} disabled={!uploadedFiles.length} label="Upload Files" visual="filled" context="primary" />
 				</div>
 			</div>
 		</div>

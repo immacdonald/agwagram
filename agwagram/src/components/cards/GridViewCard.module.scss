@@ -1,52 +1,5 @@
 @use '../../styles' as *;
 
-.card {
-	height: auto !important;
-	width: 100%;
-	grid-column-end: span 4;
-	grid-row-end: span 1;
-
-	&.full {
-		@media (min-width: $screen-sm) {
-			grid-column-end: span 8;
-		}
-
-		@media (min-width: $screen-lg) {
-			grid-column-end: span 12;
-		}
-	}
-
-	&.wide {
-		@media (min-width: $screen-sm) {
-			grid-column-end: span 8;
-		}
-
-		@media (min-width: $screen-lg) {
-			grid-column-end: span 6;
-		}
-	}
-}
-
-.icon {
-	width: 32px;
-	margin-right: 0.5rem;
-
-	> svg {
-		width: 30px;
-	}
-}
-
-.changeGraphToggles {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	padding: $xs;
-
-	> span:not(:last-child) {
-		margin-right: $md;
-	}
-}
-
 .gridControl {
 	--v-height: auto;
 
@@ -91,8 +44,8 @@
 			align-items: center;
 			gap: $sm;
 			position: absolute;
-			bottom: 120px;
-			right: 70px;
+			bottom: 50px;
+			right: 50px;
 			padding: $sm;
 			background-color: var(--c-bg);
 			box-shadow: var(--shadow-lifted);

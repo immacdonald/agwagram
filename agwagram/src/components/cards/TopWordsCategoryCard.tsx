@@ -1,6 +1,6 @@
 import { Pause } from '@imacdonald/phantom';
 import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
-import Card, { CardSize } from './Card';
+import { GridCard, GridCardSize } from '../GridCard';
 
 interface TopWordsCategoryCardProps {
 	title: string;
@@ -11,7 +11,7 @@ interface TopWordsCategoryCardProps {
 
 const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subtitle, top, symbolLabel }: TopWordsCategoryCardProps) => {
 	return (
-		<Card title={title} Icon={Pause} size={CardSize.Wide} scrollable>
+		<GridCard title={title} Icon={Pause} size={GridCardSize.Wide} scrollable>
 			{subtitle ? <span>{subtitle}</span> : false}
 			<table>
 				<thead>
@@ -39,7 +39,7 @@ const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subt
 					})}
 				</tbody>
 			</table>
-		</Card>
+		</GridCard>
 	);
 };
 

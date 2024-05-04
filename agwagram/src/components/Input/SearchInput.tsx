@@ -1,3 +1,4 @@
+import { Button, Search } from '@imacdonald/phantom';
 import React, { useState } from 'react';
 import style from './SearchInput.module.scss';
 
@@ -17,7 +18,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ placeholder = 'OSoMe_IU, POTU
 	return (
 		<div className={style.search}>
 			<input placeholder={placeholder} onChange={searchInputHandler} />
-			<button onClick={() => submit(inputText)}></button>
+			<Button onClick={() => submit(inputText)} Icon={Search} disabled />
 		</div>
 	);
 };
