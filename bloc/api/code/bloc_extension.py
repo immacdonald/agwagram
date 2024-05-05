@@ -6,10 +6,10 @@ def link_data(tweets):
     linked_data = []
     for tweet in tweets:
         #print(tweet)
-        date_obj = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y')
+        date_obj: datetime = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y')
 
         # Format datetime object as desired
-        formatted_date = date_obj.strftime('%B %d, %Y @ %I:%M%p').replace(' 0', ' ')
+        #formatted_date = date_obj.strftime('%B %d, %Y @ %I:%M%p').replace(' 0', ' ')
 
         cleaned_action = tweet['bloc']['bloc_sequences_short']['action']
         #for char in symbols.time_symbol_dict:
@@ -20,7 +20,7 @@ def link_data(tweets):
         #    cleaned_semantic_sentiment = cleaned_semantic_sentiment.replace(char, '')
 
         data = {
-            "created_at": formatted_date,
+            "created_at": date_obj.timestamp(),
             "id": tweet['id'],
             "text": tweet['full_text'],
             "action": cleaned_action,

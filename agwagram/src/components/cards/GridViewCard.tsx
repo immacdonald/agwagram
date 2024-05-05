@@ -42,7 +42,7 @@ const pauseLegend: Record<string, string> = {
 	'⚅': '#636363'
 };
 
-function formatDate(input: string) {
+function formatDate(input: string | number) {
 	const date = new Date(input);
 
 	// Get the year, month, and day from the date object
@@ -116,7 +116,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		const endIndex = startIndex + gridSize;
 		const rowData = fixedLinkedData.slice(startIndex, endIndex);
 
-		gridItems.push(`${formatDate((rowData[0].created_at as string).split('@')[0].trim())}`);
+		gridItems.push(`${formatDate(rowData[0].created_at * 1000)}`);
 		gridItems.push(...rowData);
 	}
 
@@ -154,20 +154,24 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 	};
 
 	const routeToTweet = (id: string) => {
-		//console.log(id);
 		const url = `https://twitter.com/${username}/status/${id}`;
 		window.open(url, '_blank');
 	};
 
 	const createItemSquare = (item: any, index: number): React.ReactNode => {
+		//console.log(Object.keys(pauseLegend));
 		const popoverContent = (
 			<div className={style.popoverContent}>
-				<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
-					<span>{symbolToDefinition(item.content)}</span>
-					<span>{item.created_at}</span>
-				</h3>
-				<hr style={{ margin: '0.5rem 0' }} />
-				<span>{item.text}</span>
+				{Object.keys(pauseLegend).includes(item.content) ? (<h3>{symbolToDefinition(item.content)}</h3>) : (
+					<>
+						<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
+							<span>{symbolToDefinition(item.content)}</span>
+							<span>{formatDate(item.created_at * 1000)}</span>
+						</h3>
+						<hr style={{ margin: '0.5rem 0' }} />
+						<span>{item.text}</span>
+					</>
+				)}
 			</div>
 		);
 
