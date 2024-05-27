@@ -4,7 +4,7 @@ import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
 interface TopWordsCategoryCardProps {
 	title: string;
 	subtitle?: string;
-	top: any;
+	top: Top[];
 	symbolLabel: string;
 }
 
@@ -23,7 +23,7 @@ const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subt
 						</tr>
 					</thead>
 					<tbody>
-						{top.map((word: any, i: number) => {
+						{top.map((word: Top, i: number) => {
 							return (
 								<tr key={i}>
 									<td>

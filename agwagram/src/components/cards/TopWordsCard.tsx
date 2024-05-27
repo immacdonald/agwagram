@@ -5,7 +5,7 @@ import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
 interface TopWordsCardProps {
 	title: string;
 	subtitle?: string;
-	top: any;
+	top: Top[];
 }
 
 const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: TopWordsCardProps) => {
@@ -24,7 +24,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: Top
 						</tr>
 					</thead>
 					<tbody>
-						{top.map((word: Record<string, string>, index: number) => {
+						{top.map((word: Top, index: number) => {
 							return (
 								<tr key={index}>
 									<td>{word.rank}.</td>

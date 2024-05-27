@@ -3,10 +3,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SearchInput from '../components/Input/SearchInput';
+import config from '../config';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 import { getStaticFile } from '../utility';
-import config from '../config';
 
 const Analyze: React.FC = () => {
 	const [setFiles] = useSetAnalyzeFilesMutation();
@@ -102,7 +102,11 @@ const Analyze: React.FC = () => {
 						<div>
 							<h3>Analyze From Example File</h3>
 							<p>Test the capabilities of Agwagram using one of our example Twitter data files.</p>
-							<Dropdown options={config.exampleFiles.map((file: any) => file.title)} placeholder="Select File" onChange={(value: NullablePrimitive) => changedFile(value as string)} />
+							<Dropdown
+								options={config.exampleFiles.map((file: ExampleFile) => file.title)}
+								placeholder="Select File"
+								onChange={(value: NullablePrimitive) => changedFile(value as string)}
+							/>
 							{helperText && <p>{helperText}</p>}
 						</div>
 					)

@@ -1,7 +1,7 @@
 import { Card } from '@imacdonald/phantom';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { formatDate, graphColor } from '../../utility';
 import { Chart } from '../../icons';
+import { formatDate, graphColor } from '../../utility';
 
 interface GroupChangeCardProps {
 	title: string;
@@ -10,7 +10,7 @@ interface GroupChangeCardProps {
 
 const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => {
 	console.log(reports);
-	const changeChronology: any[] = [];
+	const changeChronology: ChangeChronology[] = [];
 	reports.forEach((report: AccountBloc) => {
 		if (report.change_report && report.change_report.action) {
 			report.change_report.action.change_events.forEach((event: ChangeEvent) => {
@@ -45,7 +45,7 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
 							<YAxis />
 							<Tooltip />
 							<Legend />
-							{reports.map((report: any, i: number) => {
+							{reports.map((report: AccountBloc, i: number) => {
 								return <Line type="monotone" dataKey={report.account_username} stroke={graphColor(i)} dot={false} key={i} />;
 							})}
 						</LineChart>

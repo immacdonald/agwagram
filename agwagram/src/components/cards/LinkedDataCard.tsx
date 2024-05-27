@@ -6,7 +6,7 @@ import HoverMark from '../HoverMark';
 
 interface LinkedDataCardProps {
 	title: string;
-	data: any;
+	data: LinkedData[];
 }
 
 const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDataCardProps) => {
@@ -14,7 +14,7 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDa
 		<Card fullHeight>
 			<Card.Header title={title} Icon={Link} />
 			<Card.Body scrollable>
-				{data.map((datum: any, index: number) => {
+				{data.map((datum: LinkedData, index: number) => {
 					let titleString = `Tweeted: ${datum.created_at}`;
 					if (datum.content_syntactic != '') {
 						titleString += `\nContent: ${GetDefinition(datum.content_syntactic)}`;

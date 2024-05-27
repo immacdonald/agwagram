@@ -1,6 +1,6 @@
 import { Card, Grid, GridItemSize, PersonFilled, formatNumber } from '@imacdonald/phantom';
-import { formatDate } from '../utility';
 import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
+import { formatDate } from '../utility';
 
 interface AccountAnalysisProps {
 	account: AccountBloc;

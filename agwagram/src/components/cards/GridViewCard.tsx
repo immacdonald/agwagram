@@ -3,17 +3,25 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
 import { Dataset } from '../../icons';
+import { formatDate } from '../../utility';
 import Toggle from '../Input/Toggle';
 import style from './GridViewCard.module.scss';
-import { formatDate } from '../../utility';
 
 interface GridViewCardProps {
 	title: string;
 	username: string;
-	data: any;
+	data: LinkedData[];
 }
 
-const actionLegend: Record<string, string> = {
+interface GridLinkedData extends LinkedData {
+	content: string;
+}
+
+type GridItemData = GridLinkedData | string;
+
+type LegendKey = Record<string, string>;
+
+const actionLegend: LegendKey = {
 	P: '#84f460',
 	p: '#5fcecf',
 	R: '#FFA500',
@@ -23,7 +31,7 @@ const actionLegend: Record<string, string> = {
 	ρ: '#f9da78'
 };
 
-const contentLegend: Record<string, string> = {
+const contentLegend: LegendKey = {
 	E: '#5fcecf',
 	H: '#ea3323',
 	m: '#84f460',
@@ -32,7 +40,7 @@ const contentLegend: Record<string, string> = {
 	q: '#48752c'
 };
 
-const pauseLegend: Record<string, string> = {
+const pauseLegend: LegendKey = {
 	'□': '#ffffff',
 	'⚀': '#b7b7b7',
 	'⚁': '#b7b7b7',
@@ -44,10 +52,10 @@ const pauseLegend: Record<string, string> = {
 
 const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) => {
 	const { actionLinkedData, contentLinkedData } = useMemo(() => {
-		const actionLinkedData: any = [];
-		const contentLinkedData: any = [];
+		const actionLinkedData: GridLinkedData[] = [];
+		const contentLinkedData: GridLinkedData[] = [];
 
-		data.forEach((datum: any) => {
+		data.forEach((datum: LinkedData) => {
 			if (datum.action.length > 1) {
 				actionLinkedData.push({ ...datum, content: datum.action[0] });
 				contentLinkedData.push({ ...datum, content: datum.action[0] });
@@ -89,21 +97,21 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		);
 	}
 
-	const ref = useRef<any>();
-	const gridRef = useRef<any>();
+	const ref = useRef<HTMLDivElement>(null);
+	const gridRef = useRef<HTMLDivElement>(null);
 
 	const [height, setHeight] = useState<number>(0);
 	const [scale, setScale] = useState<number>(1);
 
 	const gridSize = Math.ceil(Math.sqrt(fixedLinkedData.length));
 
-	const gridItems: any[] = [];
+	const gridItems: GridItemData[] = [];
 	for (let row = 0; row < gridSize - 1; row++) {
-		const startIndex = row * gridSize;
-		const endIndex = startIndex + gridSize;
-		const rowData = fixedLinkedData.slice(startIndex, endIndex);
+		const startIndex: number = row * gridSize;
+		const endIndex: number = startIndex + gridSize;
+		const rowData: GridLinkedData[] = fixedLinkedData.slice(startIndex, endIndex);
 
-		gridItems.push(`${new Date(rowData[0].created_at * 1000).toLocaleDateString()}`);
+		gridItems.push(`${new Date(Number(rowData[0].created_at) * 1000).toLocaleDateString()}`);
 		gridItems.push(...rowData);
 	}
 
@@ -145,7 +153,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		window.open(url, '_blank');
 	};
 
-	const createItemSquare = (item: any, index: number): React.ReactNode => {
+	const createItemSquare = (item: GridLinkedData, index: number): React.ReactNode => {
 		//console.log(Object.keys(pauseLegend));
 		const popoverContent = (
 			<div className={style.popoverContent}>
@@ -155,7 +163,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 					<>
 						<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
 							<span>{symbolToDefinition(item.content)}</span>
-							<span>{formatDate(new Date(item.created_at * 1000), true)}</span>
+							<span>{formatDate(new Date(Number(item.created_at) * 1000), true)}</span>
 						</h3>
 						<hr style={{ margin: '0.5rem 0' }} />
 						<span>{item.text}</span>
@@ -209,15 +217,15 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 								<div ref={ref} className={style.gridCard}>
 									<TransformComponent>
 										<div ref={gridRef} className={style.grid} style={{ gridTemplateColumns: `repeat(${gridSize + 1}, 1fr)`, width: gridSize * 24 + 80 }}>
-											{gridItems.map((item, index) => {
+											{gridItems.map((item: GridItemData, index) => {
 												if (index % (gridSize + 1) == 0) {
 													return (
 														<div className={style.label} key={index}>
-															{item}
+															{item as string}
 														</div>
 													);
 												} else {
-													return createItemSquare(item, index);
+													return createItemSquare(item as GridLinkedData, index);
 												}
 											})}
 										</div>

@@ -1,35 +1,35 @@
 import { Card } from '@imacdonald/phantom';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { graphColor } from '../../utility';
 import { Chart } from '../../icons';
+import { graphColor } from '../../utility';
 
 interface ChangeProfileCardProps {
 	title: string;
-	reports: any;
+	reports: ChangeReport;
 }
 
 const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }: ChangeProfileCardProps) => {
-	if (reports.action.change_profile || reports.content_syntactic.change_profile) {
+	if (reports.action?.change_profile || reports.content_syntactic?.change_profile) {
 		const changeRate = [
 			{
 				Name: 'Change Rate',
-				Content: reports['action']['change_profile']['change_rate'],
-				Syntactic: reports['content_syntactic']['change_profile']['change_rate']
+				Content: reports.action!.change_profile.change_rate,
+				Syntactic: reports.content_syntactic!.change_profile.change_rate
 			}
 		];
 
 		const averageChange = [
 			{
 				Name: 'Action',
-				Word: reports['action']['change_profile']['average_change']['word'],
-				Pause: reports['action']['change_profile']['average_change']['pause'],
-				Activity: reports['action']['change_profile']['average_change']['activity']
+				Word: reports.action!.change_profile.average_change.word,
+				Pause: reports.action!.change_profile.average_change.pause,
+				Activity: reports.action!.change_profile.average_change.activity
 			},
 			{
 				Name: 'Syntactic',
-				Word: reports['content_syntactic']['change_profile']['average_change']['word'],
+				Word: reports.content_syntactic!.change_profile.average_change.word,
 				Pause: 0,
-				Activity: reports['content_syntactic']['change_profile']['average_change']['activity']
+				Activity: reports.content_syntactic!.change_profile.average_change.activity
 			}
 		];
 

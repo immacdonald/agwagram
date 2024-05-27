@@ -1,20 +1,20 @@
 import { Card, Row, UnstyledButton } from '@imacdonald/phantom';
 import { ReactNode, useMemo, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { formatDate, graphColor } from '../../utility';
 import { Timeline } from '../../icons';
+import { formatDate, graphColor } from '../../utility';
 import { DefinitionTooltip } from '../BLOCComponents';
 import Toggle from '../Input/Toggle';
 
 interface ChangeCardProps {
 	title: string;
-	report: any;
+	report: Action;
 }
 
 const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProps) => {
 	if (report.change_profile) {
 		// Only show pause change if it has a value
-		const showPause: boolean = report.change_profile.average_change.pause >= 0;
+		const showPause: boolean = Number(report.change_profile.average_change.pause) >= 0;
 		const [sortedField, setSortedField] = useState<string | null>('time');
 
 		const tableContent = useMemo(() => {
@@ -23,34 +23,34 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 				sorted.sort((a, b) => a.sim - b.sim);
 				//sorted.reverse();
 			} else if (sortedField == 'word') {
-				sorted.sort((a, b) => a.change_profile.word - b.change_profile.word);
+				sorted.sort((a, b) => Number(a.change_profile.word) - Number(b.change_profile.word));
 			} else if (sortedField == 'pause') {
-				sorted.sort((a, b) => a.change_profile.pause - b.change_profile.pause);
+				sorted.sort((a, b) => Number(a.change_profile.pause) - Number(b.change_profile.pause));
 			} else if (sortedField == 'activity') {
-				sorted.sort((a, b) => a.change_profile.activity - b.change_profile.activity);
+				sorted.sort((a, b) => Number(a.change_profile.activity) - Number(b.change_profile.activity));
 			} else if (sortedField == 'start') {
 				sorted.sort((a, b) => {
-					if (a.first_segment.local_dates[0] < b.first_segment.local_dates[0]) {
+					if (a.first_segment.local_dates![0] < b.first_segment.local_dates![0]) {
 						return -1;
 					}
-					if (a.first_segment.local_dates[0] > b.first_segment.local_dates[0]) {
+					if (a.first_segment.local_dates![0] > b.first_segment.local_dates![0]) {
 						return 1;
 					}
 					return 0;
 				});
 			} else if (sortedField == 'end') {
 				sorted.sort((a, b) => {
-					if (a.second_segment.local_dates[0] < b.second_segment.local_dates[0]) {
+					if (a.second_segment.local_dates![0] < b.second_segment.local_dates![0]) {
 						return -1;
 					}
-					if (a.second_segment.local_dates[0] > b.second_segment.local_dates[0]) {
+					if (a.second_segment.local_dates![0] > b.second_segment.local_dates![0]) {
 						return 1;
 					}
 					return 0;
 				});
 			}
 
-			return sorted.map((change_event: any, i: number) => {
+			return sorted.map((change_event: ChangeEvent, i: number) => {
 				return (
 					<tr key={i}>
 						<td>
@@ -63,8 +63,8 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 						<td>{change_event.change_profile.word}</td>
 						{showPause ? <td>{change_event.change_profile.pause}</td> : false}
 						<td>{change_event.change_profile.activity}</td>
-						<td>{formatDate(change_event.first_segment.local_dates[0])}</td>
-						<td>{formatDate(change_event.second_segment.local_dates[0])}</td>
+						<td>{formatDate(change_event.first_segment.local_dates![0])}</td>
+						<td>{formatDate(change_event.second_segment.local_dates![0])}</td>
 					</tr>
 				);
 			});
@@ -81,10 +81,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 			setChangeGraph({ ...changeGraph, [key]: !changeGraph[key] });
 		};
 
-		const changeChronology: any[] = [];
-		report.change_events.forEach((event: any) => {
+		const changeChronology: ChangeChronology[] = [];
+		report.change_events.forEach((event: ChangeEvent) => {
 			changeChronology.push({
-				Date: event.first_segment.local_dates[0],
+				Date: event.first_segment.local_dates![0],
 				Similarity: +event.sim.toFixed(2),
 				Word: event.change_profile.word,
 				Pause: event.change_profile.pause,

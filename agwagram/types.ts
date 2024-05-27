@@ -13,12 +13,12 @@ declare global {
 		group_top_semantic: GroupTop[];
 		group_top_sentiment: GroupTop[];
 		group_top_time: GroupTop[];
-		pairwise_sim: any[];
+		pairwise_sim: PairwiseSimilarity[];
 	}
 
 	interface FailedAnalysis extends BaseAnalysis {
-		errors: any;
-		query: any;
+		errors: Record<string, string>[];
+		query: string[];
 	}
 
 	interface Analysis extends SuccessfulAnalysis, FailedAnalysis {}
@@ -43,8 +43,8 @@ declare global {
 		top_semantic: Top[];
 		top_sentiment: Top[];
 		top_time: Top[];
-		top_change: any[];
-		linked_data: LinkedDatum[];
+		top_change: unknown[];
+		linked_data: LinkedData[];
 	}
 
 	interface ChangeReport {
@@ -60,8 +60,8 @@ declare global {
 	interface ChangeEvent {
 		sim: number;
 		change_profile: AverageChange;
-		first_segment: LinkedDatum;
-		second_segment: LinkedDatum;
+		first_segment: LinkedData;
+		second_segment: LinkedData;
 	}
 
 	interface AverageChange {
@@ -70,7 +70,7 @@ declare global {
 		activity: string;
 	}
 
-	interface LinkedDatum {
+	interface LinkedData {
 		action: string;
 		content_syntactic: string;
 		content_semantic_entity: string;
@@ -78,6 +78,8 @@ declare global {
 		change: string;
 		local_dates?: string[];
 		created_at?: string;
+		text: string;
+		id: string;
 	}
 
 	interface ChangeProfile {
@@ -99,6 +101,22 @@ declare global {
 		doc_freq: number;
 		doc_rate: number;
 		rank: number;
+	}
+
+	interface PairwiseSimilarity {
+		sim: number;
+		user_pair: [string, string];
+	}
+
+	interface ExampleFile {
+		file: string;
+		title: string;
+		type: string;
+	}
+
+	interface ChangeChronology {
+		Date: string;
+		[username: string]: number | string;
 	}
 }
 

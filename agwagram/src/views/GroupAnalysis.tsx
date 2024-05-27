@@ -5,9 +5,9 @@ import { Hub } from '../icons';
 interface GroupAnalysisProps {
 	accounts: AccountBloc[];
 	totalTweets: number;
-	topBlocWords: any;
-	topTimes: any;
-	pairwiseSim: any;
+	topBlocWords: Top[];
+	topTimes: Top[];
+	pairwiseSim: PairwiseSimilarity[];
 }
 
 const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, topBlocWords, topTimes, pairwiseSim }) => {
@@ -49,7 +49,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
 								</tr>
 							</thead>
 							<tbody>
-								{pairwiseSim.map((u_pair: any, index: number) => {
+								{pairwiseSim.map((u_pair: PairwiseSimilarity, index: number) => {
 									return (
 										<tr key={index}>
 											<td>{`${+(u_pair.sim * 100).toFixed(1)}%`}</td>
