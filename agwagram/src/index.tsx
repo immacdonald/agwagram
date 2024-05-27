@@ -1,4 +1,3 @@
-import { ResponsiveContextProvider } from '@imacdonald/phantom';
 import '@imacdonald/phantom/style/variables';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -13,11 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<ResponsiveContextProvider>
-					<BrowserRouter basename={import.meta.env.BASE_URL}>
-						<App />
-					</BrowserRouter>
-				</ResponsiveContextProvider>
+				<BrowserRouter basename={import.meta.env.BASE_URL}>
+					<App />
+				</BrowserRouter>
 			</PersistGate>
 		</Provider>
 	</React.StrictMode>

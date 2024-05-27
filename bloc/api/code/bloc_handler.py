@@ -9,6 +9,8 @@ from bloc.util import get_bloc_params
 from bloc.subcommands import run_subcommands
 from argparse import Namespace
 
+import time
+
 from . import bloc_extension
 from . import symbols
 
@@ -46,20 +48,10 @@ def verify_user_exists(user_list):
 
     return 0, user_data['data']
 
-import time
-
-def analyze_tweet_file(files = None, change_report = True):
-    if(files):
-        tic = time.perf_counter()
-        start_file = time.perf_counter()
-        tweets = []
-        for file in files:
-            file_contents = getDictArrayFromFile(file)
-            tweets.extend(file_contents)
-        end_file = time.perf_counter()
-        print(f"Got tweets list in {end_file - start_file:0.4f} seconds")
-
+def analyze_tweets(tweets = None, change_report = True):
+    if(tweets):
         # Sort Tweets by user
+        tic = time.perf_counter()
         start_file = time.perf_counter()
         users = {}
         for tweet in tweets:

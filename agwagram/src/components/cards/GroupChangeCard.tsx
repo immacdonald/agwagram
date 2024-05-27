@@ -1,7 +1,7 @@
+import { Card } from '@imacdonald/phantom';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { formatDate, graphColor } from '../../Global';
+import { formatDate, graphColor } from '../../utility';
 import { Chart } from '../../icons';
-import { GridCard, GridCardSize } from '../GridCard';
 
 interface GroupChangeCardProps {
 	title: string;
@@ -23,38 +23,44 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
 	});
 
 	return changeChronology.length > 0 ? (
-		<GridCard title={title} Icon={Chart} size={GridCardSize.Full}>
-			<div style={{ width: '100%', height: '400px' }}>
-				<h3>Similarity Over Time</h3>
-				<ResponsiveContainer width="100%" height="100%">
-					<LineChart
-						width={500}
-						height={300}
-						data={changeChronology}
-						margin={{
-							top: 5,
-							right: 30,
-							left: 20,
-							bottom: 5
-						}}
-					>
-						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="Date" tickFormatter={formatDate} />
-						<YAxis />
-						<Tooltip />
-						<Legend />
-						{reports.map((report: any, i: number) => {
-							return <Line type="monotone" dataKey={report.account_username} stroke={graphColor(i)} dot={false} key={i} />;
-						})}
-					</LineChart>
-				</ResponsiveContainer>
-			</div>
-			<br />
-		</GridCard>
+		<Card fullHeight>
+			<Card.Header title={title} Icon={Chart} />
+			<Card.Body>
+				<div style={{ width: '100%', height: '400px' }}>
+					<h3>Similarity Over Time</h3>
+					<ResponsiveContainer width="100%" height="100%">
+						<LineChart
+							width={500}
+							height={300}
+							data={changeChronology}
+							margin={{
+								top: 5,
+								right: 30,
+								left: 20,
+								bottom: 5
+							}}
+						>
+							<CartesianGrid strokeDasharray="3 3" />
+							<XAxis dataKey="Date" tickFormatter={(value: string) => formatDate(value)} />
+							<YAxis />
+							<Tooltip />
+							<Legend />
+							{reports.map((report: any, i: number) => {
+								return <Line type="monotone" dataKey={report.account_username} stroke={graphColor(i)} dot={false} key={i} />;
+							})}
+						</LineChart>
+					</ResponsiveContainer>
+				</div>
+				<br />
+			</Card.Body>
+		</Card>
 	) : (
-		<GridCard title={title} Icon={Chart} size={GridCardSize.Full}>
-			<p>No change report generated.</p>
-		</GridCard>
+		<Card fullHeight>
+			<Card.Header title={title} Icon={Chart} />
+			<Card.Body>
+				<p>No change report generated.</p>
+			</Card.Body>
+		</Card>
 	);
 };
 

@@ -1,19 +1,12 @@
-import { Accordion, Dropdown, TabGroup } from '@imacdonald/phantom';
+import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import FileUploadPortal from '../components/Input/FileUploadPortal';
 import SearchInput from '../components/Input/SearchInput';
-import Toggle from '../components/Input/Toggle';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
 import { getStaticFile } from '../utility';
-
-const files = [
-	{ file: 'sample_storygraphbot.jsonl', title: '@StoryGraphBot', type: 'JSONL' },
-	{ file: 'sample_jesus.jsonl', title: '@Jesus', type: 'JSONL' },
-	{ file: 'sample_combined.json', title: 'Combined', type: 'JSON' }
-];
+import config from '../config';
 
 const Analyze: React.FC = () => {
 	const [setFiles] = useSetAnalyzeFilesMutation();
@@ -28,7 +21,7 @@ const Analyze: React.FC = () => {
 		if (example) {
 			dispatch(setExample(example));
 		}
-		setFiles({ files, changeReport: generateChange });
+		setFiles({ files, changeReport: false });
 	};
 
 	const searchUsername = (username: string) => {
@@ -50,24 +43,24 @@ const Analyze: React.FC = () => {
 		}
 	}, []);
 
-	const [generateChange, setGenerateChange] = useState<boolean>(false);
+	/*const [generateChange, setGenerateChange] = useState<boolean>(false);
 	const toggleGenerateChange = () => {
 		setGenerateChange(!generateChange);
-	};
+	};*/
 
 	const changedFile = (title: string) => {
-		setSelectedFile(files.findIndex((file) => file.title == title));
+		setSelectedFile(config.exampleFiles.findIndex((file) => file.title == title));
 	};
 
 	useEffect(() => {
 		if (selectedFile > -1) {
-			submitJsonFile(files[selectedFile].file);
+			submitJsonFile(config.exampleFiles[selectedFile].file);
 		}
 	}, [selectedFile]);
 
 	const helperText = useMemo(() => {
 		if (selectedFile > -1) {
-			const file = files[selectedFile];
+			const file = config.exampleFiles[selectedFile];
 			return (
 				<Link to={`/static/${file.file}`} target="_blank" download>
 					Download {file.title} {file.type} File
@@ -99,9 +92,7 @@ const Analyze: React.FC = () => {
 								</p>
 							</Accordion>
 							<FileUploadPortal submit={submitFiles} />
-							<span>
-								Generate Change Reports <Toggle state={generateChange} onChange={() => toggleGenerateChange()} />
-							</span>
+							{/*<span>Generate Change Reports <Toggle state={generateChange} onChange={() => toggleGenerateChange()} /</span>*/}
 						</div>
 					)
 				},
@@ -111,7 +102,7 @@ const Analyze: React.FC = () => {
 						<div>
 							<h3>Analyze From Example File</h3>
 							<p>Test the capabilities of Agwagram using one of our example Twitter data files.</p>
-							<Dropdown options={files.map((file: any) => file.title)} placeholder="Select File" onChange={(value: any) => changedFile(value as string)} />
+							<Dropdown options={config.exampleFiles.map((file: any) => file.title)} placeholder="Select File" onChange={(value: NullablePrimitive) => changedFile(value as string)} />
 							{helperText && <p>{helperText}</p>}
 						</div>
 					)

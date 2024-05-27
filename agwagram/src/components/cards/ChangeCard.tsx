@@ -1,10 +1,9 @@
-import { Row, UnstyledButton } from '@imacdonald/phantom';
+import { Card, Row, UnstyledButton } from '@imacdonald/phantom';
 import { ReactNode, useMemo, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { formatDate, graphColor } from '../../Global';
+import { formatDate, graphColor } from '../../utility';
 import { Timeline } from '../../icons';
 import { DefinitionTooltip } from '../BLOCComponents';
-import { GridCard, GridCardSize } from '../GridCard';
 import Toggle from '../Input/Toggle';
 
 interface ChangeCardProps {
@@ -103,80 +102,86 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 		};
 
 		return (
-			<GridCard title={title} Icon={Timeline} size={GridCardSize.Full} scrollable>
-				<p>
-					<strong>Change Rate</strong>: {report.change_profile.change_rate}
+			<Card>
+				<Card.Header title={title} Icon={Timeline} />
+				<Card.Body scrollable>
+					<p>
+						<strong>Change Rate</strong>: {report.change_profile.change_rate}
+						<br />
+						<strong>Average Change: </strong>
+						{`Word: ${report.change_profile.average_change.word}, `}
+						{showPause ? `Pause: ${report.change_profile.average_change.pause}, ` : false}
+						{`Activity: ${report.change_profile.average_change.activity}`}
+					</p>
+					<hr />
+					<div style={{ width: '100%', height: '480px' }}>
+						<h3>Change Profile</h3>
+						<Row>
+							<span>
+								Similarity <Toggle state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
+							</span>
+							<span>
+								Word <Toggle state={changeGraph['word']} onChange={() => toggleChangeGraphDisplay('word')} />
+							</span>
+							<span>
+								Pause <Toggle state={changeGraph['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
+							</span>
+							<span>
+								Activity <Toggle state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
+							</span>
+						</Row>
+						<ResponsiveContainer width="100%" height="85%">
+							<LineChart
+								width={500}
+								height={300}
+								data={changeChronology}
+								margin={{
+									top: 5,
+									right: 30,
+									left: 20,
+									bottom: 5
+								}}
+							>
+								<CartesianGrid strokeDasharray="3 3" />
+								<XAxis dataKey="Date" tickFormatter={(value: string) => formatDate(value)} />
+								<YAxis />
+								<Tooltip />
+								<Legend />
+								{changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false} />}
+								{changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false} />}
+								{showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false} />}
+								{changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false} />}
+							</LineChart>
+						</ResponsiveContainer>
+					</div>
 					<br />
-					<strong>Average Change: </strong>
-					{`Word: ${report.change_profile.average_change.word}, `}
-					{showPause ? `Pause: ${report.change_profile.average_change.pause}, ` : false}
-					{`Activity: ${report.change_profile.average_change.activity}`}
-				</p>
-				<hr />
-				<div style={{ width: '100%', height: '480px' }}>
-					<h3>Change Profile</h3>
-					<Row>
-						<span>
-							Similarity <Toggle state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
-						</span>
-						<span>
-							Word <Toggle state={changeGraph['word']} onChange={() => toggleChangeGraphDisplay('word')} />
-						</span>
-						<span>
-							Pause <Toggle state={changeGraph['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
-						</span>
-						<span>
-							Activity <Toggle state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
-						</span>
-					</Row>
-					<ResponsiveContainer width="100%" height="85%">
-						<LineChart
-							width={500}
-							height={300}
-							data={changeChronology}
-							margin={{
-								top: 5,
-								right: 30,
-								left: 20,
-								bottom: 5
-							}}
-						>
-							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="Date" tickFormatter={formatDate} />
-							<YAxis />
-							<Tooltip />
-							<Legend />
-							{changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false} />}
-							{changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false} />}
-							{showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false} />}
-							{changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false} />}
-						</LineChart>
-					</ResponsiveContainer>
-				</div>
-				<br />
-				<hr />
-				<table>
-					<thead>
-						<tr>
-							<th style={{ width: '180px' }}>Start Behavior</th>
-							<th style={{ width: '180px' }}>End Behavior</th>
-							<th>{sortButton('Similarity', 'sim')}</th>
-							<th style={{ width: '70px' }}>{sortButton('Word', 'word')}</th>
-							{showPause ? <th style={{ width: '70px' }}>{sortButton('Pause', 'pause')}</th> : false}
-							<th style={{ width: '90px' }}>{sortButton('Activity', 'activity')}</th>
-							<th style={{ width: '170px' }}>{sortButton('Start Date', 'start')}</th>
-							<th style={{ width: '170px' }}>{sortButton('End Date', 'end')}</th>
-						</tr>
-					</thead>
-					<tbody>{tableContent}</tbody>
-				</table>
-			</GridCard>
+					<hr />
+					<table>
+						<thead>
+							<tr>
+								<th style={{ width: '180px' }}>Start Behavior</th>
+								<th style={{ width: '180px' }}>End Behavior</th>
+								<th>{sortButton('Similarity', 'sim')}</th>
+								<th style={{ width: '70px' }}>{sortButton('Word', 'word')}</th>
+								{showPause ? <th style={{ width: '70px' }}>{sortButton('Pause', 'pause')}</th> : false}
+								<th style={{ width: '90px' }}>{sortButton('Activity', 'activity')}</th>
+								<th style={{ width: '170px' }}>{sortButton('Start Date', 'start')}</th>
+								<th style={{ width: '170px' }}>{sortButton('End Date', 'end')}</th>
+							</tr>
+						</thead>
+						<tbody>{tableContent}</tbody>
+					</table>
+				</Card.Body>
+			</Card>
 		);
 	} else {
 		return (
-			<GridCard title={title} Icon={Timeline} size={GridCardSize.Full}>
-				<p>No change report found.</p>
-			</GridCard>
+			<Card>
+				<Card.Header title={title} Icon={Timeline} />
+				<Card.Body>
+					<p>No change report found.</p>
+				</Card.Body>
+			</Card>
 		);
 	}
 };

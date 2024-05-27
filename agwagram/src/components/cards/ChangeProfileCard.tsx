@@ -1,7 +1,7 @@
+import { Card } from '@imacdonald/phantom';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { graphColor } from '../../Global';
+import { graphColor } from '../../utility';
 import { Chart } from '../../icons';
-import { GridCard, GridCardSize } from '../GridCard';
 
 interface ChangeProfileCardProps {
 	title: string;
@@ -34,70 +34,76 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
 		];
 
 		return (
-			<GridCard title={title} Icon={Chart} size={GridCardSize.Full}>
-				<div style={{ display: 'flex', width: '100%', height: '400px' }}>
-					<div style={{ width: '100%', height: '90%' }}>
-						<h3>Change Profile</h3>
-						<ResponsiveContainer width="100%" height="100%">
-							<BarChart
-								width={100}
-								height={100}
-								data={changeRate}
-								margin={{
-									top: 5,
-									right: 30,
-									left: 20,
-									bottom: 5
-								}}
-							>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="Name" />
-								<YAxis />
-								<Tooltip />
-								<Legend />
-								<Bar dataKey="Content" fill={graphColor(0)} />
-								<Bar dataKey="Syntactic" fill={graphColor(1)} />
-							</BarChart>
-						</ResponsiveContainer>
+			<Card fullHeight>
+				<Card.Header title={title} Icon={Chart} />
+				<Card.Body>
+					<div style={{ display: 'flex', width: '100%', height: '400px' }}>
+						<div style={{ width: '100%', height: '90%' }}>
+							<h3>Change Profile</h3>
+							<ResponsiveContainer width="100%" height="100%">
+								<BarChart
+									width={100}
+									height={100}
+									data={changeRate}
+									margin={{
+										top: 5,
+										right: 30,
+										left: 20,
+										bottom: 5
+									}}
+								>
+									<CartesianGrid strokeDasharray="3 3" />
+									<XAxis dataKey="Name" />
+									<YAxis />
+									<Tooltip />
+									<Legend />
+									<Bar dataKey="Content" fill={graphColor(0)} />
+									<Bar dataKey="Syntactic" fill={graphColor(1)} />
+								</BarChart>
+							</ResponsiveContainer>
+						</div>
+						<div style={{ width: '100%', height: '90%' }}>
+							<h3>Average Change</h3>
+							<ResponsiveContainer width="100%" height="100%">
+								<BarChart
+									width={100}
+									height={100}
+									data={averageChange}
+									margin={{
+										top: 5,
+										right: 30,
+										left: 20,
+										bottom: 5
+									}}
+								>
+									<CartesianGrid strokeDasharray="3 3" />
+									<XAxis dataKey="Name" />
+									<YAxis />
+									<Tooltip />
+									<Legend />
+									<Bar dataKey="Word" fill={graphColor(0)} />
+									<Bar dataKey="Pause" fill={graphColor(1)} />
+									<Bar dataKey="Activity" fill={graphColor(2)} />
+								</BarChart>
+							</ResponsiveContainer>
+						</div>
 					</div>
-					<div style={{ width: '100%', height: '90%' }}>
-						<h3>Average Change</h3>
-						<ResponsiveContainer width="100%" height="100%">
-							<BarChart
-								width={100}
-								height={100}
-								data={averageChange}
-								margin={{
-									top: 5,
-									right: 30,
-									left: 20,
-									bottom: 5
-								}}
-							>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="Name" />
-								<YAxis />
-								<Tooltip />
-								<Legend />
-								<Bar dataKey="Word" fill={graphColor(0)} />
-								<Bar dataKey="Pause" fill={graphColor(1)} />
-								<Bar dataKey="Activity" fill={graphColor(2)} />
-							</BarChart>
-						</ResponsiveContainer>
-					</div>
-				</div>
-			</GridCard>
+				</Card.Body>
+			</Card>
 		);
 	} else {
 		return (
-			<GridCard title={title} Icon={Chart} size={GridCardSize.Full}>
-				<div style={{ display: 'flex', width: '100%', height: '400px' }}>
-					<div style={{ width: '100%', height: '90%' }}>
-						<h3>Change Profile</h3>
-						<p>No change profile found.</p>
+			<Card>
+				<Card.Header title={title} Icon={Chart} />
+				<Card.Body>
+					<div style={{ display: 'flex', width: '100%', height: '400px' }}>
+						<div style={{ width: '100%', height: '90%' }}>
+							<h3>Change Profile</h3>
+							<p>No change profile found.</p>
+						</div>
 					</div>
-				</div>
-			</GridCard>
+				</Card.Body>
+			</Card>
 		);
 	}
 };

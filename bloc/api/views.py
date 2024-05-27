@@ -7,7 +7,7 @@ import json
 from .serializers import *
 from .code import bloc_handler
 from .code import symbols
-from .code.file_handling import handle_uploaded_file
+from .code.file_handling import handle_uploaded_file, extract_tweets_from_files, validate_tweet_data
 from django.http import JsonResponse
 
 
@@ -38,13 +38,24 @@ class AnalyzeFiles(APIView):
             converted_files = []
             for file in tweet_files:
                 converted_file = handle_uploaded_file(file)
+                if converted_file is None:
+                    return Response({"error": "Invalid file(s) uploaded."}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
                 converted_files.append(converted_file.name)
+
+            if len(converted_files) == 0:
+                return Response({"error": "Invalid file(s) uploaded."}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
             toc = time.perf_counter()
             print(f"Converted all files in {toc - tic:0.4f} seconds")
 
-            # Assuming bloc_handler.analyze_tweet_file can take use_special_processing as an argument
-            results = bloc_handler.analyze_tweet_file(converted_files, change_report=generate_change_report)
+            tweets = extract_tweets_from_files(files=converted_files)
+            if tweets is None:
+                return Response({"error": "Invalid file(s) uploaded."}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+            
+            if validate_tweet_data(tweets=tweets) is False:
+                return Response({"error": "Invalid tweet data, file is missing fields."}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+            
+            results = bloc_handler.analyze_tweets(tweets=tweets, change_report=generate_change_report)
 
             for temp_file in converted_files:
                 os.remove(temp_file)

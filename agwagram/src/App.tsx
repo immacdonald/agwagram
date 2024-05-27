@@ -1,8 +1,7 @@
-import { AnchorController } from '@imacdonald/phantom';
+import { PhantomApp } from '@imacdonald/phantom';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import style from './App.module.scss';
 import Footer from './components/Page/Footer';
 import Header from './components/Page/Header';
 import { selectTheme } from './data/settingsSlice';
@@ -18,15 +17,14 @@ function App() {
 	}, [theme]);
 
 	return (
-		<div className={style.app}>
-			<AnchorController />
+		<PhantomApp anchors>
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
 			</Routes>
 			<Footer />
-		</div>
+		</PhantomApp>
 	);
 }
 

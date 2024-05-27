@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_URL } from '../Global';
+import config from '../config';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: API_URL
+	baseUrl: config.apiURL
 });
 
 // Define a service using a base URL and expected endpoints

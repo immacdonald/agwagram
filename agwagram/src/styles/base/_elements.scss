@@ -39,49 +39,6 @@ a {
 	outline: 0;
 }
 
-input[type='file'] {
-	width: 100%;
-	height: 96px;
-	display: flex;
-	border: var(--b-light);
-	border-radius: $radius-sm;
-	margin-top: $md;
-	transition: border-color var(--t-fast);
-
-	&::before {
-		content: '';
-		-webkit-mask: url('./images/upload_file.svg') no-repeat 100% 100%;
-		mask: url('./images/upload_file.svg') no-repeat 100% 100%;
-		-webkit-mask-size: cover;
-		mask-size: cover;
-		background-color: var(--c-fg);
-		transition: background-color var(--t-fast);
-		width: 64px;
-		height: 64px;
-		margin: auto;
-		margin-top: $md;
-		margin-bottom: $xxl;
-	}
-
-	&:hover {
-		border-color: var(--c-primary);
-
-		&::before {
-			background-color: var(--c-primary);
-		}
-	}
-
-	&:disabled {
-		background-color: var(--c-disabled-color);
-		transition: none;
-
-		&::before {
-			background-color: var(--c-bg);
-			transition: none;
-		}
-	}
-}
-
 // Tables
 table {
 	border-collapse: collapse;
@@ -92,7 +49,7 @@ table {
 }
 
 th {
-	padding: $sm;
+	padding: $xs;
 	border-bottom: var(--b-light);
 }
 

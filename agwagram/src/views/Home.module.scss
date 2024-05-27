@@ -1,0 +1,21 @@
+@use '../styles' as *;
+
+.split {
+	padding-bottom: $lg !important;
+	display: grid;
+	grid-template-columns: 400px 1fr;
+	grid-gap: $xl;
+
+	@include respond-max($screen-md) {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+	}
+}
+
+.gradient {
+	background: linear-gradient(180deg, var(--c-bg-light) 0%, var(--c-bg) 10%);
+}
+
+.results {
+	padding-top: 0 !important;
+}

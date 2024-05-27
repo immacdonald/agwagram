@@ -1,6 +1,6 @@
+import { Card } from '@imacdonald/phantom';
 import { Dataset } from '../../icons';
 import { DefinitionTooltip } from '../BLOCComponents';
-import { GridCard, GridCardSize } from '../GridCard';
 
 interface LanguageCardProps {
 	title: string;
@@ -10,9 +10,10 @@ interface LanguageCardProps {
 const LanguageCard: React.FC<LanguageCardProps> = ({ title, bloc }: LanguageCardProps) => {
 	const chars = bloc.split('');
 	return (
-		<GridCard title={title} Icon={Dataset} size={GridCardSize.Normal} scrollable>
-			{chars.length > 0 ? chars.map((char, i) => <DefinitionTooltip key={i} word={char} />) : <p>No analysis available.</p>}
-		</GridCard>
+		<Card fullHeight>
+			<Card.Header title={title} Icon={Dataset} />
+			<Card.Body scrollable>{chars.length > 0 ? chars.map((char, i) => <DefinitionTooltip key={i} word={char} />) : <p>No analysis available.</p>}</Card.Body>
+		</Card>
 	);
 };
 

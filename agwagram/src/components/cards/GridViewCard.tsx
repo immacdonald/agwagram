@@ -1,11 +1,11 @@
-import { Button, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext } from '@imacdonald/phantom';
+import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
 import { Dataset } from '../../icons';
-import { GridCard, GridCardSize } from '../GridCard';
 import Toggle from '../Input/Toggle';
 import style from './GridViewCard.module.scss';
+import { formatDate } from '../../utility';
 
 interface GridViewCardProps {
 	title: string;
@@ -41,22 +41,6 @@ const pauseLegend: Record<string, string> = {
 	'⚄': '#636363',
 	'⚅': '#636363'
 };
-
-function formatDate(input: string | number) {
-	const date = new Date(input);
-
-	// Get the year, month, and day from the date object
-	const year = date.getFullYear();
-	let month: any = date.getMonth() + 1; // getMonth() returns 0-11
-	let day: any = date.getDate();
-
-	// Pad the month and day with leading zeros if necessary
-	month = month.toString().padStart(2, '0');
-	day = day.toString().padStart(2, '0');
-
-	// Combine components into the desired format
-	return `${year}-${month}-${day}`;
-}
 
 const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) => {
 	const { actionLinkedData, contentLinkedData } = useMemo(() => {
@@ -96,9 +80,12 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 
 	if (actionLinkedData.length < 36) {
 		return (
-			<GridCard title={title} Icon={Dataset} size={GridCardSize.Full}>
-				<p>Cannot display grid for {actionLinkedData.length} data points.</p>
-			</GridCard>
+			<Card>
+				<Card.Header title={title} Icon={Dataset} />
+				<Card.Body>
+					<p>Cannot display grid for {actionLinkedData.length} data points.</p>
+				</Card.Body>
+			</Card>
 		);
 	}
 
@@ -116,7 +103,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		const endIndex = startIndex + gridSize;
 		const rowData = fixedLinkedData.slice(startIndex, endIndex);
 
-		gridItems.push(`${formatDate(rowData[0].created_at * 1000)}`);
+		gridItems.push(`${new Date(rowData[0].created_at * 1000).toLocaleDateString()}`);
 		gridItems.push(...rowData);
 	}
 
@@ -162,11 +149,13 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		//console.log(Object.keys(pauseLegend));
 		const popoverContent = (
 			<div className={style.popoverContent}>
-				{Object.keys(pauseLegend).includes(item.content) ? (<h3>{symbolToDefinition(item.content)}</h3>) : (
+				{Object.keys(pauseLegend).includes(item.content) ? (
+					<h3>{symbolToDefinition(item.content)}</h3>
+				) : (
 					<>
 						<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
 							<span>{symbolToDefinition(item.content)}</span>
-							<span>{formatDate(item.created_at * 1000)}</span>
+							<span>{formatDate(new Date(item.created_at * 1000), true)}</span>
 						</h3>
 						<hr style={{ margin: '0.5rem 0' }} />
 						<span>{item.text}</span>
@@ -189,60 +178,62 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 	};
 
 	return (
-		<GridCard title={title} Icon={Dataset} size={GridCardSize.Full}>
-			<p>View the BLOC data as a grid to easily analyze trends and patterns.</p>
-			<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
-				<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
-					<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
-				</span>
-				<span>
-					Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
-				</span>
-			</div>
-			<div className={style.legend}>
-				<div className={style.legendList}>
-					{legend.map((item) => {
-						return (
-							<div className={style.legendKey} key={item.symbol}>
-								<span style={{ backgroundColor: item.color }}></span>
-								<em>{item.symbol}</em>
-							</div>
-						);
-					})}
+		<Card fullHeight>
+			<Card.Header title={title} subtitle="View the BLOC data as a grid to easily analyze trends and patterns" Icon={Dataset} />
+			<Card.Body>
+				<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
+					<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
+						<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
+					</span>
+					<span>
+						Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
+					</span>
 				</div>
-			</div>
-			<div className={style.gridControl} style={controlProperties}>
-				<TransformWrapper initialScale={scale} minScale={scale - 0.25} maxScale={2} initialPositionX={0} initialPositionY={0}>
-					{({ zoomIn, zoomOut, resetTransform, setTransform }) => {
-						setTransform(0, 0, scale);
-						return (
-							<div ref={ref} className={style.gridCard}>
-								<TransformComponent>
-									<div ref={gridRef} className={style.grid} style={{ gridTemplateColumns: `repeat(${gridSize + 1}, 1fr)`, width: gridSize * 24 + 80 }}>
-										{gridItems.map((item, index) => {
-											if (index % (gridSize + 1) == 0) {
-												return (
-													<div className={style.label} key={index}>
-														{item}
-													</div>
-												);
-											} else {
-												return createItemSquare(item, index);
-											}
-										})}
-									</div>
-								</TransformComponent>
-								<div className={style.tools}>
-									<Button onClick={() => resetTransform()} Icon={Recenter} rounded />
-									<Button onClick={() => zoomOut()} Icon={ZoomOut} rounded />
-									<Button onClick={() => zoomIn()} Icon={ZoomIn} rounded />
+				<div className={style.legend}>
+					<div className={style.legendList}>
+						{legend.map((item) => {
+							return (
+								<div className={style.legendKey} key={item.symbol}>
+									<span style={{ backgroundColor: item.color }}></span>
+									<em>{item.symbol}</em>
 								</div>
-							</div>
-						);
-					}}
-				</TransformWrapper>
-			</div>
-		</GridCard>
+							);
+						})}
+					</div>
+				</div>
+				<div className={style.gridControl} style={controlProperties}>
+					<TransformWrapper initialScale={scale} minScale={scale - 0.25} maxScale={2} initialPositionX={0} initialPositionY={0}>
+						{({ zoomIn, zoomOut, resetTransform, setTransform }) => {
+							setTransform(0, 0, scale);
+							return (
+								<div ref={ref} className={style.gridCard}>
+									<TransformComponent>
+										<div ref={gridRef} className={style.grid} style={{ gridTemplateColumns: `repeat(${gridSize + 1}, 1fr)`, width: gridSize * 24 + 80 }}>
+											{gridItems.map((item, index) => {
+												if (index % (gridSize + 1) == 0) {
+													return (
+														<div className={style.label} key={index}>
+															{item}
+														</div>
+													);
+												} else {
+													return createItemSquare(item, index);
+												}
+											})}
+										</div>
+									</TransformComponent>
+									<div className={style.tools}>
+										<Button onClick={() => resetTransform()} Icon={Recenter} rounded />
+										<Button onClick={() => zoomOut()} Icon={ZoomOut} rounded />
+										<Button onClick={() => zoomIn()} Icon={ZoomIn} rounded />
+									</div>
+								</div>
+							);
+						}}
+					</TransformWrapper>
+				</div>
+			</Card.Body>
+		</Card>
 	);
 };
 

@@ -1,10 +1,11 @@
 import { Card, Page, Section } from '@imacdonald/phantom';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { Results } from '.';
 import Loading from '../components/Loading';
 import { selectResults } from '../data/settingsSlice';
 import Analyze from './Analyze';
-import style from './Analyze.module.scss';
+import style from './Home.module.scss';
 
 function Home() {
 	const resultState = useSelector(selectResults);
@@ -34,7 +35,7 @@ function Home() {
 				</Section>
 			)}
 			{resultState.data && (
-				<Section alt className={style.gradient}>
+				<Section alt className={clsx(style.gradient, style.results)}>
 					<Results />
 				</Section>
 			)}
