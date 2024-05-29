@@ -46,11 +46,9 @@ export const settingsSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addMatcher(api.endpoints.setAnalyzeFiles.matchFulfilled, (state, action: PayloadAction<Analysis>) => {
-			console.log('Finished executing endpoint');
 			state.results = { ...state.results, data: action.payload, loading: false };
 		}),
 			builder.addMatcher(api.endpoints.setAnalyzeFiles.matchRejected, (state) => {
-				console.log('Finished executing endpoint');
 				state.results = { ...state.results, data: null, loading: false };
 			}),
 			builder.addMatcher(api.endpoints.setAnalyzeUser.matchFulfilled, (state, action: PayloadAction<Analysis>) => {

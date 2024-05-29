@@ -1,5 +1,4 @@
-import { Card } from '@imacdonald/phantom';
-import { Dataset } from '../../icons';
+import { Card, Dataset } from '@imacdonald/phantom';
 import { DefinitionTooltip } from '../BLOCComponents';
 
 interface LanguageCardProps {

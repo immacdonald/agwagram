@@ -1,12 +1,10 @@
-import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from '@imacdonald/phantom';
+import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup, getStaticFile } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import SearchInput from '../components/Input/SearchInput';
 import config from '../config';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
-import { getStaticFile } from '../utility';
 
 const Analyze: React.FC = () => {
 	const [setFiles] = useSetAnalyzeFilesMutation();
@@ -92,7 +90,7 @@ const Analyze: React.FC = () => {
 								</p>
 							</Accordion>
 							<FileUploadPortal submit={submitFiles} />
-							{/*<span>Generate Change Reports <Toggle state={generateChange} onChange={() => toggleGenerateChange()} /</span>*/}
+							{/*<span>Generate Change Reports <Switch state={generateChange} onChange={() => toggleGenerateChange()} /</span>*/}
 						</div>
 					)
 				},
@@ -107,6 +105,7 @@ const Analyze: React.FC = () => {
 								placeholder="Select File"
 								onChange={(value: NullablePrimitive) => changedFile(value as string)}
 							/>
+							<br/>
 							{helperText && <p>{helperText}</p>}
 						</div>
 					)
@@ -115,13 +114,11 @@ const Analyze: React.FC = () => {
 					label: 'Username',
 					tab: (
 						<div>
-							<h3>
-								Analyze By Username <b>(Coming Soon)</b>
-							</h3>
+							<h3>Analyze By Username <b>(Coming Soon)</b></h3>
 							<p>Search for one or more accounts (separated by a comma) by their current Twitter username.</p>
-							<SearchInput submit={searchUsername} />
 						</div>
-					)
+					),
+					disabled: true
 				}
 			]}
 		/>

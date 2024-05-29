@@ -1,8 +1,7 @@
-import { Card, Tab, TabGroup } from '@imacdonald/phantom';
+import { Card, Tab, TabGroup, BarChart } from '@imacdonald/phantom';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectResults } from '../data/settingsSlice';
-import { BarChart } from '../icons';
 import { AccountAnalysis } from './AccountAnalysis';
 import { GroupAnalysis } from './GroupAnalysis';
 

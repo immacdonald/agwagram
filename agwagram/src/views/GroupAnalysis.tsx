@@ -1,6 +1,6 @@
-import { Card, Grid, GridItemSize, GroupFilled, formatNumber } from '@imacdonald/phantom';
+import { Card, Grid, GridItemSize, GroupFilled, formatNumber, Hub } from '@imacdonald/phantom';
 import { GroupChangeCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
-import { Hub } from '../icons';
+import { Link } from 'react-router-dom';
 
 interface GroupAnalysisProps {
 	accounts: AccountBloc[];
@@ -22,7 +22,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
 							Results for{' '}
 							{accounts.map((account: AccountBloc, index: number) => (
 								<span key={index}>
-									<b>@{account.account_username}</b> ({account.account_name}),{' '}
+									@{account.account_username} <Link to={`www.twitter.com/${account.account_username}`}><i>({account.account_name})</i></Link>,{' '}
 								</span>
 							))}
 							generated using {formatNumber(totalTweets)} tweets.

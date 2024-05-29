@@ -1,6 +1,5 @@
-import { Card } from '@imacdonald/phantom';
+import { Card, Link } from '@imacdonald/phantom';
 import { Fragment } from 'react';
-import { Link } from '../../icons';
 import { GetDefinition } from '../BLOCComponents';
 import HoverMark from '../HoverMark';
 

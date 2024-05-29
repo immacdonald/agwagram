@@ -1,10 +1,7 @@
-import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext } from '@imacdonald/phantom';
+import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext, Switch, formatNumericDate, formatReadableDate, Dataset } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
-import { Dataset } from '../../icons';
-import { formatDate } from '../../utility';
-import Toggle from '../Input/Toggle';
 import style from './GridViewCard.module.scss';
 
 interface GridViewCardProps {
@@ -84,7 +81,6 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 	};
 
 	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
-	//console.log(fixedLinkedData);
 
 	if (actionLinkedData.length < 36) {
 		return (
@@ -111,7 +107,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		const endIndex: number = startIndex + gridSize;
 		const rowData: GridLinkedData[] = fixedLinkedData.slice(startIndex, endIndex);
 
-		gridItems.push(`${new Date(Number(rowData[0].created_at) * 1000).toLocaleDateString()}`);
+		gridItems.push(`${formatNumericDate(Number(rowData[0].created_at) * 1000)}`);
 		gridItems.push(...rowData);
 	}
 
@@ -143,9 +139,9 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		return definitions.join(', ');
 	};
 
-	const [showDates, setShowDates] = useState<boolean>(false);
-	const toggleShowDates = () => {
-		setShowDates(!showDates);
+	const [showLabels, setShowLabels] = useState<boolean>(false);
+	const toggleShowLabels = () => {
+		setShowLabels(!showLabels);
 	};
 
 	const routeToTweet = (id: string) => {
@@ -154,16 +150,16 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 	};
 
 	const createItemSquare = (item: GridLinkedData, index: number): React.ReactNode => {
-		//console.log(Object.keys(pauseLegend));
+		const pause = Object.keys(pauseLegend).includes(item.content);
 		const popoverContent = (
 			<div className={style.popoverContent}>
-				{Object.keys(pauseLegend).includes(item.content) ? (
+				{pause ? (
 					<h3>{symbolToDefinition(item.content)}</h3>
 				) : (
 					<>
 						<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
 							<span>{symbolToDefinition(item.content)}</span>
-							<span>{formatDate(new Date(Number(item.created_at) * 1000), true)}</span>
+							<span>{formatReadableDate(new Date(Number(item.created_at) * 1000), true)}</span>
 						</h3>
 						<hr style={{ margin: '0.5rem 0' }} />
 						<span>{item.text}</span>
@@ -177,24 +173,24 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 				key={index}
 				content={popoverContent}
 				anchorClass={style.item}
-				anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: () => routeToTweet(item.id) }}
+				anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: !pause ? () => routeToTweet(item.id) : undefined}}
 				customStyle={style.popover}
 			>
-				{showDates && <em>{item.content}</em>}
+				{showLabels && <em>{item.content}</em>}
 			</Popover>
 		);
 	};
 
 	return (
 		<Card fullHeight>
-			<Card.Header title={title} subtitle="View the BLOC data as a grid to easily analyze trends and patterns" Icon={Dataset} />
+			<Card.Header title={title} subtitle="View the BLOC data as a grid to easily analyze trends and patterns." Icon={Dataset} />
 			<Card.Body>
 				<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
 					<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
 						<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
 					</span>
 					<span>
-						Show Labels <Toggle state={showDates} onChange={() => toggleShowDates()} />
+						Show Labels <Switch state={showLabels} onChange={() => toggleShowLabels()} />
 					</span>
 				</div>
 				<div className={style.legend}>

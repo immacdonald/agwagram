@@ -1,6 +1,5 @@
-import { Card } from '@imacdonald/phantom';
+import { Card, Chart } from '@imacdonald/phantom';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Chart } from '../../icons';
 import { graphColor } from '../../utility';
 
 interface ChangeProfileCardProps {

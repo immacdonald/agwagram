@@ -1,7 +1,6 @@
-import { Card } from '@imacdonald/phantom';
+import { Card, formatReadableDate, Chart } from '@imacdonald/phantom';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Chart } from '../../icons';
-import { formatDate, graphColor } from '../../utility';
+import { graphColor } from '../../utility';
 
 interface GroupChangeCardProps {
 	title: string;
@@ -41,7 +40,7 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
 							}}
 						>
 							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="Date" tickFormatter={(value: string) => formatDate(value)} />
+							<XAxis dataKey="Date" tickFormatter={(value: string) => formatReadableDate(value)} />
 							<YAxis />
 							<Tooltip />
 							<Legend />

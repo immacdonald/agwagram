@@ -1,10 +1,8 @@
-import { Card, Row, UnstyledButton } from '@imacdonald/phantom';
+import { Card, Row, UnstyledButton, Switch, formatReadableDate, Timeline } from '@imacdonald/phantom';
 import { ReactNode, useMemo, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Timeline } from '../../icons';
-import { formatDate, graphColor } from '../../utility';
+import { graphColor } from '../../utility';
 import { DefinitionTooltip } from '../BLOCComponents';
-import Toggle from '../Input/Toggle';
 
 interface ChangeCardProps {
 	title: string;
@@ -63,8 +61,8 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 						<td>{change_event.change_profile.word}</td>
 						{showPause ? <td>{change_event.change_profile.pause}</td> : false}
 						<td>{change_event.change_profile.activity}</td>
-						<td>{formatDate(change_event.first_segment.local_dates![0])}</td>
-						<td>{formatDate(change_event.second_segment.local_dates![0])}</td>
+						<td>{formatReadableDate(change_event.first_segment.local_dates![0])}</td>
+						<td>{formatReadableDate(change_event.second_segment.local_dates![0])}</td>
 					</tr>
 				);
 			});
@@ -118,16 +116,16 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 						<h3>Change Profile</h3>
 						<Row>
 							<span>
-								Similarity <Toggle state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
+								Similarity <Switch state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
 							</span>
 							<span>
-								Word <Toggle state={changeGraph['word']} onChange={() => toggleChangeGraphDisplay('word')} />
+								Word <Switch state={changeGraph['word']} onChange={() => toggleChangeGraphDisplay('word')} />
 							</span>
 							<span>
-								Pause <Toggle state={changeGraph['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
+								Pause <Switch state={changeGraph['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
 							</span>
 							<span>
-								Activity <Toggle state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
+								Activity <Switch state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
 							</span>
 						</Row>
 						<ResponsiveContainer width="100%" height="85%">
@@ -143,7 +141,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 								}}
 							>
 								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="Date" tickFormatter={(value: string) => formatDate(value)} />
+								<XAxis dataKey="Date" tickFormatter={(value: string) => formatReadableDate(value)} />
 								<YAxis />
 								<Tooltip />
 								<Legend />

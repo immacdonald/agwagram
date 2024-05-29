@@ -1,27 +1,9 @@
 @use '../' as *;
 
-// Headers
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	letter-spacing: 0.015em;
-}
-
 hr {
 	border: none;
 	border-top: var(--b-light);
 	margin: $md 0;
-}
-
-p {
-	line-height: 2em;
-
-	&:not(:last-child) {
-		margin: 0 0 0.5em 0;
-	}
 }
 
 // Links

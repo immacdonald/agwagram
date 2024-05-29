@@ -49,6 +49,11 @@ $primary: #143aa2;
 	--a-mid: rgba(#{$_alpha-base}, 0.25);
 	--a-dark: rgba(#{$_alpha-base-dark}, 0.025);
 	--a-darker: rgba(#{$_alpha-base-dark}, 0.15);
+
+	--text-header-xxl: 2rem;
+	--text-header-xl: 1.7rem;
+	--text-header-lg: 1.4rem;
+	--text-header-md: 1.3rem;
 }
 
 html[data-theme='light'] {

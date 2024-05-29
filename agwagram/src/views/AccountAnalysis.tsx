@@ -1,6 +1,6 @@
-import { Card, Grid, GridItemSize, PersonFilled, formatNumber } from '@imacdonald/phantom';
+import { Card, Grid, GridItemSize, PersonFilled, formatNumber, formatReadableDate } from '@imacdonald/phantom';
 import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
-import { formatDate } from '../utility';
+import { Link } from 'react-router-dom';
 
 interface AccountAnalysisProps {
 	account: AccountBloc;
@@ -16,11 +16,11 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
 					<Card.Header title="Account Overview" Icon={PersonFilled} />
 					<Card.Body>
 						<h2 id="results">
-							Analysis of @{account.account_username} (<i>{account.account_name}</i>)
+							Analysis of @{account.account_username} <Link to={`www.twitter.com/${account.account_username}`}><i>({account.account_name})</i></Link>
 						</h2>
 						<p>
 							{account.tweet_count > 0
-								? `Results generated using ${formatNumber(account.tweet_count)} tweets from ${formatDate(account.first_tweet_date)} to ${formatDate(account.last_tweet_date)}`
+								? `Results generated using ${formatNumber(account.tweet_count)} tweets from ${formatReadableDate(account.first_tweet_date)} to ${formatReadableDate(account.last_tweet_date)}`
 								: `No results generated due to finding 0 tweets`}
 						</p>
 						{account.elapsed_time > 0 && <p>Analysis process took {account.elapsed_time} seconds to complete</p>}

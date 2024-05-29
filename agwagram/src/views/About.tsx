@@ -12,6 +12,7 @@ function About() {
 					well as accounts which display both, Agwagram offers a flexible and generalizable method for analyzing Twitter accounts - making it an essential tool for anyone looking to study
 					and detect coordinated disinformation on social media platforms.
 				</p>
+				<br />
 				<h2>Methodology</h2>
 				<p>
 					Agwagram is built on top of BLOC, the Behavioral Language for Online Classification, a language that represents social media account behaviors, including both benign and malicious
