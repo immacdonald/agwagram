@@ -1,8 +1,8 @@
 import { Card, Row, UnstyledButton, Switch, formatReadableDate, Timeline } from '@imacdonald/phantom';
 import { ReactNode, useMemo, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { graphColor } from '../../utility';
 import { DefinitionTooltip } from '../BLOCComponents';
+import tokens from '../../styles/tokens.module.scss';
 
 interface ChangeCardProps {
 	title: string;
@@ -145,10 +145,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 								<YAxis />
 								<Tooltip />
 								<Legend />
-								{changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={graphColor(3)} dot={false} />}
-								{changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={graphColor(0)} dot={false} />}
-								{showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={graphColor(1)} dot={false} />}
-								{changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={graphColor(2)} dot={false} />}
+								{changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={tokens['graph-green']} dot={false} />}
+								{changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={tokens['graph-blue']} dot={false} />}
+								{showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={tokens['graph-red']} dot={false} />}
+								{changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={tokens['graph-yellow']} dot={false} />}
 							</LineChart>
 						</ResponsiveContainer>
 					</div>

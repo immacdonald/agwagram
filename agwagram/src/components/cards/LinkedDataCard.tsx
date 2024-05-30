@@ -1,8 +1,6 @@
-import { Card, Link } from '@imacdonald/phantom';
+import { Card, Link, HoverMark } from '@imacdonald/phantom';
 import { Fragment } from 'react';
 import { GetDefinition } from '../BLOCComponents';
-import HoverMark from '../HoverMark';
-
 interface LinkedDataCardProps {
 	title: string;
 	data: LinkedData[];
@@ -24,7 +22,7 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDa
 
 					return (
 						<Fragment key={index}>
-							<HoverMark data-title={titleString} text={GetDefinition(datum['action'])} />
+							<HoverMark text={<em>{GetDefinition(datum['action'])}</em>} data-title={titleString} />
 							{index !== data.length - 1 && ', '}
 						</Fragment>
 					);

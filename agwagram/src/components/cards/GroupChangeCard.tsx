@@ -1,14 +1,20 @@
 import { Card, formatReadableDate, Chart } from '@imacdonald/phantom';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { graphColor } from '../../utility';
+import tokens from '../../styles/tokens.module.scss';
 
 interface GroupChangeCardProps {
 	title: string;
 	reports: AccountBloc[];
 }
 
+const graphColorMap = [
+	tokens['graph-blue'],
+	tokens['graph-red'],
+	tokens['graph-yellow'],
+	tokens['graph-green']
+]
+
 const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => {
-	console.log(reports);
 	const changeChronology: ChangeChronology[] = [];
 	reports.forEach((report: AccountBloc) => {
 		if (report.change_report && report.change_report.action) {
@@ -44,8 +50,8 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
 							<YAxis />
 							<Tooltip />
 							<Legend />
-							{reports.map((report: AccountBloc, i: number) => {
-								return <Line type="monotone" dataKey={report.account_username} stroke={graphColor(i)} dot={false} key={i} />;
+							{reports.map((report: AccountBloc, index: number) => {
+								return <Line type="monotone" dataKey={report.account_username} stroke={graphColorMap[index % graphColorMap.length]} dot={false} key={index} />;
 							})}
 						</LineChart>
 					</ResponsiveContainer>

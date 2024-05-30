@@ -1,6 +1,6 @@
 import { Card, Chart } from '@imacdonald/phantom';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { graphColor } from '../../utility';
+import tokens from '../../styles/tokens.module.scss';
 
 interface ChangeProfileCardProps {
 	title: string;
@@ -56,8 +56,8 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
 									<YAxis />
 									<Tooltip />
 									<Legend />
-									<Bar dataKey="Content" fill={graphColor(0)} />
-									<Bar dataKey="Syntactic" fill={graphColor(1)} />
+									<Bar dataKey="Content" fill={tokens['graph-blue']} />
+									<Bar dataKey="Syntactic" fill={tokens['graph-red']} />
 								</BarChart>
 							</ResponsiveContainer>
 						</div>
@@ -80,9 +80,9 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
 									<YAxis />
 									<Tooltip />
 									<Legend />
-									<Bar dataKey="Word" fill={graphColor(0)} />
-									<Bar dataKey="Pause" fill={graphColor(1)} />
-									<Bar dataKey="Activity" fill={graphColor(2)} />
+									<Bar dataKey="Word" fill={tokens['graph-blue']} />
+									<Bar dataKey="Pause" fill={tokens['graph-red']} />
+									<Bar dataKey="Activity" fill={tokens['graph-yellow']} />
 								</BarChart>
 							</ResponsiveContainer>
 						</div>

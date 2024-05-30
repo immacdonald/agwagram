@@ -22,11 +22,11 @@ const Analyze: React.FC = () => {
 		setFiles({ files, changeReport: false });
 	};
 
-	const searchUsername = (username: string) => {
+	/*const searchUsername = (username: string) => {
 		dispatch(clearResults());
 		dispatch(setLoading(true));
 		setUser(username);
-	};
+	};*/
 
 	const submitJsonFile = (file: string) => {
 		getStaticFile(file).then((data) => submitFiles([data], file));

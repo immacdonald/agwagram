@@ -1,0 +1,8 @@
+@use './tokens' as *;
+
+:export {
+    graph-blue: $graphBlue;
+    graph-red: $graphRed;
+    graph-yellow: $graphYellow;
+    graph-green: $graphGreen;
+}

@@ -97,4 +97,12 @@ $legendWidth: 100px;
 
 .popover {
 	min-width: min(500px, 60vw) !important;
+
+	.title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: $xl;
+		font-size: var(--text-header-lg);
+	}
 }

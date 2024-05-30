@@ -140,9 +140,6 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 	};
 
 	const [showLabels, setShowLabels] = useState<boolean>(false);
-	const toggleShowLabels = () => {
-		setShowLabels(!showLabels);
-	};
 
 	const routeToTweet = (id: string) => {
 		const url = `https://twitter.com/${username}/status/${id}`;
@@ -154,13 +151,13 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		const popoverContent = (
 			<div className={style.popoverContent}>
 				{pause ? (
-					<h3>{symbolToDefinition(item.content)}</h3>
+					<span className={style.title}>{symbolToDefinition(item.content)}</span>
 				) : (
 					<>
-						<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<span className={style.title}>
 							<span>{symbolToDefinition(item.content)}</span>
 							<span>{formatReadableDate(new Date(Number(item.created_at) * 1000), true)}</span>
-						</h3>
+						</span>
 						<hr style={{ margin: '0.5rem 0' }} />
 						<span>{item.text}</span>
 					</>
@@ -190,7 +187,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 						<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
 					</span>
 					<span>
-						Show Labels <Switch state={showLabels} onChange={() => toggleShowLabels()} />
+						Show Labels <Switch state={showLabels} onChange={setShowLabels} />
 					</span>
 				</div>
 				<div className={style.legend}>
