@@ -2,20 +2,16 @@ import { Page, Section } from '@imacdonald/phantom';
 
 function About() {
 	return (
-		<Page title="Agwagram">
+		<Page title="agwagram">
 			<Section>
 				<h1>About</h1>
 				<p>
-					Agwagram is a cutting-edge online behavioral analysis tool designed to help researchers, journalists, social media analysts, and any other interested parties in identifying and
-					quantitatively describing the behavior of <i>Twitter</i> (known now as <i>X</i>) accounts. With the global rise of misinformation, it offers a unique solution to track shifts in
-					behavior, powered by the novel BLOC language algorithm, and identify potential bot accounts with ease. Capable of detecting a broad range of legitimate and suspicious behaviors, as
-					well as accounts which display both, Agwagram offers a flexible and generalizable method for analyzing Twitter accounts - making it an essential tool for anyone looking to study
-					and detect coordinated disinformation on social media platforms.
+					agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations, self-declared bots, trolls, etc. agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework.
 				</p>
 				<br />
 				<h2>Methodology</h2>
 				<p>
-					Agwagram is built on top of BLOC, the Behavioral Language for Online Classification, a language that represents social media account behaviors, including both benign and malicious
+					agwagram utilizes the Behavioral Language for Online Classification (BLOC) language framework. a language that represents social media account behaviors, including both benign and malicious
 					ones. It is not limited to human behavior, but can also capture the behaviors of cyborgs and bots. BLOC represents online activities as BLOC words, consisting of symbols drawn from
 					different alphabets to indicate the temporality of actions or forms of content.
 				</p>
@@ -30,10 +26,17 @@ function About() {
 					<a href="https://github.com/anwala/bloc">BLOC Project GitHub.</a>
 				</p>
 				<br />
+				
+                <h2>Publications</h2>
+				
+                <h6>A language framework for modeling social media account behavior</h6>
+                <p>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</p><br />
+                <a href="https://doi.org/10.1140/epjds/s13688-023-00410-9">EPJ Data Science</a><br />
+
 				<h2>Frequently Asked Questions</h2>
-				<p>Coming soon...</p>
-				<h2>Publications</h2>
-				<p>Coming soon...</p>
+				<h6>Who is behind agwagram and how can I contact them?</h6><br />
+                <p></p>
+
 			</Section>
 		</Page>
 	);
