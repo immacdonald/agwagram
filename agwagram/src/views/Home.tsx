@@ -10,16 +10,22 @@ function Home() {
 	const resultState = useSelector(selectResults);
 
 	return (
-		<Page title="Agwagram">
+		<Page title="agwagram">
 			<Section className={style.split}>
 				<div>
 					<h1>
-						Welcome to <i>Agwagram</i>
+						Welcome to agwagram!
 					</h1>
+                    <h4>
+                        (A <a href="https://github.com/wm-newslab">NEWS Lab</a> project)
+                    </h4>
 					<p>
-						Agwagram is a cutting-edge online behavioral analysis tool designed to help researchers, journalists, social media analysts, and any other interested parties in identifying and
-						quantitatively describing the behavior of social media accounts. Capable of detecting a broad range of legitimate and suspicious behaviors, Agwagram offers a powerful yet
-						flexible method for analyzing Twitter accounts - making it an essential tool for anyone looking to explore coordinated disinformation on social media platforms.
+						agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations, self-declared bots, trolls, etc.
+                    </p>
+                    <p>
+                        agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework.
+            
+                        For more details, see <a href="/about">About</a>.
 					</p>
 				</div>
 				<Card>

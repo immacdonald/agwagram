@@ -180,7 +180,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 
 	return (
 		<Card fullHeight>
-			<Card.Header title={title} subtitle="View the BLOC data as a grid to easily analyze trends and patterns." Icon={Dataset} />
+			<Card.Header title={title} subtitle="Explore patterns in behaviors." Icon={Dataset} />
 			<Card.Body>
 				<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
 					<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>

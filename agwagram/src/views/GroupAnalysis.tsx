@@ -17,7 +17,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
 				<Card>
 					<Card.Header title="Accounts Overview" Icon={GroupFilled} />
 					<Card.Body>
-						<h2>Analysis of {accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</h2>
+						<h2>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</h2>
 						<p>
 							Results for{' '}
 							{accounts.map((account: AccountBloc, index: number) => (
@@ -31,10 +31,10 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
 				</Card>
 			</Grid.Item>
 			<Grid.Item size={GridItemSize.Wide}>
-				<TopWordsCard title="Top 100 Behaviors" subtitle="Displays the top 100 (or less) BLOC words between all the accounts analyzed." top={topBlocWords} />
+				<TopWordsCard title="Top 100 Behaviors" subtitle="Most dominant action & content behaviors." top={topBlocWords} />
 			</Grid.Item>
 			<Grid.Item size={GridItemSize.Wide}>
-				<TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent durations of pause between activities of each account." top={topTimes} symbolLabel="Pause" />
+				<TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={topTimes} symbolLabel="Pause" />
 			</Grid.Item>
 			<Grid.Item size={GridItemSize.Wide}>
 				<Card>
