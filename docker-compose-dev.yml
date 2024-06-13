@@ -34,6 +34,7 @@ services:
     container_name: agwagram
     volumes:
       - ./agwagram:/agwagram
+      - /agwagram/node_modules
     ports:
       - "${VITE_PORT}:${VITE_PORT}"
     stdin_open: true
