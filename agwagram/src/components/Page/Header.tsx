@@ -20,7 +20,7 @@ const Header: React.FC = () => {
 				<Link to="/" className={style.logo}>
 					<Button Icon={AgwagramIcon} rounded />
 					<span>
-						<b>Agwagram</b>
+						<b>agwagram</b>
 					</span>
 				</Link>
 				<div className={style.navigation}>

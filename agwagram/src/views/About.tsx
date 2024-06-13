@@ -1,4 +1,5 @@
 import { Page, Section } from '@imacdonald/phantom';
+import { Link } from 'react-router-dom';
 
 function About() {
 	return (
@@ -30,9 +31,10 @@ function About() {
                 <h2>Publications</h2>
 				
                 <h6>A language framework for modeling social media account behavior</h6>
-                <p>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</p><br />
-                <a href="https://doi.org/10.1140/epjds/s13688-023-00410-9">EPJ Data Science</a><br />
-
+                <p>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</p>
+				<p><Link to="https://doi.org/10.1140/epjds/s13688-023-00410-9">EPJ Data Science</Link><br /></p>
+				<br/> 
+				
 				<h2>Frequently Asked Questions</h2>
 				<h6>Who is behind agwagram and how can I contact them?</h6><br />
                 <p></p>

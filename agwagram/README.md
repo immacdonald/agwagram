@@ -1,3 +1,3 @@
-# Agwagram
+# agwagram
 
-Frontend for the Agwagram (BLOC) web application.
+Frontend for the agwagram (BLOC) web application.

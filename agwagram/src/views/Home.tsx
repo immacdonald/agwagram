@@ -5,6 +5,7 @@ import { Results } from '.';
 import { selectResults } from '../data/settingsSlice';
 import Analyze from './Analyze';
 import style from './Home.module.scss';
+import { Link } from 'react-router-dom';
 
 function Home() {
 	const resultState = useSelector(selectResults);
@@ -17,7 +18,7 @@ function Home() {
 						Welcome to agwagram!
 					</h1>
                     <h4>
-                        (A <a href="https://github.com/wm-newslab">NEWS Lab</a> project)
+                        (A <Link to="https://github.com/wm-newslab">NEWS Lab</Link> project)
                     </h4>
 					<p>
 						agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations, self-declared bots, trolls, etc.
@@ -25,7 +26,7 @@ function Home() {
                     <p>
                         agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework.
             
-                        For more details, see <a href="/about">About</a>.
+                        For more details, see <Link to="/about">About</Link>.
 					</p>
 				</div>
 				<Card>
