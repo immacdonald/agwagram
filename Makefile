@@ -8,7 +8,7 @@ endef
 
 dev:
 	$(call setup_env, development)
-	docker-compose -f docker-compose-dev.yml up --build
+	docker-compose -f docker-compose-dev.yml up --build --renew-anon-volumes
 
 dev-backend:
 	$(call setup_env, development)

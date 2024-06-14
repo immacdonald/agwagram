@@ -1,5 +1,7 @@
-import { Page, Section } from '@imacdonald/phantom';
+import { Page, Section, StyledImage } from '@imacdonald/phantom';
 import { Link } from 'react-router-dom';
+import UserBlocImage from '../images/sample_3_user_blocs.png';
+import PCAImage from '../images/pca_general.png';
 
 function About() {
 	return (
@@ -12,32 +14,25 @@ function About() {
 				<br />
 				<h2>Methodology</h2>
 				<p>
-					agwagram utilizes the Behavioral Language for Online Classification (BLOC) language framework. a language that represents social media account behaviors, including both benign and malicious
-					ones. It is not limited to human behavior, but can also capture the behaviors of cyborgs and bots. BLOC represents online activities as BLOC words, consisting of symbols drawn from
-					different alphabets to indicate the temporality of actions or forms of content.
+					<Link to='https://github.com/anwala/bloc'>BLOC</Link> is a language for representing the online behaviors of social media accounts irrespective of class (human or cyborg or bot) or intent (malicious or benign). BLOC words consist of letters drawn from various alphabets (e.g., actions, pause, & content alphabets). The language is highly flexible, and can be applied to model a broad spectrum of legitimate and suspicious online behaviors.
 				</p>
+				<StyledImage image={UserBlocImage} border caption={<span style={{ opacity: '0.7' }}>Illustrations of BLOC action strings for a human, a cyborg, and a bot Twitter account illustrating some behavioral differences across these individuals. If strings are tokenized using pauses, the human account has the shortest words (average length 1.35 vs. 3.88 for the cyborg and 4.0 for the bot) and is dominated by isolated retweets and replies. The cyborg account — which we created to post threads of news updates — exhibits both human (isolated posts) and bot behavior (thread bursts). The bot account mainly generates retweet bursts.</span>} />
 				<p>
-					The BLOC language is flexible and generalizable, and can be used to detect suspicious behaviors without requiring specific fine-tuning. This is in contrast to other methods that
-					rely on features designed to target specific types of malicious behaviors, which may not generalize well to other types. BLOC can represent a broad range of legitimate and
-					suspicious behaviors, making it a versatile tool for studying and detecting social media account behaviors.
+					BLOC has been effectively applied for explaining online behaviors, bot and coordination detection, and detecting accounts — controlled by various nation states — engaged in information operations.
 				</p>
-				<p>
-					BLOC outperforms previous state-of-the-art methods for detecting bot coordinated behavior in terms of efficiency and accuracy, while using significantly fewer features. For more
-					information, please see the BLOC paper: <a href="https://arxiv.org/abs/2211.00639">A General Language for Modeling Social Media Account Behavior</a> as well as the{' '}
-					<a href="https://github.com/anwala/bloc">BLOC Project GitHub.</a>
-				</p>
+				<StyledImage image={PCAImage} border caption={<span style={{ opacity: '0.7' }}>2D PCA projections of BLOC TF-IDF vectors of accounts from three <Link to="https://alexandernwala.com/research/" target="_blank" title='datasets'>datasets</Link> that include both humans (blue) and bots (orange) illustrating the discriminative power of BLOC in separating accounts of different classes: (left) <Link to="https://botometer.osome.iu.edu/bot-repository/datasets/cresci-2017/cresci-2017.csv.zip" target="_blank" title="cresci-17">cresci-17</Link> and (right) <Link to="https://botometer.osome.iu.edu/bot-repository/datasets/varol-2017/varol-2017.dat.gz" target="_blank" title="varol-17">varol-17</Link>. The Venn diagrams show the top five pause-delimited BLOC words for the bot and human accounts shown.</span>} />
 				<br />
-				
-                <h2>Publications</h2>
-				
-                <h6>A language framework for modeling social media account behavior</h6>
-                <p>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</p>
+
+				<h2>Publications</h2>
+
+				<h6>A language framework for modeling social media account behavior</h6>
+				<p>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</p>
 				<p><Link to="https://doi.org/10.1140/epjds/s13688-023-00410-9">EPJ Data Science</Link><br /></p>
-				<br/> 
-				
+				<br />
+
 				<h2>Frequently Asked Questions</h2>
 				<h6>Who is behind agwagram and how can I contact them?</h6><br />
-                <p></p>
+				<p></p>
 
 			</Section>
 		</Page>
