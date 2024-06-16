@@ -62,7 +62,7 @@ def analyze_tweets(tweets = None, change_report = True):
                 users[user_id] = {
                     'id': user_id,
                     'username': tweet['user']['screen_name'],
-                    'name': tweet['user']['name'],
+                    'name': tweet['user'].get('name', tweet['user']['screen_name']),
                     'tweets': [tweet]
                 }
         end_file = time.perf_counter()

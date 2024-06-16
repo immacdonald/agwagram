@@ -187,7 +187,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 						<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
 					</span>
 					<span>
-						Show Labels <Switch state={showLabels} onChange={setShowLabels} />
+						Labels <Switch state={showLabels} onChange={setShowLabels} />
 					</span>
 				</div>
 				<div className={style.legend}>

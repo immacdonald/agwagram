@@ -4,7 +4,7 @@ const Footer = () => {
 	return (
 		<footer className={style.footer}>
 			<div>
-				<p>&copy; Ian MacDonald & Dr. Alexander Nwala 2023</p>
+				<p>&copy; {new Date().getFullYear()} <a href="https://www.wm.edu" target="_blank">Willam & Mary</a> | NEWS Lab</p>
 			</div>
 		</footer>
 	);
