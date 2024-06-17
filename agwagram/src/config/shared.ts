@@ -6,7 +6,8 @@ export default {
 	exampleFiles: [
         { file: 'sample_storygraphbot.jsonl', title: '@StoryGraphBot', type: 'JSONL' },
         { file: 'sample_jesus.jsonl', title: '@Jesus', type: 'JSONL' },
-        { file: 'sample_combined.json', title: 'Combined', type: 'JSON' }
+        { file: 'sample_combined.json', title: 'Combined', type: 'JSON' },
+        { file: 'celebrity_BarackObama.jsonl.gz', title: 'celebrity: @BarackObama', type: 'JSONL' }
 	]
 };
 /*

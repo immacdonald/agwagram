@@ -35,8 +35,7 @@ def getDictArrayFromJson(file):
 
 def getDictArrayFromFile(file):
     file_type = os.path.splitext(file)[1]
-    print('file:', file)
-
+    
     if file_type == '.gz':
         uncompressed_file = os.path.splitext(file)[0]
         with gzip.open(file, 'rb') as gz_file:
