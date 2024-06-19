@@ -18,7 +18,7 @@ function Home() {
 						Welcome to agwagram!
 					</h1>
                     <h4>
-                        (A <Link to="https://github.com/wm-newslab">NEWS Lab</Link> project)
+                        (A <Link to="https://github.com/wm-newslab" target="_blank">NEWS lab</Link> project)
                     </h4>
 					<p>
 						agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations, self-declared bots, trolls, etc.
@@ -26,7 +26,7 @@ function Home() {
                     <p>
                         agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework.
             
-                        For more details, see <Link to="/about">About</Link>.
+                        For more details, see <Link to="/about" target="_blank">About</Link>.
 					</p>
 				</div>
 				<Card>

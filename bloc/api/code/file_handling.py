@@ -3,7 +3,17 @@ import gzip
 import os
 import tempfile
 import time
+import sys
 
+def genericErrorInfo(slug=''):
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    
+    errMsg = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
+    print(errMsg + slug)
+
+    return errMsg
+####
 
 def getDictArrayFromJsonl(file):
     data = []
@@ -25,7 +35,7 @@ def getDictArrayFromJson(file):
 
 def getDictArrayFromFile(file):
     file_type = os.path.splitext(file)[1]
-
+    
     if file_type == '.gz':
         uncompressed_file = os.path.splitext(file)[0]
         with gzip.open(file, 'rb') as gz_file:
@@ -58,9 +68,11 @@ def extract_tweets_from_files(files = None):
         start_file = time.perf_counter()
         tweets = []
         for file in files:
+            
             file_contents = getDictArrayFromFile(file)
             if file_contents is None:
                 return None
+            
             tweets.extend(file_contents)
         end_file = time.perf_counter()
         print(f"Got tweets list in {end_file - start_file:0.4f} seconds")
@@ -72,15 +84,12 @@ def validate_tweet_data(tweets = None):
     if(tweets):
         # Define the required top-level fields
         required_fields = {
-            "id", "full_text", "user", "in_reply_to_status_id", "in_reply_to_screen_name",
-            "in_reply_to_user_id", "created_at", "entities"
+            "id", "full_text", "user", "in_reply_to_status_id", "created_at", "entities"
         }
 
         # Define required user sub-fields
         required_user_fields = {
-            "id", "created_at", "public_metrics", "name", "screen_name", 
-            "followers_count", "friends_count", "statuses_count", "listed_count", 
-            "favourites_count"
+            "id", "screen_name"
         }
 
         # Define required entity sub-fields
@@ -101,13 +110,14 @@ def validate_tweet_data(tweets = None):
                 print(f"Missing user fields: {missing}")
                 return False
         
-            
+            '''
             # Check entity sub-fields
             entities = tweet["entities"]
             if not required_entity_fields <= entities.keys():
                 missing = required_entity_fields - entities.keys()
                 print(f"Missing entity fields: {missing}")
                 return False
+            '''
         
         return True
     

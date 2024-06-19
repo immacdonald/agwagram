@@ -16,7 +16,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
 					<Card.Header title="Account Overview" Icon={PersonFilled} />
 					<Card.Body>
 						<h2 id="results">
-							Analysis of @{account.account_username} <Link to={`www.twitter.com/${account.account_username}`}><i>({account.account_name})</i></Link>
+							@{account.account_username} <Link to={`https://www.twitter.com/${account.account_username}`} target="_blank"><i>({account.account_name})</i></Link>
 						</h2>
 						<p>
 							{account.tweet_count > 0
@@ -28,10 +28,10 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
 				</Card>
 			</Grid.Item>
 			<Grid.Item size={GridItemSize.Wide}>
-				<TopWordsCard title="Top 100 Behaviors" subtitle="Displays the top 100 (or less) BLOC words." top={account.top_bloc_words} />
+				<TopWordsCard title="Top Behaviors" subtitle="Most dominant action & content behaviors." top={account.top_bloc_words} />
 			</Grid.Item>
 			<Grid.Item size={GridItemSize.Wide}>
-				<TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent durations of pause between account activities." top={account.top_time} symbolLabel="Pause" />
+				<TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={account.top_time} symbolLabel="Pause" />
 			</Grid.Item>
 			<Grid.Item size={GridItemSize.Full}>
 				<GridViewCard title="Grid View" username={account.account_username} data={account.linked_data} />

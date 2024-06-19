@@ -1,72 +1,72 @@
 change_symbol_dict = {
     # Change
-    'a': 'Profile appearance change',
-    'D': 'Delete tweet',
-    'd': 'Description change',
-    'F': 'Follow someone',
-    'f': 'Unfollow someone',
-    'g': 'Profile location change',
-    'G': 'Geographical location change (see coordinates and place)',
-    'L': 'Liked tweet',
-    'l': 'Unliked tweet',
-    'n': 'Name change',
-    'N': 'Handle change',
-    'u': 'URL change',
-    'W': 'Gained followers',
-    'w': 'Lost followers',
-    'λ': 'Language change',
-    's': 'Source change'
+    'a': 'a: Profile appearance change',
+    'D': 'D: Delete tweet',
+    'd': 'd: Description change',
+    'F': 'F: Follow someone',
+    'f': 'f: Unfollow someone',
+    'g': 'g: Profile location change',
+    'G': 'G: Geographical location change (see coordinates and place)',
+    'L': 'L: Liked tweet',
+    'l': 'l: Unliked tweet',
+    'n': 'n: Name change',
+    'N': 'N: Handle change',
+    'u': 'u: URL change',
+    'W': 'W: Gained followers',
+    'w': 'w: Lost followers',
+    'λ': 'λ: Language change',
+    's': 's: Source change'
 }
 
 action_symbol_dict = {
     # Action
-    'P': "Reply a friend (can't be checked until friendship relationship assigned)",
-    'p': 'Reply a non-friend',
-    'R': "Retweet a friend (can't be checked until friendship relationship assigned)",
-    'r': 'Retweet a non-friend',
-    'T': 'Tweet',
-    'π': 'Reply self',
-    'ρ': 'Retweet self'
+    'P': "P: Reply a friend (can't be checked until friendship relationship assigned)",
+    'p': 'p: Reply a non-friend',
+    'R': "R: Retweet a friend (can't be checked until friendship relationship assigned)",
+    'r': 'r: Retweet a non-friend',
+    'T': 'T: Tweet',
+    'π': 'π: Reply self',
+    'ρ': 'ρ: Retweet self'
 }
 
 semantic_symbol_dict = {
     # Content-Semantic
-    'x': 'Product',
-    '⊛': 'Other',
-    '⋈': 'Organization',
-    '⌖': 'Place',
-    '⚇': 'Person'
+    'x': 'x: Product',
+    '⊛': '⊛: Other',
+    '⋈': '⋈: Organization',
+    '⌖': '⌖: Place',
+    '⚇': '⚇: Person'
 }
 
 sentiment_symbol_dict = {
     # Content-Semantic-Sentiment
-    '-': 'Neutral',
-    '⋃': 'Positive',
-    '⋂': 'Negative',
+    '-': '-: Neutral',
+    '⋃': '⋃: Positive',
+    '⋂': '⋂: Negative',
 }
 
 syntactic_symbol_dict = {
     # Content-Syntactic
-    't': 'Text',
-    'E': 'Media',
-    'H': 'Hashtag',
-    'M': "Mention of friend (can't be checked until friendship relationship assigned)",
-    'm': 'Mention of non-friend',
-    'q': 'Quote URL',
-    '¤': 'Cashtag',
-    'U': 'URL',
-    'φ': 'Quote self',
+    't': 't: Text',
+    'E': 'E: Media',
+    'H': 'H: Hashtag',
+    'M': "M: Mention of friend (can't be checked until friendship relationship assigned)",
+    'm': 'm: Mention of non-friend',
+    'q': 'q: Quote URL',
+    '¤': '¤: Cashtag',
+    'U': 'U: URL',
+    'φ': 'φ: Quote self',
 }
 
 time_symbol_dict = {
     # Time
-    '□': '< 1 Minute',
-    '⚀': '< 1 Hour',
-    '⚁': '< 1 Day',
-    '⚂': '< 1 Week',
-    '⚃': '< 1 Month',
-    '⚄': '< 1 Year',
-    '⚅': '> 1 Year'
+    '□': '□: < 1 Minute)',
+    '⚀': '⚀: < 1 Hour)',
+    '⚁': '⚁: < 1 Day)',
+    '⚂': '⚂: < 1 Week)',
+    '⚃': '⚃: < 1 Month)',
+    '⚄': '⚄: < 1 Year)',
+    '⚅': '⚅: > 1 Year)'
 }
 
 master_symbol_dict = {

@@ -77,16 +77,16 @@ const Analyze: React.FC = () => {
 					label: 'File',
 					tab: (
 						<div>
-							<h3>Analyze By File</h3>
-							<p>Upload files containing Tweet data to be analyzed by agwagram.</p>
+							<h3>Analyze File</h3>
+							<p>Upload tweet file(s) to be analyzed by agwagram.</p>
 							<Accordion label="File Requirements">
 								<p>
-									Files can be in <strong>JSON</strong> or <strong>JSONL</strong> formats and can be uploaded uncompressed or as Gzip files. To upload multiple files at once, please
+									Files must be in <strong>JSON</strong> or <strong>JSONL</strong> formats and may be uploaded uncompressed or as Gzip files. To upload multiple files at once, please
 									select all your files in the file selection prompt or drag-and-drop them individually.
 								</p>
 								<p>
-									JSON files must contain the Tweet data as a array of Tweet objects. JSONL files must contain a Tweet per line,{' '}
-									<i>not</i> an account.
+									JSON files must contain the tweet data as a array of Twitter <Link to="https://web.archive.org/web/20240615012946/https://developer.x.com/en/docs/twitter-api/v1/data-dictionary/object-model/tweet" target="_blank">v1.1 tweet</Link> objects. JSONL files must contain a <Link to="https://web.archive.org/web/20240615012946/https://developer.x.com/en/docs/twitter-api/v1/data-dictionary/object-model/tweet" target="_blank">v1.1 tweet</Link> per line,{' '}
+									<i>not</i> an account. For more details, download a tweet file from the "Example Files" tab.
 								</p>
 							</Accordion>
 							<FileUploadPortal submit={submitFiles} />
@@ -99,7 +99,7 @@ const Analyze: React.FC = () => {
 					tab: (
 						<div>
 							<h3>Analyze From Examples</h3>
-							<p>Test agwagram by selecting from our sample of Twitter data files.</p>
+							<p>Test agwagram by selecting from our sample of tweet files.</p>
 							<Dropdown
 								options={config.exampleFiles.map((file: ExampleFile) => file.title)}
 								placeholder="Select File"
