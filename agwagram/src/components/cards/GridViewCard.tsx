@@ -71,17 +71,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		return { actionLinkedData, contentLinkedData };
 	}, [data]);
 
-	const [showAction, setShowAction] = useState<boolean>(true);
-	const toggleShowAction = (value: string) => {
-		if (value == 'Action') {
-			setShowAction(true);
-		} else {
-			setShowAction(false);
-		}
-	};
-
-	const fixedLinkedData = showAction ? actionLinkedData : contentLinkedData;
-
+	// The card should never render if not enough action data is present
 	if (actionLinkedData.length < 36) {
 		return (
 			<Card>
@@ -93,23 +83,25 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		);
 	}
 
+	const [showAction, setShowAction] = useState<boolean>(true);
+	const toggleShowAction = (value: string) => {
+		if (value == 'Action') {
+			setShowAction(true);
+		} else {
+			setShowAction(false);
+		}
+	};
+
+	const { data: symbols } = useGetSymbolsQuery();
+
 	const ref = useRef<HTMLDivElement>(null);
 	const gridRef = useRef<HTMLDivElement>(null);
 
+	const fixedLinkedData: GridLinkedData[] = useMemo(() => showAction ? actionLinkedData : contentLinkedData, [showAction, data]);
+	const gridSize: number = useMemo(() => Math.ceil(Math.sqrt(fixedLinkedData.length)), [fixedLinkedData]);
+
 	const [height, setHeight] = useState<number>(0);
 	const [scale, setScale] = useState<number>(1);
-
-	const gridSize = Math.ceil(Math.sqrt(fixedLinkedData.length));
-
-	const gridItems: GridItemData[] = [];
-	for (let row = 0; row < gridSize - 1; row++) {
-		const startIndex: number = row * gridSize;
-		const endIndex: number = startIndex + gridSize;
-		const rowData: GridLinkedData[] = fixedLinkedData.slice(startIndex, endIndex);
-
-		gridItems.push(`${formatNumericDate(Number(rowData[0].created_at) * 1000)}`);
-		gridItems.push(...rowData);
-	}
 
 	const { windowSize } = useResponsiveContext();
 
@@ -120,15 +112,34 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		setScale(scale);
 	}, [fixedLinkedData.length, windowSize]);
 
-	const controlProperties = { '--v-height': `${height}px` } as React.CSSProperties;
+	const controlProperties = useMemo(() => ({ '--v-height': `${height}px` } as React.CSSProperties), [height]);
 
-	const combinedLegend = { ...(showAction ? actionLegend : contentLegend), ...pauseLegend };
+	const [showLabels, setShowLabels] = useState<boolean>(false);
+
+
+	const gridItems: GridItemData[] = [];
+
+	for (let row = 0; row < gridSize - 1; row++) {
+		const startIndex: number = row * gridSize;
+		const endIndex: number = startIndex + gridSize;
+		const rowData: GridLinkedData[] = fixedLinkedData.slice(startIndex, endIndex);
+
+		gridItems.push(`${formatNumericDate(Number(rowData[0].created_at) * 1000)}`);
+		gridItems.push(...rowData);
+	}
+
+	const combinedLegend = useMemo(() => ({ ...(showAction ? actionLegend : contentLegend), ...pauseLegend }), [fixedLinkedData]);
+
 	const legend: { symbol: string; color: string }[] = [];
 	for (const [key, value] of Object.entries(combinedLegend)) {
 		legend.push({ symbol: key, color: value });
 	}
 
-	const { data: symbols } = useGetSymbolsQuery();
+	const usedSymbols = useMemo(() => Array.from(new Set(fixedLinkedData.flatMap((value: GridLinkedData) => {
+		return showAction ? [...value.action] : [...value.content];
+	}))), [fixedLinkedData]);
+
+	console.log(usedSymbols);
 
 	const symbolToDefinition = (bloc: string) => {
 		if (!symbols) {
@@ -138,8 +149,6 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		const definitions = [...bloc].map((c) => symbols[c]);
 		return definitions.join(', ');
 	};
-
-	const [showLabels, setShowLabels] = useState<boolean>(false);
 
 	const routeToTweet = (id: string) => {
 		const url = `https://twitter.com/${username}/status/${id}`;
@@ -156,7 +165,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 					<>
 						<Row align='space-between' className={style.title}>
 							<span>{symbolToDefinition(item.content)}</span>
-							<span style={{fontSize: "1rem"}}>{formatReadableDate(new Date(Number(item.created_at) * 1000), true)}</span>
+							<span style={{ fontSize: "1rem" }}>{formatReadableDate(new Date(Number(item.created_at) * 1000), true)}</span>
 						</Row>
 						<hr style={{ margin: '0.5rem 0' }} />
 						<span>{item.text}</span>
@@ -170,7 +179,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 				key={index}
 				content={popoverContent}
 				anchorClass={style.item}
-				anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: !pause ? () => routeToTweet(item.id) : undefined}}
+				anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: !pause ? () => routeToTweet(item.id) : undefined }}
 				customStyle={style.popover}
 			>
 				{showLabels && <em>{item.content}</em>}
@@ -184,7 +193,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 			<Card.Body>
 				<div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
 					<span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
-						<Dropdown options={['Action', 'Content Syntactic']} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
+						<Dropdown options={[{ label: 'Action', value: 'Action' }, { label: 'Content Syntactic', value: 'Content Syntactic' }]} isClearable={false} onChange={(v) => toggleShowAction(v as string)} defaultValue="Action" />
 					</span>
 					<span>
 						Labels <Switch state={showLabels} onChange={setShowLabels} />
@@ -194,7 +203,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 					<div className={style.legendList}>
 						{legend.map((item) => {
 							return (
-								<div className={style.legendKey} key={item.symbol}>
+								<div className={style.legendKey} key={item.symbol} style={!usedSymbols.includes(item.symbol) ? {opacity: "33%"} : undefined}>
 									<span style={{ backgroundColor: item.color }}></span>
 									<em>{item.symbol}</em>
 								</div>

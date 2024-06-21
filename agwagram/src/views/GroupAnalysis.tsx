@@ -67,7 +67,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
 				<GroupChangeCard title="Comparative Change Between Accounts" reports={accounts} />
 			</Grid.Item>
 			{accounts.map((account: AccountBloc) => (
-				<Grid.Item size={GridItemSize.Full}>
+				<Grid.Item size={GridItemSize.Full} key={account.account_username}>
 					<GridViewCard title={`Grid View for @${account.account_username}`}  username={account.account_username} data={account.linked_data} />
 				</Grid.Item>
 			))}
