@@ -6,13 +6,31 @@ import config from '../config';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, setExample, setLoading, setResults } from '../data/settingsSlice';
 
-const getStaticFile = async (file: string, type: string = 'application/json', folder: string = '/static') => {
-    const response = await fetch(`${folder}/${file}`);
-    const data = await response.blob();
-    // Convert Blob to File object
-	// The browser always decompresses a fetched gzip, this is not preventable
-    const fileObj = new File([data], file.replace('.gz', ''), { type });
-    return fileObj;
+const getStaticFile = async (file: string, folder: string = '/static') => {
+	if (config.mode == 'production' && file.endsWith('.gz')) {
+		const response = await fetch(`${folder}/${file}`, {
+			headers: {
+				'Accept': 'application/octet-stream'
+			}
+		});
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch file: ${response.statusText}`);
+		}
+
+		const data = await response.arrayBuffer();
+		// Convert ArrayBuffer to Blob and then to File object
+		const blob = new Blob([data], { type: 'application/x-gzip' });
+		const fileObj = new File([blob], file, { type: 'application/x-gzip' });
+		return fileObj;
+	}
+
+	// The browser always decompresses a fetched gzip in local development, this is not preventable
+	const response = await fetch(`${folder}/${file}`);
+	const data = await response.blob();
+	// Convert Blob to File object
+	const fileObj = new File([data], file.replace('.gz', ''), { type: 'application/json' });
+	return fileObj;
 };
 
 const Analyze: React.FC = () => {
@@ -31,7 +49,7 @@ const Analyze: React.FC = () => {
 	};
 
 	useEffect(() => {
-		if(results.isSuccess) {
+		if (results.isSuccess) {
 			dispatch(setResults(results.data!))
 		} else if (results.isError) {
 			dispatch(setResults((results.error as any).data as Analysis));
@@ -117,11 +135,11 @@ const Analyze: React.FC = () => {
 							<h3>Analyze From Examples</h3>
 							<p>Test agwagram by selecting from our sample of tweet files.</p>
 							<Dropdown
-								options={config.exampleFiles.map((file: ExampleFile) => ({label: file.title, value: file.title}))}
+								options={config.exampleFiles.map((file: ExampleFile) => ({ label: file.title, value: file.title }))}
 								placeholder="Select File"
 								onChange={(value: NullablePrimitive) => changedFile(value as string)}
 							/>
-							<br/>
+							<br />
 							{helperText && <p>{helperText}</p>}
 						</div>
 					)
