@@ -76,9 +76,12 @@ class AnalyzeUsers(APIView):
             try:
                 # Access the username from validated data
                 results = bloc_handler.analyze_user(serializer.validated_data['username'])
+                if results is None: 
+                    Response({"error": "An error occurred while getting username data."}, status=status.HTTP_400_BAD_REQUEST)
                 return Response(results, status=status.HTTP_200_OK)
-            except Exception as error:
-                return Response({"error": f"{error}"}, status=status.HTTP_400_BAD_REQUEST)
+            except Exception as e:
+                print(f"An error occurred: {str(e)}")
+                return Response({"error": "An error occurred processing your request."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response({"error": "Invalid username data."}, status=status.HTTP_400_BAD_REQUEST)
 

@@ -60,13 +60,13 @@ syntactic_symbol_dict = {
 
 time_symbol_dict = {
     # Time
-    '□': '□: < 1 Minute)',
-    '⚀': '⚀: < 1 Hour)',
-    '⚁': '⚁: < 1 Day)',
-    '⚂': '⚂: < 1 Week)',
-    '⚃': '⚃: < 1 Month)',
-    '⚄': '⚄: < 1 Year)',
-    '⚅': '⚅: > 1 Year)'
+    '□': '□: < 1 Minute',
+    '⚀': '⚀: < 1 Hour',
+    '⚁': '⚁: < 1 Day',
+    '⚂': '⚂: < 1 Week',
+    '⚃': '⚃: < 1 Month',
+    '⚄': '⚄: < 1 Year',
+    '⚅': '⚅: > 1 Year'
 }
 
 master_symbol_dict = {

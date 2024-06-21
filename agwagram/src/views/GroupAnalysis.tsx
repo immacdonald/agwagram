@@ -1,5 +1,5 @@
 import { Card, Grid, GridItemSize, GroupFilled, formatNumber, Hub } from '@imacdonald/phantom';
-import { GroupChangeCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
+import { GridViewCard, GroupChangeCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
 import { Link } from 'react-router-dom';
 
 interface GroupAnalysisProps {
@@ -66,6 +66,11 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
 			<Grid.Item size={GridItemSize.Full}>
 				<GroupChangeCard title="Comparative Change Between Accounts" reports={accounts} />
 			</Grid.Item>
+			{accounts.map((account: AccountBloc) => (
+				<Grid.Item size={GridItemSize.Full} key={account.account_username}>
+					<GridViewCard title={`Grid View for @${account.account_username}`}  username={account.account_username} data={account.linked_data} />
+				</Grid.Item>
+			))}
 		</Grid>
 	);
 };

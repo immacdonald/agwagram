@@ -4,8 +4,9 @@ import os
 import tempfile
 import time
 import sys
+import gzip
 
-def genericErrorInfo(slug=''):
+def generic_error_info(slug=''):
     exc_type, exc_obj, exc_tb = sys.exc_info()
     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
     
@@ -13,43 +14,44 @@ def genericErrorInfo(slug=''):
     print(errMsg + slug)
 
     return errMsg
-####
 
-def getDictArrayFromJsonl(file):
+
+def parse_json(json_file):
+    return json.load(json_file)
+
+
+def parse_jsonl(jsonl_file):
     data = []
 
-    with open(file, 'r') as jsonl_file:
-        jsonl_list = list(jsonl_file)
-
-    for obj in jsonl_list:
-        result = json.loads(obj)
+    for line in jsonl_file:
+        result = json.loads( line)
         data.append(result)
-    return data
-
-def getDictArrayFromJson(file):
-    data = []
-    with open(file, 'r') as json_file:
-        data = json.load(json_file)
     
     return data
 
-def getDictArrayFromFile(file):
+
+def parse_file(file):
     file_type = os.path.splitext(file)[1]
     
     if file_type == '.gz':
         uncompressed_file = os.path.splitext(file)[0]
-        with gzip.open(file, 'rb') as gz_file:
-            with open(uncompressed_file, 'wb') as write_file:
-                write_file.write(gz_file.read())
-
-        # Determine the file type of the uncompressed file
         file_type = os.path.splitext(uncompressed_file)[1]
-        file=uncompressed_file
+
+        if file_type == '.json':
+            with gzip.open(file, 'rb') as json_file:
+                return parse_json(json_file)
+        elif file_type == '.jsonl':
+            with gzip.open(file, 'rb') as jsonl_file:
+                return parse_jsonl(jsonl_file)
+        else:
+            return None
     
-    if file_type == '.json':
-        return getDictArrayFromJson(file)
+    elif file_type == '.json':
+        with open(file, 'r') as json_file:
+            return parse_json(json_file)
     elif file_type == '.jsonl':
-        return getDictArrayFromJsonl(file)
+        with open(file, 'r') as jsonl_file:
+            return parse_jsonl(jsonl_file)
     else:
         return None
 
@@ -69,7 +71,7 @@ def extract_tweets_from_files(files = None):
         tweets = []
         for file in files:
             
-            file_contents = getDictArrayFromFile(file)
+            file_contents = parse_file(file)
             if file_contents is None:
                 return None
             
@@ -93,7 +95,7 @@ def validate_tweet_data(tweets = None):
         }
 
         # Define required entity sub-fields
-        required_entity_fields = {"user_mentions", "hashtags", "symbols", "urls"}
+        # required_entity_fields = {"user_mentions", "hashtags", "symbols", "urls"}
         
         for tweet in tweets:
             # Check if all top-level fields are present

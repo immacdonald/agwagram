@@ -12,7 +12,7 @@ const Results: React.FC = () => {
 		return resultState.data;
 	}, [resultState]);
 
-	if (results && results.successful_generation) {
+	if (results?.total_tweets) {
 		const accounts = results.account_blocs;
 		if (accounts.length === 1) {
 			const account = accounts[0];
@@ -38,37 +38,19 @@ const Results: React.FC = () => {
 				/>
 			);
 		}
-	} else {
-		if (results) {
-			return (
-				<Card>
-					<Card.Header title="Analysis Failed" Icon={BarChart} />
-					<Card.Body>
-						<p>Unable to generate BLOC analysis results for the following accounts: {results.query.join(', ')}</p>
-						{results.errors.map((error: Record<string, string>) => {
-							return (
-								<div key={error.account_username}>
-									{error.account_username ? (
-										<h3>
-											Error: <b>{error.account_username}</b>
-										</h3>
-									) : (
-										<h3>Error</h3>
-									)}
-									<p>
-										Unable to analyze account due to <i>{error.error_title}</i>.
-									</p>
-									<p>
-										Details: <i>{error.error_detail}</i>
-									</p>
-								</div>
-							);
-						})}
-					</Card.Body>
-				</Card>
-			);
-		}
 	}
+
+	return (
+		<Card>
+			<Card.Header title="Analysis Failed" Icon={BarChart} />
+			<Card.Body>
+				<p>Unable to generate BLOC analysis results.</p>
+				{results && <p>{results.error}</p>}
+			</Card.Body>
+		</Card>
+	);
+
+
 };
 
 export default Results;

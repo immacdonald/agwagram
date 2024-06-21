@@ -1,9 +1,5 @@
 declare global {
-	interface BaseAnalysis {
-		successful_generation: boolean;
-	}
-
-	interface SuccessfulAnalysis extends BaseAnalysis {
+	interface SuccessfulAnalysis {
 		query_count: number;
 		total_tweets: number;
 		account_blocs: AccountBloc[];
@@ -16,9 +12,8 @@ declare global {
 		pairwise_sim: PairwiseSimilarity[];
 	}
 
-	interface FailedAnalysis extends BaseAnalysis {
-		errors: Record<string, string>[];
-		query: string[];
+	interface FailedAnalysis {
+		error: string
 	}
 
 	interface Analysis extends SuccessfulAnalysis, FailedAnalysis {}

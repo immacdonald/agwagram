@@ -20,16 +20,24 @@ export const DefinitionTooltip: React.FC<BLOCTooltipProps> = ({ word, k }: BLOCT
 	const { data: symbols } = useGetSymbolsQuery();
 
 	return [...word].map((c, index) => (
-		<Fragment key={k ? `${k}-${index}` : index}>{symbolToDefinition(symbols, c) != '' ? <HoverMark text={<em>{c}</em>} data-title={symbolToDefinition(symbols, c)} /> : <span>{c}</span>}</Fragment>
+		<Fragment key={k ? `${k}-${index}` : index}>{symbolToDefinition(symbols, c) != '' ? (
+			<HoverMark text={<em>{c}</em>} data-title={symbolToDefinition(symbols, c)} />
+		) : (
+			<span>{c}</span>
+		)}</Fragment>
 	));
 };
 
 export const SymbolTooltip: React.FC<BLOCTooltipProps> = ({ word, k }: BLOCTooltipProps) => {
 	const { data: symbols } = useGetSymbolsQuery();
 
-	return [...word].map((c, index, array) => (
+	return Array.from(new Set([...word])).map((c, index, array) => (
 		<Fragment key={k ? `${k}-${index}` : index}>
-			{symbolToDefinition(symbols, c) != '' ? <HoverMark text={<em>{symbolToDefinition(symbols, c)}</em>} data-title={c} /> : <span>{symbolToDefinition(symbols, c)}</span>}
+			{symbolToDefinition(symbols, c) != '' ? (
+				<HoverMark text={<em>{symbolToDefinition(symbols, c)}</em>} data-title={c} />
+			) : (
+				<span>{symbolToDefinition(symbols, c)}</span>
+			)}
 			{index !== array.length - 1 && ', '}
 		</Fragment>
 	));

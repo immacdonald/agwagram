@@ -1,17 +1,25 @@
-import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup, getStaticFile } from '@imacdonald/phantom';
+import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import config from '../config';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
-import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
+import { clearResults, setExample, setLoading, setResults } from '../data/settingsSlice';
+
+const getStaticFile = async (file: string, type: string = 'application/json', folder: string = '/static') => {
+    const response = await fetch(`${folder}/${file}`);
+    const data = await response.blob();
+    // Convert Blob to File object
+	// The browser always decompresses a fetched gzip, this is not preventable
+    const fileObj = new File([data], file.replace('.gz', ''), { type });
+    return fileObj;
+};
 
 const Analyze: React.FC = () => {
-	const [setFiles] = useSetAnalyzeFilesMutation();
-	const [setUser] = useSetAnalyzeUserMutation();
+	const [setFiles, results] = useSetAnalyzeFilesMutation();
+	const [_] = useSetAnalyzeUserMutation();
 
 	const dispatch = useDispatch();
-	const results = useSelector(selectResults);
 
 	const submitFiles = (files: File[], example?: string) => {
 		dispatch(clearResults());
@@ -21,6 +29,14 @@ const Analyze: React.FC = () => {
 		}
 		setFiles({ files, changeReport: false });
 	};
+
+	useEffect(() => {
+		if(results.isSuccess) {
+			dispatch(setResults(results.data!))
+		} else if (results.isError) {
+			dispatch(setResults((results.error as any).data as Analysis));
+		}
+	}, [results])
 
 	/*const searchUsername = (username: string) => {
 		dispatch(clearResults());
@@ -35,7 +51,7 @@ const Analyze: React.FC = () => {
 	const [selectedFile, setSelectedFile] = useState<number>(-1);
 
 	useEffect(() => {
-		if (!results.data) {
+		if (!results.data && !results.isLoading) {
 			// On first load preview one of the example files
 			setSelectedFile(0);
 		}
@@ -101,7 +117,7 @@ const Analyze: React.FC = () => {
 							<h3>Analyze From Examples</h3>
 							<p>Test agwagram by selecting from our sample of tweet files.</p>
 							<Dropdown
-								options={config.exampleFiles.map((file: ExampleFile) => file.title)}
+								options={config.exampleFiles.map((file: ExampleFile) => ({label: file.title, value: file.title}))}
 								placeholder="Select File"
 								onChange={(value: NullablePrimitive) => changedFile(value as string)}
 							/>
