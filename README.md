@@ -4,7 +4,7 @@
 agwagram is a web interface that allows users to analyze online accounts using the novel BLOC algorithm to explore behaviors and signs of coordinated actions, bots, and other vectors for spreading disinformation. This tool is specifically designed for the analysis of user accounts on [X (formerly) Twitter](https://www.twitter.com). More information about the underlying BLOC algorithm can be found on Dr. Alexander Nwala's [BLOC GitHub](https://github.com/anwala/bloc).
 
 ## Development
-Current version: **1.14.0**
+Current version: **1.14.1**
 
 ### Installation & Local Operation
 agwagram is a [Dockerized](https://www.docker.com/) web application containing two components, a frontend interface (agwagram) built with [React](https://react.dev/) and a backend BLOC Services API built with [Django](https://www.djangoproject.com/). The frontend is a React + [Vite](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/) project. It is most stable when ran using Docker. The project contains a `Makefile` with commands for the setup and usage of the development environment, as well as building the production version.
