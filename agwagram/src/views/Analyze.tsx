@@ -1,10 +1,19 @@
-import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup, getStaticFile } from '@imacdonald/phantom';
+import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import config from '../config';
 import { useSetAnalyzeFilesMutation, useSetAnalyzeUserMutation } from '../data/apiSlice';
 import { clearResults, selectResults, setExample, setLoading } from '../data/settingsSlice';
+
+const getStaticFile = async (file: string, type: string = 'application/json', folder: string = '/static') => {
+    const response = await fetch(`${folder}/${file}`);
+    const data = await response.blob();
+    // Convert Blob to File object
+	// The browser always decompresses a fetched gzip, this is not preventable
+    const fileObj = new File([data], file.replace('.gz', ''), { type });
+    return fileObj;
+};
 
 const Analyze: React.FC = () => {
 	const [setFiles] = useSetAnalyzeFilesMutation();

@@ -33,8 +33,21 @@ export const api = createApi({
 			query: (args) => {
 				const formData = new FormData();
 				args.files.forEach((file: File) => {
+					console.log("Type", file);
 					formData.append('tweet_files', file);
 				});
+
+				// Determine if any file in args.files is a gzip file
+				const hasGzipFile = args.files.some(file => file.name.endsWith('.gz'));
+
+				const headers = new Headers();
+
+				// Set the appropriate content type based on whether gzip files are present
+				if (hasGzipFile) {
+					headers.append('Content-Type', 'application/x-gzip');
+				} else {
+					headers.append('Content-Type', 'application/json');
+				}
 
 				return {
 					url: `/analyze/file?change_report=${args.changeReport}`,
