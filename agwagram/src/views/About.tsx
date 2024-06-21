@@ -2,6 +2,7 @@ import { Page, Section, StyledImage } from '@imacdonald/phantom';
 import { Link } from 'react-router-dom';
 import UserBlocImage from '../images/sample_3_user_blocs.png';
 import PCAImage from '../images/pca_general.png';
+import config from '../config';
 
 function About() {
 	return (
@@ -34,6 +35,9 @@ function About() {
                 <p>
                     agwagram is a project of the News Web and Social Media (NEWS) research lab at William & Mary. NEWS Lab studies the web as an entity with a focus on (local) news and vectors of disinformation on social media. agwagram was developed by <Link to="https://ianmacdonald.me/" target="_blank">Ian MacDonald</Link> and <Link to="https://alexandernwala.com/" target="_blank">Alexander C. Nwala</Link> (acnwala AT wm.edu).
                 </p>
+				<p>
+					Agwagram is currently on version {config.version}.
+				</p>
 
 			</Section>
 		</Page>
