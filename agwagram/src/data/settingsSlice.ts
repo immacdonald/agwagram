@@ -36,6 +36,9 @@ export const settingsSlice = createSlice({
 		setExample: (state, action: PayloadAction<string | null>) => {
 			state.results = { ...state.results, example: action.payload };
 		},
+		setResults: (state, action: PayloadAction<Analysis>) => {
+			state.results = { ...state.results, loading: false, data: action.payload };
+		},
 		clearResults: (state) => {
 			state.results = {
 				data: null,
@@ -44,20 +47,9 @@ export const settingsSlice = createSlice({
 			};
 		}
 	},
-	extraReducers: (builder) => {
-		builder.addMatcher(api.endpoints.setAnalyzeFiles.matchFulfilled, (state, action: PayloadAction<Analysis>) => {
-			state.results = { ...state.results, data: action.payload, loading: false };
-		}),
-			builder.addMatcher(api.endpoints.setAnalyzeFiles.matchRejected, (state) => {
-				state.results = { ...state.results, data: null, loading: false };
-			}),
-			builder.addMatcher(api.endpoints.setAnalyzeUser.matchFulfilled, (state, action: PayloadAction<Analysis>) => {
-				state.results = { ...state.results, data: action.payload, loading: false };
-			});
-	}
 });
 
-export const { setTheme, setLoading, setExample, clearResults } = settingsSlice.actions;
+export const { setTheme, setLoading, setExample, setResults, clearResults } = settingsSlice.actions;
 
 // Selectors
 export const selectTheme = (state: RootState): string => state.settings.theme;

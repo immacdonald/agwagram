@@ -26,25 +26,12 @@ def verify_user_exists(user_list):
     user_data = ot.user_lookup_usernames(user_list)
 
     if (user_data.get('errors')):
-        error_details = {
-            'errors': []
-        }
+        errors = []
         for error in user_data['errors']:
-            error_details['errors'].append({
-                'account_username': error['value'],
-                'error_title': error['title'],
-                # Remove the brackets from the account error detail around the username
-                'error_detail': error['detail'].replace("[", "").replace("]", "")
-            })
-        return len(error_details['errors']), error_details
+            errors.append(f"Error analyzing @{error['value']}: {error['title']}")
+        return len(errors), errors
     elif user_data.get('title') == 'Client Forbidden':
-        error_details = {
-            'errors': [{
-                'error_title': user_data['title'],
-                'error_detail': 'Unable to access the Twitter API due to recent changes by Twitter that are hostile towards developers.'
-            }]
-        }
-        return 1, error_details
+        return 1, {'errors': ['Unable to access the Twitter API due to recent changes by Twitter that are hostile towards developers.']}
 
     return 0, user_data['data']
 
@@ -110,11 +97,7 @@ def analyze_user(usernames):
     error_count, user_data = verify_user_exists(usernames)
 
     if error_count > 0:
-        result = {
-            'successful_generation': False,
-            'query': usernames,
-            'errors': user_data['errors']
-        }
+        return None
     else:
         user_ids = [user['id'] for user in user_data]
 
@@ -205,7 +188,6 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
         print(f"Created the change reports in {end_change - start_change:0.4f} seconds")
 
     result = {
-        'successful_generation': True,
         'query_count': query_count,
         'total_tweets': total_tweets,
         'account_blocs': [],

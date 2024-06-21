@@ -139,8 +139,6 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		return showAction ? [...value.action] : [...value.content];
 	}))), [fixedLinkedData]);
 
-	console.log(usedSymbols);
-
 	const symbolToDefinition = (bloc: string) => {
 		if (!symbols) {
 			return '';
