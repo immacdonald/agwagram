@@ -1,4 +1,4 @@
-import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext, Switch, formatNumericDate, formatReadableDate, Dataset } from '@imacdonald/phantom';
+import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext, Switch, formatNumericDate, formatReadableDate, Dataset, Row } from '@imacdonald/phantom';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';
@@ -69,7 +69,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 		});
 
 		return { actionLinkedData, contentLinkedData };
-	}, []);
+	}, [data]);
 
 	const [showAction, setShowAction] = useState<boolean>(true);
 	const toggleShowAction = (value: string) => {
@@ -154,10 +154,10 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 					<span className={style.title}>{symbolToDefinition(item.content)}</span>
 				) : (
 					<>
-						<span className={style.title}>
+						<Row align='space-between' className={style.title}>
 							<span>{symbolToDefinition(item.content)}</span>
-							<span>{formatReadableDate(new Date(Number(item.created_at) * 1000), true)}</span>
-						</span>
+							<span style={{fontSize: "1rem"}}>{formatReadableDate(new Date(Number(item.created_at) * 1000), true)}</span>
+						</Row>
 						<hr style={{ margin: '0.5rem 0' }} />
 						<span>{item.text}</span>
 					</>
