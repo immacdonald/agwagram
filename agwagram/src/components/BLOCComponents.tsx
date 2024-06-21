@@ -27,7 +27,7 @@ export const DefinitionTooltip: React.FC<BLOCTooltipProps> = ({ word, k }: BLOCT
 export const SymbolTooltip: React.FC<BLOCTooltipProps> = ({ word, k }: BLOCTooltipProps) => {
 	const { data: symbols } = useGetSymbolsQuery();
 
-	return [...word].map((c, index, array) => (
+	return Array.from(new Set([...word])).map((c, index, array) => (
 		<Fragment key={k ? `${k}-${index}` : index}>
 			{symbolToDefinition(symbols, c) != '' ? <HoverMark text={<em>{symbolToDefinition(symbols, c)}</em>} data-title={c} /> : <span>{symbolToDefinition(symbols, c)}</span>}
 			{index !== array.length - 1 && ', '}
