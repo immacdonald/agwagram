@@ -1,8 +1,9 @@
 @use './tokens' as *;
 
+// stylelint-disable
 :export {
-    graph-blue: $graphBlue;
-    graph-red: $graphRed;
-    graph-yellow: $graphYellow;
-    graph-green: $graphGreen;
+    graph-blue: $graph-blue;
+    graph-red: $graph-red;
+    graph-yellow: $graph-yellow;
+    graph-green: $graph-green;
 }

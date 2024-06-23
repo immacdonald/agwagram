@@ -1,99 +1,98 @@
 @use '../' as *;
 
 hr {
-	border: none;
-	border-top: var(--b-light);
-	margin: $md 0;
+    border: none;
+    border-top: var(--b-light);
+    margin: $md 0;
 }
 
 // Links
 a {
-	text-decoration: none;
-	color: var(--c-primary);
+    text-decoration: none;
+    color: var(--c-primary);
 
-	&:hover {
-		text-decoration: underline;
-	}
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 // Interactables
 :focus {
-	outline: 0;
+    outline: 0;
 }
 
 // Tables
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-	line-height: normal;
-	text-align: left;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    line-height: normal;
+    text-align: left;
 }
 
 th {
-	padding: $xs;
-	border-bottom: var(--b-light);
+    padding: $xs;
+    border-bottom: var(--b-light);
 }
 
 td {
-	padding: $xs;
+    padding: $xs;
 }
 
 tr:nth-child(even) {
-	background-color: var(--c-bg-dim);
+    background-color: var(--c-bg-dim);
 }
 
 mark {
-	background-color: var(--c-primary-alpha);
+    background-color: var(--c-primary-alpha);
 }
 
 // Misc.
 @keyframes appear {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 *[data-title]:not([disabled]) {
-	position: relative;
+    position: relative;
 
-	&:hover:after {
-		content: attr(data-title);
-		position: absolute;
-		top: -100%;
-		left: 50%;
-		transform: translate(-50%, 3rem);
-		width: max-content;
-		min-width: $xxl;
-		max-width: 600px;
-		max-height: 360px;
-		overflow-y: auto;
-		padding: $xs $md;
-		border-radius: $radius-sm;
-		background-color: var(--c-bg-dark);
-		text-align: center;
-		color: var(--c-fg-inverse);
-		font-size: $font-md;
-		font-weight: 500;
-		white-space: pre-line;
-		z-index: 100;
-		opacity: 1;
-		//animation: 0s ease-out 0.25s 1 appear;
-		//animation-fill-mode: forwards;
-		box-shadow: var(--shadow-floating);
-		filter: none;
-	}
+    &:hover::after {
+        content: attr(data-title);
+        position: absolute;
+        top: -100%;
+        left: 50%;
+        transform: translate(-50%, 3rem);
+        width: max-content;
+        min-width: $xxl;
+        max-width: 600px;
+        max-height: 360px;
+        overflow-y: auto;
+        padding: $xs $md;
+        border-radius: $radius-sm;
+        background-color: var(--c-bg-dark);
+        text-align: center;
+        color: var(--c-fg-inverse);
+        font-size: $font-md;
+        font-weight: 500;
+        white-space: pre-line;
+        z-index: 100;
+        opacity: 1;
+        box-shadow: var(--shadow-floating);
+        filter: none;
+    }
 }
 
 em {
-	font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
-	font-style: normal;
-	font-weight: 600;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+    font-style: normal;
+    font-weight: 600;
 }
 
 section {
-	padding-block: 48px !important;
+    padding-block: 48px !important;
 }

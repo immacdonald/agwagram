@@ -1,6 +1,6 @@
 import config from './shared';
 
 export default {
-	...config,
-	mode: 'production'
+    ...config,
+    mode: 'production'
 };

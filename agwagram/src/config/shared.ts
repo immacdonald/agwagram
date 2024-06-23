@@ -1,9 +1,9 @@
 const API_BASE: string = window.location.origin == 'http://localhost:8000' ? 'http://localhost:8080' : window.location.origin;
 
 export default {
-	version: '1.14.2',
-	apiURL: `${API_BASE}/api/v1`,
-	exampleFiles: [
+    version: '1.14.2',
+    apiURL: `${API_BASE}/api/v1`,
+    exampleFiles: [
         { file: 'bot_storygraphbot.jsonl.gz', title: 'Bot: @StoryGraphBot', type: 'JSONL' },
         { file: 'bot_threadreaderapp.jsonl.gz', title: 'Bot: @ThreadReaderApp', type: 'JSONL' },
         { file: 'celebrity_BarackObama.jsonl.gz', title: 'Celebrity: @BarackObama', type: 'JSONL' },
@@ -16,5 +16,5 @@ export default {
         { file: 'political_influencer_stillgray.jsonl.gz', title: 'Political Influencer: @stillgray', type: 'JSONL' },
         { file: 'russian_troll_Jenn_Abrams_tweets.jsonl.gz', title: 'Russian Troll: @Jenn_Abrams', type: 'JSONL' },
         { file: 'russian_troll_TEN_GOP_tweets.jsonl.gz', title: 'Russian Troll: @TEN_GOP', type: 'JSONL' }
-	]
+    ]
 };
