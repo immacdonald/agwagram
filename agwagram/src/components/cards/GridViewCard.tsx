@@ -1,4 +1,4 @@
-import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext, Switch, formatNumericDate, formatReadableDate, Dataset, Row } from '@imacdonald/phantom';
+import { Button, Card, Dropdown, Popover, Recenter, ZoomIn, ZoomOut, useResponsiveContext, Switch, formatNumericDate, formatReadableDate, Dataset, Row } from 'phantom-library';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '../../data/apiSlice';

@@ -1,4 +1,4 @@
-import { Card, BarChart } from '@imacdonald/phantom';
+import { Card, BarChart } from 'phantom-library';
 import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
 
 interface TopWordsCardProps {

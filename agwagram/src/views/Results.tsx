@@ -1,4 +1,4 @@
-import { Card, Tab, TabGroup, BarChart } from '@imacdonald/phantom';
+import { Card, Tab, TabGroup, BarChart } from 'phantom-library';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectResults } from '../data/settingsSlice';

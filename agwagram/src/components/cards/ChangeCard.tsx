@@ -1,4 +1,4 @@
-import { Card, Row, UnstyledButton, Switch, formatReadableDate, Timeline } from '@imacdonald/phantom';
+import { Card, Row, UnstyledButton, Switch, formatReadableDate, Timeline } from 'phantom-library';
 import { ReactNode, useMemo, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefinitionTooltip } from '../BLOCComponents';

@@ -1,4 +1,4 @@
-import { Button, MoonFilled, SunFilled } from '@imacdonald/phantom';
+import { Button, MoonFilled, SunFilled } from 'phantom-library';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectTheme, setTheme } from '../../data/settingsSlice';

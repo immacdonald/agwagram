@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useGetSymbolsQuery } from '../data/apiSlice';
-import { HoverMark } from '@imacdonald/phantom';
+import { HoverMark } from 'phantom-library';
 
 interface BLOCTooltipProps {
 	word: string;

@@ -1,4 +1,4 @@
-import { Page, Section, StyledImage } from '@imacdonald/phantom';
+import { Page, Section, StyledImage } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import UserBlocImage from '../images/sample_3_user_blocs.png';
 import PCAImage from '../images/pca_general.png';

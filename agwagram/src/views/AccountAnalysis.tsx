@@ -1,4 +1,4 @@
-import { Card, Grid, GridItemSize, PersonFilled, formatNumber, formatReadableDate } from '@imacdonald/phantom';
+import { Card, Grid, GridItemSize, PersonFilled, formatNumber, formatReadableDate } from 'phantom-library';
 import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
 import { Link } from 'react-router-dom';
 

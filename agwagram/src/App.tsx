@@ -1,4 +1,4 @@
-import { PhantomApp } from '@imacdonald/phantom';
+import { PhantomApp } from 'phantom-library';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';

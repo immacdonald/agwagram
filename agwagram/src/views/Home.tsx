@@ -1,4 +1,4 @@
-import { Card, Loading, Page, Section } from '@imacdonald/phantom';
+import { Card, Loading, Page, Section } from 'phantom-library';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { Results } from '.';

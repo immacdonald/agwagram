@@ -65,7 +65,7 @@ html[data-theme='light'] {
 	--c-fg-dim: var(--c-grey-10);
 	--c-fg-dark: var(--c-grey-9);
 	--c-fg-inverse: var(--c-grey-1);
-	--c-primary-fade: #{color.scale($primary, $lightness: 70%)};
+	--color-selection: #{color.scale($primary, $lightness: 70%)};
 	--c-primary-light: #{color.scale($primary, $lightness: 10%)};
 	--c-primary-dark: #{color.scale($primary, $lightness: -25%)};
 
@@ -88,7 +88,7 @@ html[data-theme='dark'] {
 	--c-fg-dim: var(--c-grey-2);
 	--c-fg-dark: var(--c-grey-3);
 	--c-fg-inverse: var(--c-grey-10);
-	--c-primary-fade: #{color.scale($primary, $lightness: -40%)};
+	--color-selection: #{color.scale($primary, $lightness: -40%)};
 	--c-primary-light: #{color.scale($primary, $lightness: -10%)};
 	--c-primary-dark: #{color.scale($primary, $lightness: -25%)};
 

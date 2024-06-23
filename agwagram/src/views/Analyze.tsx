@@ -1,4 +1,4 @@
-import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from '@imacdonald/phantom';
+import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from 'phantom-library';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';

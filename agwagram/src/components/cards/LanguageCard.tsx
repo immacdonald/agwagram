@@ -1,4 +1,4 @@
-import { Card, Dataset } from '@imacdonald/phantom';
+import { Card, Dataset } from 'phantom-library';
 import { DefinitionTooltip } from '../BLOCComponents';
 
 interface LanguageCardProps {

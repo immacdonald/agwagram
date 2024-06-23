@@ -1,4 +1,4 @@
-import { Card, Pause } from '@imacdonald/phantom';
+import { Card, Pause } from 'phantom-library';
 import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
 
 interface TopWordsCategoryCardProps {

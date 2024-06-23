@@ -1,4 +1,4 @@
-import { Card, Link, HoverMark } from '@imacdonald/phantom';
+import { Card, Link, HoverMark } from 'phantom-library';
 import { Fragment } from 'react';
 import { GetDefinition } from '../BLOCComponents';
 interface LinkedDataCardProps {

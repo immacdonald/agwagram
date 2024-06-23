@@ -1,4 +1,4 @@
-import { Card, Chart } from '@imacdonald/phantom';
+import { Card, Chart } from 'phantom-library';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import tokens from '../../styles/tokens.module.scss';
 

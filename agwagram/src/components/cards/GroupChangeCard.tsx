@@ -1,4 +1,4 @@
-import { Card, formatReadableDate, Chart } from '@imacdonald/phantom';
+import { Card, formatReadableDate, Chart } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import tokens from '../../styles/tokens.module.scss';
 
