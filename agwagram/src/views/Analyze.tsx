@@ -71,7 +71,7 @@ const Analyze: React.FC = () => {
     useEffect(() => {
         if (!results.data && !results.isLoading) {
             // On first load preview one of the example files
-            setSelectedFile(0);
+            setSelectedFile(Math.floor(Math.random() * config.exampleFiles.length));
         }
     }, []);
 

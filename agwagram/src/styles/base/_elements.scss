@@ -1,50 +1,8 @@
 @use '../' as *;
 
-hr {
-    border: none;
-    border-top: var(--b-light);
-    margin: $md 0;
-}
-
-// Links
-a {
-    text-decoration: none;
-    color: var(--c-primary);
-
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
 // Interactables
 :focus {
     outline: 0;
-}
-
-// Tables
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    line-height: normal;
-    text-align: left;
-}
-
-th {
-    padding: $xs;
-    border-bottom: var(--b-light);
-}
-
-td {
-    padding: $xs;
-}
-
-tr:nth-child(even) {
-    background-color: var(--c-bg-dim);
-}
-
-mark {
-    background-color: var(--c-primary-alpha);
 }
 
 // Misc.

@@ -15,12 +15,12 @@ function Home() {
             <Section className={style.split}>
                 <div>
                     <h1>Welcome to agwagram!</h1>
-                    <h4>
-                        (A{' '}
+                    <h4 style={{ fontWeight: '600', opacity: '0.8' }}>
+                        A{' '}
                         <Link to="https://github.com/wm-newslab" target="_blank">
-                            NEWS lab
+                            NEWS Lab
                         </Link>{' '}
-                        project)
+                        Project
                     </h4>
                     <p>
                         agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news

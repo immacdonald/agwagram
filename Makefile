@@ -18,9 +18,20 @@ prod:
 	docker-compose up --build
 
 # Backend flake8 linting
-lint_backend:
+lint-backend:
 	cd bloc && flake8
 
 # Frontend ESLint and Prettier formatting
-lint_frontend:
+lint-frontend:
 	cd agwagram && npm run format
+
+version-patch:
+	bump2version patch
+
+version-minor:
+	bump2version minor
+
+version-major:
+	bump2version major
+
+.PHONY: dev dev-backend prod lint-backend lint-frontend version-patch version-minor version-major
