@@ -260,4 +260,4 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
     );
 };
 
-export default GridViewCard;
+export { GridViewCard };

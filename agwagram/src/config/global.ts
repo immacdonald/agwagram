@@ -1,6 +1,6 @@
 const API_BASE: string = window.location.origin == 'http://localhost:8000' ? 'http://localhost:8080' : window.location.origin;
 
-export default {
+const global = {
     version: '1.15.0',
     apiURL: `${API_BASE}/api/v1`,
     exampleFiles: [
@@ -18,3 +18,5 @@ export default {
         { file: 'russian_troll_TEN_GOP_tweets.jsonl.gz', title: 'Russian Troll: @TEN_GOP', type: 'JSONL' }
     ]
 };
+
+export { global };

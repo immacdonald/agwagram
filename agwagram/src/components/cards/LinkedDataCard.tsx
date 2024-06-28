@@ -33,4 +33,4 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDa
     );
 };
 
-export default LinkedDataCard;
+export { LinkedDataCard };

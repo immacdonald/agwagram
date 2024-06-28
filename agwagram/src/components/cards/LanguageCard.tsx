@@ -16,4 +16,4 @@ const LanguageCard: React.FC<LanguageCardProps> = ({ title, bloc }: LanguageCard
     );
 };
 
-export default LanguageCard;
+export { LanguageCard };

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Results } from '.';
 import { selectResults } from '../data/settingsSlice';
-import Analyze from './Analyze';
+import { Analyze } from './Analyze';
 import style from './Home.module.scss';
 
 function Home() {
@@ -55,4 +55,4 @@ function Home() {
     );
 }
 
-export default Home;
+export { Home };

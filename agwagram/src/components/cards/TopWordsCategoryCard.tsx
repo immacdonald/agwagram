@@ -44,4 +44,4 @@ const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subt
     );
 };
 
-export default TopWordsCategoryCard;
+export { TopWordsCategoryCard };

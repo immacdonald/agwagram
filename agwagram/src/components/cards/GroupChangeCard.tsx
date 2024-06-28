@@ -64,4 +64,4 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
     );
 };
 
-export default GroupChangeCard;
+export { GroupChangeCard };

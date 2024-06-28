@@ -107,4 +107,4 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
     }
 };
 
-export default ChangeProfileCard;
+export { ChangeProfileCard };

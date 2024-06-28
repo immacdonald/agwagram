@@ -54,4 +54,5 @@ export const { setTheme, setLoading, setExample, setResults, clearResults } = se
 export const selectTheme = (state: RootState): string => state.settings.theme;
 export const selectResults = (state: RootState): ResultState => state.settings.results;
 
-export default settingsSlice.reducer;
+const settingsReducer = settingsSlice.reducer;
+export { settingsReducer };

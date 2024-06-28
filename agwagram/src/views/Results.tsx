@@ -51,4 +51,4 @@ const Results: React.FC = () => {
     );
 };
 
-export default Results;
+export { Results };

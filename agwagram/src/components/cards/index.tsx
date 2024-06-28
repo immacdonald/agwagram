@@ -1,8 +1,8 @@
-export { default as ChangeCard } from './ChangeCard';
-export { default as ChangeProfileCard } from './ChangeProfileCard';
-export { default as GridViewCard } from './GridViewCard';
-export { default as GroupChangeCard } from './GroupChangeCard';
-export { default as LanguageCard } from './LanguageCard';
-export { default as LinkedDataCard } from './LinkedDataCard';
-export { default as TopWordsCard } from './TopWordsCard';
-export { default as TopWordsCategoryCard } from './TopWordsCategoryCard';
+export * from './ChangeCard';
+export * from './ChangeProfileCard';
+export * from './GridViewCard';
+export * from './GroupChangeCard';
+export * from './LanguageCard';
+export * from './LinkedDataCard';
+export * from './TopWordsCard';
+export * from './TopWordsCategoryCard';

@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { PhantomApp } from 'phantom-library';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import Footer from './components/Page/Footer';
-import Header from './components/Page/Header';
+import { Footer } from './components/Page/Footer';
+import { Header } from './components/Page/Header';
 import { selectTheme } from './data/settingsSlice';
 import { About, Home } from './views';
 
-function App() {
+const App = () => {
     const theme = useSelector(selectTheme);
 
     useEffect(() => {
@@ -26,6 +26,6 @@ function App() {
             <Footer />
         </PhantomApp>
     );
-}
+};
 
-export default App;
+export { App };

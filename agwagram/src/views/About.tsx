@@ -1,6 +1,6 @@
 import { Page, Section, StyledImage } from 'phantom-library';
 import { Link } from 'react-router-dom';
-import config from '../config';
+import { config } from '../config';
 import PCAImage from '../images/pca_general.png';
 import UserBlocImage from '../images/sample_3_user_blocs.png';
 
@@ -24,6 +24,7 @@ function About() {
                 <StyledImage
                     image={UserBlocImage}
                     border
+                    alt="Illustrations of BLOC action strings for a human, a cyborg, and a bot Twitter account illustrating some behavioral differences across these individuals"
                     caption={
                         <span style={{ opacity: '0.7' }}>
                             Illustrations of BLOC action strings for a human, a cyborg, and a bot Twitter account illustrating some behavioral differences across these individuals. If strings are
@@ -40,6 +41,7 @@ function About() {
                 <StyledImage
                     image={PCAImage}
                     border
+                    alt="2D PCA projections of BLOC TF-IDF vectors of accounts"
                     caption={
                         <span style={{ opacity: '0.7' }}>
                             2D PCA projections of BLOC TF-IDF vectors of accounts from two datasets that include both humans (blue) and bots (orange) illustrating the discriminative power of BLOC in
@@ -88,4 +90,4 @@ function About() {
     );
 }
 
-export default About;
+export { About };

@@ -45,4 +45,4 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: Top
     );
 };
 
-export default TopWordsCard;
+export { TopWordsCard };

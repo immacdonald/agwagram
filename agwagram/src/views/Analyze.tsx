@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from 'phantom-library';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import config from '../config';
+import { config } from '../config';
 import { useSetAnalyzeFilesMutation } from '../data/apiSlice';
 import { clearResults, setExample, setLoading, setResults } from '../data/settingsSlice';
 
@@ -81,7 +81,7 @@ const Analyze: React.FC = () => {
 	};*/
 
     const changedFile = (title: string) => {
-        setSelectedFile(config.exampleFiles.findIndex((file) => file.title == title));
+        setSelectedFile(config.exampleFiles.findIndex((file: any) => file.title == title));
     };
 
     useEffect(() => {
@@ -168,4 +168,4 @@ const Analyze: React.FC = () => {
     );
 };
 
-export default Analyze;
+export { Analyze };

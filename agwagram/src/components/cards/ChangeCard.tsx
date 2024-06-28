@@ -184,4 +184,4 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
     }
 };
 
-export default ChangeCard;
+export { ChangeCard };
