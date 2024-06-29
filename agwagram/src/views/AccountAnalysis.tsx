@@ -1,6 +1,6 @@
 import { Card, formatNumber, formatReadableDate, Grid, GridItemSize, PersonFilled } from 'phantom-library';
 import { Link } from 'react-router-dom';
-import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, TopWordsCard, TopWordsCategoryCard } from '../components/cards';
+import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, TopWordsCard, TopWordsCategoryCard } from '@components';
 
 interface AccountAnalysisProps {
     account: AccountBloc;

@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from 'phantom-library';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import config from '../config';
-import { useSetAnalyzeFilesMutation } from '../data/apiSlice';
-import { clearResults, setExample, setLoading, setResults } from '../data/settingsSlice';
+import { config } from '@config';
+import { useSetAnalyzeFilesMutation } from '@data/apiSlice';
+import { clearResults, setExample, setLoading, setResults } from '@data/settingsSlice';
 
 const getStaticDataFile = async (file: string, folder: string = '/data') => {
     if (config.mode == 'production' && file.endsWith('.gz')) {
@@ -71,7 +71,7 @@ const Analyze: React.FC = () => {
     useEffect(() => {
         if (!results.data && !results.isLoading) {
             // On first load preview one of the example files
-            setSelectedFile(Math.floor(Math.random() * config.exampleFiles.length));
+            setSelectedFile(config.exampleFilesInitial[Math.floor(Math.random() * config.exampleFilesInitial.length)]);
         }
     }, []);
 
@@ -81,7 +81,7 @@ const Analyze: React.FC = () => {
 	};*/
 
     const changedFile = (title: string) => {
-        setSelectedFile(config.exampleFiles.findIndex((file) => file.title == title));
+        setSelectedFile(config.exampleFiles.findIndex((file: { title: string }) => file.title == title));
     };
 
     useEffect(() => {
@@ -168,4 +168,4 @@ const Analyze: React.FC = () => {
     );
 };
 
-export default Analyze;
+export { Analyze };

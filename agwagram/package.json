@@ -1,7 +1,7 @@
 {
     "name": "agwagram",
     "private": true,
-    "version": "1.15.0",
+    "version": "1.16.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -15,11 +15,10 @@
         "format": "npm run lint && npm run stylelint:fix && npm run prettier:fix"
     },
     "dependencies": {
-        "@imacdonald/phantom-config": "^0.2.7",
         "@reduxjs/toolkit": "^2.2.1",
         "classnames": "^2.3.2",
         "clsx": "^2.1.1",
-        "phantom-library": "^0.7.3",
+        "phantom-library": "^0.9.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-redux": "^9.1.0",
@@ -32,11 +31,13 @@
         "vite-plugin-svgr": "^4.1.0"
     },
     "devDependencies": {
+        "@imacdonald/phantom-config": "^0.4.2",
         "@types/node": "^20.4.8",
         "@types/react": "^18.2.15",
         "@types/react-dom": "^18.2.7",
         "@vitejs/plugin-react": "^4.0.3",
         "typescript": "^5.0.2",
-        "vite": "^4.5.2"
+        "vite": "^4.5.2",
+        "vite-tsconfig-paths": "^4.3.2"
     }
 }

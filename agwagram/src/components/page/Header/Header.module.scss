@@ -1,0 +1,60 @@
+@use 'sass:math';
+
+.header {
+    --v-header-height: 64px;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--v-header-height) !important;
+    background-color: var(--color-surface-foreground);
+    border-bottom: var(--border-light);
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    left: 0;
+
+    .content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 0 $lg;
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: auto;
+        }
+
+        .navLinks {
+            display: flex;
+            align-items: center;
+            gap: $xs;
+        }
+    }
+}
+
+.logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    text-decoration: none !important;
+
+    img {
+        height: 40px;
+        aspect-ratio: 4;
+    }
+
+    svg {
+        fill: var(--color-primary) !important;
+    }
+}
+
+.tools {
+    display: flex;
+    flex-direction: column;
+    gap: $sm;
+}

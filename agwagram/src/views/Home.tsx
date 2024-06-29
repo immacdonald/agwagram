@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import { Card, Loading, Page, Section } from 'phantom-library';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Results } from '.';
-import { selectResults } from '../data/settingsSlice';
-import Analyze from './Analyze';
+import { selectResults } from '@data/settingsSlice';
+import { Analyze } from './Analyze';
+import { Results } from './Results';
 import style from './Home.module.scss';
 
 function Home() {
@@ -28,9 +28,9 @@ function Home() {
                     </p>
                     <p>
                         agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework. For more details,
-                        see{' '}
+                        see the{' '}
                         <Link to="/about" target="_blank">
-                            About
+                            about page
                         </Link>
                         .
                     </p>
@@ -55,4 +55,4 @@ function Home() {
     );
 }
 
-export default Home;
+export { Home };

@@ -1,28 +1,24 @@
 {
+    "extends": "@imacdonald/phantom-config/tsconfig",
     "compilerOptions": {
-        "target": "ES2020",
-        "useDefineForClassFields": true,
-        "lib": ["ES2020", "DOM", "DOM.Iterable"],
-        "module": "ESNext",
-        "skipLibCheck": true,
-
-        /* Bundler mode */
-        "moduleResolution": "bundler",
-        "allowImportingTsExtensions": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
+        "outDir": "dist",
+        "baseUrl": ".",
         "noEmit": true,
-        "jsx": "react-jsx",
-
-        /* Linting */
-        "strict": true,
-        "noUnusedLocals": false,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-
-        /* Types */
-        "types": ["vite-plugin-svgr/client"]
+        "skipLibCheck": true,
+        "paths": {
+            "@assets/*": ["./src/assets/*"],
+            "@components": ["./src/components"],
+            "@config": ["./src/config"],
+            "@data/*": ["./src/data/*"],
+            "@styles/*": ["./src/styles/*"],
+            "@views": ["./src/views"]
+        },
+        "types": ["node", "vite-plugin-svgr/client"]
     },
-    "include": ["src", "custom.d.ts", "types.ts"],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "include": ["src", "types.d.ts"],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
+    ]
 }

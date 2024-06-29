@@ -1,0 +1,19 @@
+@use 'sass:color';
+
+:root {
+    --color-primary: rgb(20 58 162);
+    --font-body: helvetica, sans-serif;
+    --font-header: helvetica, sans-serif;
+    --text-header-xxl: 2rem;
+    --text-header-xl: 1.7rem;
+    --text-header-lg: 1.4rem;
+    --text-header-md: 1.3rem;
+}
+
+::selection {
+    --color-selection: rgb(20 58 162 / 40%);
+}
+
+:root[data-theme='dark'] {
+    --color-primary: rgb(66 103 206);
+}

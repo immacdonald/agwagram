@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../data/store';
+import { RootState } from './store';
 
 interface ResultState {
     data: Analysis | null;
@@ -8,13 +8,11 @@ interface ResultState {
 }
 
 interface SettingsState {
-    theme: string;
     results: ResultState;
 }
 
 // Define the initial state
 const initialState: SettingsState = {
-    theme: 'light',
     results: {
         data: null,
         loading: false,
@@ -26,9 +24,6 @@ export const settingsSlice = createSlice({
     name: 'settings',
     initialState,
     reducers: {
-        setTheme: (state, action: PayloadAction<string>) => {
-            state.theme = action.payload;
-        },
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.results = { ...state.results, loading: action.payload };
         },
@@ -48,10 +43,10 @@ export const settingsSlice = createSlice({
     }
 });
 
-export const { setTheme, setLoading, setExample, setResults, clearResults } = settingsSlice.actions;
+export const { setLoading, setExample, setResults, clearResults } = settingsSlice.actions;
 
 // Selectors
-export const selectTheme = (state: RootState): string => state.settings.theme;
 export const selectResults = (state: RootState): ResultState => state.settings.results;
 
-export default settingsSlice.reducer;
+const settingsReducer = settingsSlice.reducer;
+export { settingsReducer };

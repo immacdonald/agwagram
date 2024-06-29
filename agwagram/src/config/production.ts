@@ -1,6 +1,8 @@
-import config from './shared';
+import { global } from './global';
 
-export default {
-    ...config,
+const production = {
+    ...global,
     mode: 'production'
 };
+
+export { production };

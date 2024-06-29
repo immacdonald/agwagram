@@ -176,7 +176,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
     pairwise_sim_report = run_subcommands(gen_bloc_args, 'sim', all_bloc_output)
     pairwise_sim_report = sorted(pairwise_sim_report, key=lambda x: x['sim'], reverse=True)
     end_pairwise = time.perf_counter()
-    print(f"Generated pairwise sim in {end_pairwise - start_pairwise:0.4f} seconds")
+    #print(f"Generated pairwise sim in {end_pairwise - start_pairwise:0.4f} seconds")
 
     # Generate change reports
     if(change_report):
@@ -313,16 +313,14 @@ def recalculate_bloc_word_rate(bloc_words):
 def select_bloc_params(ids=[], bearer_token='', source='Account'):
     if source == 'Account':
         account_src = 'Twitter Search'
-        tweet_order = 'reverse'
     elif source == 'File':
         account_src = 'Tweet File'
-        tweet_order = 'noop'
 
     bloc_params, _ = get_bloc_params(ids, 
                                      bearer_token, 
                                      sort_action_words=True, 
                                      keep_bloc_segments=True, 
-                                     tweet_order=tweet_order, 
+                                     tweet_order='sorted', 
                                      account_src=account_src,
                                      bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], 
                                      keep_tweets=True)

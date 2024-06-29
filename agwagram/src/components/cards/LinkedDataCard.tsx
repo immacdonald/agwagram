@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Card, HoverMark, Link } from 'phantom-library';
-import { GetDefinition } from '../BLOCComponents';
+import { GetDefinition } from '@components';
 
 interface LinkedDataCardProps {
     title: string;
@@ -23,7 +23,7 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDa
 
                     return (
                         <Fragment key={index}>
-                            <HoverMark text={<em>{GetDefinition(datum['action'])}</em>} data-title={titleString} />
+                            <HoverMark text={<em>{GetDefinition(datum['action'])}</em>} data-tooltip={titleString} />
                             {index !== data.length - 1 && ', '}
                         </Fragment>
                     );
@@ -33,4 +33,4 @@ const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDa
     );
 };
 
-export default LinkedDataCard;
+export { LinkedDataCard };

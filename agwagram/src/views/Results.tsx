@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { BarChart, Card, Tab, TabGroup } from 'phantom-library';
 import { useSelector } from 'react-redux';
-import { selectResults } from '../data/settingsSlice';
+import { selectResults } from '@data/settingsSlice';
 import { AccountAnalysis } from './AccountAnalysis';
 import { GroupAnalysis } from './GroupAnalysis';
 
@@ -51,4 +51,4 @@ const Results: React.FC = () => {
     );
 };
 
-export default Results;
+export { Results };

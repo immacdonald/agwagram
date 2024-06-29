@@ -1,0 +1,11 @@
+@use '../' as *;
+
+em {
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+    font-style: normal;
+    font-weight: 600;
+}
+
+section {
+    padding-block: 48px !important;
+}

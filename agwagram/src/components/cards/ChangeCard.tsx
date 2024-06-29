@@ -1,8 +1,8 @@
 import { ReactNode, useMemo, useState } from 'react';
 import { Card, formatReadableDate, Row, Switch, Timeline, UnstyledButton } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { DefinitionTooltip } from '../BLOCComponents';
-import tokens from '../../styles/tokens.module.scss';
+import { DefinitionTooltip } from '@components';
+import tokens from '@styles/tokens.module.scss';
 
 interface ChangeCardProps {
     title: string;
@@ -184,4 +184,4 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
     }
 };
 
-export default ChangeCard;
+export { ChangeCard };

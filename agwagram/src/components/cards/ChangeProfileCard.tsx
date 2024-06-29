@@ -1,6 +1,6 @@
 import { Card, Chart } from 'phantom-library';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import tokens from '../../styles/tokens.module.scss';
+import tokens from '@styles/tokens.module.scss';
 
 interface ChangeProfileCardProps {
     title: string;
@@ -107,4 +107,4 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
     }
 };
 
-export default ChangeProfileCard;
+export { ChangeProfileCard };
