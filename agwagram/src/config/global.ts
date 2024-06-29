@@ -16,7 +16,8 @@ const global = {
         { file: 'political_influencer_stillgray.jsonl.gz', title: 'Political Influencer: @stillgray', type: 'JSONL' },
         { file: 'russian_troll_Jenn_Abrams_tweets.jsonl.gz', title: 'Russian Troll: @Jenn_Abrams', type: 'JSONL' },
         { file: 'russian_troll_TEN_GOP_tweets.jsonl.gz', title: 'Russian Troll: @TEN_GOP', type: 'JSONL' }
-    ]
+    ],
+    exampleFilesInitial: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 };
 
 export { global };

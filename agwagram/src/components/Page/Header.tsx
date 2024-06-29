@@ -17,9 +17,9 @@ const Header: React.FC = () => {
                 </Link>
                 <div className={style.navigation}>
                     <nav className={style.navLinks}>
-                        <Button link="/" label="Home" visual='text' />
-                        <Button link="/about" label="About" visual='text' />
-                        <Button rounded visual='text' onClick={() => toggleTheme()} Icon={theme == 'light' ? SunFilled : MoonFilled} />
+                        <Button link="/" label="Home" visual="text" />
+                        <Button link="/about" label="About" visual="text" />
+                        <Button rounded visual="text" onClick={() => toggleTheme()} Icon={theme == 'light' ? SunFilled : MoonFilled} />
                     </nav>
                 </div>
             </div>

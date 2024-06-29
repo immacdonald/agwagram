@@ -71,7 +71,7 @@ const Analyze: React.FC = () => {
     useEffect(() => {
         if (!results.data && !results.isLoading) {
             // On first load preview one of the example files
-            setSelectedFile(Math.floor(Math.random() * config.exampleFiles.length));
+            setSelectedFile(config.exampleFilesInitial[Math.floor(Math.random() * config.exampleFilesInitial.length)]);
         }
     }, []);
 
@@ -81,7 +81,7 @@ const Analyze: React.FC = () => {
 	};*/
 
     const changedFile = (title: string) => {
-        setSelectedFile(config.exampleFiles.findIndex((file: any) => file.title == title));
+        setSelectedFile(config.exampleFiles.findIndex((file: { title: string }) => file.title == title));
     };
 
     useEffect(() => {

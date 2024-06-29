@@ -8,7 +8,9 @@ function About() {
     return (
         <Page title="agwagram">
             <Section>
-                <Text as='h1' align='center'>About</Text>
+                <Text as="h1" align="center">
+                    About
+                </Text>
                 <p>
                     agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations,
                     self-declared bots, trolls, etc. agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language

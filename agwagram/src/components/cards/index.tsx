@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 export * from './ChangeCard';
 export * from './ChangeProfileCard';
 export * from './GridViewCard';
@@ -6,3 +7,4 @@ export * from './LanguageCard';
 export * from './LinkedDataCard';
 export * from './TopWordsCard';
 export * from './TopWordsCategoryCard';
+/* eslint-enable react-refresh/only-export-components */

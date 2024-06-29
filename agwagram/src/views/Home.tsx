@@ -28,9 +28,9 @@ function Home() {
                     </p>
                     <p>
                         agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework. For more details,
-                        see{' '}
+                        see the{' '}
                         <Link to="/about" target="_blank">
-                            About
+                            about page
                         </Link>
                         .
                     </p>

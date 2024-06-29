@@ -6,7 +6,11 @@ const Footer = () => {
         <footer className={style.footer}>
             <div>
                 <span>
-                    &copy; {new Date().getFullYear()} <Link to="https://www.wm.edu" target="_blank">Willam & Mary</Link> | NEWS Lab
+                    &copy; {new Date().getFullYear()}{' '}
+                    <Link to="https://www.wm.edu" target="_blank">
+                        Willam & Mary
+                    </Link>{' '}
+                    | NEWS Lab
                 </span>
             </div>
         </footer>
