@@ -313,16 +313,14 @@ def recalculate_bloc_word_rate(bloc_words):
 def select_bloc_params(ids=[], bearer_token='', source='Account'):
     if source == 'Account':
         account_src = 'Twitter Search'
-        tweet_order = 'reverse'
     elif source == 'File':
         account_src = 'Tweet File'
-        tweet_order = 'noop'
 
     bloc_params, _ = get_bloc_params(ids, 
                                      bearer_token, 
                                      sort_action_words=True, 
                                      keep_bloc_segments=True, 
-                                     tweet_order=tweet_order, 
+                                     tweet_order='reverse', 
                                      account_src=account_src,
                                      bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], 
                                      keep_tweets=True)
