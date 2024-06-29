@@ -1,5 +1,5 @@
 import { Card, Pause } from 'phantom-library';
-import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
+import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCategoryCardProps {
     title: string;

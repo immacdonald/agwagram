@@ -320,7 +320,7 @@ def select_bloc_params(ids=[], bearer_token='', source='Account'):
                                      bearer_token, 
                                      sort_action_words=True, 
                                      keep_bloc_segments=True, 
-                                     tweet_order='reverse', 
+                                     tweet_order='sorted', 
                                      account_src=account_src,
                                      bloc_alphabets=['action', 'content_syntactic', 'content_semantic_entity', 'content_semantic_sentiment', 'change'], 
                                      keep_tweets=True)

@@ -1,6 +1,6 @@
 import { Button, MoonFilled, SunFilled, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
-import { AgwagramIcon } from '../../icons';
+import { AgwagramIcon } from '@assets/icons';
 import style from './Header.module.scss';
 
 const Header: React.FC = () => {

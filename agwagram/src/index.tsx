@@ -3,10 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from '@data/store.ts';
 import { App } from './App.tsx';
-import { persistor, store } from './data/store.ts';
 import 'phantom-library/styles';
-import './styles/core.module.scss';
+import '@styles/core.module.scss';
 import { ResponsiveContextProvider } from 'phantom-library';
 
 createRoot(document.getElementById('root')!).render(

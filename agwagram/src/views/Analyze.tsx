@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from 'phantom-library';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { config } from '../config';
-import { useSetAnalyzeFilesMutation } from '../data/apiSlice';
-import { clearResults, setExample, setLoading, setResults } from '../data/settingsSlice';
+import { config } from '@config';
+import { useSetAnalyzeFilesMutation } from '@data/apiSlice';
+import { clearResults, setExample, setLoading, setResults } from '@data/settingsSlice';
 
 const getStaticDataFile = async (file: string, folder: string = '/data') => {
     if (config.mode == 'production' && file.endsWith('.gz')) {

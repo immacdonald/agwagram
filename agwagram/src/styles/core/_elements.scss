@@ -1,50 +1,5 @@
 @use '../' as *;
 
-// Interactables
-:focus {
-    outline: 0;
-}
-
-// Misc.
-@keyframes appear {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-*[data-title]:not([disabled]) {
-    position: relative;
-
-    &:hover::after {
-        content: attr(data-title);
-        position: absolute;
-        top: -100%;
-        left: 50%;
-        transform: translate(-50%, 3rem);
-        width: max-content;
-        min-width: $xxl;
-        max-width: 600px;
-        max-height: 360px;
-        overflow-y: auto;
-        padding: $xs $md;
-        border-radius: $radius-sm;
-        background-color: var(--c-bg-dark);
-        text-align: center;
-        color: var(--c-fg-inverse);
-        font-size: $font-md;
-        font-weight: 500;
-        white-space: pre-line;
-        z-index: 100;
-        opacity: 1;
-        box-shadow: var(--shadow-floating);
-        filter: none;
-    }
-}
-
 em {
     font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
     font-style: normal;

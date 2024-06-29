@@ -1,5 +1,5 @@
 import { Card, Dataset } from 'phantom-library';
-import { DefinitionTooltip } from '../BLOCComponents';
+import { DefinitionTooltip } from '@components';
 
 interface LanguageCardProps {
     title: string;

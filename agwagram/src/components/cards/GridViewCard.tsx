@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Card, Dataset, Dropdown, formatNumericDate, formatReadableDate, Popover, Recenter, Row, Switch, useResponsiveContext, ZoomIn, ZoomOut } from 'phantom-library';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
-import { useGetSymbolsQuery } from '../../data/apiSlice';
+import { useGetSymbolsQuery } from '@data/apiSlice';
 import style from './GridViewCard.module.scss';
 
 interface GridViewCardProps {
@@ -118,13 +118,16 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 
     const gridItems: GridItemData[] = [];
 
-    for (let row = 0; row < gridSize - 1; row++) {
+    // Grid size or grid size - 1? A problem for me tommorow
+    for (let row = 0; row < gridSize; row++) {
         const startIndex: number = row * gridSize;
         const endIndex: number = startIndex + gridSize;
         const rowData: GridLinkedData[] = fixedLinkedData.slice(startIndex, endIndex);
 
-        gridItems.push(`${formatNumericDate(Number(rowData[0].created_at) * 1000)}`);
-        gridItems.push(...rowData);
+        if (rowData[0]) {
+            gridItems.push(`${formatNumericDate(Number(rowData[0].created_at) * 1000)}`);
+            gridItems.push(...rowData);
+        }
     }
 
     const combinedLegend = useMemo(() => ({ ...(showAction ? actionLegend : contentLegend), ...pauseLegend }), [fixedLinkedData]);

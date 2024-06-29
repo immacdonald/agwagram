@@ -1,8 +1,7 @@
 import { Page, Section, StyledImage, Text } from 'phantom-library';
 import { Link } from 'react-router-dom';
-import { config } from '../config';
-import PCAImage from '../images/pca_general.png';
-import UserBlocImage from '../images/sample_3_user_blocs.png';
+import { PCAImage, userBlocImage } from '@assets/images';
+import { config } from '@config';
 
 function About() {
     return (
@@ -24,7 +23,7 @@ function About() {
                     applied to model a broad spectrum of legitimate and suspicious online behaviors.
                 </p>
                 <StyledImage
-                    image={UserBlocImage}
+                    image={userBlocImage}
                     border
                     alt="Illustrations of BLOC action strings for a human, a cyborg, and a bot Twitter account illustrating some behavioral differences across these individuals"
                     caption={

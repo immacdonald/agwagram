@@ -6,15 +6,14 @@
         "noEmit": true,
         "skipLibCheck": true,
         "paths": {
-            "@components/*": ["./src/components/*"],
+            "@assets/*": ["./src/assets/*"],
+            "@components": ["./src/components"],
             "@config": ["./src/config"],
-            "@data": ["./src/data"],
             "@data/*": ["./src/data/*"],
-            "@icons": ["./src/icons"],
-            "@types": ["./src/types"],
+            "@styles/*": ["./src/styles/*"],
             "@views": ["./src/views"]
         },
-        "types": ["vite-plugin-svgr/client"]
+        "types": ["node", "vite-plugin-svgr/client"]
     },
     "include": ["src", "types.d.ts"],
     "references": [

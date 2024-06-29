@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../data/store';
+import { RootState } from './store';
 
 interface ResultState {
     data: Analysis | null;

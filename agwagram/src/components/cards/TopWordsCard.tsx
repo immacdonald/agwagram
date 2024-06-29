@@ -1,5 +1,5 @@
 import { BarChart, Card } from 'phantom-library';
-import { DefinitionTooltip, SymbolTooltip } from '../BLOCComponents';
+import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCardProps {
     title: string;
