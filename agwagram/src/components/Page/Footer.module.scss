@@ -10,12 +10,16 @@
     justify-content: space-evenly;
     align-items: start;
     padding: $lg max(calc((100% - $screen-lg) / 2), 3%);
-    background-color: var(--c-bg);
-    color: var(--c-fg);
+    background-color: var(--color-surface-background);
+    color: var(--color-text);
     font-size: $font-xs;
 
-    > div {
-        border-top: var(--b-light);
+    a {
+        color: var(--color-text);
+    }
+
+    >div {
+        border-top: var(--border-light);
         padding-top: $md;
         width: 100%;
         display: flex;
@@ -27,14 +31,5 @@
     @include respond-max($screen-lg) {
         padding-left: 3%;
         padding-right: 3%;
-    }
-
-    p {
-        margin: 0;
-    }
-
-    a {
-        color: var(--c-fg);
-        text-decoration: none;
     }
 }

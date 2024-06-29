@@ -1,4 +1,4 @@
-import { Page, Section, StyledImage } from 'phantom-library';
+import { Page, Section, StyledImage, Text } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { config } from '../config';
 import PCAImage from '../images/pca_general.png';
@@ -8,7 +8,7 @@ function About() {
     return (
         <Page title="agwagram">
             <Section>
-                <h1>About</h1>
+                <Text as='h1' align='center'>About</Text>
                 <p>
                     agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations,
                     self-declared bots, trolls, etc. agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language
@@ -26,7 +26,7 @@ function About() {
                     border
                     alt="Illustrations of BLOC action strings for a human, a cyborg, and a bot Twitter account illustrating some behavioral differences across these individuals"
                     caption={
-                        <span style={{ opacity: '0.7' }}>
+                        <span>
                             Illustrations of BLOC action strings for a human, a cyborg, and a bot Twitter account illustrating some behavioral differences across these individuals. If strings are
                             tokenized using pauses, the human account has the shortest words (average length 1.35 vs. 3.88 for the cyborg and 4.0 for the bot) and is dominated by isolated retweets and
                             replies. The cyborg account — which we created to post threads of news updates — exhibits both human (isolated posts) and bot behavior (thread bursts). The bot account
@@ -43,7 +43,7 @@ function About() {
                     border
                     alt="2D PCA projections of BLOC TF-IDF vectors of accounts"
                     caption={
-                        <span style={{ opacity: '0.7' }}>
+                        <span>
                             2D PCA projections of BLOC TF-IDF vectors of accounts from two datasets that include both humans (blue) and bots (orange) illustrating the discriminative power of BLOC in
                             separating accounts of different classes: (left){' '}
                             <Link to="https://botometer.osome.iu.edu/bot-repository/datasets/cresci-2017/cresci-2017.csv.zip" target="_blank" title="cresci-17">
@@ -58,9 +58,7 @@ function About() {
                     }
                 />
                 <br />
-
                 <h2>Publications</h2>
-
                 <span>A language framework for modeling social media account behavior</span>
                 <br />
                 <span>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</span>
@@ -70,7 +68,6 @@ function About() {
                 </Link>
                 <br />
                 <br />
-
                 <h2>Developers</h2>
                 <p>
                     agwagram is a project of the News Web and Social Media (NEWS) research lab at William & Mary. NEWS Lab studies the web as an entity with a focus on (local) news and vectors of

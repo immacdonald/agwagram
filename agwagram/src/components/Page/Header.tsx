@@ -1,18 +1,10 @@
-import { Button, MoonFilled, SunFilled } from 'phantom-library';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, MoonFilled, SunFilled, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
-import { selectTheme, setTheme } from '../../data/settingsSlice';
 import { AgwagramIcon } from '../../icons';
 import style from './Header.module.scss';
 
 const Header: React.FC = () => {
-    const dispatch = useDispatch();
-    const theme = useSelector(selectTheme);
-
-    function switchTheme() {
-        const switchTo = theme == 'light' ? 'dark' : 'light';
-        dispatch(setTheme(switchTo));
-    }
+    const { theme, toggleTheme } = useResponsiveContext();
 
     return (
         <header className={style.header}>
@@ -25,9 +17,9 @@ const Header: React.FC = () => {
                 </Link>
                 <div className={style.navigation}>
                     <nav className={style.navLinks}>
-                        <Button link="/" label="Home" />
-                        <Button link="/about" label="About" />
-                        <Button rounded onClick={() => switchTheme()} Icon={theme == 'light' ? SunFilled : MoonFilled} />
+                        <Button link="/" label="Home" visual='text' />
+                        <Button link="/about" label="About" visual='text' />
+                        <Button rounded visual='text' onClick={() => toggleTheme()} Icon={theme == 'light' ? SunFilled : MoonFilled} />
                     </nav>
                 </div>
             </div>
