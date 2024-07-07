@@ -75,7 +75,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             activity: true
         });
 
-        const toggleChangeGraphDisplay = (key: string) => {
+        const toggleChangeGraphDisplay = (key: string): void => {
             setChangeGraph({ ...changeGraph, [key]: !changeGraph[key] });
         };
 

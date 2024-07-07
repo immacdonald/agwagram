@@ -6,7 +6,7 @@ import { config } from '@config';
 import { useSetAnalyzeFilesMutation } from '@data/apiSlice';
 import { clearResults, setExample, setLoading, setResults } from '@data/settingsSlice';
 
-const getStaticDataFile = async (file: string, folder: string = '/data') => {
+const getStaticDataFile = async (file: string, folder: string = '/data'): Promise<File> => {
     if (config.mode == 'production' && file.endsWith('.gz')) {
         const response = await fetch(`${folder}/${file}`, {
             headers: {
@@ -39,7 +39,7 @@ const Analyze: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const submitFiles = (files: File[], example?: string) => {
+    const submitFiles = (files: File[], example?: string): void => {
         dispatch(clearResults());
         dispatch(setLoading(true));
         if (example) {
@@ -62,7 +62,7 @@ const Analyze: React.FC = () => {
 		setUser(username);
 	};*/
 
-    const submitJsonFile = (file: string) => {
+    const submitJsonFile = (file: string): void => {
         getStaticDataFile(file).then((data) => submitFiles([data], file));
     };
 
@@ -80,7 +80,7 @@ const Analyze: React.FC = () => {
 		setGenerateChange(!generateChange);
 	};*/
 
-    const changedFile = (title: string) => {
+    const changedFile = (title: string): void => {
         setSelectedFile(config.exampleFiles.findIndex((file: { title: string }) => file.title == title));
     };
 
@@ -94,7 +94,7 @@ const Analyze: React.FC = () => {
         if (selectedFile > -1) {
             const file = config.exampleFiles[selectedFile];
             return (
-                <Link to={`/static/${file.file}`} target="_blank" download>
+                <Link to={`/data/${file.file}`} target="_blank" download>
                     Download {file.title} {file.type} File
                 </Link>
             );

@@ -2,12 +2,13 @@ import clsx from 'clsx';
 import { Card, Loading, Page, Section } from 'phantom-library';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 import { selectResults } from '@data/settingsSlice';
 import { Analyze } from './Analyze';
 import { Results } from './Results';
 import style from './Home.module.scss';
 
-function Home() {
+const Home: FC = () => {
     const resultState = useSelector(selectResults);
 
     return (
@@ -53,6 +54,6 @@ function Home() {
             )}
         </Page>
     );
-}
+};
 
 export { Home };

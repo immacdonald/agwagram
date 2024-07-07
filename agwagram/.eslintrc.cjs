@@ -1,3 +1,3 @@
 module.exports = {
-    extends: ['./node_modules/@imacdonald/phantom-config/.eslintrc.cjs']
+    extends: ['./node_modules/phantom-config/.eslintrc.cjs']
 };

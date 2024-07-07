@@ -8,17 +8,18 @@
         "build": "tsc && vite build --base=/",
         "preview": "vite preview",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives && tsc --noEmit --emitDeclarationOnly false",
-        "prettier": "prettier ./ --check --ignore-path ./node_modules/@imacdonald/phantom-config/.prettierignore",
-        "prettier:fix": "prettier ./ --write --ignore-path ./node_modules/@imacdonald/phantom-config/.prettierignore",
+        "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --fix && tsc --noEmit --emitDeclarationOnly false",
+        "prettier": "prettier ./ --check --ignore-path ./node_modules/phantom-config/.prettierignore",
+        "prettier:fix": "prettier ./ --write --ignore-path ./node_modules/phantom-config/.prettierignore",
         "stylelint": "npx stylelint '**/*.{css,scss}'",
         "stylelint:fix": "npx stylelint '**/*.{css,scss}' --fix",
-        "format": "npm run lint && npm run stylelint:fix && npm run prettier:fix"
+        "format": "npm run lint:fix && npm run stylelint:fix && npm run prettier:fix"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.1",
         "classnames": "^2.3.2",
         "clsx": "^2.1.1",
-        "phantom-library": "^0.9.2",
+        "phantom-library": "^0.10.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-redux": "^9.1.0",
@@ -31,11 +32,11 @@
         "vite-plugin-svgr": "^4.1.0"
     },
     "devDependencies": {
-        "@imacdonald/phantom-config": "^0.4.2",
         "@types/node": "^20.4.8",
         "@types/react": "^18.2.15",
         "@types/react-dom": "^18.2.7",
         "@vitejs/plugin-react": "^4.0.3",
+        "phantom-config": "^0.5.1",
         "typescript": "^5.0.2",
         "vite": "^4.5.2",
         "vite-tsconfig-paths": "^4.3.2"

@@ -4,7 +4,7 @@ interface BLOCTooltipProps {
 }
 
 // Returns BLOC symbol
-const symbolToDefinition = (symbols: Record<string, string> | undefined, bloc: string) => {
+const symbolToDefinition = (symbols: Record<string, string> | undefined, bloc: string): string => {
     if (!symbols) {
         return '';
     }

@@ -1,9 +1,10 @@
 import { Page, Section, StyledImage, Text } from 'phantom-library';
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 import { PCAImage, userBlocImage } from '@assets/images';
 import { config } from '@config';
 
-function About() {
+const About: FC = () => {
     return (
         <Page title="agwagram">
             <Section>
@@ -86,6 +87,6 @@ function About() {
             </Section>
         </Page>
     );
-}
+};
 
 export { About };

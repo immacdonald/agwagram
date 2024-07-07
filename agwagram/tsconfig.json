@@ -1,5 +1,5 @@
 {
-    "extends": "@imacdonald/phantom-config/tsconfig",
+    "extends": "phantom-config/tsconfig",
     "compilerOptions": {
         "outDir": "dist",
         "baseUrl": ".",

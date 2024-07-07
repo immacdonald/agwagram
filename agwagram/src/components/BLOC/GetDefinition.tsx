@@ -1,7 +1,7 @@
 import { useGetSymbolsQuery } from '@data/apiSlice';
 import { symbolToDefinition } from './bloc';
 
-const GetDefinition = (word: string) => {
+const GetDefinition = (word: string): string => {
     const { data: symbols } = useGetSymbolsQuery();
 
     const result = Array.from(word)

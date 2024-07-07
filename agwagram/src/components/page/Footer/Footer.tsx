@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 import style from './Footer.module.scss';
 
-const Footer = () => {
+const Footer: FC = () => {
     return (
         <footer className={style.footer}>
             <div>

@@ -84,7 +84,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
     }
 
     const [showAction, setShowAction] = useState<boolean>(true);
-    const toggleShowAction = (value: string) => {
+    const toggleShowAction = (value: string): void => {
         if (value == 'Action') {
             setShowAction(true);
         } else {
@@ -149,7 +149,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
         [fixedLinkedData]
     );
 
-    const symbolToDefinition = (bloc: string) => {
+    const symbolToDefinition = (bloc: string): string => {
         if (!symbols) {
             return '';
         }
@@ -158,7 +158,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
         return definitions.join(', ');
     };
 
-    const routeToTweet = (id: string) => {
+    const routeToTweet = (id: string): void => {
         const url = `https://twitter.com/${username}/status/${id}`;
         window.open(url, '_blank');
     };
@@ -187,7 +187,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                 key={index}
                 content={popoverContent}
                 anchorClass={style.item}
-                anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: !pause ? () => routeToTweet(item.id) : undefined }}
+                anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: !pause ? (): void => routeToTweet(item.id) : undefined }}
                 customStyle={style.popover}
             >
                 {showLabels && <em>{item.content}</em>}

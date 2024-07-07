@@ -13,7 +13,7 @@
 }
 
 .gradient {
-    background: linear-gradient(180deg, var(--color-surface-foreground) 0%, var(--color-surface-background) 10%);
+    background: linear-gradient(180deg, var(--color-surface-foreground) 0%, var(--color-surface-background) max(10%, 400px));
 }
 
 .results {
