@@ -40,6 +40,25 @@ declare global {
         top_time: Top[];
         top_change: unknown[];
         linked_data: LinkedData[];
+        sumgrams: Sumgrams[];
+    }
+
+    interface Sumgrams {
+        base_ngram: number;
+        top_sumgram_count: number;
+        top_sumgrams: Sumgram[];
+    }
+
+    interface Sumgram {
+        ngram: string;
+        term_freq: number;
+        term_rate: number;
+        parent_sentences: {
+            sentence: string;
+            sent_indx: number;
+            doc_index: number;
+            doc_id: number;
+        }[];
     }
 
     interface ChangeReport {

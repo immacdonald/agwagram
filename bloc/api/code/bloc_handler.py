@@ -7,6 +7,11 @@ from bloc.generator import add_bloc_sequences
 from bloc.util import get_default_symbols
 from bloc.util import get_bloc_params
 from bloc.subcommands import run_subcommands
+
+from sumgram.sumgram import get_top_sumgrams
+
+import copy
+
 from argparse import Namespace
 
 import time
@@ -265,6 +270,9 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
         end_link = time.perf_counter()
         print(f"Generated linked data in {end_link - start_link:0.4f} seconds")
 
+        sumgrams = sumgrams_from_tweets(all_tweets)
+        #print(sumgrams)
+
         result['account_blocs'].append({
             'user_exists': True,
             # User Data
@@ -291,7 +299,9 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
             'top_time': top_time,
             'top_change': top_change,
             # Linked Data
-            'linked_data': linked_data
+            'linked_data': linked_data,
+            # Sumgrams
+            'sumgrams': sumgrams
             })
 
     return result
@@ -371,6 +381,39 @@ def link_change_report(raw_report):
             report[alphabet]['change_profile'] = None
 
     return report
+
+def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3]):
+    docs = []
+
+    for i, tweet in enumerate(tweets):
+        doc = {
+            "id": i,
+            "text":  tweet["full_text"]
+        }
+        docs.append(doc)
+
+    params = {
+        'top_sumgram_count': 20,
+        'add_stopwords': ['rt', 'http', 'https', 'amp', 't.co'],
+        'no_rank_sentences': True,
+        'min_df': 1
+    }
+
+    sumgrams = []
+    for ngram in ngrams:
+        try: 
+            docs_copy=copy.deepcopy(docs)
+            n_sumgrams = get_top_sumgrams(docs_copy, ngram, params=params)
+            sumgrams.append({
+                'base_ngram': n_sumgrams['base_ngram'],
+                'top_sumgram_count': n_sumgrams['top_sumgram_count'],
+                'top_sumgrams': n_sumgrams['top_sumgrams'],
+            })
+        except Exception as e:
+            print("Exception", e)
+
+    return sumgrams
+
 
 def round_format(value):
     return f'{float(value):.2%}'[:-1]

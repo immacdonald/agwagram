@@ -7,7 +7,7 @@ import { config } from '@config';
 const About: FC = () => {
     return (
         <Page title="agwagram">
-            <Section>
+            <Section variant="inset">
                 <Text as="h1" align="center">
                     About
                 </Text>

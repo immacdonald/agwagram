@@ -1,0 +1,10 @@
+.subtitle {
+    position: fixed;
+    height: 32px;
+    width: 100%;
+    top: 64px;
+    left: 0;
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    z-index: 100;
+}

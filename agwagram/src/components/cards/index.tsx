@@ -5,6 +5,7 @@ export * from './GridViewCard';
 export * from './GroupChangeCard';
 export * from './LanguageCard';
 export * from './LinkedDataCard';
+export * from './SumgramsCard';
 export * from './TopWordsCard';
 export * from './TopWordsCategoryCard';
 /* eslint-enable react-refresh/only-export-components */
