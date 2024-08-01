@@ -1,9 +1,10 @@
 @use 'sass:color';
 
 :root {
+    $font: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --color-primary: rgb(20 58 162);
-    --font-body: helvetica, sans-serif;
-    --font-header: helvetica, sans-serif;
+    --font-body: #{$font};
+    --font-header: #{$font};
     --text-header-xxl: 2rem;
     --text-header-xl: 1.7rem;
     --text-header-lg: 1.4rem;

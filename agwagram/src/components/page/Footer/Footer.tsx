@@ -10,8 +10,9 @@ const Footer: FC = () => {
                     &copy; {new Date().getFullYear()}{' '}
                     <Link to="https://www.wm.edu" target="_blank">
                         Willam & Mary
-                    </Link>{' '}
-                    | NEWS Lab
+                    </Link> <Link to="https://github.com/wm-newslab" target="_blank">
+                        NEWS Lab
+                    </Link>
                 </span>
             </div>
         </footer>
