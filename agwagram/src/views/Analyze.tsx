@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Accordion, Dropdown, FileUploadPortal, NullablePrimitive, TabGroup } from 'phantom-library';
+import { Accordion, Dropdown, FileUploadPortal, Heading, NullablePrimitive, TabGroup, Text } from 'phantom-library';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { config } from '@config';
@@ -111,14 +111,14 @@ const Analyze: React.FC = () => {
                     label: 'File',
                     tab: (
                         <div>
-                            <h3>Analyze File</h3>
-                            <p>Upload tweet file(s) to be analyzed by agwagram.</p>
+                            <Heading minor title="Analyze File" />
+                            <Text>Upload tweet file(s) to be analyzed by agwagram.</Text>
                             <Accordion label="File Requirements">
-                                <p>
+                                <Text>
                                     Files must be in <strong>JSON</strong> or <strong>JSONL</strong> formats and may be uploaded uncompressed or as Gzip files. To upload multiple files at once, please
                                     select all your files in the file selection prompt or drag-and-drop them individually.
-                                </p>
-                                <p>
+                                </Text>
+                                <Text>
                                     JSON files must contain the tweet data as a array of Twitter{' '}
                                     <Link to="https://web.archive.org/web/20240615012946/https://developer.x.com/en/docs/twitter-api/v1/data-dictionary/object-model/tweet" target="_blank">
                                         v1.1 tweet
@@ -128,7 +128,7 @@ const Analyze: React.FC = () => {
                                         v1.1 tweet
                                     </Link>{' '}
                                     per line, <i>not</i> an account. For more details, download a tweet file from the "Example Files" tab.
-                                </p>
+                                </Text>
                             </Accordion>
                             <FileUploadPortal submit={submitFiles} />
                             {/*<span>Generate Change Reports <Switch state={generateChange} onChange={() => toggleGenerateChange()} /</span>*/}
@@ -139,15 +139,15 @@ const Analyze: React.FC = () => {
                     label: 'Example Files',
                     tab: (
                         <div>
-                            <h3>Analyze From Examples</h3>
-                            <p>Test agwagram by selecting from our sample of tweet files.</p>
+                            <Heading minor title="Analyze From Examples" />
+                            <Text>Test agwagram by selecting from our sample of tweet files.</Text>
                             <Dropdown
                                 options={config.exampleFiles.map((file: ExampleFile) => ({ label: file.title, value: file.title }))}
                                 placeholder="Select File"
                                 onChange={(value: NullablePrimitive) => changedFile(value as string)}
                             />
                             <br />
-                            {helperText && <p>{helperText}</p>}
+                            {helperText && <Text>{helperText}</Text>}
                         </div>
                     )
                 },
@@ -155,10 +155,15 @@ const Analyze: React.FC = () => {
                     label: 'Username',
                     tab: (
                         <div>
-                            <h3>
-                                Analyze By Username <b>(Coming Soon)</b>
-                            </h3>
-                            <p>Search for one or more accounts (separated by a comma) by their current Twitter username.</p>
+                            <Heading
+                                minor
+                                title={
+                                    <>
+                                        Analyze By Username <i>(Coming Soon)</i>
+                                    </>
+                                }
+                            />
+                            <Text>Search for one or more accounts (separated by a comma) by their current Twitter username.</Text>
                         </div>
                     ),
                     disabled: true

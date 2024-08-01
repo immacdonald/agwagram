@@ -1,14 +1,13 @@
 import { BarChart, Card, Dropdown, decimalPlaces, Text, Popover } from 'phantom-library';
-import { useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import style from './SumgramsCard.module.scss';
 
-interface SumgramsCardProps {
-    title: string;
-    subtitle?: string;
-    sumgrams: Sumgrams[];
+interface HighlightedTextProps {
+    text: string;
+    match: string;
 }
 
-const HighlightedText = ({ text, match }: { text: string; match: string }) => {
+const HighlightedText: FC<HighlightedTextProps> = ({ text, match }) => {
     if (!match) return <span>{text}</span>;
 
     // Escape special characters in the match string for use in a regular expression
@@ -20,7 +19,13 @@ const HighlightedText = ({ text, match }: { text: string; match: string }) => {
     return <span>{parts.map((part, index) => (part.toLowerCase() === match.toLowerCase() ? <mark key={index}>{part}</mark> : part))}</span>;
 };
 
-const SumgramsCard: React.FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
+interface SumgramsCardProps {
+    title: string;
+    subtitle?: string;
+    sumgrams: Sumgrams[];
+}
+
+const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
     // To-do: filter out sumgrams where there are no top sumgrams
     const sumgramOptions = sumgrams.map((sumgram: Sumgrams, index: number) => {
         return {
@@ -55,37 +60,37 @@ const SumgramsCard: React.FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }
                             </thead>
                             <tbody>
                                 {sumgrams[sumgramIndex].top_sumgrams.map((sumgram: Sumgram, index: number) => {
-                                    console.log(sumgram);
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1}.</td>
-
-                                            {sumgram.parent_sentences.length > 0 ? (
-                                                <Popover
-                                                    customStyle={style.popover}
-                                                    content={
-                                                        <div className={style.content}>
-                                                            {sumgram.parent_sentences.map((sentence) => {
-                                                                return (
-                                                                    <>
-                                                                        <HighlightedText text={sentence.sentence} match={sumgram.ngram} />
-                                                                        <br />
-                                                                        <br />
-                                                                    </>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    }
-                                                    direction="right"
-                                                >
-                                                    <td>{sumgram.ngram}</td>
-                                                </Popover>
-                                            ) : (
-                                                <Popover content="No sentences found" direction="right">
-                                                    <td>{sumgram.ngram}</td>
-                                                </Popover>
-                                            )}
-
+                                            <td>
+                                                {sumgram.parent_sentences.length > 0 ? (
+                                                    <Popover
+                                                        customStyle={style.popover}
+                                                        anchorClass={style.popoverAnchor}
+                                                        content={
+                                                            <div className={style.content}>
+                                                                {sumgram.parent_sentences.map((sentence, index: number) => {
+                                                                    return (
+                                                                        <Fragment key={index}>
+                                                                            <HighlightedText text={sentence.sentence} match={sumgram.ngram} />
+                                                                            <br />
+                                                                            <br />
+                                                                        </Fragment>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        }
+                                                        direction="right"
+                                                    >
+                                                        {sumgram.ngram}
+                                                    </Popover>
+                                                ) : (
+                                                    <Popover anchorClass={style.popoverAnchor} content="No sentences found" direction="right">
+                                                        {sumgram.ngram}
+                                                    </Popover>
+                                                )}
+                                            </td>
                                             <td>{sumgram.term_freq}</td>
                                             <td>{decimalPlaces(sumgram.term_rate * 100, 1)}</td>
                                         </tr>

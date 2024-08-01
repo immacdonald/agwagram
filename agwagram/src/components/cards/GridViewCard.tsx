@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Card, Dataset, Dropdown, formatNumericDate, formatReadableDate, Popover, Recenter, Row, Switch, useResponsiveContext, ZoomIn, ZoomOut } from 'phantom-library';
+import { Button, Card, Dataset, Dropdown, formatNumericDate, formatReadableDate, Popover, Recenter, Row, Switch, useResponsiveContext, ZoomIn, ZoomOut, Text } from 'phantom-library';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '@data/apiSlice';
 import style from './GridViewCard.module.scss';
@@ -77,7 +77,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
             <Card>
                 <Card.Header title={title} Icon={Dataset} />
                 <Card.Body>
-                    <p>Cannot display grid for {actionLinkedData.length} data points.</p>
+                    <Text>Cannot display grid for {actionLinkedData.length} data points.</Text>
                 </Card.Body>
             </Card>
         );

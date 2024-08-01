@@ -1,5 +1,6 @@
-import { Card, formatNumber, formatReadableDate, Grid, GridItemSize, PersonFilled, Row } from 'phantom-library';
+import { Card, formatNumber, formatReadableDate, Grid, GridItemSize, Heading, PersonFilled, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
 import style from './AccountAnalysis.module.scss';
 
@@ -10,28 +11,42 @@ interface AccountAnalysisProps {
 const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
     const expertMode = false;
 
+    const { isMobile } = useResponsiveContext();
+
+    const ref = useRef<HTMLDivElement>(null);
+    const isTitleCardVisible = useIsVisible(ref);
+
     return (
         <>
-            <Row className={style.subtitle} align="center">
-                <span>Showing results for @{account.account_username}</span>
-            </Row>
+            {!isTitleCardVisible && ref.current && (
+                <Row className={style.subtitle} align="center">
+                    <span>
+                        {!isMobile && `Analyzing `}@{account.account_username}
+                    </span>
+                </Row>
+            )}
             <Grid>
                 <Grid.Item size={GridItemSize.Full}>
-                    <Card>
+                    <Card ref={ref}>
                         <Card.Header title="Account Overview" Icon={PersonFilled} />
                         <Card.Body>
-                            <h2 id="results">
-                                @{account.account_username}{' '}
-                                <Link to={`https://www.twitter.com/${account.account_username}`} target="_blank">
-                                    <i>({account.account_name})</i>
-                                </Link>
-                            </h2>
-                            <p>
+                            <Heading
+                                title={
+                                    <>
+                                        @{account.account_username}{' '}
+                                        <Link to={`https://www.twitter.com/${account.account_username}`} target="_blank">
+                                            <i>({account.account_name})</i>
+                                        </Link>
+                                    </>
+                                }
+                                bold={false}
+                            />
+                            <Text>
                                 {account.tweet_count > 0
                                     ? `Results generated using ${formatNumber(account.tweet_count)} tweets from ${formatReadableDate(account.first_tweet_date)} to ${formatReadableDate(account.last_tweet_date)}`
                                     : `No results generated due to finding 0 tweets`}
-                            </p>
-                            {account.elapsed_time > 0 && <p>Analysis process took {account.elapsed_time} seconds to complete</p>}
+                            </Text>
+                            {account.elapsed_time > 0 && <Text>Analysis process took {account.elapsed_time} seconds to complete</Text>}
                         </Card.Body>
                     </Card>
                 </Grid.Item>
@@ -42,7 +57,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
                     <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={account.top_time} symbolLabel="Pause" />
                 </Grid.Item>
                 <Grid.Item size={GridItemSize.Full}>
-                    <SumgramsCard title="Sumgrams" sumgrams={account.sumgrams} />
+                    <SumgramsCard title="Sumgrams" subtitle="Most frequently used phrases." sumgrams={account.sumgrams} />
                 </Grid.Item>
                 <Grid.Item size={GridItemSize.Full}>
                     <GridViewCard title="Grid View" username={account.account_username} data={account.linked_data} />

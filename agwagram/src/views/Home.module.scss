@@ -1,7 +1,7 @@
 @use '../styles' as *;
 
 .split {
-    padding-bottom: $lg !important;
+    padding-block: $lg !important;
     display: grid;
     grid-template-columns: 400px 1fr;
     grid-gap: $xl;
@@ -9,11 +9,11 @@
     @include respond-max($screen-md) {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
+        grid-gap: $lg;
     }
 }
 
 .section {
-    // background: linear-gradient(180deg, var(--color-surface-foreground) 0%, var(--color-surface-background) max(10%, 400px));
     background: var(--color-surface-background) !important;
 }
 

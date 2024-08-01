@@ -1,5 +1,5 @@
 import { ReactNode, useMemo, useState } from 'react';
-import { Card, formatReadableDate, Row, Switch, Timeline, UnstyledButton } from 'phantom-library';
+import { Card, formatReadableDate, Row, Switch, Timeline, UnstyledButton, Text, Heading } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefinitionTooltip } from '@components';
 import tokens from '@styles/tokens.module.scss';
@@ -103,17 +103,17 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             <Card>
                 <Card.Header title={title} Icon={Timeline} />
                 <Card.Body scrollable>
-                    <p>
+                    <Text>
                         <strong>Change Rate</strong>: {report.change_profile.change_rate}
                         <br />
                         <strong>Average Change: </strong>
                         {`Word: ${report.change_profile.average_change.word}, `}
                         {showPause ? `Pause: ${report.change_profile.average_change.pause}, ` : false}
                         {`Activity: ${report.change_profile.average_change.activity}`}
-                    </p>
+                    </Text>
                     <hr />
                     <div style={{ width: '100%', height: '480px' }}>
-                        <h3>Change Profile</h3>
+                        <Heading minor title="Change Profile" />
                         <Row>
                             <span>
                                 Similarity <Switch state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
@@ -177,7 +177,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             <Card>
                 <Card.Header title={title} Icon={Timeline} />
                 <Card.Body>
-                    <p>No change report found.</p>
+                    <Text>No change report found.</Text>
                 </Card.Body>
             </Card>
         );

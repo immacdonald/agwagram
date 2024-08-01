@@ -1,6 +1,6 @@
-import { Card, formatNumber, Grid, GridItemSize, GroupFilled, Hub, Row } from 'phantom-library';
+import { Card, formatNumber, Grid, GridItemSize, GroupFilled, Heading, Hub, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
-import { Fragment } from 'react';
+import { Fragment, useRef } from 'react';
 import { GridViewCard, GroupChangeCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
 import style from './AccountAnalysis.module.scss';
 
@@ -13,23 +13,30 @@ interface GroupAnalysisProps {
 }
 
 const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, topBlocWords, topTimes, pairwiseSim }) => {
+    const { isMobile } = useResponsiveContext();
+
+    const ref = useRef<HTMLDivElement>(null);
+    const isTitleCardVisible = useIsVisible(ref);
+
     return (
         <>
-            <Row className={style.subtitle} align="center">
-                <span>
-                    Showing results for{' '}
-                    {accounts.map((account: AccountBloc, index: number) => (
-                        <Fragment key={index}>@{account.account_username} </Fragment>
-                    ))}
-                </span>
-            </Row>
+            {!isTitleCardVisible && ref.current && (
+                <Row className={style.subtitle} align="center">
+                    <span>
+                        {!isMobile && `Analyzing `}
+                        {accounts.map((account: AccountBloc, index: number) => (
+                            <Fragment key={index}>@{account.account_username} </Fragment>
+                        ))}
+                    </span>
+                </Row>
+            )}
             <Grid>
                 <Grid.Item size={GridItemSize.Full}>
-                    <Card>
+                    <Card ref={ref}>
                         <Card.Header title="Accounts Overview" Icon={GroupFilled} />
                         <Card.Body>
-                            <h2>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</h2>
-                            <p>
+                            <Heading title={<>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</>} bold={false} />
+                            <Text>
                                 Results for{' '}
                                 {accounts.map((account: AccountBloc, index: number) => (
                                     <span key={index}>
@@ -41,7 +48,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                                     </span>
                                 ))}
                                 generated using {formatNumber(totalTweets)} tweets.
-                            </p>
+                            </Text>
                         </Card.Body>
                     </Card>
                 </Grid.Item>
@@ -85,7 +92,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                 )}
                 {accounts.map((account: AccountBloc) => (
                     <Grid.Item size={GridItemSize.Full} key={account.account_username}>
-                        <SumgramsCard title={`Sumgrams for @${account.account_username}`} sumgrams={account.sumgrams} />
+                        <SumgramsCard title={`Sumgrams for @${account.account_username}`} subtitle="Most frequently used phrases." sumgrams={account.sumgrams} />
                     </Grid.Item>
                 ))}
                 {accounts.map((account: AccountBloc) => (

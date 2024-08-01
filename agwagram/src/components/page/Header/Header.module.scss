@@ -1,17 +1,16 @@
 @use 'sass:math';
 
 .header {
-    --v-header-height: 64px;
+    @include responsive-width;
 
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--v-header-height) !important;
+    height: var(--header-height) !important;
     background-color: var(--color-surface-foreground);
     border-bottom: var(--border-light);
     z-index: 10;
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
 

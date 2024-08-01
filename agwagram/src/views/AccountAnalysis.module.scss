@@ -1,10 +1,14 @@
 .subtitle {
     position: fixed;
     height: 32px;
-    width: 100%;
-    top: 64px;
-    left: 0;
+    min-width: 128px;
+    width: fit-content !important;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--color-primary);
     color: var(--color-text-on-primary);
     z-index: 100;
+    border-radius: $radius-md;
+    padding-inline: $md;
 }

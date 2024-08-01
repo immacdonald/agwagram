@@ -1,13 +1,13 @@
 .footer {
     --v-footer-height: 128px;
 
-    width: 100%;
+    @include responsive-width;
+
     min-height: var(--v-footer-height);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: start;
-    padding: $lg max(calc((100% - $screen-lg) / 2), 3%);
     background-color: var(--color-surface-background);
     color: var(--color-text);
     font-size: $font-xs;

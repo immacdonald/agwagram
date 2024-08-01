@@ -1,4 +1,4 @@
-import { Card, Chart } from 'phantom-library';
+import { Card, Chart, Heading, Text } from 'phantom-library';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import tokens from '@styles/tokens.module.scss';
 
@@ -38,7 +38,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
                 <Card.Body>
                     <div style={{ display: 'flex', width: '100%', height: '400px' }}>
                         <div style={{ width: '100%', height: '90%' }}>
-                            <h3>Change Profile</h3>
+                            <Heading title="Change Profile" bold={false} />
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     width={100}
@@ -62,7 +62,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
                             </ResponsiveContainer>
                         </div>
                         <div style={{ width: '100%', height: '90%' }}>
-                            <h3>Average Change</h3>
+                            <Heading title="Average Change" bold={false} />
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     width={100}
@@ -97,8 +97,8 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
                 <Card.Body>
                     <div style={{ display: 'flex', width: '100%', height: '400px' }}>
                         <div style={{ width: '100%', height: '90%' }}>
-                            <h3>Change Profile</h3>
-                            <p>No change profile found.</p>
+                            <Heading minor title="Change Profile" />
+                            <Text>No change profile found.</Text>
                         </div>
                     </div>
                 </Card.Body>

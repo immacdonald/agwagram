@@ -1,4 +1,4 @@
-import { Page, Section, StyledImage, Text } from 'phantom-library';
+import { Heading, Page, Section, StyledImage, Text } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
 import { PCAImage, userBlocImage } from '@assets/images';
@@ -8,21 +8,18 @@ const About: FC = () => {
     return (
         <Page title="agwagram">
             <Section variant="inset">
-                <Text as="h1" align="center">
-                    About
-                </Text>
-                <p>
+                <Heading align="center" title="About" />
+                <Text marginBottom>
                     agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations,
                     self-declared bots, trolls, etc. agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language
                     framework.
-                </p>
-                <br />
-                <h2>Methodology</h2>
-                <p>
+                </Text>
+                <Heading minor title="Methodology" />
+                <Text>
                     <Link to="https://github.com/anwala/bloc">BLOC</Link> is a language for representing the online behaviors of social media accounts irrespective of class (human or cyborg or bot) or
                     intent (malicious or benign). BLOC words consist of letters drawn from various alphabets (e.g., actions, pauses, & content alphabets). The language is highly flexible, and can be
                     applied to model a broad spectrum of legitimate and suspicious online behaviors.
-                </p>
+                </Text>
                 <StyledImage
                     image={userBlocImage}
                     border
@@ -36,10 +33,10 @@ const About: FC = () => {
                         </span>
                     }
                 />
-                <p>
+                <Text>
                     BLOC has been effectively applied for explaining online behaviors, bot and coordination detection, and detecting accounts — controlled by various nation states — engaged in
                     information operations.
-                </p>
+                </Text>
                 <StyledImage
                     image={PCAImage}
                     border
@@ -59,19 +56,20 @@ const About: FC = () => {
                         </span>
                     }
                 />
-                <br />
-                <h2>Publications</h2>
-                <span>A language framework for modeling social media account behavior</span>
-                <br />
-                <span>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</span>
-                <br />
-                <Link to="https://doi.org/10.1140/epjds/s13688-023-00410-9" target="_blank">
-                    EPJ Data Science
-                </Link>
-                <br />
-                <br />
-                <h2>Developers</h2>
-                <p>
+                <Heading minor title="Publications" />
+                <Text as="span" newline>
+                    A language framework for modeling social media account behavior
+                </Text>
+                <Text as="span" newline>
+                    Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer
+                </Text>
+                <Text as="span" newline marginBottom>
+                    <Link to="https://doi.org/10.1140/epjds/s13688-023-00410-9" target="_blank">
+                        EPJ Data Science
+                    </Link>
+                </Text>
+                <Heading minor title="About Us" />
+                <Text marginBottom>
                     agwagram is a project of the News Web and Social Media (NEWS) research lab at William & Mary. NEWS Lab studies the web as an entity with a focus on (local) news and vectors of
                     disinformation on social media. agwagram was developed by{' '}
                     <Link to="https://ianmacdonald.me/" target="_blank">
@@ -82,8 +80,8 @@ const About: FC = () => {
                         Alexander C. Nwala
                     </Link>{' '}
                     (acnwala AT wm.edu).
-                </p>
-                <p>Agwagram is currently on version {config.version}.</p>
+                </Text>
+                <Text>Agwagram is currently on version {config.version}.</Text>
             </Section>
         </Page>
     );
