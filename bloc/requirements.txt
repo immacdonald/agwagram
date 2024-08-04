@@ -25,7 +25,7 @@ rjsmin==1.2.1
 scikit-learn==1.2.2
 scipy==1.10.1
 sqlparse==0.4.4
-sumgram @ git+https://github.com/jefromyers/sumgram.git@00f3675874dcd3d9bdbc2fcabd8060c1a3205680
+sumgram==1.0.4
 textblob==0.17.1
 threadpoolctl==3.1.0
 tqdm==4.65.0

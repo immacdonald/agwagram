@@ -1,23 +1,7 @@
 import { BarChart, Card, Dropdown, decimalPlaces, Text, Popover } from 'phantom-library';
 import { FC, Fragment, useState } from 'react';
+import { HighlightedText } from '@components';
 import style from './SumgramsCard.module.scss';
-
-interface HighlightedTextProps {
-    text: string;
-    match: string;
-}
-
-const HighlightedText: FC<HighlightedTextProps> = ({ text, match }) => {
-    if (!match) return <span>{text}</span>;
-
-    // Escape special characters in the match string for use in a regular expression
-    const escapedMatch = match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`(${escapedMatch})`, 'gi');
-
-    const parts = text.split(regex);
-
-    return <span>{parts.map((part, index) => (part.toLowerCase() === match.toLowerCase() ? <mark key={index}>{part}</mark> : part))}</span>;
-};
 
 interface SumgramsCardProps {
     title: string;
@@ -73,7 +57,7 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
                                                                 {sumgram.parent_sentences.map((sentence, index: number) => {
                                                                     return (
                                                                         <Fragment key={index}>
-                                                                            <HighlightedText text={sentence.sentence} match={sumgram.ngram} />
+                                                                            <HighlightedText text={sentence.sentence} matches={sumgram.partial_sumgrams} />
                                                                             <br />
                                                                             <br />
                                                                         </Fragment>

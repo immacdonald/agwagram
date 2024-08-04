@@ -10,8 +10,6 @@ from bloc.subcommands import run_subcommands
 
 from sumgram.sumgram import get_top_sumgrams
 
-import copy
-
 from argparse import Namespace
 
 import time
@@ -402,12 +400,21 @@ def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3]):
     sumgrams = []
     for ngram in ngrams:
         try: 
-            docs_copy=copy.deepcopy(docs)
-            n_sumgrams = get_top_sumgrams(docs_copy, ngram, params=params)
+            n_sumgrams = get_top_sumgrams(docs, ngram, params=params)
+            top_sumgrams = n_sumgrams['top_sumgrams']
+            for t in top_sumgrams:
+                partials = set()
+                partials.add( t['ngram'] )
+
+                for hist in t.get('sumgram_history', []):
+                    partials.add( hist['prev_ngram'] )
+                    partials.add( hist['cur_ngram'] )
+                t['partial_sumgrams'] = list(partials)
+            
             sumgrams.append({
                 'base_ngram': n_sumgrams['base_ngram'],
                 'top_sumgram_count': n_sumgrams['top_sumgram_count'],
-                'top_sumgrams': n_sumgrams['top_sumgrams'],
+                'top_sumgrams': top_sumgrams,
             })
         except Exception as e:
             print("Exception", e)

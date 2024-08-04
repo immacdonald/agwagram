@@ -59,6 +59,7 @@ declare global {
             doc_index: number;
             doc_id: number;
         }[];
+        partial_sumgrams: string[];
     }
 
     interface ChangeReport {
