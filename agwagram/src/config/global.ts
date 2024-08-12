@@ -1,7 +1,7 @@
 const API_BASE: string = window.location.origin == 'http://localhost:8000' ? 'http://localhost:8080' : window.location.origin;
 
 const global = {
-    version: '1.20.1',
+    version: '1.20.2',
     apiURL: `${API_BASE}/api/v1`,
     exampleFiles: [
         { file: 'bot_storygraphbot.jsonl.gz', title: 'Bot: @StoryGraphBot', type: 'JSONL' },
