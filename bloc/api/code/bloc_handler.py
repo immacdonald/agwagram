@@ -268,7 +268,7 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
         end_link = time.perf_counter()
         print(f"Generated linked data in {end_link - start_link:0.4f} seconds")
 
-        ngrams = [1, 2, 3] if account_bloc['more_details']['total_tweets'] < 5000 else [2]
+        ngrams = [1, 2, 3] if account_bloc['more_details']['total_tweets'] < 2000 else []
         sumgrams = sumgrams_from_tweets(all_tweets, ngrams)
         #print(sumgrams)
 
