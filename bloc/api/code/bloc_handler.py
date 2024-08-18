@@ -10,6 +10,8 @@ from bloc.subcommands import run_subcommands
 
 from sumgram.sumgram import get_top_sumgrams
 
+import random
+
 from argparse import Namespace
 
 import time
@@ -268,8 +270,18 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
         end_link = time.perf_counter()
         print(f"Generated linked data in {end_link - start_link:0.4f} seconds")
 
-        ngrams = [1, 2, 3] if account_bloc['more_details']['total_tweets'] < 2000 else []
+        start_sumgrams = time.perf_counter()
+        ngrams = [1, 2, 3]
+        #ngrams = [1, 2, 3] if account_bloc['more_details']['total_tweets'] < 2000 else []
+        #tracemalloc.start()
         sumgrams = sumgrams_from_tweets(all_tweets, ngrams)
+        #snapshot = tracemalloc.take_snapshot()
+        #top_stats = snapshot.statistics('lineno')
+        #print("[ Top 10 ]")
+        #for stat in top_stats[:10]:
+        #    print(stat)
+        #end_sumgrams = time.perf_counter()
+        #print(f"Computed sumgrams in {end_sumgrams - start_sumgrams:0.4f} seconds")
         #print(sumgrams)
 
         result['account_blocs'].append({
@@ -383,11 +395,18 @@ def link_change_report(raw_report):
 
 def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3]):
     docs = []
+    tweet_limit = 2500
+
+    # If n is provided and the number of tweets is greater than n, sample n tweets randomly
+    if tweet_limit is not None and len(tweets) > tweet_limit:
+        # Seed the psuedo-random with the original length of the tweets
+        random.seed(len(tweets))
+        tweets = random.sample(tweets, tweet_limit)
 
     for i, tweet in enumerate(tweets):
         doc = {
             "id": i,
-            "text":  tweet["full_text"]
+            "text": tweet["full_text"]
         }
         docs.append(doc)
 
