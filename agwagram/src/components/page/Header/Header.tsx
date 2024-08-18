@@ -1,4 +1,4 @@
-import { Button, MoonFilled, SunFilled, useResponsiveContext } from 'phantom-library';
+import { Button, MoonFilledIcon, SunFilledIcon, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { AgwagramIcon } from '@assets/icons';
 import style from './Header.module.scss';
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
                     <nav className={style.navLinks}>
                         <Button link="/" label="Home" visual="text" />
                         <Button link="/about" label="About" visual="text" />
-                        <Button rounded visual="text" onClick={() => toggleTheme()} Icon={theme == 'light' ? SunFilled : MoonFilled} />
+                        <Button rounded visual="text" onClick={() => toggleTheme()} Icon={theme == 'light' ? SunFilledIcon : MoonFilledIcon} />
                     </nav>
                 </div>
             </div>

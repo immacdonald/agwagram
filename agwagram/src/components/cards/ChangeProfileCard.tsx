@@ -1,4 +1,4 @@
-import { Card, Chart, Heading, Text } from 'phantom-library';
+import { Card, ChartIcon, Heading, Text } from 'phantom-library';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import tokens from '@styles/tokens.module.scss';
 
@@ -34,7 +34,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
 
         return (
             <Card fullHeight>
-                <Card.Header title={title} Icon={Chart} />
+                <Card.Header title={title} Icon={ChartIcon} />
                 <Card.Body>
                     <div style={{ display: 'flex', width: '100%', height: '400px' }}>
                         <div style={{ width: '100%', height: '90%' }}>
@@ -93,7 +93,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
     } else {
         return (
             <Card>
-                <Card.Header title={title} Icon={Chart} />
+                <Card.Header title={title} Icon={ChartIcon} />
                 <Card.Body>
                     <div style={{ display: 'flex', width: '100%', height: '400px' }}>
                         <div style={{ width: '100%', height: '90%' }}>

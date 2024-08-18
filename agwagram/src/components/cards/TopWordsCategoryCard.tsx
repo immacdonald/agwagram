@@ -1,4 +1,4 @@
-import { Card, Pause } from 'phantom-library';
+import { Card, PauseIcon } from 'phantom-library';
 import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCategoryCardProps {
@@ -11,7 +11,7 @@ interface TopWordsCategoryCardProps {
 const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subtitle, top, symbolLabel }: TopWordsCategoryCardProps) => {
     return (
         <Card fullHeight>
-            <Card.Header title={title} subtitle={subtitle} Icon={Pause} />
+            <Card.Header title={title} subtitle={subtitle} Icon={PauseIcon} />
             <Card.Body scrollable>
                 <table>
                     <thead>

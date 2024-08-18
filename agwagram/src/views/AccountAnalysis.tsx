@@ -1,4 +1,4 @@
-import { Card, formatNumber, formatReadableDate, Grid, GridItemSize, Heading, PersonFilled, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
+import { Card, formatNumber, formatReadableDate, Grid, GridItemSize, Heading, PersonFilledIcon, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
@@ -28,7 +28,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
             <Grid>
                 <Grid.Item size={GridItemSize.Full}>
                     <Card ref={ref}>
-                        <Card.Header title="Account Overview" Icon={PersonFilled} />
+                        <Card.Header title="Account Overview" Icon={PersonFilledIcon} />
                         <Card.Body>
                             <Heading
                                 title={

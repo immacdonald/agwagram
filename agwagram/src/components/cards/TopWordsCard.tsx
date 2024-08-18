@@ -1,4 +1,4 @@
-import { BarChart, Card } from 'phantom-library';
+import { BarChartIcon, Card } from 'phantom-library';
 import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCardProps {
@@ -10,7 +10,7 @@ interface TopWordsCardProps {
 const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: TopWordsCardProps) => {
     return (
         <Card fullHeight>
-            <Card.Header title={title} subtitle={subtitle} Icon={BarChart} />
+            <Card.Header title={title} subtitle={subtitle} Icon={BarChartIcon} />
             <Card.Body scrollable>
                 <table>
                     <thead>

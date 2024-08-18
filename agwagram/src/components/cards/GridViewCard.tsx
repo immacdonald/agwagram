@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Card, Dataset, Dropdown, formatNumericDate, formatReadableDate, Popover, Recenter, Row, Switch, useResponsiveContext, ZoomIn, ZoomOut, Text } from 'phantom-library';
+import { Button, Card, DatasetIcon, Dropdown, formatNumericDate, formatReadableDate, Popover, RecenterIcon, Row, Switch, useResponsiveContext, ZoomInIcon, ZoomOutIcon, Text } from 'phantom-library';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '@data/apiSlice';
 import style from './GridViewCard.module.scss';
@@ -75,7 +75,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
     if (actionLinkedData.length < 36) {
         return (
             <Card>
-                <Card.Header title={title} Icon={Dataset} />
+                <Card.Header title={title} Icon={DatasetIcon} />
                 <Card.Body>
                     <Text>Cannot display grid for {actionLinkedData.length} data points.</Text>
                 </Card.Body>
@@ -197,7 +197,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
 
     return (
         <Card fullHeight>
-            <Card.Header title={title} subtitle="Explore patterns in behaviors." Icon={Dataset} />
+            <Card.Header title={title} subtitle="Explore patterns in behaviors." Icon={DatasetIcon} />
             <Card.Body>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
                     <span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
@@ -249,9 +249,9 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                                         </div>
                                     </TransformComponent>
                                     <div className={style.tools}>
-                                        <Button onClick={() => resetTransform()} Icon={Recenter} rounded />
-                                        <Button onClick={() => zoomOut()} Icon={ZoomOut} rounded />
-                                        <Button onClick={() => zoomIn()} Icon={ZoomIn} rounded />
+                                        <Button onClick={() => resetTransform()} Icon={RecenterIcon} rounded />
+                                        <Button onClick={() => zoomOut()} Icon={ZoomOutIcon} rounded />
+                                        <Button onClick={() => zoomIn()} Icon={ZoomInIcon} rounded />
                                     </div>
                                 </div>
                             );

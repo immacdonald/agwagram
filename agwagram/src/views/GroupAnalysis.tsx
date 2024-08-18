@@ -1,4 +1,4 @@
-import { Card, formatNumber, Grid, GridItemSize, GroupFilled, Heading, Hub, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
+import { Card, formatNumber, Grid, GridItemSize, GroupFilledIcon, Heading, HubIcon, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { Fragment, useRef } from 'react';
 import { GridViewCard, GroupChangeCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
@@ -33,7 +33,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
             <Grid>
                 <Grid.Item size={GridItemSize.Full}>
                     <Card ref={ref}>
-                        <Card.Header title="Accounts Overview" Icon={GroupFilled} />
+                        <Card.Header title="Accounts Overview" Icon={GroupFilledIcon} />
                         <Card.Body>
                             <Heading title={<>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</>} bold={false} />
                             <Text>
@@ -60,7 +60,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                 </Grid.Item>
                 <Grid.Item size={GridItemSize.Full}>
                     <Card>
-                        <Card.Header title="Pairwise Similarity" Icon={Hub} />
+                        <Card.Header title="Pairwise Similarity" Icon={HubIcon} />
                         <Card.Body>
                             <table>
                                 <thead>

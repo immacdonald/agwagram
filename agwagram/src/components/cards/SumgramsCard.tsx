@@ -1,4 +1,4 @@
-import { BarChart, Card, Dropdown, decimalPlaces, Text, Popover } from 'phantom-library';
+import { BarChartIcon, Card, Dropdown, decimalPlaces, Text, Popover } from 'phantom-library';
 import { FC, Fragment, useState } from 'react';
 import { HighlightedText } from '@components';
 import style from './SumgramsCard.module.scss';
@@ -23,7 +23,7 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
 
     return (
         <Card fullHeight>
-            <Card.Header title={title} subtitle={subtitle} Icon={BarChart} />
+            <Card.Header title={title} subtitle={subtitle} Icon={BarChartIcon} />
             <Card.Body scrollable>
                 {sumgramOptions.length > 0 ? (
                     <>

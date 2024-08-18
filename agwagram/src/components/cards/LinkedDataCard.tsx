@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Card, HoverMark, Link } from 'phantom-library';
+import { Card, HoverMark, LinkIcon } from 'phantom-library';
 import { GetDefinition } from '@components';
 
 interface LinkedDataCardProps {
@@ -10,7 +10,7 @@ interface LinkedDataCardProps {
 const LinkedDataCard: React.FC<LinkedDataCardProps> = ({ title, data }: LinkedDataCardProps) => {
     return (
         <Card fullHeight>
-            <Card.Header title={title} Icon={Link} />
+            <Card.Header title={title} Icon={LinkIcon} />
             <Card.Body scrollable>
                 {data.map((datum: LinkedData, index: number) => {
                     let titleString = `Tweeted: ${datum.created_at}`;

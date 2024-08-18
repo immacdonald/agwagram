@@ -1,5 +1,5 @@
 import { ReactNode, useMemo, useState } from 'react';
-import { Card, formatReadableDate, Row, Switch, Timeline, UnstyledButton, Text, Heading } from 'phantom-library';
+import { Card, formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Text, Heading } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefinitionTooltip } from '@components';
 import tokens from '@styles/tokens.module.scss';
@@ -101,7 +101,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
 
         return (
             <Card>
-                <Card.Header title={title} Icon={Timeline} />
+                <Card.Header title={title} Icon={TimelineIcon} />
                 <Card.Body scrollable>
                     <Text>
                         <strong>Change Rate</strong>: {report.change_profile.change_rate}
@@ -175,7 +175,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
     } else {
         return (
             <Card>
-                <Card.Header title={title} Icon={Timeline} />
+                <Card.Header title={title} Icon={TimelineIcon} />
                 <Card.Body>
                     <Text>No change report found.</Text>
                 </Card.Body>
