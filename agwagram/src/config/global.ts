@@ -2,7 +2,7 @@ const API_BASE: string = window.location.origin == 'http://localhost:8000' ? 'ht
 
 const global = {
     version: '1.20.3',
-    apiURL: `${API_BASE}/api/v1`,
+    apiURL: `${API_BASE}/tools/agwagram/api/v1`,
     exampleFiles: [
         { file: 'bot_storygraphbot.jsonl.gz', title: 'Bot: @StoryGraphBot', type: 'JSONL' },
         { file: 'bot_threadreaderapp.jsonl.gz', title: 'Bot: @ThreadReaderApp', type: 'JSONL' },

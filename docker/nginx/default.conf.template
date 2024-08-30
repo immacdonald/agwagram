@@ -5,16 +5,16 @@ server {
     server_tokens off;
     client_max_body_size 20M;
 
-    location / {
+    location /tools/agwagram {
         root   /usr/share/nginx/html;
-        index  index.html index.htm;
-        try_files $uri $uri/ /index.html;
+        index  index.html;
+        try_files $uri $uri/ /tools/agwagram/index.html;
     }
 
-    location /api {
+    location /tools/agwagram/api {
         try_files $uri @proxy_api;
     }
-    location /admin {
+    location /tools/agwagram/admin {
         try_files $uri @proxy_api;
     }
 

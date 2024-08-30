@@ -10,7 +10,6 @@ from .code import symbols
 from .code.file_handling import handle_uploaded_file, extract_tweets_from_files, validate_tweet_data
 from django.http import JsonResponse
 
-
 import logging
 logger = logging.getLogger("mainLogger")
 

@@ -43,13 +43,14 @@ const globalSCSS = () => ({
 
 const baseConfig: UserConfig = {
     plugins: [tsconfigPaths(), globalSCSS() as Plugin, svgr(), react()],
+    base: '/tools/agwagram',
     server: {
         watch: {
             usePolling: true
         },
         host: true, // Here
         strictPort: true,
-        port: 8000
+        port: 8000,
     }
 };
 
@@ -62,7 +63,6 @@ function devConfig(): UserConfig {
 function prodConfig(): UserConfig {
     return {
         ...baseConfig,
-        base: '/tools/agwagram'
     };
 }
 /* eslint-enable @typescript-eslint/explicit-function-return-type */
