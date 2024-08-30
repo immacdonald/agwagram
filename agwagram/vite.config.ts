@@ -50,7 +50,7 @@ const baseConfig: UserConfig = {
         },
         host: true, // Here
         strictPort: true,
-        port: 8000,
+        port: 8000
     }
 };
 
@@ -62,7 +62,7 @@ function devConfig(): UserConfig {
 
 function prodConfig(): UserConfig {
     return {
-        ...baseConfig,
+        ...baseConfig
     };
 }
 /* eslint-enable @typescript-eslint/explicit-function-return-type */
