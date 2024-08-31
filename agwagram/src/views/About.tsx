@@ -6,8 +6,8 @@ import { config } from '@config';
 
 const About: FC = () => {
     return (
-        <Page title="agwagram">
-            <Section variant="inset">
+        <Page title="agwagram" headerSpace="pad">
+            <Section variant="inset" hasBackground>
                 <Heading align="center" title="About" />
                 <Text marginBottom>
                     agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations,

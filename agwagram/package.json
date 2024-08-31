@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build --base=/",
+        "build": "tsc && vite build",
         "preview": "vite preview",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives && tsc --noEmit --emitDeclarationOnly false",
         "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --fix && tsc --noEmit --emitDeclarationOnly false",
@@ -19,7 +19,7 @@
         "@reduxjs/toolkit": "^2.2.1",
         "classnames": "^2.3.2",
         "clsx": "^2.1.1",
-        "phantom-library": "^0.12.1",
+        "phantom-library": "^0.13.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-redux": "^9.1.0",
