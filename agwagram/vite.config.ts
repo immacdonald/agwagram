@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, Plugin } from 'vite';
+import { defineConfig, Plugin, UserConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
@@ -11,6 +11,9 @@ export default defineConfig(({ command }) => {
         return devConfig();
     } else if (command === 'build') {
         return prodConfig();
+    } else {
+        console.warn('Invalid build command provided, using fallback dev config');
+        return devConfig();
     }
 });
 
@@ -38,8 +41,9 @@ const globalSCSS = () => ({
     }
 });
 
-const baseConfig = {
+const baseConfig: UserConfig = {
     plugins: [tsconfigPaths(), globalSCSS() as Plugin, svgr(), react()],
+    base: '/tools/agwagram',
     server: {
         watch: {
             usePolling: true
@@ -50,16 +54,15 @@ const baseConfig = {
     }
 };
 
-function devConfig() {
+function devConfig(): UserConfig {
     return {
         ...baseConfig
     };
 }
 
-function prodConfig() {
+function prodConfig(): UserConfig {
     return {
-        ...baseConfig,
-        base: '/agwagram'
+        ...baseConfig
     };
 }
 /* eslint-enable @typescript-eslint/explicit-function-return-type */

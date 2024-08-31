@@ -8,7 +8,7 @@ import { clearResults, setExample, setLoading, setResults } from '@data/settings
 
 const getStaticDataFile = async (file: string, folder: string = '/data'): Promise<File> => {
     if (config.mode == 'production' && file.endsWith('.gz')) {
-        const response = await fetch(`${folder}/${file}`, {
+        const response = await fetch(`${import.meta.env.BASE_URL}/${folder}/${file}`, {
             headers: {
                 Accept: 'application/octet-stream'
             }

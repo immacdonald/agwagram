@@ -12,7 +12,7 @@ const Home: FC = () => {
     const resultState = useSelector(selectResults);
 
     return (
-        <Page title="agwagram">
+        <Page title="agwagram" headerSpace="pad">
             <Section className={clsx(style.section, style.split)}>
                 <Card fullHeight context="primary">
                     <Card.Body>
@@ -52,12 +52,12 @@ const Home: FC = () => {
                 </Card>
             </Section>
             {resultState.loading && (
-                <Section alt className={style.section}>
+                <Section className={style.section}>
                     <Loading />
                 </Section>
             )}
             {resultState.data && (
-                <Section alt className={clsx(style.section, style.results)}>
+                <Section className={clsx(style.section, style.results)}>
                     <Results />
                 </Section>
             )}
