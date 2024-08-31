@@ -11,5 +11,5 @@ RUN npm run build
 # Copy React static files and start nginx
 FROM docker.io/library/nginx:stable-alpine
 
-COPY --from=build /app/frontend/dist /usr/share/nginx/html
+COPY --from=build /app/frontend/dist /usr/share/nginx/html/tools/agwagram
 COPY docker/nginx/default.conf.template /etc/nginx/templates/default.conf.template

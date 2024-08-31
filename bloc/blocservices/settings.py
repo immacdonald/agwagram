@@ -174,7 +174,7 @@ LOGGING = {
     },
 }
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'agwagram.wm.edu']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'agwagram.wm.edu', 'newsresearch.lab.wm.edu']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",

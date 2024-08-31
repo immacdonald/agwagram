@@ -43,6 +43,7 @@ const globalSCSS = () => ({
 
 const baseConfig: UserConfig = {
     plugins: [tsconfigPaths(), globalSCSS() as Plugin, svgr(), react()],
+    base: '/tools/agwagram',
     server: {
         watch: {
             usePolling: true
@@ -61,8 +62,7 @@ function devConfig(): UserConfig {
 
 function prodConfig(): UserConfig {
     return {
-        ...baseConfig,
-        base: '/tools/agwagram'
+        ...baseConfig
     };
 }
 /* eslint-enable @typescript-eslint/explicit-function-return-type */
