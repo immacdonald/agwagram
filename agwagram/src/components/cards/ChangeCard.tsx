@@ -1,5 +1,5 @@
-import { ReactNode, useMemo, useState } from 'react';
-import { Card, formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Text, Heading } from 'phantom-library';
+import { ReactNode, useMemo, useRef, useState } from 'react';
+import { Card, formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Heading, Typography } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefinitionTooltip } from '@components';
 import tokens from '@styles/tokens.module.scss';
@@ -8,6 +8,8 @@ interface ChangeCardProps {
     title: string;
     report: Action;
 }
+
+type ChangeGraphState = Record<string, boolean>;
 
 const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProps) => {
     if (report.change_profile) {
@@ -68,7 +70,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             });
         }, [sortedField]);
 
-        const [changeGraph, setChangeGraph] = useState<{ [Key: string]: boolean }>({
+        const changeGraph = useRef<ChangeGraphState>({
             similarity: true,
             word: true,
             pause: true,
@@ -76,7 +78,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
         });
 
         const toggleChangeGraphDisplay = (key: string): void => {
-            setChangeGraph({ ...changeGraph, [key]: !changeGraph[key] });
+            changeGraph.current = { ...changeGraph.current, [key]: !(changeGraph.current[key]) };
         };
 
         const changeChronology: ChangeChronology[] = [];
@@ -103,29 +105,28 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             <Card>
                 <Card.Header title={title} Icon={TimelineIcon} />
                 <Card.Body scrollable>
-                    <Text>
+                    <Typography.Paragraph>
                         <strong>Change Rate</strong>: {report.change_profile.change_rate}
                         <br />
                         <strong>Average Change: </strong>
                         {`Word: ${report.change_profile.average_change.word}, `}
                         {showPause ? `Pause: ${report.change_profile.average_change.pause}, ` : false}
                         {`Activity: ${report.change_profile.average_change.activity}`}
-                    </Text>
-                    <hr />
+                    </Typography.Paragraph>
                     <div style={{ width: '100%', height: '480px' }}>
-                        <Heading minor title="Change Profile" />
+                        <Heading minor>Change Profile</Heading>
                         <Row>
                             <span>
-                                Similarity <Switch state={changeGraph['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
+                                Similarity <Switch state={changeGraph.current['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
                             </span>
                             <span>
-                                Word <Switch state={changeGraph['word']} onChange={() => toggleChangeGraphDisplay('word')} />
+                                Word <Switch state={changeGraph.current['word']} onChange={() => toggleChangeGraphDisplay('word')} />
                             </span>
                             <span>
-                                Pause <Switch state={changeGraph['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
+                                Pause <Switch state={changeGraph.current['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
                             </span>
                             <span>
-                                Activity <Switch state={changeGraph['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
+                                Activity <Switch state={changeGraph.current['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
                             </span>
                         </Row>
                         <ResponsiveContainer width="100%" height="85%">
@@ -145,10 +146,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                {changeGraph['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={tokens['graph-green']} dot={false} />}
-                                {changeGraph['word'] && <Line type="monotone" dataKey="Word" stroke={tokens['graph-blue']} dot={false} />}
-                                {showPause && changeGraph['pause'] && <Line type="monotone" dataKey="Pause" stroke={tokens['graph-red']} dot={false} />}
-                                {changeGraph['activity'] && <Line type="monotone" dataKey="Activity" stroke={tokens['graph-yellow']} dot={false} />}
+                                {changeGraph.current['similarity'] && <Line type="monotone" dataKey="Similarity" stroke={tokens['graph-green']} dot={false} />}
+                                {changeGraph.current['word'] && <Line type="monotone" dataKey="Word" stroke={tokens['graph-blue']} dot={false} />}
+                                {showPause && changeGraph.current['pause'] && <Line type="monotone" dataKey="Pause" stroke={tokens['graph-red']} dot={false} />}
+                                {changeGraph.current['activity'] && <Line type="monotone" dataKey="Activity" stroke={tokens['graph-yellow']} dot={false} />}
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
@@ -177,7 +178,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             <Card>
                 <Card.Header title={title} Icon={TimelineIcon} />
                 <Card.Body>
-                    <Text>No change report found.</Text>
+                    <Typography.Paragraph>No change report found.</Typography.Paragraph>
                 </Card.Body>
             </Card>
         );

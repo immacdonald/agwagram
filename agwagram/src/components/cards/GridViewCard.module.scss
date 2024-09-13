@@ -45,7 +45,7 @@
             padding: $sm;
             background-color: var(--color-surface-foreground);
             box-shadow: var(--shadow-lifted);
-            border-radius: $xl;
+            border-radius: var(--border-radius);
         }
 
         [class^='react-transform-wrapper'] {
@@ -63,7 +63,7 @@
     padding: 8px;
     margin-bottom: 8px;
     background-color: var(--color-surface-background);
-    border-radius: $radius-lg;
+    border-radius: var(--border-radius);
 
     .legendList {
         width: 100%;

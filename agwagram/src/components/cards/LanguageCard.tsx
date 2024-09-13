@@ -1,4 +1,4 @@
-import { Card, DatasetIcon, Text } from 'phantom-library';
+import { Card, DatasetIcon, Typography } from 'phantom-library';
 import { DefinitionTooltip } from '@components';
 
 interface LanguageCardProps {
@@ -11,7 +11,7 @@ const LanguageCard: React.FC<LanguageCardProps> = ({ title, bloc }: LanguageCard
     return (
         <Card fullHeight>
             <Card.Header title={title} Icon={DatasetIcon} />
-            <Card.Body scrollable>{chars.length > 0 ? chars.map((char, i) => <DefinitionTooltip key={i} word={char} />) : <Text>No analysis available.</Text>}</Card.Body>
+            <Card.Body scrollable>{chars.length > 0 ? chars.map((char, i) => <DefinitionTooltip key={i} word={char} />) : <Typography.Paragraph>No analysis available.</Typography.Paragraph>}</Card.Body>
         </Card>
     );
 };

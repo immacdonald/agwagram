@@ -1,4 +1,4 @@
-import { Card, ChartIcon, formatReadableDate, Heading, Text } from 'phantom-library';
+import { Card, ChartIcon, formatReadableDate, Heading, Typography } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import tokens from '@styles/tokens.module.scss';
 
@@ -27,7 +27,7 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
             <Card.Header title={title} Icon={ChartIcon} />
             <Card.Body>
                 <div style={{ width: '100%', height: '400px' }}>
-                    <Heading title="Similarity Over Time" bold={false} />
+                    <Heading>Similarity Over Time</Heading>
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             width={500}
@@ -58,7 +58,7 @@ const GroupChangeCard: React.FC<GroupChangeCardProps> = ({ title, reports }) => 
         <Card fullHeight>
             <Card.Header title={title} Icon={ChartIcon} />
             <Card.Body>
-                <Text>No change report generated.</Text>
+                <Typography.Paragraph>No change report generated.</Typography.Paragraph>
             </Card.Body>
         </Card>
     );

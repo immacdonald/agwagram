@@ -1,4 +1,4 @@
-import { BarChartIcon, Card, Dropdown, decimalPlaces, Text, Popover } from 'phantom-library';
+import { BarChartIcon, Card, Dropdown, decimalPlaces, Popover, Typography } from 'phantom-library';
 import { FC, Fragment, useState } from 'react';
 import { HighlightedText } from '@components';
 import style from './SumgramsCard.module.scss';
@@ -84,7 +84,7 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
                         </table>
                     </>
                 ) : (
-                    <Text>Unable to calculate sumgrams for this account.</Text>
+                    <Typography.Paragraph>Unable to calculate sumgrams for this account.</Typography.Paragraph>
                 )}
             </Card.Body>
         </Card>

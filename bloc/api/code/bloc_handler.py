@@ -395,7 +395,7 @@ def link_change_report(raw_report):
 
 def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3]):
     docs = []
-    tweet_limit = 2500
+    tweet_limit = 1000
 
     # If n is provided and the number of tweets is greater than n, sample n tweets randomly
     if tweet_limit is not None and len(tweets) > tweet_limit:

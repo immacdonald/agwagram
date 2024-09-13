@@ -1,4 +1,4 @@
-import { Card, ChartIcon, Heading, Text } from 'phantom-library';
+import { Card, ChartIcon, Heading, Typography } from 'phantom-library';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import tokens from '@styles/tokens.module.scss';
 
@@ -36,9 +36,9 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
             <Card fullHeight>
                 <Card.Header title={title} Icon={ChartIcon} />
                 <Card.Body>
-                    <div style={{ display: 'flex', width: '100%', height: '400px' }}>
+                    <div style={{ display: 'flex', width: '100%', height: '600px' }}>
                         <div style={{ width: '100%', height: '90%' }}>
-                            <Heading title="Change Profile" bold={false} />
+                            <Heading>Change Profile</Heading>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     width={100}
@@ -62,7 +62,7 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
                             </ResponsiveContainer>
                         </div>
                         <div style={{ width: '100%', height: '90%' }}>
-                            <Heading title="Average Change" bold={false} />
+                            <Heading>Average Change</Heading>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     width={100}
@@ -97,8 +97,8 @@ const ChangeProfileCard: React.FC<ChangeProfileCardProps> = ({ title, reports }:
                 <Card.Body>
                     <div style={{ display: 'flex', width: '100%', height: '400px' }}>
                         <div style={{ width: '100%', height: '90%' }}>
-                            <Heading minor title="Change Profile" />
-                            <Text>No change profile found.</Text>
+                            <Heading minor>Change Profile</Heading>
+                            <Typography.Paragraph>No change profile found.</Typography.Paragraph>
                         </div>
                     </div>
                 </Card.Body>

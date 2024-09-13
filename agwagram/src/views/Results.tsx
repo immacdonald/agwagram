@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { BarChartIcon, Card, Tab, TabGroup, Text } from 'phantom-library';
+import { BarChartIcon, Card, Tab, TabGroup, Typography } from 'phantom-library';
 import { useSelector } from 'react-redux';
 import { selectResults } from '@data/settingsSlice';
 import { AccountAnalysis } from './AccountAnalysis';
@@ -44,8 +44,8 @@ const Results: React.FC = () => {
         <Card>
             <Card.Header title="Analysis Failed" Icon={BarChartIcon} />
             <Card.Body>
-                <Text>Unable to generate BLOC analysis results.</Text>
-                {results && <Text>{results.error}</Text>}
+                <Typography.Paragraph>Unable to generate BLOC analysis results.</Typography.Paragraph>
+                {results && <Typography.Paragraph>{results.error}</Typography.Paragraph>}
             </Card.Body>
         </Card>
     );

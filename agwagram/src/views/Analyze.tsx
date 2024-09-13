@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Accordion, Dropdown, FileUploadPortal, Heading, NullablePrimitive, TabGroup, Text } from 'phantom-library';
+import { Accordion, Dropdown, FileUploadPortal, Heading, NullablePrimitive, TabGroup, Typography } from 'phantom-library';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { config } from '@config';
@@ -39,6 +39,11 @@ const Analyze: React.FC = () => {
 
     const dispatch = useDispatch();
 
+    /*const [generateChange, setGenerateChange] = useState<boolean>(false);
+	const toggleGenerateChange = () => {
+		setGenerateChange(!generateChange);
+	};*/
+
     const submitFiles = (files: File[], example?: string): void => {
         dispatch(clearResults());
         dispatch(setLoading(true));
@@ -75,11 +80,6 @@ const Analyze: React.FC = () => {
         }
     }, []);
 
-    /*const [generateChange, setGenerateChange] = useState<boolean>(false);
-	const toggleGenerateChange = () => {
-		setGenerateChange(!generateChange);
-	};*/
-
     const changedFile = (title: string): void => {
         setSelectedFile(config.exampleFiles.findIndex((file: { title: string }) => file.title == title));
     };
@@ -111,14 +111,14 @@ const Analyze: React.FC = () => {
                     label: 'File',
                     tab: (
                         <div>
-                            <Heading minor title="Analyze File" />
-                            <Text>Upload tweet file(s) to be analyzed by agwagram.</Text>
+                            <Heading minor>Analyze File</Heading>
+                            <Typography.Text>Upload tweet file(s) to be analyzed by agwagram.</Typography.Text>
                             <Accordion label="File Requirements">
-                                <Text>
+                                <Typography.Paragraph>
                                     Files must be in <strong>JSON</strong> or <strong>JSONL</strong> formats and may be uploaded uncompressed or as Gzip files. To upload multiple files at once, please
                                     select all your files in the file selection prompt or drag-and-drop them individually.
-                                </Text>
-                                <Text>
+                                </Typography.Paragraph>
+                                <Typography.Paragraph>
                                     JSON files must contain the tweet data as a array of Twitter{' '}
                                     <Link to="https://web.archive.org/web/20240615012946/https://developer.x.com/en/docs/twitter-api/v1/data-dictionary/object-model/tweet" target="_blank">
                                         v1.1 tweet
@@ -128,10 +128,10 @@ const Analyze: React.FC = () => {
                                         v1.1 tweet
                                     </Link>{' '}
                                     per line, <i>not</i> an account. For more details, download a tweet file from the "Example Files" tab.
-                                </Text>
+                                </Typography.Paragraph>
                             </Accordion>
                             <FileUploadPortal submit={submitFiles} />
-                            {/*<span>Generate Change Reports <Switch state={generateChange} onChange={() => toggleGenerateChange()} /</span>*/}
+                            {/*<Typography.Text>Generate Change Reports <Switch state={generateChange} onChange={() => toggleGenerateChange()} /></Typography.Text>*/}
                         </div>
                     )
                 },
@@ -139,35 +139,28 @@ const Analyze: React.FC = () => {
                     label: 'Example Files',
                     tab: (
                         <div>
-                            <Heading minor title="Analyze From Examples" />
-                            <Text>Test agwagram by selecting from our sample of tweet files.</Text>
+                            <Heading minor>Analyze From Examples</Heading>
+                            <Typography.Paragraph>Test agwagram by selecting from our sample of tweet files.</Typography.Paragraph>
                             <Dropdown
                                 options={config.exampleFiles.map((file: ExampleFile) => ({ label: file.title, value: file.title }))}
                                 placeholder="Select File"
                                 onChange={(value: NullablePrimitive) => changedFile(value as string)}
                             />
                             <br />
-                            {helperText && <Text>{helperText}</Text>}
+                            {helperText && <Typography.Paragraph>{helperText}</Typography.Paragraph>}
                         </div>
                     )
-                },
-                {
+                }
+                /*{
                     label: 'Username',
                     tab: (
                         <div>
-                            <Heading
-                                minor
-                                title={
-                                    <>
-                                        Analyze By Username <i>(Coming Soon)</i>
-                                    </>
-                                }
-                            />
-                            <Text>Search for one or more accounts (separated by a comma) by their current Twitter username.</Text>
+                            <Heading minor>Analyze By Username <i>(Coming Soon)</i></Heading>
+                            <Typography.Paragraph>Search for one or more accounts (separated by a comma) by their current Twitter username.</Typography.Paragraph>
                         </div>
                     ),
                     disabled: true
-                }
+                }*/
             ]}
         />
     );

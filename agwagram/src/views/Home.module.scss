@@ -1,9 +1,9 @@
 @use '../styles' as *;
 
-.split {
-    padding-block: $lg !important;
-    display: grid;
-    grid-template-columns: 420px 1fr;
+.split > div {
+    // padding-block: $sm !important;
+    display: grid !important;
+    grid-template-columns: 400px 1fr;
     grid-gap: $xl;
 
     @include respond-max($screen-md) {
@@ -13,10 +13,13 @@
     }
 }
 
-.section {
-    background: var(--color-surface-background) !important;
-}
-
 .results {
     padding-top: 0 !important;
+}
+
+.analysis {
+    color: var(--color-text);
+    background-color: var(--color-surface-foreground);
+    padding: $md;
+    border-radius: var(--border-radius);
 }

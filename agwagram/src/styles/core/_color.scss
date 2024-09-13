@@ -4,8 +4,9 @@
     $font: 'Helvetica Neue', helvetica, arial, sans-serif;
 
     --color-primary: rgb(20 58 162);
+    --color-surface-page-light: #f6f8fc;
     --font-body: #{$font};
-    --font-header: #{$font};
+    --font-heading: #{$font};
     --text-header-xxl: 2rem;
     --text-header-xl: 1.7rem;
     --text-header-lg: 1.4rem;

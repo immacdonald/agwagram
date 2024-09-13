@@ -1,4 +1,4 @@
-import { Card, formatNumber, Grid, GridItemSize, GroupFilledIcon, Heading, HubIcon, Row, useIsVisible, Text, useResponsiveContext } from 'phantom-library';
+import { Card, formatNumber, AdaptiveGrid, AdaptiveGridItemSize, GroupFilledIcon, Heading, HubIcon, Row, useIsVisible, useResponsiveContext, Typography } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { Fragment, useRef } from 'react';
 import { GridViewCard, GroupChangeCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
@@ -30,13 +30,15 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                     </span>
                 </Row>
             )}
-            <Grid>
-                <Grid.Item size={GridItemSize.Full}>
+            <AdaptiveGrid>
+                <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                     <Card ref={ref}>
                         <Card.Header title="Accounts Overview" Icon={GroupFilledIcon} />
                         <Card.Body>
-                            <Heading title={<>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</>} bold={false} />
-                            <Text>
+                            <Heading>
+                                {accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}
+                            </Heading>
+                            <Typography.Paragraph>
                                 Results for{' '}
                                 {accounts.map((account: AccountBloc, index: number) => (
                                     <span key={index}>
@@ -48,17 +50,17 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                                     </span>
                                 ))}
                                 generated using {formatNumber(totalTweets)} tweets.
-                            </Text>
+                            </Typography.Paragraph>
                         </Card.Body>
                     </Card>
-                </Grid.Item>
-                <Grid.Item size={GridItemSize.Wide}>
+                </AdaptiveGrid.Item>
+                <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
                     <TopWordsCard title="Top 100 Behaviors" subtitle="Most dominant action & content behaviors." top={topBlocWords} />
-                </Grid.Item>
-                <Grid.Item size={GridItemSize.Wide}>
+                </AdaptiveGrid.Item>
+                <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
                     <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={topTimes} symbolLabel="Pause" />
-                </Grid.Item>
-                <Grid.Item size={GridItemSize.Full}>
+                </AdaptiveGrid.Item>
+                <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                     <Card>
                         <Card.Header title="Pairwise Similarity" Icon={HubIcon} />
                         <Card.Body>
@@ -84,23 +86,23 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                             </table>
                         </Card.Body>
                     </Card>
-                </Grid.Item>
+                </AdaptiveGrid.Item>
                 {accounts[0].change_report.action && (
-                    <Grid.Item size={GridItemSize.Full}>
+                    <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                         <GroupChangeCard title="Comparative Change Between Accounts" reports={accounts} />
-                    </Grid.Item>
+                    </AdaptiveGrid.Item>
                 )}
                 {accounts.map((account: AccountBloc) => (
-                    <Grid.Item size={GridItemSize.Full} key={account.account_username}>
+                    <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full} key={account.account_username}>
                         <SumgramsCard title={`Sumgrams for @${account.account_username}`} subtitle="Most frequently used phrases." sumgrams={account.sumgrams} />
-                    </Grid.Item>
+                    </AdaptiveGrid.Item>
                 ))}
                 {accounts.map((account: AccountBloc) => (
-                    <Grid.Item size={GridItemSize.Full} key={account.account_username}>
-                        <GridViewCard title={`Grid View for @${account.account_username}`} username={account.account_username} data={account.linked_data} />
-                    </Grid.Item>
+                    <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full} key={account.account_username}>
+                        <GridViewCard title={`AdaptiveGrid View for @${account.account_username}`} username={account.account_username} data={account.linked_data} />
+                    </AdaptiveGrid.Item>
                 ))}
-            </Grid>
+            </AdaptiveGrid>
         </>
     );
 };

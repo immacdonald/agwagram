@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Card, Heading, Loading, Page, Section, Text } from 'phantom-library';
+import { Card, Heading, Loading, Page, Section, Typography } from 'phantom-library';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
@@ -12,42 +12,35 @@ const Home: FC = () => {
     const resultState = useSelector(selectResults);
 
     return (
-        <Page title="agwagram" headerSpace="pad">
-            <Section className={clsx(style.section, style.split)}>
-                <Card fullHeight context="primary">
+        <Page title="agwagram">
+            <Section>
+                <Card context="primary" className={style.split}>
                     <Card.Body>
-                        <Heading
-                            major
-                            title="Welcome to agwagram!"
-                            subtitle={
-                                <>
-                                    A{' '}
-                                    <i>
-                                        <Link to="https://github.com/wm-newslab" target="_blank">
-                                            NEWS Lab
-                                        </Link>
-                                    </i>{' '}
-                                    Project
-                                </>
-                            }
-                        />
-                        <Text>
-                            agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news
-                            organizations, self-declared bots, trolls, etc.
-                        </Text>
-                        <Text>
-                            agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework. For more
-                            details, see the{' '}
-                            <Link to="/about" target="_blank">
-                                about page
-                            </Link>
-                            .
-                        </Text>
-                    </Card.Body>
-                </Card>
-                <Card fullHeight>
-                    <Card.Body>
-                        <Analyze />
+                        <div>
+                            <Heading
+                                major
+                                subtitle={
+                                    <>A <i><Link to="https://github.com/wm-newslab" target="_blank">NEWS Lab</Link></i> Project</>
+                                }
+                            >
+                                Welcome to agwagram!
+                            </Heading>
+                            <Typography.Paragraph>
+                                agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news
+                                organizations, self-declared bots, trolls, etc.
+                            </Typography.Paragraph>
+                            <Typography.Paragraph styleLinks={false}>
+                                agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework. For more
+                                details, see the{' '}
+                                <Link to="/about" target="_blank">
+                                    about page
+                                </Link>
+                                .
+                            </Typography.Paragraph>
+                        </div>
+                        <div className={style.analysis}>
+                            <Analyze />
+                        </div>
                     </Card.Body>
                 </Card>
             </Section>

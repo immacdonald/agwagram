@@ -1,46 +1,33 @@
 @use 'sass:math';
 
-.header {
-    @include responsive-width;
-
+.content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: var(--header-height) !important;
-    background-color: var(--color-surface-foreground);
-    border-bottom: var(--border-light);
-    z-index: 10;
-    position: fixed;
-    top: 0;
-    left: 0;
+    width: 100%;
+    padding: 0 $lg;
 
-    .content {
+    .navigation {
         display: flex;
         align-items: center;
-        width: 100%;
-        padding: 0 $lg;
+        justify-content: space-between;
+        margin-left: auto;
+    }
 
-        .navigation {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-left: auto;
-        }
-
-        .navLinks {
-            display: flex;
-            align-items: center;
-            gap: $xs;
-        }
+    .navLinks {
+        display: flex;
+        align-items: center;
+        gap: $xs;
     }
 }
+
 
 .logo {
     height: 100%;
     display: flex;
     align-items: center;
-    font-size: 24px;
+    font-size: var(--text-header-md);
     text-decoration: none !important;
+    color: var(--color-primary);
 
     img {
         height: 40px;
@@ -49,6 +36,15 @@
 
     svg {
         fill: var(--color-primary) !important;
+    }
+}
+
+.newslab {
+    margin-left: $lg;
+
+    a {
+        text-decoration: none !important;
+        color: var(--color-text);
     }
 }
 
