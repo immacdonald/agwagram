@@ -35,9 +35,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                     <Card ref={ref}>
                         <Card.Header title="Accounts Overview" Icon={GroupFilledIcon} />
                         <Card.Body>
-                            <Heading>
-                                {accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}
-                            </Heading>
+                            <Heading>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</Heading>
                             <Typography.Paragraph>
                                 Results for{' '}
                                 {accounts.map((account: AccountBloc, index: number) => (

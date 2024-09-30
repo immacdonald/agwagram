@@ -40,7 +40,7 @@ def verify_user_exists(user_list):
 
     return 0, user_data['data']
 
-def analyze_tweets(tweets = None, change_report = True):
+def analyze_tweets(tweets = None, change_report = True, sumgram_tweet_limit = 1000, expert_mode = False):
     if(tweets):
         # Sort Tweets by user
         tic = time.perf_counter()
@@ -89,7 +89,7 @@ def analyze_tweets(tweets = None, change_report = True):
 
         toc = time.perf_counter()
         print(f"Generated bloc output for analysis in {toc - tic:0.4f} seconds")
-        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False, change_report = change_report)
+        return bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = False, change_report = change_report, sumgram_tweet_limit=sumgram_tweet_limit, expert_mode=expert_mode)
 
 
 def analyze_user(usernames):
@@ -114,7 +114,7 @@ def analyze_user(usernames):
 
     return result
 
-def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True, change_report = True):
+def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True, change_report = False, sumgram_tweet_limit = 1000, expert_mode = False):
     # Useful statistics
     start_bloc = time.perf_counter()
     gen_bloc_args = Namespace(**bloc_params)
@@ -270,19 +270,8 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
         end_link = time.perf_counter()
         print(f"Generated linked data in {end_link - start_link:0.4f} seconds")
 
-        start_sumgrams = time.perf_counter()
         ngrams = [1, 2, 3]
-        #ngrams = [1, 2, 3] if account_bloc['more_details']['total_tweets'] < 2000 else []
-        #tracemalloc.start()
-        sumgrams = sumgrams_from_tweets(all_tweets, ngrams)
-        #snapshot = tracemalloc.take_snapshot()
-        #top_stats = snapshot.statistics('lineno')
-        #print("[ Top 10 ]")
-        #for stat in top_stats[:10]:
-        #    print(stat)
-        #end_sumgrams = time.perf_counter()
-        #print(f"Computed sumgrams in {end_sumgrams - start_sumgrams:0.4f} seconds")
-        #print(sumgrams)
+        sumgrams = sumgrams_from_tweets(all_tweets, ngrams, sumgram_tweet_limit)
 
         result['account_blocs'].append({
             'user_exists': True,
@@ -316,7 +305,6 @@ def bloc_analysis(all_bloc_output, user_data, bloc_params, count_elapsed = True,
             })
 
     return result
-
 
 
 def recalculate_bloc_word_rate(bloc_words):
@@ -393,9 +381,8 @@ def link_change_report(raw_report):
 
     return report
 
-def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3]):
+def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3], tweet_limit = 1000):
     docs = []
-    tweet_limit = 1000
 
     # If n is provided and the number of tweets is greater than n, sample n tweets randomly
     if tweet_limit is not None and len(tweets) > tweet_limit:

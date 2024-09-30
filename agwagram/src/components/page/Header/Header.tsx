@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     const { theme, toggleTheme } = useResponsiveContext();
 
     return (
-        <SimpleDynamicHeader pageSpace='pad' hasBackground>
+        <SimpleDynamicHeader pageSpace="pad" hasBackground>
             <div className={style.content}>
                 <Link to="/" className={style.logo}>
                     <Button Icon={AgwagramIcon} rounded />
@@ -26,8 +26,12 @@ const Header: React.FC = () => {
                 </div>
                 <div className={style.navigation}>
                     <nav className={style.navLinks}>
-                        <Button link="/" visual="text">Home</Button>
-                        <Button link="/about" visual="text">About</Button>
+                        <Button link="/" visual="text">
+                            Home
+                        </Button>
+                        <Button link="/about" visual="text">
+                            About
+                        </Button>
                         <Button rounded visual="text" onClick={() => toggleTheme()} Icon={theme == 'light' ? SunFilledIcon : MoonFilledIcon} />
                     </nav>
                 </div>

@@ -29,7 +29,7 @@ export const api = createApi({
                 };
             }
         }),
-        setAnalyzeFiles: builder.mutation<Analysis, { files: File[]; changeReport: boolean }>({
+        setAnalyzeFiles: builder.mutation<Analysis, { files: File[]; changeReport: boolean; sumgramLimit: number; expertMode: boolean }>({
             query: (args) => {
                 const formData = new FormData();
                 args.files.forEach((file: File) => {
@@ -37,7 +37,7 @@ export const api = createApi({
                 });
 
                 return {
-                    url: `/analyze/file?change_report=${args.changeReport}`,
+                    url: `/analyze/file?change=${args.changeReport}&sumgrams=${args.sumgramLimit}&expert=${args.expertMode}`,
                     method: 'POST',
                     body: formData
                 };

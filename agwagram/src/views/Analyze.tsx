@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Accordion, Dropdown, FileUploadPortal, Heading, NullablePrimitive, TabGroup, Typography } from 'phantom-library';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { config } from '@config';
 import { useSetAnalyzeFilesMutation } from '@data/apiSlice';
-import { clearResults, setExample, setLoading, setResults } from '@data/settingsSlice';
+import { clearResults, selectConfig, setExample, setLoading, setResults } from '@data/settingsSlice';
 
 const getStaticDataFile = async (file: string, folder: string = '/data'): Promise<File> => {
     if (config.mode == 'production' && file.endsWith('.gz')) {
@@ -35,14 +35,10 @@ const getStaticDataFile = async (file: string, folder: string = '/data'): Promis
 
 const Analyze: React.FC = () => {
     const [setFiles, results] = useSetAnalyzeFilesMutation();
+    const analysisConfig = useSelector(selectConfig);
     //const [setUser] = useSetAnalyzeUserMutation();
 
     const dispatch = useDispatch();
-
-    /*const [generateChange, setGenerateChange] = useState<boolean>(false);
-	const toggleGenerateChange = () => {
-		setGenerateChange(!generateChange);
-	};*/
 
     const submitFiles = (files: File[], example?: string): void => {
         dispatch(clearResults());
@@ -50,7 +46,7 @@ const Analyze: React.FC = () => {
         if (example) {
             dispatch(setExample(example));
         }
-        setFiles({ files, changeReport: false });
+        setFiles({ files, changeReport: !!analysisConfig.changeReports, sumgramLimit: analysisConfig.sumgramLimit || 1000, expertMode: !!analysisConfig.expertMode });
     };
 
     useEffect(() => {
@@ -131,7 +127,6 @@ const Analyze: React.FC = () => {
                                 </Typography.Paragraph>
                             </Accordion>
                             <FileUploadPortal submit={submitFiles} />
-                            {/*<Typography.Text>Generate Change Reports <Switch state={generateChange} onChange={() => toggleGenerateChange()} /></Typography.Text>*/}
                         </div>
                     )
                 },

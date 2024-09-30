@@ -1,5 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Card, DatasetIcon, Dropdown, formatNumericDate, formatReadableDate, Popover, RecenterIcon, Row, Switch, Typography, useResponsiveContext, ZoomInIcon, ZoomOutIcon } from 'phantom-library';
+import {
+    Button,
+    Card,
+    DatasetIcon,
+    Dropdown,
+    formatNumericDate,
+    formatReadableDate,
+    Popover,
+    RecenterIcon,
+    Row,
+    Switch,
+    Typography,
+    useResponsiveContext,
+    ZoomInIcon,
+    ZoomOutIcon
+} from 'phantom-library';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '@data/apiSlice';
 import style from './GridViewCard.module.scss';

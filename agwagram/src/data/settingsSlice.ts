@@ -7,8 +7,15 @@ interface ResultState {
     example: string | null;
 }
 
+interface ConfigState {
+    changeReports?: boolean;
+    sumgramLimit?: number;
+    expertMode?: boolean;
+}
+
 interface SettingsState {
     results: ResultState;
+    config: ConfigState;
 }
 
 // Define the initial state
@@ -17,6 +24,11 @@ const initialState: SettingsState = {
         data: null,
         loading: false,
         example: null
+    },
+    config: {
+        changeReports: false,
+        sumgramLimit: 1000,
+        expertMode: false
     }
 };
 
@@ -39,14 +51,18 @@ export const settingsSlice = createSlice({
                 loading: false,
                 example: null
             };
+        },
+        setConfig: (state, action: PayloadAction<ConfigState>) => {
+            state.config = { ...state.config, ...action.payload };
         }
     }
 });
 
-export const { setLoading, setExample, setResults, clearResults } = settingsSlice.actions;
+export const { setLoading, setExample, setResults, clearResults, setConfig } = settingsSlice.actions;
 
 // Selectors
 export const selectResults = (state: RootState): ResultState => state.settings.results;
+export const selectConfig = (state: RootState): ConfigState => state.settings.config;
 
 const settingsReducer = settingsSlice.reducer;
 export { settingsReducer };

@@ -27,8 +27,10 @@ import time
 class AnalyzeFiles(APIView):
     def post(self, request):
         start: float = time.perf_counter()
-        change_param = request.query_params.get('change_report', 'true')
+        change_param = request.query_params.get('change', 'false')
         generate_change_report = change_param.lower() == 'true'
+        sumgrams_limit_param = int(request.query_params.get('sumgrams', 1000))
+        expert_mode_param = request.query_params.get('expert', 'false')
 
         try:
             tic = time.perf_counter()
@@ -54,7 +56,7 @@ class AnalyzeFiles(APIView):
             if validate_tweet_data(tweets=tweets) is False:
                 return Response({"error": "Invalid tweet data, file is missing fields."}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
             
-            results = bloc_handler.analyze_tweets(tweets=tweets, change_report=generate_change_report)
+            results = bloc_handler.analyze_tweets(tweets=tweets, change_report=generate_change_report, sumgram_tweet_limit=sumgrams_limit_param, expert_mode=expert_mode_param)
 
             for temp_file in converted_files:
                 os.remove(temp_file)

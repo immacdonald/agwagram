@@ -57,18 +57,14 @@ const About: FC = () => {
                     }
                 />
                 <Heading minor>Publications</Heading>
-                <Typography.Text newline>
-                    A language framework for modeling social media account behavior
-                </Typography.Text>
-                <Typography.Text newline>
-                    Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer
-                </Typography.Text>
+                <Typography.Text newline>A language framework for modeling social media account behavior</Typography.Text>
+                <Typography.Text newline>Alexander C. Nwala, Alessandro Flammini, and Filippo Menczer</Typography.Text>
                 <Typography.Text newline>
                     <Link to="https://doi.org/10.1140/epjds/s13688-023-00410-9" target="_blank">
                         EPJ Data Science
                     </Link>
                 </Typography.Text>
-                <br/>
+                <br />
                 <Heading minor>About Us</Heading>
                 <Typography.Paragraph>
                     agwagram is a project of the News Web and Social Media (NEWS) research lab at William & Mary. NEWS Lab studies the web as an entity with a focus on (local) news and vectors of

@@ -1,15 +1,19 @@
 import clsx from 'clsx';
-import { Card, Heading, Loading, Page, Section, Typography } from 'phantom-library';
-import { useSelector } from 'react-redux';
+import { Button, Card, Column, Heading, Loading, MenuIcon, Page, Section, Switch, Typography } from 'phantom-library';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FC } from 'react';
-import { selectResults } from '@data/settingsSlice';
+import { FC, useState } from 'react';
+import { selectConfig, selectResults, setConfig } from '@data/settingsSlice';
 import { Analyze } from './Analyze';
 import { Results } from './Results';
 import style from './Home.module.scss';
 
 const Home: FC = () => {
     const resultState = useSelector(selectResults);
+    const configState = useSelector(selectConfig);
+    const dispatch = useDispatch();
+
+    const [expandAnalysisConfig, setExpandAnalysisConfig] = useState<boolean>(false);
 
     return (
         <Page title="agwagram">
@@ -20,7 +24,15 @@ const Home: FC = () => {
                             <Heading
                                 major
                                 subtitle={
-                                    <>A <i><Link to="https://github.com/wm-newslab" target="_blank">NEWS Lab</Link></i> Project</>
+                                    <>
+                                        A{' '}
+                                        <i>
+                                            <Link to="https://github.com/wm-newslab" target="_blank">
+                                                NEWS Lab
+                                            </Link>
+                                        </i>{' '}
+                                        Project
+                                    </>
                                 }
                             >
                                 Welcome to agwagram!
@@ -39,7 +51,32 @@ const Home: FC = () => {
                             </Typography.Paragraph>
                         </div>
                         <div className={style.analysis}>
-                            <Analyze />
+                            <div>
+                                <Analyze />
+                            </div>
+                            <div className={style.analysisConfig} data-panel-expanded={expandAnalysisConfig ? 'true' : 'false'}>
+                                <div className={style.configToggle}>
+                                    <Button Icon={MenuIcon} onClick={() => setExpandAnalysisConfig(!expandAnalysisConfig)} visual="text" />
+                                </div>
+                                <div className={style.configContent}>
+                                    <Heading minor>Config</Heading>
+                                    <Column gap="16px" verticalAlign="start" align="start">
+                                        <Typography.Text>
+                                            Generate Change Reports <Switch state={!!configState.changeReports} onChange={(state: boolean) => dispatch(setConfig({ changeReports: state }))} />
+                                        </Typography.Text>
+                                        <Typography.Text>
+                                            Expert Mode <Switch state={!!configState.expertMode} onChange={(state: boolean) => dispatch(setConfig({ expertMode: state }))} />
+                                        </Typography.Text>
+                                        <Typography.Text>
+                                            Sumgram Tweet Limit{' '}
+                                            <input
+                                                value={configState.sumgramLimit}
+                                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(setConfig({ sumgramLimit: Number(event.target.value) }))}
+                                            />
+                                        </Typography.Text>
+                                    </Column>
+                                </div>
+                            </div>
                         </div>
                     </Card.Body>
                 </Card>

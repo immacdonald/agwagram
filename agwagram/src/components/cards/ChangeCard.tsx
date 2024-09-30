@@ -1,4 +1,4 @@
-import { ReactNode, useMemo, useRef, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { Card, formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Heading, Typography } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefinitionTooltip } from '@components';
@@ -13,6 +13,13 @@ type ChangeGraphState = Record<string, boolean>;
 
 const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProps) => {
     if (report.change_profile) {
+        const changeGraph = useRef<ChangeGraphState>({
+            similarity: true,
+            word: true,
+            pause: true,
+            activity: true
+        });
+
         // Only show pause change if it has a value
         const showPause: boolean = Number(report.change_profile.average_change.pause) >= 0;
         const [sortedField, setSortedField] = useState<string | null>('time');
@@ -68,17 +75,14 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
                     </tr>
                 );
             });
-        }, [sortedField]);
+        }, [sortedField, changeGraph.current]);
 
-        const changeGraph = useRef<ChangeGraphState>({
-            similarity: true,
-            word: true,
-            pause: true,
-            activity: true
-        });
+        const [, updateState] = useState<any>();
+        const forceUpdate = useCallback(() => updateState({}), []);
 
-        const toggleChangeGraphDisplay = (key: string): void => {
-            changeGraph.current = { ...changeGraph.current, [key]: !(changeGraph.current[key]) };
+        const toggleChangeGraphDisplay = (key: string, state: boolean): void => {
+            changeGraph.current = { ...changeGraph.current, [key]: state };
+            forceUpdate();
         };
 
         const changeChronology: ChangeChronology[] = [];
@@ -101,6 +105,23 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
             );
         };
 
+        const changeToggles = (
+            <>
+                <span>
+                    Similarity <Switch state={changeGraph.current['similarity']} onChange={(state: boolean) => toggleChangeGraphDisplay('similarity', state)} />
+                </span>
+                <span>
+                    Word <Switch state={changeGraph.current['word']} onChange={(state: boolean) => toggleChangeGraphDisplay('word', state)} />
+                </span>
+                <span>
+                    Pause <Switch state={changeGraph.current['pause']} onChange={(state: boolean) => toggleChangeGraphDisplay('pause', state)} />
+                </span>
+                <span>
+                    Activity <Switch state={changeGraph.current['activity']} onChange={(state: boolean) => toggleChangeGraphDisplay('activity', state)} />
+                </span>
+            </>
+        );
+
         return (
             <Card>
                 <Card.Header title={title} Icon={TimelineIcon} />
@@ -115,20 +136,7 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
                     </Typography.Paragraph>
                     <div style={{ width: '100%', height: '480px' }}>
                         <Heading minor>Change Profile</Heading>
-                        <Row>
-                            <span>
-                                Similarity <Switch state={changeGraph.current['similarity']} onChange={() => toggleChangeGraphDisplay('similarity')} />
-                            </span>
-                            <span>
-                                Word <Switch state={changeGraph.current['word']} onChange={() => toggleChangeGraphDisplay('word')} />
-                            </span>
-                            <span>
-                                Pause <Switch state={changeGraph.current['pause']} onChange={() => toggleChangeGraphDisplay('pause')} />
-                            </span>
-                            <span>
-                                Activity <Switch state={changeGraph.current['activity']} onChange={() => toggleChangeGraphDisplay('activity')} />
-                            </span>
-                        </Row>
+                        <Row>{changeToggles}</Row>
                         <ResponsiveContainer width="100%" height="85%">
                             <LineChart
                                 width={500}

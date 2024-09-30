@@ -1,7 +1,9 @@
 import { Card, formatNumber, formatReadableDate, AdaptiveGrid, AdaptiveGridItemSize, Heading, PersonFilledIcon, Row, useIsVisible, useResponsiveContext, Typography } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
+import { selectConfig } from '@data/settingsSlice';
 import style from './AccountAnalysis.module.scss';
 
 interface AccountAnalysisProps {
@@ -9,7 +11,8 @@ interface AccountAnalysisProps {
 }
 
 const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
-    const expertMode = false;
+    const analysisConfig = useSelector(selectConfig);
+    const expertMode = analysisConfig.expertMode;
 
     const { isMobile } = useResponsiveContext();
 
@@ -57,15 +60,21 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                     <GridViewCard title="Grid View" username={account.account_username} data={account.linked_data} />
                 </AdaptiveGrid.Item>
-                {account.change_report.action && <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                    <ChangeProfileCard title="Change Profile Details" reports={account.change_report} />
-                </AdaptiveGrid.Item>}
-                {account.change_report.action && <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                    <ChangeCard title="Action Change Profile" report={account.change_report.action!} />
-                </AdaptiveGrid.Item>}
-                {account.change_report.content_syntactic && <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                     <ChangeCard title="Syntactic Change Profile" report={account.change_report.content_syntactic!} />
-                </AdaptiveGrid.Item>}
+                {account.change_report.action && (
+                    <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
+                        <ChangeProfileCard title="Change Profile Details" reports={account.change_report} />
+                    </AdaptiveGrid.Item>
+                )}
+                {account.change_report.action && (
+                    <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
+                        <ChangeCard title="Action Change Profile" report={account.change_report.action!} />
+                    </AdaptiveGrid.Item>
+                )}
+                {account.change_report.content_syntactic && (
+                    <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
+                        <ChangeCard title="Syntactic Change Profile" report={account.change_report.content_syntactic!} />
+                    </AdaptiveGrid.Item>
+                )}
                 {expertMode ? (
                     <>
                         <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>

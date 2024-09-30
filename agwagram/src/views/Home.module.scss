@@ -18,8 +18,56 @@
 }
 
 .analysis {
+    $config-width: 40px;
+
     color: var(--color-text);
     background-color: var(--color-surface-foreground);
-    padding: $md;
     border-radius: var(--border-radius);
+    display: flex;
+    position: relative;
+
+    > div:first-child {
+        width: 100%;
+        padding: $md;
+        padding-right: calc(#{$md} + #{$config-width});
+
+        &:has(+ [data-panel-expanded='true']) {
+            filter: opacity(0.5);
+            filter: opacity(0.5);
+        }
+    }
+
+    .analysisConfig {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: $config-width;
+        transition: width var(--transition-mid);
+        z-index: 2;
+        background-color: var(--color-surface-foreground);
+        border: var(--border-light);
+        display: flex;
+        overflow: hidden;
+
+        .configToggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: $config-width;
+            border-right: var(--border-light);
+        }
+
+        .configContent {
+            width: 320px !important;
+            padding: $md;
+        }
+
+        &[data-panel-expanded='true'] {
+            width: 320px;
+            box-shadow: var(--shadow-lifted);
+        }
+    }
 }
