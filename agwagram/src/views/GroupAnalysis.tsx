@@ -56,7 +56,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                     <TopWordsCard title="Top 100 Behaviors" subtitle="Most dominant action & content behaviors." top={topBlocWords} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
-                    <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={topTimes} symbolLabel="Pause" />
+                    <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={topTimes} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                     <Card>
@@ -97,7 +97,7 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                 ))}
                 {accounts.map((account: AccountBloc) => (
                     <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full} key={account.account_username}>
-                        <GridViewCard title={`AdaptiveGrid View for @${account.account_username}`} username={account.account_username} data={account.linked_data} />
+                        <GridViewCard title={`Grid View for @${account.account_username}`} username={account.account_username} data={account.linked_data} />
                     </AdaptiveGrid.Item>
                 ))}
             </AdaptiveGrid>

@@ -34,9 +34,9 @@ type GridItemData = GridLinkedData | string;
 type LegendKey = Record<string, string>;
 
 const actionLegend: LegendKey = {
-    P: '#84f460',
+    //P: '#84f460',
     p: '#5fcecf',
-    R: '#FFA500',
+    //R: '#FFA500',
     r: '#ea3323',
     T: '#48752c',
     π: '#ea33f7',
@@ -234,9 +234,9 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                     <div className={style.legendList}>
                         {legend.map((item) => {
                             return (
-                                <div className={style.legendKey} key={item.symbol} style={!usedSymbols.includes(item.symbol) ? { opacity: '33%' } : undefined}>
+                                <div className={style.legendKey} key={item.symbol} style={!usedSymbols.includes(item.symbol) ? { display: 'none' /*opacity: '33%'*/ } : undefined}>
                                     <span style={{ backgroundColor: item.color }}></span>
-                                    <em>{item.symbol}</em>
+                                    <em>{symbolToDefinition(item.symbol)}</em>
                                 </div>
                             );
                         })}

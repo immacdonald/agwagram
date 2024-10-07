@@ -1,10 +1,13 @@
 import { Heading, Page, Section, StyledImage, Typography } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
+import { useAnalytics } from 'src/hooks';
 import { PCAImage, userBlocImage } from '@assets/images';
 import { config } from '@config';
 
 const About: FC = () => {
+    useAnalytics('/tools/agwagram');
+
     return (
         <Page title="agwagram">
             <Section variant="inset">

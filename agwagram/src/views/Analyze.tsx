@@ -104,7 +104,23 @@ const Analyze: React.FC = () => {
             variant="segmented"
             tabs={[
                 {
-                    label: 'File',
+                    label: 'Pick An Account',
+                    tab: (
+                        <div>
+                            <Heading minor>Analyze From Examples</Heading>
+                            <Typography.Paragraph>Test agwagram by selecting from our sample of tweet files.</Typography.Paragraph>
+                            <Dropdown
+                                options={config.exampleFiles.map((file: ExampleFile) => ({ label: file.title, value: file.title }))}
+                                placeholder="Select File"
+                                onChange={(value: NullablePrimitive) => changedFile(value as string)}
+                            />
+                            <br />
+                            {helperText && <Typography.Paragraph>{helperText}</Typography.Paragraph>}
+                        </div>
+                    )
+                },
+                {
+                    label: 'Upload Tweets File(s)',
                     tab: (
                         <div>
                             <Heading minor>Analyze File</Heading>
@@ -127,22 +143,6 @@ const Analyze: React.FC = () => {
                                 </Typography.Paragraph>
                             </Accordion>
                             <FileUploadPortal submit={submitFiles} />
-                        </div>
-                    )
-                },
-                {
-                    label: 'Example Files',
-                    tab: (
-                        <div>
-                            <Heading minor>Analyze From Examples</Heading>
-                            <Typography.Paragraph>Test agwagram by selecting from our sample of tweet files.</Typography.Paragraph>
-                            <Dropdown
-                                options={config.exampleFiles.map((file: ExampleFile) => ({ label: file.title, value: file.title }))}
-                                placeholder="Select File"
-                                onChange={(value: NullablePrimitive) => changedFile(value as string)}
-                            />
-                            <br />
-                            {helperText && <Typography.Paragraph>{helperText}</Typography.Paragraph>}
                         </div>
                     )
                 }

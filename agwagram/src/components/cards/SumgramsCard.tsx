@@ -13,7 +13,7 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
     // To-do: filter out sumgrams where there are no top sumgrams
     const sumgramOptions = sumgrams.map((sumgram: Sumgrams, index: number) => {
         return {
-            label: `ngram = ${sumgram.base_ngram}`,
+            label: `n = ${sumgram.base_ngram}`,
             value: index
         };
     });
@@ -30,7 +30,7 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
                         <Dropdown
                             options={sumgramOptions}
                             onChange={(selected) => setSumgramIndex(typeof selected == 'number' ? selected : 1)}
-                            placeholder="Select ngram"
+                            placeholder="n = "
                             defaultValue={sumgramOptions[defaultSumgram].value}
                         />
                         <table>
