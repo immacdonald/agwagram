@@ -6,7 +6,7 @@ import { About, Home } from '@views';
 import { useAnalytics } from './hooks/useAnalytics';
 
 const App: FC = () => {
-    useAnalytics();
+    useAnalytics("/tools/agwagram");
 
     return (
         <StyledApp anchors>
