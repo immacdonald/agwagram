@@ -23,15 +23,7 @@ const Results: React.FC = () => {
                     tabs={[
                         {
                             label: 'Group Analysis',
-                            tab: (
-                                <GroupAnalysis
-                                    accounts={accounts}
-                                    totalTweets={results.total_tweets}
-                                    topBlocWords={results.group_top_bloc_words}
-                                    topTimes={results.group_top_time}
-                                    pairwiseSim={results.pairwise_sim}
-                                />
-                            )
+                            tab: <GroupAnalysis accounts={accounts} totalTweets={results.total_tweets} topTimes={results.group_top_time} pairwiseSim={results.pairwise_sim} />
                         },
                         ...accounts.map((account: AccountBloc) => ({ label: `@${account.account_username}`, tab: <AccountAnalysis account={account} /> }) as Tab)
                     ]}

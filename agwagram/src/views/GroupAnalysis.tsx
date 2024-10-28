@@ -1,18 +1,17 @@
 import { Card, formatNumber, AdaptiveGrid, AdaptiveGridItemSize, GroupFilledIcon, Heading, HubIcon, Row, useIsVisible, useResponsiveContext, Typography } from 'phantom-library';
 import { Link } from 'react-router-dom';
 import { Fragment, useRef } from 'react';
-import { GridViewCard, GroupChangeCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
+import { GridViewCard, GroupChangeCard, SumgramsCard, TopWordsCategoryCard } from '@components';
 import style from './AccountAnalysis.module.scss';
 
 interface GroupAnalysisProps {
     accounts: AccountBloc[];
     totalTweets: number;
-    topBlocWords: Top[];
     topTimes: Top[];
     pairwiseSim: PairwiseSimilarity[];
 }
 
-const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, topBlocWords, topTimes, pairwiseSim }) => {
+const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, topTimes, pairwiseSim }) => {
     const { isMobile } = useResponsiveContext();
 
     const ref = useRef<HTMLDivElement>(null);
@@ -52,9 +51,9 @@ const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, to
                         </Card.Body>
                     </Card>
                 </AdaptiveGrid.Item>
-                <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
+                {/*<AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
                     <TopWordsCard title="Top 100 Behaviors" subtitle="Most dominant action & content behaviors." top={topBlocWords} />
-                </AdaptiveGrid.Item>
+                </AdaptiveGrid.Item>*/}
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
                     <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={topTimes} />
                 </AdaptiveGrid.Item>

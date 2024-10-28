@@ -3,8 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 import { FC } from 'react';
 import { Footer, Header } from '@components';
 import { About, Home } from '@views';
+import { useAnalytics } from './hooks/useAnalytics';
 
 const App: FC = () => {
+    useAnalytics();
+
     return (
         <StyledApp anchors>
             <Header />

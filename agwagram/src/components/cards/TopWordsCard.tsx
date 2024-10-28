@@ -1,17 +1,38 @@
-import { BarChartIcon, Card } from 'phantom-library';
+import { BarChartIcon, Card, Dropdown, NullablePrimitive } from 'phantom-library';
+import { useState } from 'react';
 import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCardProps {
     title: string;
     subtitle?: string;
-    top: Top[];
+    topAction: Top[];
+    topContent: Top[];
 }
 
-const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: TopWordsCardProps) => {
+const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, topAction, topContent }: TopWordsCardProps) => {
+    const [top, setTop] = useState<Top[]>(topAction);
+    const onCategoryChange = (selected: NullablePrimitive) => {
+        console.log(selected);
+        if (selected == 'content') {
+            setTop(topContent);
+        } else {
+            setTop(topAction);
+        }
+    };
+
     return (
         <Card fullHeight>
             <Card.Header title={title} subtitle={subtitle} Icon={BarChartIcon} />
             <Card.Body scrollable>
+                <Dropdown
+                    options={[
+                        { value: 'action', label: 'Action' },
+                        { value: 'content', label: 'Content' }
+                    ]}
+                    onChange={onCategoryChange}
+                    defaultValue="action"
+                    isClearable={false}
+                />
                 <table>
                     <thead>
                         <tr>
@@ -26,7 +47,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, top }: Top
                         {top.map((word: Top, index: number) => {
                             return (
                                 <tr key={index}>
-                                    <td>{word.rank}.</td>
+                                    <td>{index + 1}.</td>
                                     <td>
                                         <DefinitionTooltip word={word.term} />
                                     </td>

@@ -49,7 +49,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
                     </Card>
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
-                    <TopWordsCard title="Top Behaviors" subtitle="Most dominant action & content behaviors." top={account.top_bloc_words} />
+                    <TopWordsCard title="Top Behaviors" subtitle="Most dominant action & content behaviors." topAction={account.top_actions} topContent={account.top_syntactic} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Wide}>
                     <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={account.top_time} />

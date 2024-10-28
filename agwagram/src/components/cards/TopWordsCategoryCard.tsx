@@ -3,11 +3,12 @@ import { SymbolTooltip } from '@components';
 
 interface TopWordsCategoryCardProps {
     title: string;
-    subtitle?: string;
     top: Top[];
+    subtitle?: string;
+    category?: string;
 }
 
-const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subtitle, top }: TopWordsCategoryCardProps) => {
+const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subtitle, top, category = 'Behavior' }: TopWordsCategoryCardProps) => {
     return (
         <Card fullHeight>
             <Card.Header title={title} subtitle={subtitle} Icon={PauseIcon} />
@@ -15,7 +16,7 @@ const TopWordsCategoryCard: React.FC<TopWordsCategoryCardProps> = ({ title, subt
                 <table>
                     <thead>
                         <tr>
-                            <th>Behavior</th>
+                            <th>{category}</th>
                             <th style={{ width: '90px' }}>Frequency</th>
                             <th style={{ width: '85px' }}>Rate (%)</th>
                         </tr>

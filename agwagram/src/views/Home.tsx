@@ -3,15 +3,12 @@ import { Button, Card, Column, Heading, Loading, MenuIcon, Page, Section, Switch
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FC, useState } from 'react';
-import { useAnalytics } from 'src/hooks';
 import { selectConfig, selectResults, setConfig } from '@data/settingsSlice';
 import { Analyze } from './Analyze';
 import { Results } from './Results';
 import style from './Home.module.scss';
 
 const Home: FC = () => {
-    useAnalytics('/tools/agwagram');
-
     const resultState = useSelector(selectResults);
     const configState = useSelector(selectConfig);
     const dispatch = useDispatch();
