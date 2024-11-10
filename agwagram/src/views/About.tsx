@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { FC } from 'react';
 import { PCAImage, userBlocImage } from '@assets/images';
 import { config } from '@config';
+import { DashboardLayout } from 'src/layouts/DashboardLayout';
 
 const About: FC = () => {
     return (
-        <Page title="agwagram">
-            <Section variant="inset">
-                <Heading align="center">About</Heading>
+        <DashboardLayout header={false}>
+            <Section style={{backgroundColor: "var(--color-background-foreground)"}}>
+                <Heading align="center" major>About</Heading>
                 <Typography.Paragraph>
                     agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations,
                     self-declared bots, trolls, etc. agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language
@@ -80,7 +81,7 @@ const About: FC = () => {
                 </Typography.Paragraph>
                 <Typography.Paragraph>Agwagram is currently on version {config.version}.</Typography.Paragraph>
             </Section>
-        </Page>
+        </DashboardLayout>
     );
 };
 

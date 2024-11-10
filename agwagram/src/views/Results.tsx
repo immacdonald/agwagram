@@ -20,6 +20,7 @@ const Results: React.FC = () => {
         } else {
             return (
                 <TabGroup
+                    variant='segmented'
                     tabs={[
                         {
                             label: 'Group Analysis',

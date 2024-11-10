@@ -1,0 +1,57 @@
+.layout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    article {
+        padding: var(--space-xl);
+    }
+}
+
+.darken {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+    background-color: #00000040;
+    z-index: 109;
+}
+
+.aside {
+    width: 224px;
+    position: sticky;
+    inset: 0;
+    height: 100vh;
+    padding: var(--space);
+    overflow-y: auto;
+    flex-shrink: 0;
+    background-color: var(--color-background-dark);
+    color: white;
+    z-index: 110;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+
+    button, a {
+        color: white;
+        font-weight: 600;
+        padding-block: 0 !important;
+    }
+
+    &.mobile {
+        position: fixed;
+        inset: 0;
+        height: 100%;
+        z-index: 200;
+        transition: transform var(--transition-mid);
+
+        &[data-toggled="true"] {
+            transform: translateX(0);
+        }
+
+        &[data-toggled="false"] {
+            transform: translateX(-256px);
+        }
+    }
+}

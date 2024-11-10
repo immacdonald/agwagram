@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0 $lg;
+    padding: 0 var(--space-lg);
 
     .navigation {
         display: flex;
@@ -16,7 +16,7 @@
     .navLinks {
         display: flex;
         align-items: center;
-        gap: $xs;
+        gap: var(--space-sm);
     }
 }
 
@@ -39,7 +39,7 @@
 }
 
 .newslab {
-    margin-left: $lg;
+    margin-left: var(--space-lg);
 
     a {
         text-decoration: none !important;
@@ -50,5 +50,5 @@
 .tools {
     display: flex;
     flex-direction: column;
-    gap: $sm;
+    gap: var(--space-sm);
 }

@@ -38,12 +38,12 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            gap: $sm;
+            gap: var(--space-sm);
             position: absolute;
             bottom: 50px;
             right: 50px;
-            padding: $sm;
-            background-color: var(--color-surface-foreground);
+            padding: var(--space-sm);
+            background-color: var(--color-background-foreground);
             box-shadow: var(--shadow-lifted);
             border-radius: var(--border-radius);
         }
@@ -62,7 +62,7 @@
     flex-direction: column;
     padding: 8px;
     margin-bottom: 8px;
-    background-color: var(--color-surface-background);
+    background-color: var(--color-background);
     border-radius: var(--border-radius);
     font-size: 12px;
 
@@ -97,7 +97,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: $xl;
+        gap: var(--space-xl);
         font-size: var(--text-header-lg);
     }
 }

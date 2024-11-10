@@ -57,12 +57,6 @@ const Analyze: React.FC = () => {
         }
     }, [results]);
 
-    /*const searchUsername = (username: string) => {
-		dispatch(clearResults());
-		dispatch(setLoading(true));
-		setUser(username);
-	};*/
-
     const submitJsonFile = (file: string): void => {
         getStaticDataFile(file).then((data) => submitFiles([data], file));
     };

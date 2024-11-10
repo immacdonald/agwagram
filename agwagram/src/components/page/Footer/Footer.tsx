@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
-import { Column, Flex, SimpleFooter, Typography } from 'phantom-library';
+import { Column, designTokens, Flex, SimpleFooter, StyledLink, Typography } from 'phantom-library';
 
 const Footer: FC = () => {
     return (
-        <SimpleFooter theme="dark">
+        <SimpleFooter style={{borderTop: designTokens.border.light}}>
             <Flex flex={{ base: 'row', xs: 'column' }} gap={{ base: '64px', xs: '8px' }} verticalAlign="start">
                 <Column align="start" gap="0">
                     <Typography.Text>
@@ -25,11 +25,11 @@ const Footer: FC = () => {
                     <Link to="/about">About</Link>
                 </Column>
             </Flex>
-            <Typography.Text styleLinks={false}>
+            <Typography.Text>
                 &copy; {new Date().getFullYear()}{' '}
-                <Link to="https://newsresearch.lab.wm.edu" target="_blank">
+                <StyledLink to="https://newsresearch.lab.wm.edu" external inherit>
                     Willam & Mary NEWS Lab
-                </Link>
+                </StyledLink>
             </Typography.Text>
         </SimpleFooter>
     );

@@ -1,15 +1,22 @@
 @use '../styles' as *;
 
-.split > div {
-    // padding-block: $sm !important;
-    display: grid !important;
-    grid-template-columns: 400px 1fr;
-    grid-gap: $xl;
+.split {
+    margin-bottom: var(--space-lg);
 
-    @include respond-max($screen-md) {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        grid-gap: $lg;
+    >div {
+        padding: var(--space) var(--space-lg);
+        background-color: var(--color-background-foreground);
+        display: grid;
+        grid-template-columns: 448px 1fr;
+        grid-gap: var(--space-xl);
+        box-shadow: var(--shadow-raised);
+        border-radius: var(--border-radius);
+
+        @include respond-max($screen-lg) {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            grid-gap: var(--space-lg);
+        }
     }
 }
 
@@ -21,15 +28,16 @@
     $config-width: 40px;
 
     color: var(--color-text);
-    background-color: var(--color-surface-foreground);
+    border: var(--border-light);
+    //background-color: var(--color-background-foreground);
     border-radius: var(--border-radius);
     display: flex;
     position: relative;
 
-    > div:first-child {
+    >div:first-child {
         width: 100%;
-        padding: $md;
-        padding-right: calc(#{$md} + #{$config-width});
+        padding: var(--space);
+        padding-right: calc(#{var(--space)} + #{$config-width});
 
         &:has(+ [data-panel-expanded='true']) {
             filter: opacity(0.5);
@@ -44,7 +52,7 @@
         width: $config-width;
         transition: width var(--transition-mid);
         z-index: 2;
-        background-color: var(--color-surface-foreground);
+        background-color: var(--color-background-foreground);
         border: var(--border-light);
         display: flex;
         overflow: hidden;
@@ -61,7 +69,7 @@
 
         .configContent {
             width: 320px !important;
-            padding: $md;
+            padding: var(--space);
         }
 
         &[data-panel-expanded='true'] {
@@ -69,4 +77,9 @@
             box-shadow: var(--shadow-lifted);
         }
     }
+}
+
+.grid {
+
+    
 }

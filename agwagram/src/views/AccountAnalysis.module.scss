@@ -10,5 +10,5 @@
     color: var(--color-text-on-primary);
     z-index: 100;
     border-radius: var(--border-radius);
-    padding-inline: $md;
+    padding-inline: var(--space);
 }

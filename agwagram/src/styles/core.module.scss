@@ -1,1 +1,9 @@
 @forward 'core';
+
+[class^='phantom-icon'] {
+    vertical-align: text-top;
+}
+
+[class^='phantom-card'] {
+    border: none !important;
+}

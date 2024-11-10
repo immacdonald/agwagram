@@ -16,12 +16,9 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
 
     const { isMobile } = useResponsiveContext();
 
-    const ref = useRef<HTMLDivElement>(null);
-    const isTitleCardVisible = useIsVisible(ref);
-
     return (
         <>
-            {!isTitleCardVisible && ref.current && (
+            {false && (
                 <Row className={style.subtitle} align="center">
                     <span>
                         {!isMobile && `Analyzing `}@{account.account_username}
@@ -30,7 +27,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
             )}
             <AdaptiveGrid>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                    <Card ref={ref}>
+                    <Card>
                         <Card.Header title="Account Overview" Icon={PersonFilledIcon} />
                         <Card.Body>
                             <Heading>

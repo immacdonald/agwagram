@@ -3,14 +3,20 @@
 :root {
     $font: 'Helvetica Neue', helvetica, arial, sans-serif;
 
-    --color-primary: rgb(20 58 162);
-    --color-surface-page-light: #f6f8fc;
+    $primary: rgb(20 58 162);
+    --color-primary: #{$primary};
+    --color-primary-dark: #{color.scale($primary, $lightness: -15%)};
+    --color-primary-darker: #0f1868;
+
+    --color-background-page-light: #f6f8fc;
     --font-body: #{$font};
     --font-heading: #{$font};
     --text-header-xxl: 2rem;
     --text-header-xl: 1.7rem;
     --text-header-lg: 1.4rem;
     --text-header-md: 1.3rem;
+
+    --header-height: 40px;
 }
 
 ::selection {
@@ -18,5 +24,8 @@
 }
 
 :root[data-theme='dark'] {
-    --color-primary: rgb(66 103 206);
+    $primary: rgb(66 103 206);
+    --color-primary: #{$primary};
+    --color-primary-dark: #{color.scale($primary, $lightness: -15%)};
+    --color-primary-darker: #{color.scale($primary, $lightness: -30%)};
 }

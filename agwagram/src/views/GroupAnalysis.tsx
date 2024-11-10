@@ -14,24 +14,11 @@ interface GroupAnalysisProps {
 const GroupAnalysis: React.FC<GroupAnalysisProps> = ({ accounts, totalTweets, topTimes, pairwiseSim }) => {
     const { isMobile } = useResponsiveContext();
 
-    const ref = useRef<HTMLDivElement>(null);
-    const isTitleCardVisible = useIsVisible(ref);
-
     return (
         <>
-            {!isTitleCardVisible && ref.current && (
-                <Row className={style.subtitle} align="center">
-                    <span>
-                        {!isMobile && `Analyzing `}
-                        {accounts.map((account: AccountBloc, index: number) => (
-                            <Fragment key={index}>@{account.account_username} </Fragment>
-                        ))}
-                    </span>
-                </Row>
-            )}
             <AdaptiveGrid>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                    <Card ref={ref}>
+                    <Card>
                         <Card.Header title="Accounts Overview" Icon={GroupFilledIcon} />
                         <Card.Body>
                             <Heading>{accounts.map((account: AccountBloc) => `@${account.account_username}`).join(', ')}</Heading>
