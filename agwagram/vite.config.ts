@@ -1,11 +1,10 @@
+import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig, Plugin, UserConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import path from 'path';
 
 // https://vitejs.dev/config/
-// eslint-disable-next-line import-x/no-default-export
 export default defineConfig(({ command }) => {
     if (command === 'serve') {
         return devConfig();

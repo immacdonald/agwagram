@@ -1,10 +1,10 @@
+import { CSSProperties, FC } from 'react';
 import { Link } from 'react-router-dom';
-import { FC } from 'react';
 import { Column, designTokens, Flex, SimpleFooter, StyledLink, Typography } from 'phantom-library';
 
 const Footer: FC = () => {
     return (
-        <SimpleFooter style={{borderTop: designTokens.border.light}}>
+        <SimpleFooter style={{ borderTop: designTokens.border.light, '--footer-height': '128px', paddingTop: designTokens.space.md, alignItems: 'center' } as CSSProperties}>
             <Flex flex={{ base: 'row', xs: 'column' }} gap={{ base: '64px', xs: '8px' }} verticalAlign="start">
                 <Column align="start" gap="0">
                     <Typography.Text>

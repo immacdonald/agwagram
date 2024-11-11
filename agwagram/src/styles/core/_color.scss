@@ -1,13 +1,17 @@
 @use 'sass:color';
 
+$selection-color: rgb(53 89 220 / 30%);
+
 :root {
     $font: 'Helvetica Neue', helvetica, arial, sans-serif;
-
     $primary: rgb(20 58 162);
+
     --color-primary: #{$primary};
     --color-primary-dark: #{color.scale($primary, $lightness: -15%)};
     --color-primary-darker: #0f1868;
-
+    --color-primary-border: #219bf2;
+    --color-primary-text: #08558c;
+    --color-selection: #{$selection-color};
     --color-background-page-light: #f6f8fc;
     --font-body: #{$font};
     --font-heading: #{$font};
@@ -15,16 +19,18 @@
     --text-header-xl: 1.7rem;
     --text-header-lg: 1.4rem;
     --text-header-md: 1.3rem;
-
     --header-height: 40px;
+
+    scrollbar-gutter: stable;
 }
 
 ::selection {
-    --color-selection: rgb(20 58 162 / 40%);
+    --color-selection: #{$selection-color};
 }
 
 :root[data-theme='dark'] {
     $primary: rgb(66 103 206);
+
     --color-primary: #{$primary};
     --color-primary-dark: #{color.scale($primary, $lightness: -15%)};
     --color-primary-darker: #{color.scale($primary, $lightness: -30%)};

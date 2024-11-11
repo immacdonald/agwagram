@@ -133,6 +133,12 @@ declare global {
         Date: string;
         [username: string]: number | string;
     }
+
+    interface StaticFile {
+        file: string;
+        title: string;
+        type: string;
+    }
 }
 
 export {};

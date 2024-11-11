@@ -6,4 +6,9 @@
 
 [class^='phantom-card'] {
     border: none !important;
+
+    > [class^='phantom-header'] {
+        color: var(--color-primary-text);
+        font-weight: 500;
+    }
 }

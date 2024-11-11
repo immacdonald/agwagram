@@ -1,30 +1,26 @@
-import React, { useMemo } from 'react';
-import { BarChartIcon, Card, Tab, TabGroup, Typography } from 'phantom-library';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectResults } from '@data/settingsSlice';
+import { BarChartIcon, Card, Tab, TabGroup, Typography } from 'phantom-library';
+import { selectAnalysis } from '@data/settingsSlice';
 import { AccountAnalysis } from './AccountAnalysis';
 import { GroupAnalysis } from './GroupAnalysis';
 
 const Results: React.FC = () => {
-    const resultState = useSelector(selectResults);
+    const { data: analysis, error } = useSelector(selectAnalysis);
 
-    const results = useMemo(() => {
-        return resultState.data;
-    }, [resultState]);
-
-    if (results?.total_tweets) {
-        const accounts = results.account_blocs;
+    if (analysis && analysis.total_tweets) {
+        const accounts = analysis.account_blocs;
         if (accounts.length === 1) {
             const account = accounts[0];
             return <AccountAnalysis account={account} />;
         } else {
             return (
                 <TabGroup
-                    variant='segmented'
+                    variant="segmented"
                     tabs={[
                         {
                             label: 'Group Analysis',
-                            tab: <GroupAnalysis accounts={accounts} totalTweets={results.total_tweets} topTimes={results.group_top_time} pairwiseSim={results.pairwise_sim} />
+                            tab: <GroupAnalysis accounts={accounts} totalTweets={analysis.total_tweets} topTimes={analysis.group_top_time} pairwiseSim={analysis.pairwise_sim} />
                         },
                         ...accounts.map((account: AccountBloc) => ({ label: `@${account.account_username}`, tab: <AccountAnalysis account={account} /> }) as Tab)
                     ]}
@@ -38,7 +34,7 @@ const Results: React.FC = () => {
             <Card.Header title="Analysis Failed" Icon={BarChartIcon} />
             <Card.Body>
                 <Typography.Paragraph>Unable to generate BLOC analysis results.</Typography.Paragraph>
-                {results && <Typography.Paragraph>{results.error}</Typography.Paragraph>}
+                <Typography.Paragraph>{analysis?.error ? analysis?.error : error ? error : 'An error has occured.'}</Typography.Paragraph>
             </Card.Body>
         </Card>
     );

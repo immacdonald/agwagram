@@ -1,11 +1,11 @@
-import { StyledApp } from 'phantom-library';
-import { Route, Routes } from 'react-router-dom';
 import { FC } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { StyledApp } from 'phantom-library';
 import { About, Home } from '@views';
 import { useAnalytics } from './hooks/useAnalytics';
 
 const App: FC = () => {
-    useAnalytics("/tools/agwagram");
+    useAnalytics('/tools/agwagram');
 
     return (
         <StyledApp anchors>

@@ -1,5 +1,5 @@
-import { BarChartIcon, Card, Dropdown, NullablePrimitive } from 'phantom-library';
 import { useState } from 'react';
+import { BarChartIcon, Card, Dropdown, NullablePrimitive } from 'phantom-library';
 import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCardProps {
@@ -33,6 +33,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, topAction,
                     defaultValue="action"
                     isClearable={false}
                 />
+                <br />
                 <table>
                     <thead>
                         <tr>

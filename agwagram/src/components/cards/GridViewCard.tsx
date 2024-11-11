@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import {
     Button,
     Card,
@@ -15,7 +16,6 @@ import {
     ZoomInIcon,
     ZoomOutIcon
 } from 'phantom-library';
-import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import { useGetSymbolsQuery } from '@data/apiSlice';
 import style from './GridViewCard.module.scss';
 
@@ -219,7 +219,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                         <Dropdown
                             options={[
                                 { label: 'Action', value: 'Action' },
-                                { label: 'Content Syntactic', value: 'Content Syntactic' }
+                                { label: 'Content', value: 'Content' }
                             ]}
                             isClearable={false}
                             onChange={(v) => toggleShowAction(v as string)}
@@ -227,7 +227,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                         />
                     </span>
                     <span>
-                        Labels <Switch state={showLabels} onChange={setShowLabels} />
+                        Labels <Switch defaultChecked={showLabels} onChange={(event: FormEvent<HTMLInputElement>) => setShowLabels(event.currentTarget.checked)} />
                     </span>
                 </div>
                 <div className={style.legend}>

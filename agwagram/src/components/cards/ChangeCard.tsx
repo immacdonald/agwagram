@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useRef, useState } from 'react';
+import { FormEvent, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { Card, formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Heading, Typography } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefinitionTooltip } from '@components';
@@ -99,8 +99,10 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
         const sortButton = (text: string, code: string): ReactNode => {
             return (
                 <UnstyledButton onClick={() => setSortedField(code)}>
-                    {text}
-                    {sortedField == code ? ' >' : false}
+                    <>
+                        {text}
+                        {sortedField == code ? ' >' : false}
+                    </>
                 </UnstyledButton>
             );
         };
@@ -108,16 +110,18 @@ const ChangeCard: React.FC<ChangeCardProps> = ({ title, report }: ChangeCardProp
         const changeToggles = (
             <>
                 <span>
-                    Similarity <Switch state={changeGraph.current['similarity']} onChange={(state: boolean) => toggleChangeGraphDisplay('similarity', state)} />
+                    Similarity{' '}
+                    <Switch defaultChecked={changeGraph.current['similarity']} onChange={(event: FormEvent<HTMLInputElement>) => toggleChangeGraphDisplay('similarity', event.currentTarget.checked)} />
                 </span>
                 <span>
-                    Word <Switch state={changeGraph.current['word']} onChange={(state: boolean) => toggleChangeGraphDisplay('word', state)} />
+                    Word <Switch defaultChecked={changeGraph.current['word']} onChange={(event: FormEvent<HTMLInputElement>) => toggleChangeGraphDisplay('word', event.currentTarget.checked)} />
                 </span>
                 <span>
-                    Pause <Switch state={changeGraph.current['pause']} onChange={(state: boolean) => toggleChangeGraphDisplay('pause', state)} />
+                    Pause <Switch defaultChecked={changeGraph.current['pause']} onChange={(event: FormEvent<HTMLInputElement>) => toggleChangeGraphDisplay('pause', event.currentTarget.checked)} />
                 </span>
                 <span>
-                    Activity <Switch state={changeGraph.current['activity']} onChange={(state: boolean) => toggleChangeGraphDisplay('activity', state)} />
+                    Activity{' '}
+                    <Switch defaultChecked={changeGraph.current['activity']} onChange={(event: FormEvent<HTMLInputElement>) => toggleChangeGraphDisplay('activity', event.currentTarget.checked)} />
                 </span>
             </>
         );
