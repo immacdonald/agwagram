@@ -22,16 +22,15 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
     useOutsideClick(ref, () => setSidebar(false));
 
     useEffect(() => {
-        setSidebar(false);
-        setFullscreen(false);
+        if (isMobile) {
+            setSidebar(false);
+        }
     }, [isMobile]);
 
     const setSidebar = (state: boolean) => {
         noScroll(state);
         setSidebarActive(state);
     };
-
-    const [fullscreen, setFullscreen] = useState<boolean>(false);
 
     const SidebarContent = useMemo(
         () => (
@@ -67,17 +66,15 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
 
     return (
         <Row verticalAlign="start">
-            {!fullscreen && SidebarContent}
+            {(isMobile || sidebarActive) && SidebarContent}
             <div className={styles.layout}>
-                {sidebarActive && <div className={styles.darken} />}
+                {isMobile && sidebarActive && <div className={styles.darken} />}
                 {
                     <DynamicHeader hasBackground pageSpace="pad" style={{ borderBottom: designTokens.border.light, paddingInline: designTokens.space.md }}>
                         <Row align="start">
-                            {isMobile && <Button Icon={MenuIcon} variant="text" onClick={() => setSidebar(!sidebarActive)} />}
-                            {isMobile ? (
+                            <Button Icon={MenuIcon} variant="text" onClick={() => setSidebar(!sidebarActive)} />
+                            {(isMobile || !sidebarActive) && (
                                 <span style={{ color: 'var(--color-primary-text)', fontSize: 'var(--text-header-md)', fontWeight: 'bold', marginLeft: designTokens.space.md }}>agwagram</span>
-                            ) : (
-                                <Button variant="text" onClick={() => setFullscreen(!fullscreen)} Icon={MenuIcon} />
                             )}
                         </Row>
                     </DynamicHeader>
