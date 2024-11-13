@@ -12,3 +12,20 @@
         font-weight: 500;
     }
 }
+
+[class^='phantom-switch'] {
+    top: unset !important;
+}
+
+[class^='phantom-button'] svg {
+    height: 1.25rem !important;
+}
+
+[class^='phantom-modals'] {
+    z-index: 110 !important;
+
+    > div {
+        width: min(600px, 90%) !important;
+        min-width: unset !important;
+    }
+}

@@ -2,19 +2,20 @@ import { FC } from 'react';
 import { PCAImage, userBlocImage } from '@assets/images';
 import { Heading, Section, StyledImage, StyledLink, Typography } from 'phantom-library';
 import { DashboardLayout } from 'src/layouts/DashboardLayout';
+import { Agwagram } from '@components';
 import { config } from '@config';
 
 const About: FC = () => {
     return (
-        <DashboardLayout header={false}>
+        <DashboardLayout>
             <Section style={{ backgroundColor: 'var(--color-background-foreground)' }}>
                 <Heading align="center" major>
                     About
                 </Heading>
                 <Typography.Paragraph>
-                    agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news organizations,
-                    self-declared bots, trolls, etc. agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language
-                    framework.
+                    <Agwagram /> enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With <Agwagram />, you can explore the behaviors of news
+                    organizations, self-declared bots, trolls, etc. <Agwagram /> is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool
+                    utilizes the BLOC language framework.
                 </Typography.Paragraph>
                 <Heading minor>Methodology</Heading>
                 <Typography.Paragraph>
@@ -72,8 +73,11 @@ const About: FC = () => {
                 <br />
                 <Heading minor>About Us</Heading>
                 <Typography.Paragraph>
-                    agwagram is a project of the News Web and Social Media (NEWS) research lab at William & Mary. NEWS Lab studies the web as an entity with a focus on (local) news and vectors of
-                    disinformation on social media. agwagram was developed by{' '}
+                    <Agwagram /> is a project of the{' '}
+                    <StyledLink to="https://newsresearch.lab.wm.edu" external>
+                        News Web and Social Media (NEWS) research lab
+                    </StyledLink>{' '}
+                    at William & Mary. NEWS Lab studies the web as an entity with a focus on (local) news and vectors of disinformation on social media. <Agwagram /> was developed by{' '}
                     <StyledLink to="https://ianmacdonald.me/" external>
                         Ian MacDonald
                     </StyledLink>{' '}
@@ -84,7 +88,7 @@ const About: FC = () => {
                     (acnwala [at] wm.edu).
                 </Typography.Paragraph>
                 <Typography.Text align="center" soft>
-                    Agwagram is currently on version {config.version}.
+                    <Agwagram /> is currently on version {config.version}.
                 </Typography.Text>
             </Section>
         </DashboardLayout>

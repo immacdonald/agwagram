@@ -2,7 +2,7 @@ import { FC, FormEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormInput, Modal, Switch, Typography } from 'phantom-library';
 import { selectConfig, setConfig } from '@data/settingsSlice';
-import styles from './AnalysisConfig.module.scss';
+import styles from './Analysis.module.scss';
 
 const AnalysisConfig: FC = () => {
     const configState = useSelector(selectConfig);

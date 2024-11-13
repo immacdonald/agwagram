@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { TuneIcon } from '@assets/icons';
 import { Button, Heading, Loading, setModal, Typography } from 'phantom-library';
 import { DashboardLayout } from 'src/layouts/DashboardLayout';
+import { Agwagram } from '@components';
 import { selectAnalysis } from '@data/settingsSlice';
 import { AnalysisConfig } from './AnalysisConfig';
 import { Analyze } from './Analyze';
@@ -14,23 +15,19 @@ const Home: FC = () => {
     const { data, loading } = useSelector(selectAnalysis);
 
     return (
-        <DashboardLayout header={false}>
+        <DashboardLayout>
             <div className={style.split}>
                 <Button type="default" Icon={TuneIcon} onClick={() => setModal(<AnalysisConfig />)} className={style.settings} />
                 <div>
                     <div>
                         <Heading>Welcome to agwagram!</Heading>
                         <Typography.Paragraph>
-                            agwagram enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With agwagram, you can explore the behaviors of news
-                            organizations, self-declared bots, trolls, etc.
+                            <Agwagram /> enables you to study a broad spectrum of authentic & inauthentic behaviors of Twitter (aka X) accounts. With <Agwagram />, you can explore the behaviors of
+                            news organizations, self-declared bots, trolls, etc.
                         </Typography.Paragraph>
                         <Typography.Paragraph>
-                            agwagram is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework. For more
-                            details, see the{' '}
-                            <Link to="/about" target="_blank">
-                                about page
-                            </Link>
-                            .
+                            <Agwagram /> is a portmanteau of "agwa" (Igbo language for "behavior") and "gram" (Greek language for "a record"). This tool utilizes the BLOC language framework. For more
+                            details, see the <Link to="/about">about page</Link>.
                         </Typography.Paragraph>
                     </div>
                     <div className={style.analysis}>

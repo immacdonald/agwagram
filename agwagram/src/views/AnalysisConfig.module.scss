@@ -1,9 +1,0 @@
-.config {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space);
-
-    > span {
-        padding-inline: var(--space-sm);
-    }
-}

@@ -21,11 +21,11 @@ change_symbol_dict = {
 action_symbol_dict = {
     # Action
     'P': "Reply friend (can't be checked until friendship relationship assigned)",
-    'p': 'Reply non-friend',
+    'p': 'Reply to non-friend',
     'R': "Retweet friend (can't be checked until friendship relationship assigned)",
     'r': 'Retweet non-friend',
     'T': 'Tweet',
-    'π': 'Reply self',
+    'π': 'Reply to self',
     'ρ': 'Retweet self'
 }
 

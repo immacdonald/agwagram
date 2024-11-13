@@ -12,7 +12,6 @@ interface TopWordsCardProps {
 const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, topAction, topContent }: TopWordsCardProps) => {
     const [top, setTop] = useState<Top[]>(topAction);
     const onCategoryChange = (selected: NullablePrimitive) => {
-        console.log(selected);
         if (selected == 'content') {
             setTop(topContent);
         } else {
@@ -38,7 +37,7 @@ const TopWordsCard: React.FC<TopWordsCardProps> = ({ title, subtitle, topAction,
                     <thead>
                         <tr>
                             <th style={{ width: '55px' }}>Rank</th>
-                            <th style={{ width: '100px' }}>Word</th>
+                            <th style={{ width: '100px' }}>Behavior</th>
                             <th style={{ width: '90px' }}>Frequency</th>
                             <th style={{ width: '85px' }}>Rate (%)</th>
                             <th>Description</th>

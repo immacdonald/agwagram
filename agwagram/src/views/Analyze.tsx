@@ -7,18 +7,18 @@ import { config } from '@config';
 import { useSetAnalyzeFilesMutation } from '@data/apiSlice';
 import { selectConfig, setAnalysis } from '@data/settingsSlice';
 
+const maxFiles: number = 4;
+
 const Analyze: React.FC = () => {
     const [setFiles] = useSetAnalyzeFilesMutation();
     const analysisConfig = useSelector(selectConfig);
     const dispatch = useDispatch();
 
     const submitFiles = (files: File[]): void => {
-        console.log('Setting files');
         setFiles({ files, changeReport: !!analysisConfig.changeReports, sumgramLimit: analysisConfig.sumgramLimit || 1000, expertMode: !!analysisConfig.expertMode });
     };
 
     const submitJsonFiles = (files: StaticFile[]): void => {
-        console.log('Getting files for', files);
         Promise.all(files.map((file) => getStaticDataFile(file.file)))
             .then((dataArray) => submitFiles(dataArray))
             .catch((error) => console.error('Error fetching files:', error));
@@ -37,7 +37,7 @@ const Analyze: React.FC = () => {
             submitJsonFiles(selectedFiles);
         } else {
             dispatch(setAnalysis(null));
-            console.log('No files!');
+            //console.log('No files!');
         }
     }, [selectedFilesInternal]);
 
@@ -75,7 +75,16 @@ const Analyze: React.FC = () => {
                                 options={config.exampleFiles.map((file: ExampleFile) => ({ label: file.title, value: file.title }))}
                                 placeholder="Select File"
                                 defaultValue={selectedFilesInternal}
-                                onChange={(selected: NullablePrimitive[]) => setSelectedFilesInternal(selected as string[])}
+                                onChange={(selected: NullablePrimitive[]) => {
+                                    if (selectedFilesInternal.length < maxFiles) {
+                                        setSelectedFilesInternal(selected as string[]);
+                                    } else {
+                                        const capped = selected as string[];
+                                        capped.shift();
+                                        setSelectedFilesInternal(capped);
+                                    }
+                                }}
+                                value={selectedFilesInternal}
                             />
                             <br />
                             {helperText}
@@ -105,7 +114,7 @@ const Analyze: React.FC = () => {
                                     per line, <i>not</i> an account. For more details, download a tweet file from the "Example Files" tab.
                                 </Typography.Paragraph>
                             </Accordion>
-                            <FileUploadPortal submit={submitFiles} />
+                            <FileUploadPortal submit={submitFiles} maxFiles={maxFiles} />
                         </div>
                     )
                 }

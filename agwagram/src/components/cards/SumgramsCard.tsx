@@ -10,7 +10,6 @@ interface SumgramsCardProps {
 }
 
 const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
-    // To-do: filter out sumgrams where there are no top sumgrams
     const sumgramOptions = sumgrams.map((sumgram: Sumgrams, index: number) => {
         return {
             label: `n = ${sumgram.base_ngram}`,
@@ -33,6 +32,7 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
                             placeholder="n = "
                             defaultValue={sumgramOptions[defaultSumgram].value}
                         />
+                        <br />
                         <table>
                             <thead>
                                 <tr>

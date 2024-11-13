@@ -1,0 +1,23 @@
+.config {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space);
+
+    > span {
+        padding-inline: var(--space-sm);
+    }
+}
+
+.header {
+    position: fixed;
+    top: calc(var(--header-height) / 2);
+    left: 50vw;
+    z-index: 101;
+    transform: translate(-50%, -50%);
+    font-size: var(--font-size-lg);
+    color: var(--color-primary-text);
+    background-color: var(--color-background-foreground);
+    padding-inline: var(--space-lg);
+    border-radius: var(--border-radius);
+    opacity: 0;
+}

@@ -35,10 +35,6 @@ export const api = createApi({
                     body: formData
                 };
             },
-            transformResponse(response: Analysis) {
-                console.log('Got response of', response);
-                return response;
-            },
             onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
                 // Set loading to true
                 dispatch(setAnalysis({ loading: true }));

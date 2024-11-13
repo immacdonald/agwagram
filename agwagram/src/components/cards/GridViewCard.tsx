@@ -4,6 +4,7 @@ import {
     Button,
     Card,
     DatasetIcon,
+    designTokens,
     Dropdown,
     formatNumericDate,
     formatReadableDate,
@@ -214,7 +215,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
         <Card fullHeight>
             <Card.Header title={title} subtitle="Explore patterns in behaviors." Icon={DatasetIcon} />
             <Card.Body>
-                <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: designTokens.space.md }}>
                     <span style={{ width: 'min(calc(90% - 150px), 600px)' }}>
                         <Dropdown
                             options={[
@@ -226,7 +227,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                             defaultValue="Action"
                         />
                     </span>
-                    <span>
+                    <span style={{ display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginRight: designTokens.space.lg, gap: designTokens.space.sm }}>
                         Labels <Switch defaultChecked={showLabels} onChange={(event: FormEvent<HTMLInputElement>) => setShowLabels(event.currentTarget.checked)} />
                     </span>
                 </div>
@@ -236,7 +237,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                             return (
                                 <div className={style.legendKey} key={item.symbol} style={!usedSymbols.includes(item.symbol) ? { display: 'none' /*opacity: '33%'*/ } : undefined}>
                                     <span style={{ backgroundColor: item.color }}></span>
-                                    <em>{symbolToDefinition(item.symbol)}</em>
+                                    {symbolToDefinition(item.symbol)}
                                 </div>
                             );
                         })}
