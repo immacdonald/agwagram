@@ -1,5 +1,5 @@
 import { ReactNode, FC, useMemo, useState, useEffect, useRef } from 'react';
-import { AgwagramIcon, HelpIcon, HomeIcon, PersonSearchIcon, TuneIcon, UploadFileIcon } from '@assets/icons';
+import { AgwagramIcon, FullscreenExitIcon, FullscreenIcon, HelpIcon, HomeIcon, PersonSearchIcon, TuneIcon, UploadFileIcon } from '@assets/icons';
 import clsx from 'clsx';
 import { useResponsiveContext, Button, Row, Typography, Divider, DynamicHeader, MenuIcon, designTokens, useNoScroll, useOutsideClick, setModal } from 'phantom-library';
 import { AnalysisConfig } from '@views';
@@ -77,7 +77,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
                             {isMobile ? (
                                 <span style={{ color: 'var(--color-primary-text)', fontSize: 'var(--text-header-md)', fontWeight: 'bold', marginLeft: designTokens.space.md }}>agwagram</span>
                             ) : (
-                                <Button variant="text" onClick={() => setFullscreen(!fullscreen)} Icon={MenuIcon} />
+                                <Button variant="text" onClick={() => setFullscreen(!fullscreen)} Icon={fullscreen ? FullscreenExitIcon : FullscreenIcon} />
                             )}
                         </Row>
                     </DynamicHeader>
