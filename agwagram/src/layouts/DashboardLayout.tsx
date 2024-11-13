@@ -1,5 +1,5 @@
 import { ReactNode, FC, useMemo, useState, useEffect, useRef } from 'react';
-import { AgwagramIcon, FullscreenExitIcon, FullscreenIcon, HelpIcon, HomeIcon, PersonSearchIcon, TuneIcon, UploadFileIcon } from '@assets/icons';
+import { AgwagramIcon, HelpIcon, HomeIcon, PersonSearchIcon, TuneIcon, UploadFileIcon } from '@assets/icons';
 import clsx from 'clsx';
 import { useResponsiveContext, Button, Row, Typography, Divider, DynamicHeader, MenuIcon, designTokens, useNoScroll, useOutsideClick, setModal } from 'phantom-library';
 import { AnalysisConfig } from '@views';
@@ -39,25 +39,25 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
                 <Typography.Text style={{ fontSize: 'var(--text-header-md)', fontWeight: 'bold' }}>
                     <AgwagramIcon /> agwagram
                 </Typography.Text>
-                <Typography.Text newline style={{ fontSize: 'var(--font-sm)' }}>
+                <Typography.Text newline style={{ fontSize: 'var(--font-size-sm)' }}>
                     A <b>News Lab</b> Project
                 </Typography.Text>
                 <Divider />
                 <Typography.Text style={{ fontWeight: 'bold' }}>Navigation</Typography.Text>
-                <Button full align="start" link="/" context="dark" variant="text" Icon={HomeIcon} iconRight>
+                <Button full align="start" link="/" context="dark" variant="text" Icon={HomeIcon}>
                     Home
                 </Button>
-                <Button full align="start" link="/about" context="dark" variant="text" Icon={HelpIcon} iconRight>
+                <Button full align="start" link="/about" context="dark" variant="text" Icon={HelpIcon}>
                     About
                 </Button>
                 <Typography.Text style={{ fontWeight: 'bold' }}>Analyze</Typography.Text>
-                <Button full align="start" link="/" context="dark" variant="text" Icon={UploadFileIcon} iconRight>
+                <Button full align="start" link="/" context="dark" variant="text" Icon={UploadFileIcon}>
                     Upload Files
                 </Button>
-                <Button full align="start" link="/" context="dark" variant="text" Icon={PersonSearchIcon} iconRight>
+                <Button full align="start" link="/" context="dark" variant="text" Icon={PersonSearchIcon}>
                     Example Accounts
                 </Button>
-                <Button full align="start" context="dark" variant="text" onClick={() => setModal(<AnalysisConfig />)} Icon={TuneIcon} iconRight>
+                <Button full align="start" context="dark" variant="text" onClick={() => setModal(<AnalysisConfig />)} Icon={TuneIcon}>
                     Analysis Settings
                 </Button>
             </aside>
@@ -72,13 +72,13 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
                 {sidebarActive && <div className={styles.darken} />}
                 {
                     <DynamicHeader hasBackground pageSpace="pad" style={{ borderBottom: designTokens.border.light, paddingInline: designTokens.space.md }}>
-                        <Row align="space-between">
-                            {isMobile ? (
-                                <span style={{ color: 'var(--color-primary-text)', fontSize: 'var(--text-header-md)', fontWeight: 'bold' }}>agwagram</span>
-                            ) : (
-                                <Button variant="text" onClick={() => setFullscreen(!fullscreen)} Icon={fullscreen ? FullscreenExitIcon : FullscreenIcon} />
-                            )}
+                        <Row align="start">
                             {isMobile && <Button Icon={MenuIcon} variant="text" onClick={() => setSidebar(!sidebarActive)} />}
+                            {isMobile ? (
+                                <span style={{ color: 'var(--color-primary-text)', fontSize: 'var(--text-header-md)', fontWeight: 'bold', marginLeft: designTokens.space.md }}>agwagram</span>
+                            ) : (
+                                <Button variant="text" onClick={() => setFullscreen(!fullscreen)} Icon={MenuIcon} />
+                            )}
                         </Row>
                     </DynamicHeader>
                 }

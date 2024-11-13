@@ -40,7 +40,7 @@ const GroupTopWordsCard: FC<GroupTopWordsCardProps> = ({ title, subtitle, accoun
                         <tr>
                             <th style={{ width: '55px' }}>Rank</th>
                             {accounts.map((account: AccountBloc) => {
-                                return <th>@{account.account_username} Behaviour</th>;
+                                return <th key={account.account_username}>@{account.account_username}</th>;
                             })}
                         </tr>
                     </thead>
@@ -51,12 +51,12 @@ const GroupTopWordsCard: FC<GroupTopWordsCardProps> = ({ title, subtitle, accoun
                                     <td>{index + 1}.</td>
                                     {accounts.map((account: AccountBloc) => {
                                         if (index >= account[top].length) {
-                                            return <td />;
+                                            return <td key={account.account_username} />;
                                         }
 
                                         const word = account[top][index];
                                         return (
-                                            <td>
+                                            <td key={account.account_username}>
                                                 <DefinitionTooltip word={word.term} />
                                             </td>
                                         );

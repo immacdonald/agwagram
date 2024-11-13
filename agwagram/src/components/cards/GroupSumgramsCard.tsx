@@ -38,7 +38,7 @@ const GroupSumgramsCard: FC<GroupSumgramsCardProps> = ({ title, subtitle, accoun
                                 <tr>
                                     <th style={{ width: '60px' }}>Rank</th>
                                     {accounts.map((account: AccountBloc) => {
-                                        return <th>@{account.account_username} sumgram</th>;
+                                        return <th key={account.account_username}>@{account.account_username}</th>;
                                     })}
                                 </tr>
                             </thead>
@@ -49,12 +49,12 @@ const GroupSumgramsCard: FC<GroupSumgramsCardProps> = ({ title, subtitle, accoun
                                             <td>{index + 1}.</td>
                                             {accounts.map((account: AccountBloc) => {
                                                 if (!account.sumgrams[sumgramIndex] || index >= account.sumgrams[sumgramIndex].top_sumgrams.length) {
-                                                    return <td />;
+                                                    return <td key={account.account_username} />;
                                                 }
 
                                                 const sumgram = account.sumgrams[sumgramIndex].top_sumgrams[index];
                                                 return (
-                                                    <td>
+                                                    <td key={account.account_username}>
                                                         {sumgram.parent_sentences.length > 0 ? (
                                                             <Popover
                                                                 customStyle={style.popover}

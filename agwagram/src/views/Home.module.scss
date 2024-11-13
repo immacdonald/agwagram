@@ -30,8 +30,6 @@
 }
 
 .analysis {
-    $config-width: 40px;
-
     color: var(--color-text);
     border: var(--border-light);
     border-radius: var(--border-radius);
@@ -41,5 +39,51 @@
     > div:first-child {
         width: 100%;
         padding: var(--space);
+    }
+}
+
+.loading {
+    position: relative;
+    width: var(--space);
+    height: var(--space);
+    border-radius: var(--space-sm);
+    background-color: var(--color-primary-text);
+    color: var(--color-primary-text);
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+
+.loading::before,
+.loading::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: var(--space);
+    height: var(--space);
+    border-radius: var(--space-sm);
+    background-color: var(--color-primary-text);
+    color: var(--color-primary-text);
+    animation: dot-flashing 1s infinite alternate;
+}
+
+.loading::before {
+    left: calc(var(--space-xl) * -1);
+    animation-delay: 0s;
+}
+
+.loading::after {
+    left: var(--space-xl);
+    animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+    0% {
+        background-color: var(--color-primary-text);
+    }
+
+    50%,
+    100% {
+        background-color: var(--color-primary-alpha);
     }
 }

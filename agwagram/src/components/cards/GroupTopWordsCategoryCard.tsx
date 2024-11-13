@@ -30,7 +30,7 @@ const GroupTopWordsCategoryCard: React.FC<GroupTopWordsCategoryCardProps> = ({ t
                         <tr>
                             <th>{categoryTitle}</th>
                             {accounts.map((account: AccountBloc) => {
-                                return <th>@{account.account_username} Rate</th>;
+                                return <th key={account.account_username}>@{account.account_username}</th>;
                             })}
                         </tr>
                     </thead>
@@ -44,12 +44,12 @@ const GroupTopWordsCategoryCard: React.FC<GroupTopWordsCategoryCardProps> = ({ t
                                     {accounts.map((account: AccountBloc) => {
                                         const match = account[category].filter((top) => top.term == key);
                                         if (match.length == 0) {
-                                            return <td />;
+                                            return <td key={account.account_username} />;
                                         }
 
                                         const word = match[0];
 
-                                        return <td>{word.term_rate}%</td>;
+                                        return <td key={account.account_username}>{word.term_rate}%</td>;
                                     })}
                                 </tr>
                             );
@@ -59,35 +59,6 @@ const GroupTopWordsCategoryCard: React.FC<GroupTopWordsCategoryCardProps> = ({ t
             </Card.Body>
         </Card>
     );
-    /*return (
-        <Card fullHeight>
-            <Card.Header title={title} subtitle={subtitle} Icon={PauseIcon} />
-            <Card.Body scrollable>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>{category}</th>
-                            <th style={{ width: '90px' }}>Frequency</th>
-                            <th style={{ width: '85px' }}>Rate (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {top.map((word: Top, i: number) => {
-                            return (
-                                <tr key={i}>
-                                    <td style={{ textAlign: 'left' }}>
-                                        <SymbolTooltip word={word.term} />
-                                    </td>
-                                    <td>{word.term_freq}</td>
-                                    <td>{word.term_rate}</td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </Card.Body>
-        </Card>
-    );*/
 };
 
 export { GroupTopWordsCategoryCard };

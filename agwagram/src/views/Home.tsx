@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TuneIcon } from '@assets/icons';
-import { Button, Heading, Loading, setModal, Typography } from 'phantom-library';
+import { Button, Heading, Row, setModal, Typography } from 'phantom-library';
 import { DashboardLayout } from 'src/layouts/DashboardLayout';
 import { Agwagram } from '@components';
 import { selectAnalysis } from '@data/settingsSlice';
@@ -38,9 +38,9 @@ const Home: FC = () => {
                 </div>
             </div>
             {loading && (
-                <div>
-                    <Loading />
-                </div>
+                <Row style={{ height: '192px' }}>
+                    <div className={style.loading} />
+                </Row>
             )}
             {data && (
                 <div>
