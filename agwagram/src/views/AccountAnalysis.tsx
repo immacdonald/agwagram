@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@features';
 import { Card, formatNumber, formatReadableDate, AdaptiveGrid, AdaptiveGridItemSize, Heading, PersonFilledIcon, Typography, useIsVisible, useScrollDistance } from 'phantom-library';
-import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@components';
 import { selectConfig } from '@data/settingsSlice';
 import styles from './Analysis.module.scss';
 

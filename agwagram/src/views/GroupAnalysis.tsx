@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
+import { GridViewCard, GroupChangeCard, GroupSumgramsCard, GroupTopWordsCard, GroupTopWordsCategoryCard } from '@features';
 import { Card, formatNumber, AdaptiveGrid, AdaptiveGridItemSize, GroupFilledIcon, Heading, HubIcon, Typography } from 'phantom-library';
-import { GridViewCard, GroupChangeCard, GroupSumgramsCard, GroupTopWordsCard, GroupTopWordsCategoryCard } from '@components';
 
 interface GroupAnalysisProps {
     accounts: AccountBloc[];

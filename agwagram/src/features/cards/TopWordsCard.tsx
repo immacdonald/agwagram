@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { DefinitionTooltip, SymbolTooltip } from '@features';
 import { BarChartIcon, Card, Dropdown, NullablePrimitive } from 'phantom-library';
-import { DefinitionTooltip, SymbolTooltip } from '@components';
 
 interface TopWordsCardProps {
     title: string;

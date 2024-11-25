@@ -393,7 +393,8 @@ def sumgrams_from_tweets(tweets, ngrams = [1, 2, 3], tweet_limit = 1000):
     for i, tweet in enumerate(tweets):
         doc = {
             "id": i,
-            "text": tweet["full_text"]
+            "text": tweet["full_text"],
+            "tweet_id": tweet['id']
         }
         docs.append(doc)
 

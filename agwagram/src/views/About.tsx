@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { PCAImage, userBlocImage } from '@assets/images';
+import { Agwagram } from '@features';
 import { Heading, Section, StyledImage, StyledLink, Typography } from 'phantom-library';
 import { DashboardLayout } from 'src/layouts/DashboardLayout';
-import { Agwagram } from '@components';
 import { config } from '@config';
 
 const About: FC = () => {
