@@ -34,6 +34,17 @@ type GridItemData = GridLinkedData | string;
 
 type LegendKey = Record<string, string>;
 
+// New color palette
+/*const actionLegend: LegendKey = {
+    //P: '#84f460',
+    p: '#5fcecf',
+    //R: '#FFA500',
+    r: '#416ee8',
+    T: '#588e36',
+    π: '#e6336f',
+    ρ: '#f9da78'
+};*/
+
 const actionLegend: LegendKey = {
     //P: '#84f460',
     p: '#5fcecf',
@@ -53,7 +64,7 @@ const contentLegend: LegendKey = {
     q: '#48752c'
 };
 
-const pauseLegend: LegendKey = {
+/*const pauseLegend: LegendKey = {
     '□': '#ffffff',
     '⚀': '#b7b7b7',
     '⚁': '#b7b7b7',
@@ -61,6 +72,17 @@ const pauseLegend: LegendKey = {
     '⚃': '#8a8a8a',
     '⚄': '#636363',
     '⚅': '#636363'
+};*/
+
+// Updated blue-grey color palette to fit with enabling symbols
+const pauseLegend: LegendKey = {
+    '□': '#cbcadd',
+    '⚀': '#a8a8bc',
+    '⚁': '#87879b',
+    '⚂': '#67687c',
+    '⚃': '#484a5f',
+    '⚄': '#2b2e42',
+    '⚅': '#101528'
 };
 
 const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) => {
@@ -179,6 +201,20 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
         window.open(url, '_blank');
     };
 
+    const [enabledSymbols, setEnabledSymbols] = useState<string[]>(usedSymbols);
+
+    const changeSymbolEnabled = (symbol: string) => {
+        if (enabledSymbols.includes(symbol)) {
+            setEnabledSymbols(enabledSymbols.filter((s) => s != symbol));
+        } else {
+            setEnabledSymbols([...enabledSymbols, symbol]);
+        }
+    };
+
+    useEffect(() => {
+        setEnabledSymbols(usedSymbols);
+    }, [usedSymbols]);
+
     const createItemSquare = (item: GridLinkedData, index: number): React.ReactNode => {
         const pause = Object.keys(pauseLegend).includes(item.content);
         const popoverContent = (
@@ -198,12 +234,20 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
             </div>
         );
 
+        const getBackgroundColor = () => {
+            if (!enabledSymbols.includes(item.content)) {
+                return 'white';
+            } else {
+                return combinedLegend[item.content] ?? 'white';
+            }
+        };
+
         return (
             <Popover
                 key={index}
                 content={popoverContent}
                 anchorClass={style.item}
-                anchorProps={{ style: { backgroundColor: `${combinedLegend[item.content] ?? 'white'}` }, onClick: !pause ? (): void => routeToTweet(item.id) : undefined }}
+                anchorProps={{ style: { backgroundColor: getBackgroundColor() }, onClick: !pause ? (): void => routeToTweet(item.id) : undefined }}
                 customStyle={style.popover}
             >
                 {showLabels && <em>{item.content}</em>}
@@ -235,9 +279,18 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                     <div className={style.legendList}>
                         {legend.map((item) => {
                             return (
-                                <div className={style.legendKey} key={item.symbol} style={!usedSymbols.includes(item.symbol) ? { display: 'none' /*opacity: '33%'*/ } : undefined}>
-                                    <span style={{ backgroundColor: item.color }}></span>
-                                    {symbolToDefinition(item.symbol)}
+                                <div
+                                    className={style.legendKey}
+                                    key={item.symbol}
+                                    style={!usedSymbols.includes(item.symbol) ? { display: 'none' } : !enabledSymbols.includes(item.symbol) ? { opacity: '33%' } : undefined}
+                                >
+                                    <Button onClick={() => changeSymbolEnabled(item.symbol)}>
+                                        <span className={style.legendKeyColor} style={{ backgroundColor: item.color }} />
+                                        {symbolToDefinition(item.symbol)}
+                                        <span style={{ marginLeft: designTokens.space.sm }}>
+                                            <b>{fixedLinkedData.filter((data) => data[showAction ? 'action' : 'content'] == item.symbol).length}</b>
+                                        </span>
+                                    </Button>
                                 </div>
                             );
                         })}

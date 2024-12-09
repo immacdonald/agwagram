@@ -58,12 +58,12 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, username, sumgra
                                                         content={
                                                             <div className={style.content}>
                                                                 {sumgram.parent_sentences.map((sentence, index: number) => {
-                                                                    const tweet = tweets.filter((t) => t.id == `${sentence.doc_id}`)[0]
+                                                                    const tweet = tweets.filter((t) => t.id == `${sentence.doc_id}`)[0];
                                                                     return (
                                                                         <Fragment key={index}>
                                                                             <StyledLink
                                                                                 inherit
-                                                                                style={{ marginBottom: designTokens.space.lg, display: "block" }}
+                                                                                style={{ marginBottom: designTokens.space.lg, display: 'block' }}
                                                                                 to={`https://twitter.com/${username}/status/${tweet.id}`}
                                                                                 external
                                                                             >
@@ -95,10 +95,9 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, username, sumgra
                     </>
                 ) : (
                     <Typography.Paragraph>Unable to calculate sumgrams for this account.</Typography.Paragraph>
-                )
-                }
-            </Card.Body >
-        </Card >
+                )}
+            </Card.Body>
+        </Card>
     );
 };
 

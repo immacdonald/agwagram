@@ -44,7 +44,7 @@ const GroupTopWordsCategoryCard: React.FC<GroupTopWordsCategoryCardProps> = ({ t
                 <Row>
                     {data.map((accountData, index) => {
                         return (
-                            <Column style={{ width: `calc(${100 / accounts.length}% + ${index == 0 ? 80 - 30 : 0}px - 30px)` }}>
+                            <Column style={{ width: `calc(${100 / accounts.length}% + ${index == 0 ? 80 - 30 : 0}px - 30px)` }} key={index}>
                                 <Typography.Text>@{accounts[index].account_username}</Typography.Text>
                                 <ResponsiveContainer width="100%" height={400}>
                                     <BarChart layout="vertical" data={accountData} margin={{ top: 5, right: 15, left: 15, bottom: 5 }}>
