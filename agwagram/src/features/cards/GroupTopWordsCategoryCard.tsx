@@ -1,5 +1,6 @@
 import { SymbolTooltip } from '@features';
-import { BarChartIcon, Card } from 'phantom-library';
+import { BarChartIcon } from 'phantom-library';
+import { Card } from '@components';
 
 interface GroupTopWordsCategoryCardProps {
     title: string;

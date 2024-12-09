@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BarChartIcon, Card, Tab, TabGroup, Typography } from 'phantom-library';
+import { BarChartIcon, Tab, TabGroup, Typography } from 'phantom-library';
+import { Card } from '@components';
 import { selectAnalysis } from '@data/settingsSlice';
 import { AccountAnalysis } from './AccountAnalysis';
 import { GroupAnalysis } from './GroupAnalysis';

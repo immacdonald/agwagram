@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopWordsCard, TopWordsCategoryCard } from '@features';
-import { Card, formatNumber, formatReadableDate, AdaptiveGrid, AdaptiveGridItemSize, Heading, PersonFilledIcon, Typography, useIsVisible, useScrollDistance } from 'phantom-library';
+import { ChangeCard, ChangeProfileCard, GridViewCard, LanguageCard, LinkedDataCard, SumgramsCard, TopPausesCard, TopWordsCard } from '@features';
+import { formatNumber, formatReadableDate, Heading, PersonFilledIcon, Typography, useIsVisible, useScrollDistance } from 'phantom-library';
+import { AdaptiveGrid, AdaptiveGridItemSize, Card } from '@components';
 import { selectConfig } from '@data/settingsSlice';
 import styles from './Analysis.module.scss';
 
@@ -49,7 +50,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
                     <TopWordsCard title="Top Behaviors" subtitle="Most dominant action & content behaviors." topAction={account.top_actions} topContent={account.top_syntactic} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                    <TopWordsCategoryCard title="Top Pauses" subtitle="Most frequent pauses between actions." top={account.top_time} category="Pause" />
+                    <TopPausesCard title="Top Pauses" pauses={account.top_time} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                     <SumgramsCard title="Sumgrams" subtitle="Most frequently used phrases." sumgrams={account.sumgrams} />

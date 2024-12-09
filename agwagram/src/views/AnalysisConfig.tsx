@@ -8,16 +8,24 @@ const AnalysisConfig: FC = () => {
     const configState = useSelector(selectConfig);
     const dispatch = useDispatch();
 
+    const allowChangeReports = false;
+    const allowExpertMode = false;
+
     return (
         <Modal header="Analysis Settings" reject={null}>
             <div className={styles.config}>
-                <Typography.Text>
-                    Generate Change Reports{' '}
-                    <Switch defaultChecked={!!configState.changeReports} onChange={(event: FormEvent<HTMLInputElement>) => dispatch(setConfig({ changeReports: event.currentTarget.checked }))} />
-                </Typography.Text>
-                <Typography.Text>
-                    Expert Mode <Switch defaultChecked={!!configState.expertMode} onChange={(event: FormEvent<HTMLInputElement>) => dispatch(setConfig({ expertMode: event.currentTarget.checked }))} />
-                </Typography.Text>
+                {allowChangeReports && (
+                    <Typography.Text>
+                        Generate Change Reports{' '}
+                        <Switch defaultChecked={!!configState.changeReports} onChange={(event: FormEvent<HTMLInputElement>) => dispatch(setConfig({ changeReports: event.currentTarget.checked }))} />
+                    </Typography.Text>
+                )}
+                {allowExpertMode && (
+                    <Typography.Text>
+                        Expert Mode{' '}
+                        <Switch defaultChecked={!!configState.expertMode} onChange={(event: FormEvent<HTMLInputElement>) => dispatch(setConfig({ expertMode: event.currentTarget.checked }))} />
+                    </Typography.Text>
+                )}
                 <FormInput
                     type="number"
                     name="sumgramLimit"

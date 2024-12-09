@@ -1,7 +1,8 @@
 import { FormEvent, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { DefinitionTooltip } from '@features';
-import { Card, formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Heading, Typography } from 'phantom-library';
+import { formatReadableDate, Row, Switch, TimelineIcon, UnstyledButton, Heading, Typography } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Card } from '@components';
 import tokens from '@styles/tokens.module.scss';
 
 interface ChangeCardProps {

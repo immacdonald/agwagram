@@ -1,6 +1,7 @@
 import { FC, useMemo, useState } from 'react';
 import { DefinitionTooltip } from '@features';
-import { BarChartIcon, Card, Dropdown, NullablePrimitive } from 'phantom-library';
+import { BarChartIcon, Dropdown, NullablePrimitive } from 'phantom-library';
+import { Card } from '@components';
 
 interface GroupTopWordsCardProps {
     title: string;

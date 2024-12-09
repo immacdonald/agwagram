@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { GetDefinition } from '@features';
-import { Card, HoverMark, LinkIcon } from 'phantom-library';
+import { HoverMark, LinkIcon } from 'phantom-library';
+import { Card } from '@components';
 
 interface LinkedDataCardProps {
     title: string;

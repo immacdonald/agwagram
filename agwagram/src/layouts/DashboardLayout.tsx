@@ -51,10 +51,10 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
                     About
                 </Button>
                 <Typography.Text style={{ fontWeight: 'bold' }}>Analyze</Typography.Text>
-                <Button full align="start" link="/" context="dark" variant="text" Icon={UploadFileIcon}>
+                <Button full align="start" link="/?mode=upload" context="dark" variant="text" Icon={UploadFileIcon}>
                     Upload Files
                 </Button>
-                <Button full align="start" link="/" context="dark" variant="text" Icon={PersonSearchIcon}>
+                <Button full align="start" link="/?mode=examples" context="dark" variant="text" Icon={PersonSearchIcon}>
                     Example Accounts
                 </Button>
                 <Button full align="start" context="dark" variant="text" onClick={() => setModal(<AnalysisConfig />)} Icon={TuneIcon}>

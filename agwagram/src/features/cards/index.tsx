@@ -9,6 +9,7 @@ export * from './SumgramsCard';
 export * from './TopWordsCard';
 export * from './GroupSumgramsCard';
 export * from './TopWordsCategoryCard';
+export * from './TopPausesCard';
 export * from './GroupTopWordsCard';
 export * from './GroupTopWordsCategoryCard';
 /* eslint-enable react-refresh/only-export-components */

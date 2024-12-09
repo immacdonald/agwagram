@@ -1,5 +1,6 @@
-import { Card, ChartIcon, formatReadableDate, Heading, Typography } from 'phantom-library';
+import { ChartIcon, formatReadableDate, Heading, Typography } from 'phantom-library';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Card } from '@components';
 import tokens from '@styles/tokens.module.scss';
 
 interface GroupChangeCardProps {

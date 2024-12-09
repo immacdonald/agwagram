@@ -1,5 +1,6 @@
 import { DefinitionTooltip } from '@features';
-import { Card, DatasetIcon, Typography } from 'phantom-library';
+import { DatasetIcon, Typography } from 'phantom-library';
+import { Card } from '@components';
 
 interface LanguageCardProps {
     title: string;

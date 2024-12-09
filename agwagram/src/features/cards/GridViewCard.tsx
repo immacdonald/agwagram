@@ -2,7 +2,6 @@ import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import {
     Button,
-    Card,
     DatasetIcon,
     designTokens,
     Dropdown,
@@ -17,6 +16,7 @@ import {
     ZoomInIcon,
     ZoomOutIcon
 } from 'phantom-library';
+import { Card } from '@components';
 import { useGetSymbolsQuery } from '@data/apiSlice';
 import style from './GridViewCard.module.scss';
 

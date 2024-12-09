@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from 'react';
-import { BarChartIcon, Card, Dropdown, Popover, Typography } from 'phantom-library';
+import { BarChartIcon, Dropdown, Popover, Typography } from 'phantom-library';
 import { HighlightedText } from '@components';
+import { Card } from '@components';
 import style from './SumgramsCard.module.scss';
 
 interface GroupSumgramsCardProps {

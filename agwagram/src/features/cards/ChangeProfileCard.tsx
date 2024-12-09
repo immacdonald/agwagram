@@ -1,5 +1,6 @@
-import { Card, ChartIcon, Heading, Typography } from 'phantom-library';
+import { ChartIcon, Heading, Typography } from 'phantom-library';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Card } from '@components';
 import tokens from '@styles/tokens.module.scss';
 
 interface ChangeProfileCardProps {

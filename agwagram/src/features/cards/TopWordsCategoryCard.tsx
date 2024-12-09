@@ -1,5 +1,6 @@
 import { SymbolTooltip } from '@features';
-import { Card, PauseIcon } from 'phantom-library';
+import { PauseIcon } from 'phantom-library';
+import { Card } from '@components';
 
 interface TopWordsCategoryCardProps {
     title: string;

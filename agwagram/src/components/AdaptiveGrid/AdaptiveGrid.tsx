@@ -1,6 +1,6 @@
-import type { CommonComponentProps } from '@types';
 import { FC, ReactNode } from 'react';
 import clsx from 'clsx';
+import { CommonComponentProps } from 'phantom-library';
 import { AdaptiveGridItemSize } from './AdaptiveGridItemSize';
 import styles from './AdaptiveGrid.module.scss';
 

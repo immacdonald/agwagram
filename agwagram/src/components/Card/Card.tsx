@@ -1,8 +1,6 @@
-import type { IconProps } from '@components';
-import type { CommonComponentProps, VisualContext } from '@types';
 import { ComponentType, FC, forwardRef, ReactNode } from 'react';
 import clsx from 'clsx';
-import { Column } from '@components';
+import { Column, CommonComponentProps, IconProps, VisualContext } from 'phantom-library';
 import styles from './Card.module.scss';
 
 interface CardProps extends CommonComponentProps {
