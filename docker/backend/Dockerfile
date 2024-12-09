@@ -2,12 +2,12 @@
 FROM docker.io/library/python:3.10
 
 WORKDIR /app
-COPY ./bloc/requirements.txt /app/backend/
+COPY ./server/requirements.txt /app/backend/
 
 RUN pip install --upgrade pip \
     && pip install -r backend/requirements.txt
 
-COPY ./bloc /app/backend
+COPY ./server /app/backend
 COPY docker/backend/run_dev_server.sh /app/backend
 
 WORKDIR /app/backend

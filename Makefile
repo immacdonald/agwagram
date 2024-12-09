@@ -19,11 +19,11 @@ prod:
 
 # Backend flake8 linting
 lint-backend:
-	cd bloc && flake8
+	cd server && flake8
 
 # Frontend ESLint and Prettier formatting
 lint-frontend:
-	cd agwagram && npm run format
+	cd app && npm run format
 
 version-patch:
 	bump2version patch

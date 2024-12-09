@@ -29,9 +29,9 @@ The frontend of agwagram is written in [TypeScript](https://www.typescriptlang.o
 
 #### Project Structure
 
-On the top level of the project are all the configuration files related to Vite, TypeScript, the [package.json](agwagram/package.json), and utilities related to linting and formatting. The [src](agwagram/src/) folder contains the contents of the React app.
+On the top level of the project are all the configuration files related to Vite, TypeScript, the [package.json](app/package.json), and utilities related to linting and formatting. The [src](app/src/) folder contains the contents of the React app.
 
-The main file of the React app is [index.tsx](agwagram/src/index.tsx), which contains the contexts for persistent data, URL routing, responsive styling, and the application itself. [App.tsx](agwagram/src/App.tsx) contains the actual routing (done with [react-router-dom](https://reactrouter.com/en/main)).
+The main file of the React app is [index.tsx](app/src/index.tsx), which contains the contexts for persistent data, URL routing, responsive styling, and the application itself. [App.tsx](app/src/App.tsx) contains the actual routing (done with [react-router-dom](https://reactrouter.com/en/main)).
 
 ##### Linting & Formatting
 
@@ -43,12 +43,12 @@ make lint-frontend
 
 #### Data Management
 
-The frontend of agwagram handles several types of data with varying forms and levels of persistency. The [Redux](https://redux.js.org/) library is utilized to make the management of data much more streamlined as well as being more accessible. The [store](agwagram/src/data/store.ts) is home to the global Redux data store, which has several key features:
+The frontend of agwagram handles several types of data with varying forms and levels of persistency. The [Redux](https://redux.js.org/) library is utilized to make the management of data much more streamlined as well as being more accessible. The [store](app/src/data/store.ts) is home to the global Redux data store, which has several key features:
 * The store is capable of being persisted across reloads and between sessions on the site
 * Data in the store considered crucial "gates" the remainder of page execution such that it will display a loading animation until it has been read in
 * Redux stores consist of "slices' which are related groupings of data that can be interacted with through various hooks and functions
 
-On agwagram the Redux store contains two slices: [apiSlice.ts](agwagram/src/data/apiSlice.ts) and [settingsSlice.ts](agwagram/src/data/settingsSlice.ts).
+On agwagram the Redux store contains two slices: [apiSlice.ts](app/src/data/apiSlice.ts) and [settingsSlice.ts](app/src/data/settingsSlice.ts).
 
 ##### API Data Slice
 
@@ -76,11 +76,11 @@ The settings data slice contains global variables for the user's operation of th
 
 #### Types
 
-Being written in TypeScript rather than plain JavaScript offers several advantages and leads to a much more robust system. All data handled is *strictly* typed, meaning it is expected to conform to a particular TypeScript type or interface. These can all be found in [types.ts](agwagram/types.ts). The website is configured to throw errors and fail compilation when typings are not appropriately assigned or respected, but these can be disabled on a situational basis during development.
+Being written in TypeScript rather than plain JavaScript offers several advantages and leads to a much more robust system. All data handled is *strictly* typed, meaning it is expected to conform to a particular TypeScript type or interface. These can all be found in [types.ts](app/types.ts). The website is configured to throw errors and fail compilation when typings are not appropriately assigned or respected, but these can be disabled on a situational basis during development.
 
 #### Styling
 
-Styling for agwagram is done with [SCSS](https://sass-lang.com/) contained in [CSS Modules](https://github.com/css-modules/css-modules). Combining both the SCSS pre-processor with the flexibility of CSS modules leads to a much better developer experience and a smoother user experience on the website. The "core" styles are located in [styles/base](agwagram/src/styles/base) and are responsible for CSS variables relating to color and effects, element default styling, and more. A set of SCSS variables (the tokens of the agwagram design system) are imported automatically into all `.scss` files in the project meaning they can be used in any component or view stylesheet with ease. These tokens include things like a range of spaces and font sizes.
+Styling for agwagram is done with [SCSS](https://sass-lang.com/) contained in [CSS Modules](https://github.com/css-modules/css-modules). Combining both the SCSS pre-processor with the flexibility of CSS modules leads to a much better developer experience and a smoother user experience on the website. The "core" styles are located in [styles/base](app/src/styles/base) and are responsible for CSS variables relating to color and effects, element default styling, and more. A set of SCSS variables (the tokens of the agwagram design system) are imported automatically into all `.scss` files in the project meaning they can be used in any component or view stylesheet with ease. These tokens include things like a range of spaces and font sizes.
 
 #### Changing Frontend Port
 To run agwagram on a different port than the default of `8000`, change the value of `VITE_PORT` in the `development.env` file and the `port` config value in `vite.config.ts`. To apply these changes to an existing Docker container, stop the container and start it again.

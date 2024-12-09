@@ -15,11 +15,11 @@ services:
       - ./development.env
       - docker/.env
     build:
-      context: ./bloc
-    entrypoint: /bloc/dev-entrypoint.sh
-    container_name: bloc
+      context: ./server
+    entrypoint: /server/dev-entrypoint.sh
+    container_name: server
     volumes:
-      - ./bloc:/bloc
+      - ./server:/server
     ports:
       - "${PORT}:${PORT}"
     depends_on:
@@ -29,12 +29,12 @@ services:
     env_file:
       - ./development.env
     build:
-      context: ./agwagram
+      context: ./app
     command: sh -c "npm rebuild esbuild && npm run dev"
-    container_name: agwagram
+    container_name: app
     volumes:
-      - ./agwagram:/agwagram
-      - /agwagram/node_modules
+      - ./app:/app
+      - /app/node_modules
     ports:
       - "${VITE_PORT}:${VITE_PORT}"
     stdin_open: true
