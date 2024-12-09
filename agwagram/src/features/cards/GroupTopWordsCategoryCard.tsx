@@ -1,6 +1,8 @@
-import { SymbolTooltip } from '@features';
-import { BarChartIcon } from 'phantom-library';
+import { useMemo } from 'react';
+import { BarChartIcon, Column, Row, Typography } from 'phantom-library';
+import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import { Card } from '@components';
+import { tokens } from '@styles/tokens';
 
 interface GroupTopWordsCategoryCardProps {
     title: string;
@@ -20,13 +22,52 @@ const timeSymbols = {
 
 const GroupTopWordsCategoryCard: React.FC<GroupTopWordsCategoryCardProps> = ({ title, subtitle, accounts }) => {
     const category = 'top_time';
-    const categoryTitle = 'Pause';
+
+    const data = useMemo(() => {
+        return accounts.map((account) => {
+            const pauses = account[category];
+            return Object.entries(timeSymbols).map(([pause, meaning]) => {
+                const word = pauses.filter((top) => top.term == pause);
+                return {
+                    term: meaning,
+                    frequency: word.length > 0 ? parseInt(word[0].term_freq) : 0,
+                    rate: word.length > 0 ? parseFloat(word[0].term_rate) : 0
+                };
+            });
+        });
+    }, [accounts]);
 
     return (
         <Card fullHeight>
             <Card.Header title={title} subtitle={subtitle} Icon={BarChartIcon} />
-            <Card.Body scrollable>
-                <table>
+            <Card.Body>
+                <Row>
+                    {data.map((accountData, index) => {
+                        return (
+                            <Column style={{ width: `calc(${100 / accounts.length}% + ${index == 0 ? 80 - 30 : 0}px - 30px)` }}>
+                                <Typography.Text>@{accounts[index].account_username}</Typography.Text>
+                                <ResponsiveContainer width="100%" height={400}>
+                                    <BarChart layout="vertical" data={accountData} margin={{ top: 5, right: 15, left: 15, bottom: 5 }}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis type="number" allowDataOverflow={false} tickCount={4} />
+                                        <YAxis type="category" dataKey="term" width={80} hide={index > 0} />
+                                        <Tooltip
+                                            formatter={(value, name, props) => {
+                                                const { payload } = props;
+                                                if (name === 'frequency') {
+                                                    return [`Frequency: ${value}`, 'Rate: ' + payload.rate + '%'];
+                                                }
+                                                return value;
+                                            }}
+                                        />
+                                        <Bar dataKey="frequency" fill={tokens.graph.blue} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </Column>
+                        );
+                    })}
+                </Row>
+                {/*<table>
                     <thead>
                         <tr>
                             <th>{categoryTitle}</th>
@@ -56,7 +97,7 @@ const GroupTopWordsCategoryCard: React.FC<GroupTopWordsCategoryCardProps> = ({ t
                             );
                         })}
                     </tbody>
-                </table>
+                </table>*/}
             </Card.Body>
         </Card>
     );

@@ -2,24 +2,31 @@ import { useMemo } from 'react';
 import { PauseIcon } from 'phantom-library';
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import { Card } from '@components';
-import { useGetSymbolsQuery } from '@data/apiSlice';
 import { tokens } from '@styles/tokens';
-import { symbolToDefinition } from '../tooltips/bloc';
 
 interface TopPausesCardProps {
     title: string;
     pauses: Top[];
 }
 
-const TopPausesCard: React.FC<TopPausesCardProps> = ({ title, pauses }) => {
-    const { data: symbols } = useGetSymbolsQuery();
+const timeSymbols = {
+    '□': '< 1 Minute',
+    '⚀': '< 1 Hour',
+    '⚁': '< 1 Day',
+    '⚂': '< 1 Week',
+    '⚃': '< 1 Month',
+    '⚄': '< 1 Year',
+    '⚅': '> 1 Year'
+};
 
+const TopPausesCard: React.FC<TopPausesCardProps> = ({ title, pauses }) => {
     const data = useMemo(() => {
-        return pauses.map((word) => {
+        return Object.entries(timeSymbols).map(([pause, meaning]) => {
+            const word = pauses.filter((top) => top.term == pause);
             return {
-                term: `${symbolToDefinition(symbols, word.term)}`,
-                frequency: parseInt(word.term_freq),
-                rate: parseFloat(word.term_rate)
+                term: meaning,
+                frequency: word.length > 0 ? parseInt(word[0].term_freq) : 0,
+                rate: word.length > 0 ? parseFloat(word[0].term_rate) : 0
             };
         });
     }, [pauses]);
