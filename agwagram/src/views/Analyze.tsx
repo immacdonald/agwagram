@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Accordion, FileUploadPortal, Heading, MultiDropdown, NullablePrimitive, StyledLink, TabGroup, Typography } from 'phantom-library';
 import { getStaticDataFile } from 'src/utility';
 import { config } from '@config';
@@ -61,9 +61,34 @@ const Analyze: React.FC = () => {
         }
     }, [selectedFiles]);
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        setSelectedMode(params.get('mode') == 'upload' ? 1 : 0);
+    }, [location.search]);
+
+    const searchMode = (): number => {
+        const params = new URLSearchParams(location.search);
+        return params.get('mode') == 'upload' ? 1 : 0;
+    };
+
+    const [selectedMode, setSelectedMode] = useState<number>(searchMode());
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        if (!(params.get('mode') == 'upload' && selectedMode == 1)) {
+            params.set('mode', selectedMode == 1 ? 'upload' : 'examples');
+            navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+        }
+    }, [selectedMode]);
+
     return (
         <TabGroup
             variant="segmented"
+            selectedIndex={selectedMode}
+            onChange={(value: number) => setSelectedMode(value)}
             tabs={[
                 {
                     label: 'Pick An Account',
