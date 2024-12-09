@@ -53,7 +53,7 @@ const AccountAnalysis: React.FC<AccountAnalysisProps> = ({ account }) => {
                     <TopPausesCard title="Top Pauses" pauses={account.top_time} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
-                    <SumgramsCard title="Sumgrams" subtitle="Most frequently used phrases." sumgrams={account.sumgrams} />
+                    <SumgramsCard title="Sumgrams" subtitle="Most frequently used phrases." username={account.account_username} sumgrams={account.sumgrams} tweets={account.linked_data} />
                 </AdaptiveGrid.Item>
                 <AdaptiveGrid.Item size={AdaptiveGridItemSize.Full}>
                     <GridViewCard title="Grid View" username={account.account_username} data={account.linked_data} />

@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from 'react';
-import { BarChartIcon, Dropdown, decimalPlaces, Popover, Typography } from 'phantom-library';
+import { BarChartIcon, Dropdown, decimalPlaces, Popover, Typography, designTokens, formatReadableDate, StyledLink } from 'phantom-library';
 import { HighlightedText } from '@components';
 import { Card } from '@components';
 import style from './SumgramsCard.module.scss';
@@ -7,10 +7,12 @@ import style from './SumgramsCard.module.scss';
 interface SumgramsCardProps {
     title: string;
     subtitle?: string;
+    username: string;
     sumgrams: Sumgrams[];
+    tweets: LinkedData[];
 }
 
-const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
+const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, username, sumgrams, tweets }) => {
     const sumgramOptions = sumgrams.map((sumgram: Sumgrams, index: number) => {
         return {
             label: `n = ${sumgram.base_ngram}`,
@@ -56,11 +58,18 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
                                                         content={
                                                             <div className={style.content}>
                                                                 {sumgram.parent_sentences.map((sentence, index: number) => {
+                                                                    const tweet = tweets.filter((t) => t.id == `${sentence.doc_id}`)[0]
                                                                     return (
                                                                         <Fragment key={index}>
-                                                                            <HighlightedText text={sentence.sentence} matches={sumgram.partial_sumgrams} />
-                                                                            <br />
-                                                                            <br />
+                                                                            <StyledLink
+                                                                                inherit
+                                                                                style={{ marginBottom: designTokens.space.lg, display: "block" }}
+                                                                                to={`https://twitter.com/${username}/status/${tweet.id}`}
+                                                                                external
+                                                                            >
+                                                                                <b>{formatReadableDate(new Date(Number(tweet.created_at) * 1000))}: </b>
+                                                                                <HighlightedText text={sentence.sentence} matches={sumgram.partial_sumgrams} />
+                                                                            </StyledLink>
                                                                         </Fragment>
                                                                     );
                                                                 })}
@@ -86,9 +95,10 @@ const SumgramsCard: FC<SumgramsCardProps> = ({ title, subtitle, sumgrams }) => {
                     </>
                 ) : (
                     <Typography.Paragraph>Unable to calculate sumgrams for this account.</Typography.Paragraph>
-                )}
-            </Card.Body>
-        </Card>
+                )
+                }
+            </Card.Body >
+        </Card >
     );
 };
 
