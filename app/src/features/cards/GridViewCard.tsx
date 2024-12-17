@@ -288,7 +288,7 @@ const GridViewCard: React.FC<GridViewCardProps> = ({ title, username, data }) =>
                                         <span className={style.legendKeyColor} style={{ backgroundColor: item.color }} />
                                         {symbolToDefinition(item.symbol)}
                                         <span style={{ marginLeft: designTokens.space.sm }}>
-                                            <b>{fixedLinkedData.filter((data) => data[showAction ? 'action' : 'content'] == item.symbol).length}</b>
+                                            <b>{gridItems.filter((data) => typeof data !== 'string' && (data as GridLinkedData).content == item.symbol).length}</b>
                                         </span>
                                     </Button>
                                 </div>
