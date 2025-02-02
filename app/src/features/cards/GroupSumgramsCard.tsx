@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from 'react';
-import { BarChartIcon, Dropdown, Popover, Typography } from 'phantom-library';
+import { BarChartIcon, designTokens, Dropdown, formatReadableDate, Popover, StyledLink, Typography } from 'phantom-library';
 import { HighlightedText } from '@components';
 import { Card } from '@components';
 import style from './SumgramsCard.module.scss';
@@ -63,11 +63,18 @@ const GroupSumgramsCard: FC<GroupSumgramsCardProps> = ({ title, subtitle, accoun
                                                                 content={
                                                                     <div className={style.content}>
                                                                         {sumgram.parent_sentences.map((sentence, index: number) => {
+                                                                            const tweet = account.linked_data.filter((t) => t.id == `${sentence.doc_id}`)[0];
                                                                             return (
                                                                                 <Fragment key={index}>
-                                                                                    <HighlightedText text={sentence.sentence} matches={sumgram.partial_sumgrams} />
-                                                                                    <br />
-                                                                                    <br />
+                                                                                    <StyledLink
+                                                                                        inherit
+                                                                                        style={{ marginBottom: designTokens.space.lg, display: 'block' }}
+                                                                                        to={`https://twitter.com/${account.account_username}/status/${tweet.id}`}
+                                                                                        external
+                                                                                    >
+                                                                                        <b>{formatReadableDate(new Date(Number(tweet.created_at) * 1000))}: </b>
+                                                                                        <HighlightedText text={sentence.sentence} matches={sumgram.partial_sumgrams} />
+                                                                                    </StyledLink>
                                                                                 </Fragment>
                                                                             );
                                                                         })}
