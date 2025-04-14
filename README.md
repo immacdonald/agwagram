@@ -1,5 +1,9 @@
 # agwagram
 
+![Agwagram Logo](https://raw.githubusercontent.com/immacdonald/agwagram/refs/heads/main/docs/graphics/agwagram.png)
+
+Try out agwagram on the NEWSResearch website [here](https://newsresearch.lab.wm.edu/tools/agwagram).
+
 ## About
 agwagram is a web interface that allows users to analyze online accounts using the novel BLOC algorithm to explore behaviors and signs of coordinated actions, bots, and other vectors for spreading disinformation. This tool is specifically designed for the analysis of user accounts on [X (formerly) Twitter](https://www.twitter.com). More information about the underlying BLOC algorithm can be found on Dr. Alexander Nwala's [BLOC GitHub](https://github.com/anwala/bloc).
 
@@ -25,7 +29,7 @@ This command uses sets the development environment variables and composes the Do
 
 ### Frontend
 
-The frontend of agwagram is written in [TypeScript](https://www.typescriptlang.org/) using the [React](https://react.dev/) library and built with [Vite](https://vitejs.dev/). Packages and dependencies are managed with [npm](https://www.npmjs.com/). In order to develop and deploy agwagram you will need to have installed `npm` on your system.
+The frontend of agwagram is written in [TypeScript](https://www.typescriptlang.org/) using the [React](https://react.dev/) library and built with [Vite](https://vitejs.dev/). Charting and visualization is done using [recharts](https://recharts.org. Packages and dependencies are managed with [npm](https://www.npmjs.com/). In order to develop and deploy agwagram you will need to have installed `npm` on your system.
 
 #### Project Structure
 
@@ -100,6 +104,10 @@ The [Flake8](https://flake8.pycqa.org/en/latest/) code formatter is used for BLO
 make lint-backend
 ```
 
+### Versioning
+
+This repository uses [semantic versioning](https://docs.npmjs.com/about-semantic-versioning) to track changes. Versions are synced between the frontend and backend using [bump2version](https://github.com/c4urself/bump2version) which needs to be installed globally. To update the version use the Makefile aliases: `make version-patch`, `make version-minor`, or `make version-major` accordingly. 
+
 ### Production & Testing
 For the testing (QA) and production version of the website the React frontend is built out as static files and served using `nginx`. The Django server is served with `gunicorn`. In the QA build of agwagram both the frontend and backend are served at the same URL. Use the following command:
 
@@ -111,7 +119,9 @@ make prod
 
 Any changes to the frontend can be tested by executing `npm run dev` to start up the local development server. When running locally, agwagram will direct it's API requests to a local instance of the backend rather than the production server, so ensure that is running (it can be activated without running the frontend through Docker with `make dev-backend`). Everything else about the local version should accurately reflect how the site will appear and function when deployed, so make sure to test thoroughly.
 
-Before deploying it is highly advised to run the formatter (`npm run format`) to check for ESLint or TypeScript errors, as these *will* cause deployment to fail if found during the build phase. Once that is done, any push to main on the agwagram W&M GitLab repository will trigger an automatic build and deployment pipeline to execute.
+Before deploying it is highly advised to run the formatter (`npm run format`) to check for ESLint or TypeScript errors, as these *will* cause deployment to fail if found during the build phase.
+
+Once that is done, any push to main on the agwagram W&M GitLab repository will trigger an automatic build and deployment pipeline to execute.
 
 ## Contributors
 Lead development by [Ian MacDonald](https://github.com/immacdonald) in collaboration with [Alexander C. Nwala](https://alexandernwala.com/). Special thanks to the William & Mary IT Department for assistance with hosting.
